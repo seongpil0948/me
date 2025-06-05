@@ -52,3 +52,9 @@ The project enforces:
 - Padding lines between statements
 - No unused imports
 - Warning on console statements
+
+
+### Reference
+
+- https://blog.cmiscm.com/?page_id=3023
+- 
