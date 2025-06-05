@@ -154,13 +154,15 @@ export default function MePage() {
     <div className="w-full max-w-full flex flex-col gap-8">
       {/* 헤더 섹션 */}
       <div className="flex flex-col items-center text-center">
-        <h1 className={title({ size: "lg" })}>
+        <h1 className={title({ size: "sm" })}>
           Seongpil Choi{" "}
-          <span className={title({ color: "pink" })}>(최성필)</span>
+          <span className={title({ color: "yellow", size: "sm" })}>
+            (최성필)
+          </span>
         </h1>
-        <p className={subtitle({ className: "mt-2" })}>
+        {/* <p className={subtitle({ className: "mt-2" })}>
           상상을 코드로 구현하고, 문제를 소통의 기회로 생각합니다.
-        </p>
+        </p> */}
       </div>
 
       {/* 탭 내비게이션 */}
@@ -169,14 +171,14 @@ export default function MePage() {
         className="w-full"
         classNames={{
           tab: "px-6",
-          tabList: "gap-6",
+          tabList: "gap-2 md:gap-6",
           cursor: "w-full bg-primary",
         }}
         selectedKey={selected}
         onSelectionChange={(key) => setSelected(key as string)}
       >
         <Tab key="profile" title="프로필">
-          <Card className="mt-6">
+          <Card>
             <CardBody>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* 왼쪽: 기본 정보 */}
