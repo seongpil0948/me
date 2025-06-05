@@ -3,12 +3,8 @@ export type SiteConfig = typeof siteConfig;
 export const siteConfig = {
   name: "Seongpil Choi ",
   description: "Make beautiful websites regardless of your design experience.",
-  navItems: [
-
-  ],
-  navMenuItems: [
-
-  ],
+  navItems: [],
+  navMenuItems: [],
   links: {
     github: "https://github.com/heroui-inc/heroui",
     twitter: "https://twitter.com/hero_ui",
