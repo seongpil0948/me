@@ -121,14 +121,13 @@ export default function MePage() {
   ];
 
   const portfolioLinks = [
-    { name: "About", url: "https://www.peachhub.love/ko/about" },
     { name: "Github", url: "https://github.com/seongpil0948" },
     { name: "LinkedIn", url: "https://www.linkedin.com/in/choi-seongpil-9910a0203/" },
-    { name: "3D Projects", url: "https://www.peachhub.love/ko/project" },
-    { name: "Game", url: "https://www.peachhub.love/ko/game/world" },
-    { name: "Documents", url: "https://www.peachhub.love/ko/docs" },
-    { name: "Stock service", url: "https://stock.peachhub.love/" },
     { name: "CodingGame", url: "https://www.codingame.com/profile/f98c28095b66d60aa9adc3f62e04210e6669263" },
+    { name: "All-ad", url: "http://all-ad.in", disabled: true },
+    { name: "3D Projects", url: "https://www.peachhub.love/ko/project", disabled: true },
+    { name: "Game", url: "https://www.peachhub.love/ko/game/world", disabled: true },
+    { name: "Stock service", url: "https://stock.peachhub.love/", disabled: true },
   ];
 
   return (
@@ -163,7 +162,7 @@ export default function MePage() {
                   <div className="space-y-2">
                     <p>📱 010-7184-0948</p>
                     <p>📧 seongpil0948@gmail.com</p>
-                    <p>🌐 Abacus.com</p>
+                    <Link href="https://idstrust.com" isExternal>🌐 Daewoong {">"} IDS</Link>
                     <p>📍 경기도 광명시 가림일로 101, 도덕파크타운 202-301호</p>
                   </div>
                   
@@ -181,7 +180,7 @@ export default function MePage() {
                   <h2 className="text-xl font-bold mb-4">포트폴리오 링크</h2>
                   <div className="flex flex-col space-y-2">
                     {portfolioLinks.map((link, index) => (
-                      <Link key={index} href={link.url} isExternal showAnchorIcon color="primary">
+                      <Link key={index} href={link.url} isExternal showAnchorIcon color="primary" isDisabled={link.disabled}>
                         {link.name}
                       </Link>
                     ))}
@@ -381,7 +380,7 @@ export default function MePage() {
             radius: "full",
             variant: "shadow",
           })}
-          href="https://www.peachhub.love/ko/about"
+          href="http://all-ad.in"
         >
           포트폴리오 사이트 방문하기
         </Link>
