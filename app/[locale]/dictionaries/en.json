@@ -1,0 +1,120 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hello",
+    "title": "Frontend Developer",
+    "description": "A developer focused on user experience"
+  },
+  "common": {
+    "welcome": "Welcome",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "language": "Language",
+    "selectLanguage": "Select Language"
+  },
+  "profile": {
+    "title": "Profile",
+    "contactInfo": "Contact Information",
+    "phone": "Phone",
+    "email": "Email",
+    "website": "Website",
+    "address": "Address",
+    "education": "Education",
+    "degree": "Bachelor's Degree",
+    "major": "Information and Communication Engineering",
+    "portfolioLinks": "Portfolio Links",
+    "aboutMe": "About Me",
+    "skills": "Technical Skills",
+    "teamworkSkills": "Teamwork Skills"
+  },
+  "experience": {
+    "title": "Experience",
+    "careerHistory": "Career History",
+    "keyAchievements": "Key Achievements",
+    "position": {
+      "seniorEngineer": "Senior Engineer",
+      "seniorResearcher": "Senior Researcher",
+      "researcher": "Researcher",
+      "fullStackEngineer": "Full Stack Engineer"
+    }
+  },
+  "certifications": {
+    "title": "Certifications",
+    "certAndCredentials": "Certifications & Credentials",
+    "issueDate": "Issue Date",
+    "certified": "Certified"
+  },
+  "projects": {
+    "title": "Projects",
+    "majorProjects": "Major Projects",
+    "keyAchievements": "Key Achievements"
+  },
+  "reviews": {
+    "title": "Recent Achievements",
+    "yearlyPerformance": "2025 Key Technical Achievements & Contributions",
+    "sections": {
+      "infrastructure": "Infrastructure Stability & Cost Optimization",
+      "highAvailability": "High Availability Architecture Implementation",
+      "dataPlatform": "Data Platform Innovation",
+      "productivity": "Development Productivity Enhancement"
+    },
+    "items": {
+      "monitoring": "Monitoring System Implementation",
+      "costOptimization": "Cost Optimization",
+      "redisHA": "Redis Sentinel HA Configuration",
+      "dbHealthCheck": "Database Health Check",
+      "logAnalysis": "Log Analysis System Expansion",
+      "workflowAutomation": "Workflow Automation",
+      "cicdPipeline": "CI/CD Pipeline Implementation",
+      "securityAccess": "Security & Access Control"
+    },
+    "coreProject": {
+      "title": "Core Project: Direct Sales Management System",
+      "description": "Web/Mobile Integrated Platform Development Completed"
+    }
+  },
+  "buttons": {
+    "visitGithub": "Visit Github",
+    "visitPortfolio": "Visit Portfolio Site"
+  },
+  "tabs": {
+    "profile": "Profile",
+    "experience": "Experience",
+    "certifications": "Certifications",
+    "projects": "Projects",
+    "reviews": "Recent Achievements"
+  },
+  "companies": {
+    "bucheonUniversity": "Bucheon University",
+    "daewoong": "Daewoong",
+    "idstrust": "Idstrust",
+    "abacus": "Abacus",
+    "inoutbox": "InoutBox",
+    "intellisys": "Intellisys"
+  },
+  "dates": {
+    "present": "Present",
+    "performanceReview": "Performance Review",
+    "march": "March",
+    "june": "June",
+    "january": "January",
+    "april": "April",
+    "may": "May",
+    "august": "August",
+    "november": "November",
+    "year": "",
+    "month": "",
+    "months10": "10 months",
+    "years2months6": "2 years 6 months"
+  },
+  "achievements": {
+    "userSatisfaction": "User Satisfaction",
+    "crossPlatform": "Cross Platform",
+    "realtimeDataSync": "Real-time Data Sync",
+    "webAdmin": "Web Admin"
+  }
+}

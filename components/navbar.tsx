@@ -13,6 +13,7 @@ import NextLink from "next/link";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon, DiscordIcon, SearchIcon } from "@/components/icons";
+import LanguageSwitcher from "@/components/language-switcher";
 
 export const Navbar = () => {
   const searchInput = (
@@ -58,6 +59,7 @@ export const Navbar = () => {
             <GithubIcon className="text-default-500" />
           </Link>
           <ThemeSwitch />
+          <LanguageSwitcher />
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
       </NavbarContent>
@@ -67,6 +69,7 @@ export const Navbar = () => {
           <GithubIcon className="text-default-500" />
         </Link>
         <ThemeSwitch />
+        <LanguageSwitcher />
         <NavbarMenuToggle />
       </NavbarContent>
     </HeroUINavbar>

@@ -1,0 +1,120 @@
+{
+  "nav": {
+    "home": "홈",
+    "about": "소개",
+    "contact": "연락처"
+  },
+  "hero": {
+    "greeting": "안녕하세요",
+    "title": "프론트엔드 개발자",
+    "description": "사용자 경험을 중심으로 생각하는 개발자입니다"
+  },
+  "common": {
+    "welcome": "환영합니다",
+    "loading": "로딩 중...",
+    "error": "오류가 발생했습니다",
+    "language": "언어",
+    "selectLanguage": "언어 선택"
+  },
+  "profile": {
+    "title": "프로필",
+    "contactInfo": "연락처 정보",
+    "phone": "전화",
+    "email": "이메일",
+    "website": "웹사이트",
+    "address": "주소",
+    "education": "학력",
+    "degree": "학사",
+    "major": "정보통신공학",
+    "portfolioLinks": "포트폴리오 링크",
+    "aboutMe": "자기소개",
+    "skills": "기술 스택",
+    "teamworkSkills": "팀워크 스킬"
+  },
+  "experience": {
+    "title": "경력",
+    "careerHistory": "경력 사항",
+    "keyAchievements": "주요 성과",
+    "position": {
+      "seniorEngineer": "시니어 엔지니어",
+      "seniorResearcher": "시니어 연구원",
+      "researcher": "연구원",
+      "fullStackEngineer": "풀스택 엔지니어"
+    }
+  },
+  "certifications": {
+    "title": "자격증",
+    "certAndCredentials": "자격증 및 인증",
+    "issueDate": "취득일",
+    "certified": "인증됨"
+  },
+  "projects": {
+    "title": "프로젝트",
+    "majorProjects": "주요 프로젝트",
+    "keyAchievements": "주요 성과"
+  },
+  "reviews": {
+    "title": "최근 성과",
+    "yearlyPerformance": "2025년 주요 기술 성과 및 기여도",
+    "sections": {
+      "infrastructure": "인프라 안정성 및 비용 최적화",
+      "highAvailability": "고가용성 아키텍처 구현",
+      "dataPlatform": "데이터 플랫폼 혁신",
+      "productivity": "개발 생산성 향상"
+    },
+    "items": {
+      "monitoring": "모니터링 시스템 구축",
+      "costOptimization": "비용 최적화",
+      "redisHA": "Redis Sentinel HA 구성",
+      "dbHealthCheck": "데이터베이스 헬스체크",
+      "logAnalysis": "로그 분석 시스템 확장",
+      "workflowAutomation": "워크플로우 자동화",
+      "cicdPipeline": "CI/CD 파이프라인 구축",
+      "securityAccess": "보안 및 접근 제어"
+    },
+    "coreProject": {
+      "title": "핵심 프로젝트: 직거래 영업사원 관리 시스템",
+      "description": "웹/모바일 통합 플랫폼 개발 완료"
+    }
+  },
+  "buttons": {
+    "visitGithub": "Github 방문하기",
+    "visitPortfolio": "포트폴리오 사이트 방문하기"
+  },
+  "tabs": {
+    "profile": "프로필",
+    "experience": "경력",
+    "certifications": "자격증",
+    "projects": "프로젝트",
+    "reviews": "최근 성과"
+  },
+  "companies": {
+    "bucheonUniversity": "부천대학교",
+    "daewoong": "대웅",
+    "idstrust": "Idstrust",
+    "abacus": "애버커스",
+    "inoutbox": "InoutBox",
+    "intellisys": "Intellisys"
+  },
+  "dates": {
+    "present": "현재",
+    "performanceReview": "성과평가",
+    "march": "3월",
+    "june": "6월",
+    "january": "1월",
+    "april": "4월",
+    "may": "5월",
+    "august": "8월",
+    "november": "11월",
+    "year": "년",
+    "month": "월",
+    "months10": "10개월",
+    "years2months6": "2년 6개월"
+  },
+  "achievements": {
+    "userSatisfaction": "사용자 만족도",
+    "crossPlatform": "크로스플랫폼",
+    "realtimeDataSync": "실시간 데이터 동기화",
+    "webAdmin": "웹 어드민"
+  }
+}

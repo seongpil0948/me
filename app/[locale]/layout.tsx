@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
+import { notFound } from "next/navigation";
 import clsx from "clsx";
 
 import { Providers } from "./providers";
@@ -7,6 +8,7 @@ import { Providers } from "./providers";
 import { siteConfig } from "@/config/site";
 import { fontMono, nanumMyeongjo, notoSerifKr } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
+import i18nConfig from "@/i18nConfig";
 
 export const metadata: Metadata = {
   title: {
@@ -26,13 +28,21 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
+
+  if (!i18nConfig.locales.includes(locale)) {
+    notFound();
+  }
+
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning lang={locale}>
       <head />
       <body
         className={clsx(

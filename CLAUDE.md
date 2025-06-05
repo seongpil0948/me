@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Development
 
+- 작업 후 pnpm format, pnpm lint, pnpm build 를 통해 문제 없음을 검증하도 록해줘
+
 ```bash
 pnpm dev        # Start development server with Turbopack
 pnpm build      # Build for production
@@ -53,8 +55,30 @@ The project enforces:
 - No unused imports
 - Warning on console statements
 
+### Internationalization (i18n)
+
+This project supports multiple languages using `next-i18n-router`:
+
+- **Supported Languages**: Korean (ko), English (en), Chinese (zh)
+- **Default Language**: Korean (ko)
+- **Language Detection**: Automatic based on browser settings
+- **Language Switching**: Available in navbar
+- **URL Structure**: `/[locale]/...` (e.g., `/en`, `/zh`)
+
+#### Key i18n Files
+
+- `i18nConfig.ts` - i18n configuration
+- `middleware.ts` - Language detection and routing
+- `app/[locale]/dictionaries/` - Translation files
+- `components/language-switcher.tsx` - Language switcher component
+
+#### Adding New Translations
+
+1. Update dictionary files in `app/[locale]/dictionaries/`
+2. Add new keys to all language files (ko.json, en.json, zh.json)
+3. Use translations in components via the `dict` prop
 
 ### Reference
 
 - https://blog.cmiscm.com/?page_id=3023
-- 
+-
