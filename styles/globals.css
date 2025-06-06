@@ -1,4 +1,322 @@
 @import "tailwindcss";
 @plugin '../hero.ts';
+@source '../components/**/*.{js,ts,jsx,tsx,mdx}';
+@source '../app/**/*.{js,ts,jsx,tsx,mdx}';
 @source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 @custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* ================================
+     Typography System
+     ================================ */
+
+  /* Font Families */
+  --font-family-sans: var(--font-sans);
+  --font-family-mono: var(--font-mono);
+  --font-family-noto-sans-kr: var(--font-noto-sans-kr);
+  --font-family-noto-serif-kr: var(--font-noto-serif-kr);
+  --font-family-nanum-myeongjo: var(--font-nanum-myeongjo);
+
+  /* Typography Scale - Hierarchical System */
+  /* Headings */
+  --font-size-heading-6xl: 3.75rem; /* 60px - Hero title desktop */
+  --font-size-heading-5xl: 3rem; /* 48px - Hero title mobile */
+  --font-size-heading-3xl: 1.875rem; /* 30px - Section headers */
+  --font-size-heading-2xl: 1.5rem; /* 24px - Subsection headers */
+  --font-size-heading-xl: 1.25rem; /* 20px - Card headers */
+  --font-size-heading-lg: 1.125rem; /* 18px - List headers */
+
+  /* Body Text */
+  --font-size-body-xl: 1.25rem; /* 20px - Hero description */
+  --font-size-body-lg: 1.125rem; /* 18px - Large body text */
+  --font-size-body-base: 1rem; /* 16px - Default body text */
+  --font-size-body-sm: 0.875rem; /* 14px - Small body text */
+  --font-size-body-xs: 0.75rem; /* 12px - Caption text */
+
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 1.8; /* Used for readability in prose */
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* HeroUI Component Sizes */
+  --font-size-tiny: 0.625rem; /* 10px */
+  --font-size-small: 0.75rem; /* 12px */
+  --font-size-medium: 0.875rem; /* 14px */
+  --font-size-large: 1rem; /* 16px */
+
+  --line-height-tiny: 0.9375rem; /* 15px */
+  --line-height-small: 1.375rem; /* 22px */
+  --line-height-medium: 1.5rem; /* 24px */
+  --line-height-large: 1.625rem; /* 26px */
+
+  /* ================================
+     Spacing & Layout System
+     ================================ */
+
+  /* Container Widths */
+  --width-xs: 20rem; /* 320px */
+  --width-sm: 24rem; /* 384px */
+  --width-md: 28rem; /* 448px */
+  --width-lg: 32rem; /* 512px */
+  --width-xl: 36rem; /* 576px */
+  --width-2xl: 42rem; /* 672px */
+  --width-3xl: 48rem; /* 768px */
+  --width-4xl: 56rem; /* 896px */
+  --width-6xl: 72rem; /* 1152px */
+
+  /* Border Radius */
+  --radius-small: 0.5rem; /* 8px */
+  --radius-medium: 0.75rem; /* 12px */
+  --radius-large: 1.5rem; /* 24px */
+
+  /* Opacity */
+  --opacity-disabled: 0.3;
+
+  /* ================================
+     Color System - Portfolio Design System
+     ================================ */
+
+  /* Brand Colors */
+  --color-primary: #dc6b4a; /* Orange/coral - Main accent color */
+  --color-primary-foreground: #ffffff;
+  --color-primary-hover: #c5563a; /* Darker shade for hover states */
+
+  /* Background Colors */
+  --color-background: #fffdf7; /* Off-white/cream - Main background */
+  --color-background-secondary: #fffaf0; /* Light cream - Card backgrounds */
+  --color-background-tertiary: #f5f5f3; /* Very light gray - Progress backgrounds */
+
+  /* Text Colors */
+  --color-text-primary: #262626; /* Dark gray/black - Headings */
+  --color-text-secondary: #525250; /* Dark gray - Body text */
+  --color-text-tertiary: #787872; /* Medium gray - Meta text */
+  --color-text-accent: #dc6b4a; /* Orange/coral - Links and highlights */
+
+  /* Border Colors */
+  --color-border-primary: #e8e8e5; /* Light gray - Default borders */
+  --color-border-accent: #dc6b4a; /* Orange/coral - Accent borders */
+
+  /* Skill Progress Bar Colors */
+  --color-skill-1: #e5d4b1; /* Beige */
+  --color-skill-2: #00d184; /* Green */
+  --color-skill-3: #b8b8b2; /* Gray */
+
+  /* Status Colors */
+  --color-success: #00a367; /* Dark green - Success/certified text */
+  --color-success-bg: #e5f7f0; /* Light green - Success background */
+  --color-warning: #a37800; /* Dark yellow - Warning/in-progress text */
+  --color-warning-bg: #fff3d1; /* Light yellow - Warning background */
+
+  /* Neutral/Gray Scale */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f3;
+  --color-gray-200: #e8e8e5;
+  --color-gray-300: #dbdbd7;
+  --color-gray-400: #d1d1cc;
+  --color-gray-500: #b8b8b2;
+  --color-gray-600: #a3a39c;
+  --color-gray-700: #787872;
+  --color-gray-800: #525250;
+  --color-gray-900: #262626;
+
+  /* Component-specific Colors */
+  --color-hero-title-accent: #dc6b4a;
+  --color-tab-active: #dc6b4a;
+  --color-link-hover: #c5563a;
+  --color-progress-bg: #f5f5f3;
+
+  /* Semantic Colors (HeroUI compatibility) */
+  --color-default: #e8e8e5;
+  --color-default-foreground: #262626;
+  --color-divider: #e8e8e5;
+  --color-overlay: #fafaf8;
+  --color-focus: #dc6b4a;
+
+  /* Extended Semantic Colors (HeroUI compatibility) */
+
+  /* Danger */
+  --color-danger: #eb1544;
+  --color-danger-foreground: #ffffff;
+
+  /* Secondary */
+  --color-secondary: #525250;
+  --color-secondary-foreground: #ffffff;
+
+  /* Success (using existing values) */
+  --color-success: #00a367;
+  --color-success-foreground: #ffffff;
+
+  /* Warning (using existing values) */
+  --color-warning: #a37800;
+  --color-warning-foreground: #ffffff;
+}
+
+/* ================================
+   Root Variables & Dark Mode
+   ================================ */
+:root {
+  /* NextUI compatibility */
+  --nextui-content3: #787872;
+  --nextui-content4: #b8b8b2;
+}
+
+/* Dark mode adjustments */
+.dark {
+  /* Backgrounds */
+  --color-background: #1a1a1a;
+  --color-background-secondary: #262626;
+  --color-background-tertiary: #2e2e2e;
+
+  /* Text Colors */
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #e8e8e5;
+  --color-text-tertiary: #b8b8b2;
+
+  /* Borders */
+  --color-border-primary: #525250;
+  --color-border-accent: #dc6b4a;
+
+  /* Component colors remain similar for consistency */
+  --color-primary: #dc6b4a;
+  --color-primary-foreground: #ffffff;
+  --color-divider: #525250;
+
+  /* Progress backgrounds */
+  --color-progress-bg: #2e2e2e;
+}
+
+/* ================================
+   Utility Classes
+   ================================ */
+
+/* Text Color Utilities */
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-tertiary {
+  color: var(--color-text-tertiary);
+}
+
+.text-accent {
+  color: var(--color-text-accent);
+}
+
+.text-content3 {
+  color: var(--nextui-content3);
+}
+
+/* Background Utilities */
+.bg-primary {
+  background-color: var(--color-background);
+}
+
+.bg-secondary {
+  background-color: var(--color-background-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--color-background-tertiary);
+}
+
+.bg-default {
+  background-color: var(--color-gray-100);
+}
+
+/* Border Utilities */
+.border-primary {
+  border-color: var(--color-border-primary);
+}
+
+.border-accent {
+  border-color: var(--color-border-accent);
+}
+
+/* Font Family Utilities */
+.font-sans {
+  font-family: var(--font-family-sans);
+}
+
+.font-mono {
+  font-family: var(--font-family-mono);
+}
+
+.font-nanum-myeongjo {
+  font-family: var(--font-family-nanum-myeongjo);
+}
+
+.font-noto-sans-kr {
+  font-family: var(--font-family-noto-sans-kr);
+}
+
+.font-noto-serif-kr {
+  font-family: var(--font-family-noto-serif-kr);
+}
+
+/* Text truncation */
+.three-line-ellipsis {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Flexbox utilities */
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-center-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-center-ver {
+  display: flex;
+  align-items: center;
+}
+
+.flex-center-hor {
+  display: flex;
+  justify-content: center;
+}
+
+/* Gradient effect */
+.gradient {
+  background: linear-gradient(60deg, #61dafb 0%, #d6cbf6 30%, #f2056f 70%);
+}
+
+/* ================================
+   View Transitions
+   ================================ */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root) {
+  animation-duration: 0.5s;
+}

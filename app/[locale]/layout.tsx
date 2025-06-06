@@ -6,7 +6,13 @@ import clsx from "clsx";
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
-import { fontMono, nanumMyeongjo, notoSerifKr } from "@/config/fonts";
+import {
+  fontSans,
+  fontMono,
+  nanumMyeongjo,
+  notoSerifKr,
+  notoSansKr,
+} from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
 import i18nConfig from "@/i18nConfig";
 
@@ -18,10 +24,41 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   icons: {
     icon: "/favicon.ico",
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180" },
+    other: [
+      {
+        rel: "android-chrome",
+        url: "/android-chrome-192x192.png",
+        sizes: "192x192",
+      },
+      {
+        rel: "android-chrome",
+        url: "/android-chrome-512x512.png",
+        sizes: "512x512",
+      },
+    ],
+  },
+  openGraph: {
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [
+      {
+        url: "https://all-ad.in/logo-1024.png",
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
   },
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  userScalable: false,
+  maximumScale: 1,
+  minimumScale: 1,
+
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
@@ -46,10 +83,12 @@ export default async function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-background antialiased ",
+          fontSans.variable,
           fontMono.variable,
+          notoSansKr.variable,
           notoSerifKr.variable,
-          nanumMyeongjo.variable,
+          nanumMyeongjo.variable
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>

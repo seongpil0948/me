@@ -1,11 +1,10 @@
 import { Link } from "@heroui/link";
-import { button as buttonStyles } from "@heroui/theme";
+import { Button } from "@heroui/button";
 
 import { getDictionary, Locale } from "./dictionaries";
 
-import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
-import TabsSection from "@/components/tabs-section";
+import PortfolioSection from "@/components/portfolio/portfolio-section";
 
 export default async function MePage({
   params,
@@ -16,15 +15,14 @@ export default async function MePage({
   const dict = await getDictionary(locale);
 
   const skills = [
-    { name: "React", level: 90 },
-    { name: "Vue", level: 95 },
-    { name: "Next.js", level: 85 },
-    { name: "Flutter", level: 80 },
-    { name: "Django", level: 85 },
-    { name: "Spring-boot", level: 75 },
+    { name: "React&Vue", level: 90 },
     { name: "Go-Gin", level: 80 },
+    { name: "Flutter", level: 80 },
+    { name: "Python,Django&Airflow", level: 85 },
+    { name: "Spring-boot", level: 75 },
     { name: "Kubernetes", level: 95 },
     { name: "AWS", level: 90 },
+    { name: "Terraform", level: 50 },
   ];
 
   const certifications = [
@@ -61,14 +59,14 @@ export default async function MePage({
       position: "Senior Engineer",
       period: "2024년 6월 – 현재 (성과평가: 2025년 1월-5월)",
       description:
-        "Frontend, 인프라, 데이터 플랫폼 업무를 담당하며 고객관리 플랫폼을 성공적으로 운영 중입니다. AWS와 Kubernetes 환경에서 안정적인 시스템 구축에 주력하고 있습니다.",
+        "Frontend, 인프라, 데이터 플랫폼 업무를 담당하며 TheShop 고도화 및 운영 중입니다. AWS와 Kubernetes 환경에서 안정적인 시스템 구축에 주력하고 있습니다.",
       achievements: [
         "인프라/Gateway: 12대 서버에 모니터링 수집기 설치 및 Grafana 연동 완료",
         "Connect 인증 서버 연동 성공 및 전체 트래픽에 RBAC 적용",
         "Platform 포함 5개 BO 서비스 연동 및 IP 제한 설정 완료",
         "데이터(Airflow 등): 메일, Kafka, Health check 배치 통합을 위한 DAG 개발 및 적용",
         "Glue(Spark)와 Athena(Hive)를 활용해 7일 로그 확인에서 10년 로그 조회로 기능 확장",
-        "Scouter의 Java17 이상 미지원 문제로 Scouter-React(OTEL-Kafka-React) POC 수행",
+        "Scouter의 Java17 이상 미지원 문제로 Scouter-React(OTEL-Kafka-React) 전환",
         "고객관리 플랫폼: 신규 CICD 환경(AWS, E2E Test)을 OnPremise Jenkins에 성공적으로 구축",
         "서비스 트래픽 모니터링 후 스케일 다운 실행, 예상 비용 대비 50% 절감",
         "APISIX (Gateway): POC로 Kafka와 Airflow 연동 성공",
@@ -130,42 +128,15 @@ export default async function MePage({
       name: "CodingGame",
       url: "https://www.codingame.com/profile/f98c28095b66d60aa9adc3f62e04210e6669263",
     },
-    { name: "All-ad", url: "http://all-ad.in", disabled: true },
-    {
-      name: "3D Projects",
-      url: "https://www.peachhub.love/ko/project",
-      disabled: true,
-    },
-    {
-      name: "Game",
-      url: "https://www.peachhub.love/ko/game/world",
-      disabled: true,
-    },
-    {
-      name: "Stock service",
-      url: "https://stock.peachhub.love/",
-      disabled: true,
-    },
+    { name: "All-ad", url: "http://all-ad.in" },
   ];
 
   return (
-    <div className="w-full max-w-full flex flex-col gap-8">
-      {/* 헤더 섹션 */}
-      <div className="flex flex-col items-center text-center">
-        <h1 className={title({ size: "sm" })}>
-          Seongpil Choi{" "}
-          <span className={title({ color: "yellow", size: "sm" })}>
-            (최성필)
-          </span>
-        </h1>
-        <p className={subtitle({ className: "mt-2" })}>
-          {dict.hero.description}
-        </p>
-      </div>
-
+    <div className="w-full max-w-full flex flex-col gap-8 bg-background">
       {/* 탭 내비게이션 */}
-      <TabsSection
+      <PortfolioSection
         certifications={certifications}
+        description={dict.hero.description}
         dict={dict}
         experiences={experiences}
         portfolioLinks={portfolioLinks}
@@ -173,29 +144,33 @@ export default async function MePage({
       />
 
       <div className="flex justify-center gap-4 mt-8 mb-16">
-        <Link
+        <Button
+          as={Link}
           isExternal
-          className={buttonStyles({
-            color: "primary",
-            radius: "full",
-            variant: "shadow",
-          })}
+          className="shadow-lg"
+          radius="full"
+          style={{
+            backgroundColor: "var(--color-text-primary)",
+            color: "var(--color-background)",
+          }}
           href="https://github.com/seongpil0948"
         >
           <GithubIcon size={20} />
           {dict.buttons.visitGithub}
-        </Link>
-        <Link
+        </Button>
+        <Button
+          as={Link}
           isExternal
-          className={buttonStyles({
-            color: "secondary",
-            radius: "full",
-            variant: "shadow",
-          })}
+          className="shadow-lg"
+          radius="full"
+          style={{
+            backgroundColor: "var(--color-primary)",
+            color: "#FFFFFF",
+          }}
           href="http://all-ad.in"
         >
           {dict.buttons.visitPortfolio}
-        </Link>
+        </Button>
       </div>
     </div>
   );

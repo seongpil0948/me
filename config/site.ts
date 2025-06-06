@@ -1,15 +1,12 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Seongpil Choi ",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Seongpil Choi | 최성필",
+  description: "협업과 소통을 핵심 가치로 삼는 소프트웨어 개발자.",
   navItems: [],
   navMenuItems: [],
   links: {
-    github: "https://github.com/heroui-inc/heroui",
-    twitter: "https://twitter.com/hero_ui",
-    docs: "https://heroui.com",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
+    github: "https://github.com/seongpil0948",
+    discord: "https://discord.gg/3kPsv5uD",
   },
 };
