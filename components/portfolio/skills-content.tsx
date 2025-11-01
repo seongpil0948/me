@@ -12,7 +12,11 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
   const skillsWithColor = skills.map((skill, index) => ({
     ...skill,
     color:
-      index % 3 === 0 ? "var(--color-skill-1)" : index % 3 === 1 ? "var(--color-skill-2)" : "var(--color-skill-3)",
+      index % 3 === 0
+        ? "var(--color-skill-1)"
+        : index % 3 === 1
+          ? "var(--color-skill-2)"
+          : "var(--color-skill-3)",
   }));
 
   return (
@@ -28,10 +32,16 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
         {skillsWithColor.map((skill, index) => (
           <div key={index} className="space-y-2">
             <div className="flex justify-between items-baseline">
-              <span className="font-medium" style={{ color: "var(--color-text-primary)" }}>
+              <span
+                className="font-medium"
+                style={{ color: "var(--color-text-primary)" }}
+              >
                 {skill.name}
               </span>
-              <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
+              <span
+                className="text-sm"
+                style={{ color: "var(--color-text-tertiary)" }}
+              >
                 {skill.level}%
               </span>
             </div>
@@ -69,7 +79,10 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
             <Chip
               key={idx}
               className="px-4 py-2"
-              style={{ borderColor: "var(--color-primary)", color: "var(--color-primary)" }}
+              style={{
+                borderColor: "var(--color-primary)",
+                color: "var(--color-primary)",
+              }}
               variant="bordered"
             >
               {skill}

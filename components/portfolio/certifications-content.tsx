@@ -36,7 +36,7 @@ export default function CertificationsContent({
                 {cert.logo && (
                   <Image
                     alt={`${cert.org} logo`}
-                    className="object-contain flex-shrink-0"
+                    className="object-contain shrink-0"
                     height={60}
                     src={cert.logo}
                     width={60}
@@ -49,21 +49,32 @@ export default function CertificationsContent({
                   >
                     {cert.name}
                   </h3>
-                  <p className="text-sm mb-2" style={{ color: "var(--color-text-tertiary)" }}>
+                  <p
+                    className="text-sm mb-2"
+                    style={{ color: "var(--color-text-tertiary)" }}
+                  >
                     {cert.org}
                   </p>
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                <span
+                  className="text-sm"
+                  style={{ color: "var(--color-text-secondary)" }}
+                >
                   {cert.date}
                 </span>
                 <Chip
                   size="sm"
                   style={{
                     backgroundColor:
-                      cert.status === "certified" ? "var(--color-success-bg)" : "var(--color-warning-bg)",
-                    color: cert.status === "certified" ? "var(--color-success)" : "var(--color-warning)",
+                      cert.status === "certified"
+                        ? "var(--color-success-bg)"
+                        : "var(--color-warning-bg)",
+                    color:
+                      cert.status === "certified"
+                        ? "var(--color-success)"
+                        : "var(--color-warning)",
                   }}
                   variant="flat"
                 >

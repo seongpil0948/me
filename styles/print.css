@@ -1,0 +1,56 @@
+/* Print-specific styles for resume PDF generation */
+
+@media print {
+  /* Hide elements that shouldn't appear in print */
+  nav,
+  .no-print,
+  button {
+    display: none !important;
+  }
+
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  /* Ensure colors are preserved in print */
+  html,
+  body {
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Remove shadows and animations */
+  * {
+    box-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+
+  /* Avoid breaking inside elements */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    page-break-after: avoid;
+  }
+
+  ul,
+  ol,
+  section {
+    page-break-inside: avoid;
+  }
+}

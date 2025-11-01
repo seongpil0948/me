@@ -6,8 +6,8 @@
   },
   "hero": {
     "greeting": "Hello",
-    "title": "Frontend Developer",
-    "description": "A developer focused on user experience"
+    "title": "Senior Full-Stack Engineer",
+    "description": "6-year infrastructure and full-stack engineer with expertise in designing and operating large-scale distributed systems. Specializing in optimizing infrastructure for a ₩500B annual revenue e-commerce platform in MSA environments, and maximizing organizational productivity through enhanced Developer Experience (DevEx)."
   },
   "common": {
     "welcome": "Welcome",
@@ -79,7 +79,8 @@
   },
   "buttons": {
     "visitGithub": "Visit Github",
-    "visitPortfolio": "Visit Portfolio Site"
+    "visitPortfolio": "Visit Portfolio Site",
+    "downloadResume": "Download Resume PDF"
   },
   "tabs": {
     "profile": "Profile",
@@ -116,5 +117,21 @@
     "crossPlatform": "Cross Platform",
     "realtimeDataSync": "Real-time Data Sync",
     "webAdmin": "Web Admin"
+  },
+  "resume": {
+    "title": "Resume",
+    "summary": "Professional Summary",
+    "contact": "Contact Information",
+    "education": "Education",
+    "skills": "Technical Skills",
+    "experience": "Work Experience",
+    "certifications": "Certifications",
+    "downloadPdf": "Download PDF",
+    "errorDetection": "Error Detection Reduction",
+    "costSavings": "Cost Savings",
+    "deploymentSpeedup": "Deployment Speedup",
+    "logRetention": "Log Retention Expansion",
+    "projectRevenue": "Revenue Increase",
+    "dailyMessages": "Daily Messages"
   }
 }

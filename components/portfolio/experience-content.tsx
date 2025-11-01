@@ -29,21 +29,34 @@ export default function ExperienceContent({
               >
                 {exp.position}
               </h3>
-              <p className="text-lg mb-1" style={{ color: "var(--color-text-secondary)" }}>
+              <p
+                className="text-lg mb-1"
+                style={{ color: "var(--color-text-secondary)" }}
+              >
                 {exp.company}
               </p>
-              <p className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
+              <p
+                className="text-sm"
+                style={{ color: "var(--color-text-tertiary)" }}
+              >
                 {exp.period}
               </p>
             </div>
 
-            <p className="mb-4" style={{ color: "var(--color-text-secondary)" }}>
+            <p
+              className="mb-4"
+              style={{ color: "var(--color-text-secondary)" }}
+            >
               {exp.description}
             </p>
 
             <ul className="space-y-2">
               {exp.achievements.map((achievement, aidx) => (
-                <li key={aidx} className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
+                <li
+                  key={aidx}
+                  className="text-sm"
+                  style={{ color: "var(--color-text-tertiary)" }}
+                >
                   • {achievement}
                 </li>
               ))}

@@ -6,8 +6,8 @@
   },
   "hero": {
     "greeting": "你好",
-    "title": "前端开发者",
-    "description": "专注于用户体验的开发者"
+    "title": "高级全栈工程师",
+    "description": "6年基础设施和全栈工程师，在设计和运营大规模分布式系统方面具有专业经验。专门从事MSA环境中年交易额5000亿韩元的电子商务平台的基础设施优化，并通过提升开发者体验(DevEx)来最大化组织生产力。"
   },
   "common": {
     "welcome": "欢迎",
@@ -79,7 +79,8 @@
   },
   "buttons": {
     "visitGithub": "访问 Github",
-    "visitPortfolio": "访问作品集网站"
+    "visitPortfolio": "访问作品集网站",
+    "downloadResume": "下载简历PDF"
   },
   "tabs": {
     "profile": "个人简介",
@@ -116,5 +117,21 @@
     "crossPlatform": "跨平台",
     "realtimeDataSync": "实时数据同步",
     "webAdmin": "网页管理"
+  },
+  "resume": {
+    "title": "简历",
+    "summary": "专业总结",
+    "contact": "联系方式",
+    "education": "教育背景",
+    "skills": "技术栈",
+    "experience": "工作经历",
+    "certifications": "证书",
+    "downloadPdf": "下载PDF",
+    "errorDetection": "错误检测时间减少",
+    "costSavings": "成本节省",
+    "deploymentSpeedup": "部署时间减少",
+    "logRetention": "日志保留扩展",
+    "projectRevenue": "收入增长",
+    "dailyMessages": "每日消息处理"
   }
 }

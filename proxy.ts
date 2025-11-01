@@ -8,7 +8,7 @@ const { locales, defaultLocale } = i18nConfig;
 
 function getLocale(request: NextRequest): string {
   const negotiatorHeaders: Record<string, string> = {};
-  
+
   request.headers.forEach((value, key) => {
     negotiatorHeaders[key] = value;
   });
@@ -27,16 +27,16 @@ export function proxy(request: NextRequest) {
 
   // Check if there is any supported locale in the pathname
   const pathnameHasLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
   );
 
   if (pathnameHasLocale) return;
 
   // Redirect if there is no locale
   const locale = getLocale(request);
-  
+
   request.nextUrl.pathname = `/${locale}${pathname}`;
-  
+
   return NextResponse.redirect(request.nextUrl);
 }
 
