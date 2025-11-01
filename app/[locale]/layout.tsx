@@ -16,6 +16,10 @@ import {
 import { Navbar } from "@/components/navbar";
 import i18nConfig from "@/i18nConfig";
 
+export async function generateStaticParams() {
+  return i18nConfig.locales.map((locale) => ({ locale }));
+}
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -81,6 +85,7 @@ export default async function RootLayout({
   return (
     <html suppressHydrationWarning lang={locale}>
       <head />
+      <meta name="locale" content={locale} />
       <body
         className={clsx(
           "min-h-screen bg-background antialiased ",
@@ -88,7 +93,7 @@ export default async function RootLayout({
           fontMono.variable,
           notoSansKr.variable,
           notoSerifKr.variable,
-          nanumMyeongjo.variable
+          nanumMyeongjo.variable,
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>

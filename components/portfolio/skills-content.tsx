@@ -12,14 +12,14 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
   const skillsWithColor = skills.map((skill, index) => ({
     ...skill,
     color:
-      index % 3 === 0 ? "#E5D4B1" : index % 3 === 1 ? "#00D184" : "#B8B8B2",
+      index % 3 === 0 ? "var(--color-skill-1)" : index % 3 === 1 ? "var(--color-skill-2)" : "var(--color-skill-3)",
   }));
 
   return (
     <div className="py-12">
       <h2
         className="text-3xl font-bold text-center"
-        style={{ color: "#262626" }}
+        style={{ color: "var(--color-text-primary)" }}
       >
         {dict.profile.skills}
       </h2>
@@ -28,10 +28,10 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
         {skillsWithColor.map((skill, index) => (
           <div key={index} className="space-y-2">
             <div className="flex justify-between items-baseline">
-              <span className="font-medium" style={{ color: "#262626" }}>
+              <span className="font-medium" style={{ color: "var(--color-text-primary)" }}>
                 {skill.name}
               </span>
-              <span className="text-sm" style={{ color: "#787872" }}>
+              <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
                 {skill.level}%
               </span>
             </div>
@@ -41,7 +41,7 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
               color="default"
               style={
                 {
-                  "--progress-background": "#F5F5F3",
+                  "--progress-background": "var(--color-background-tertiary)",
                   "--progress-color": skill.color,
                 } as any
               }
@@ -54,7 +54,7 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
       <div className="mt-16 max-w-4xl mx-auto">
         <h3
           className="text-2xl font-bold mb-8 text-center"
-          style={{ color: "#262626" }}
+          style={{ color: "var(--color-text-primary)" }}
         >
           {dict.profile.teamworkSkills}
         </h3>
@@ -69,7 +69,7 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
             <Chip
               key={idx}
               className="px-4 py-2"
-              style={{ borderColor: "#DC6B4A", color: "#DC6B4A" }}
+              style={{ borderColor: "var(--color-primary)", color: "var(--color-primary)" }}
               variant="bordered"
             >
               {skill}

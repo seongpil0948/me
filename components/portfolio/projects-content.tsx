@@ -9,7 +9,7 @@ interface ProjectsContentProps {
 
 export default function ProjectsContent({}: ProjectsContentProps) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  
+
   const projects = [
     {
       title: "🏗️ Gateway 및 트래픽 관리",
@@ -109,7 +109,10 @@ export default function ProjectsContent({}: ProjectsContentProps) {
                 <div className="px-2 pb-4">
                   <ul className="space-y-2 pt-2">
                     {project.content.map((item, iidx) => (
-                      <li key={iidx} style={{ color: "var(--color-text-secondary)" }}>
+                      <li
+                        key={iidx}
+                        style={{ color: "var(--color-text-secondary)" }}
+                      >
                         • {item}
                       </li>
                     ))}

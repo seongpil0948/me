@@ -30,26 +30,31 @@ export default async function MePage({
       name: "AWS Certified DevOps Engineer – Professional",
       org: "Amazon Web Services",
       date: "2024년 11월",
+      logo: "/other/logo/amazon_web_services_logo.jpeg",
     },
     {
       name: "AWS Certified SysOps Administrator – Associate",
       org: "Amazon Web Services",
       date: "2024년 8월",
+      logo: "/other/logo/amazon_web_services_logo.jpeg",
     },
     {
       name: "LFCS (Linux Foundation Certified System Administrator)",
       org: "The Linux Foundation",
       date: "2024년 3월",
+      logo: "/other/logo/the_linux_foundation_logo.jpeg",
     },
     {
       name: "CKA (Certified Kubernetes Administrator)",
       org: "The Linux Foundation",
       date: "2024년 1월",
+      logo: "/other/logo/the_linux_foundation_logo.jpeg",
     },
     {
       name: "정보처리기사",
       org: "한국산업인력공단",
       date: "2019년",
+      logo: "/other/logo/hrd_korea_logo.jpeg",
     },
   ];
 
@@ -57,7 +62,7 @@ export default async function MePage({
     {
       company: "대웅 (Idstrust)",
       position: "Senior Engineer",
-      period: "2024년 6월 – 현재 (성과평가: 2025년 1월-5월)",
+      period: "2024년 6월 – 현재 (성과평가: 2026년 1월-5월)",
       description:
         "Frontend, 인프라, 데이터 플랫폼 업무를 담당하며 TheShop 고도화 및 운영 중입니다. AWS와 Kubernetes 환경에서 안정적인 시스템 구축에 주력하고 있습니다.",
       achievements: [

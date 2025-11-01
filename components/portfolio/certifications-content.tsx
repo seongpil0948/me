@@ -1,5 +1,6 @@
 import { Card, CardBody } from "@heroui/card";
 import { Chip } from "@heroui/chip";
+import { Image } from "@heroui/image";
 
 import { Dictionary, Certification } from "@/types/portfolio";
 
@@ -26,30 +27,43 @@ export default function CertificationsContent({
             key={idx}
             className="p-6 border"
             style={{
-              backgroundColor: "#FFFAF0",
-              borderColor: "#E8E8E5",
+              backgroundColor: "var(--color-background-secondary)",
+              borderColor: "var(--color-border-primary)",
             }}
           >
             <CardBody className="p-0">
-              <h3
-                className="text-lg font-bold mb-2"
-                style={{ color: "#262626" }}
-              >
-                {cert.name}
-              </h3>
-              <p className="text-sm mb-4" style={{ color: "#787872" }}>
-                {cert.org}
-              </p>
+              <div className="flex items-start gap-4 mb-4">
+                {cert.logo && (
+                  <Image
+                    alt={`${cert.org} logo`}
+                    className="object-contain flex-shrink-0"
+                    height={60}
+                    src={cert.logo}
+                    width={60}
+                  />
+                )}
+                <div className="flex-1">
+                  <h3
+                    className="text-lg font-bold mb-2"
+                    style={{ color: "var(--color-text-primary)" }}
+                  >
+                    {cert.name}
+                  </h3>
+                  <p className="text-sm mb-2" style={{ color: "var(--color-text-tertiary)" }}>
+                    {cert.org}
+                  </p>
+                </div>
+              </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm" style={{ color: "#525250" }}>
+                <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
                   {cert.date}
                 </span>
                 <Chip
                   size="sm"
                   style={{
                     backgroundColor:
-                      cert.status === "certified" ? "#E5F7F0" : "#FFF3D1",
-                    color: cert.status === "certified" ? "#00A367" : "#A37800",
+                      cert.status === "certified" ? "var(--color-success-bg)" : "var(--color-warning-bg)",
+                    color: cert.status === "certified" ? "var(--color-success)" : "var(--color-warning)",
                   }}
                   variant="flat"
                 >

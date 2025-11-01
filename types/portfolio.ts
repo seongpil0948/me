@@ -8,6 +8,7 @@ export interface Certification {
   org: string;
   date: string;
   status?: "certified" | "in-progress";
+  logo?: string;
 }
 
 export interface Experience {

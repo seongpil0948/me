@@ -86,59 +86,59 @@
      ================================ */
 
   /* Brand Colors */
-  --color-primary: #dc6b4a; /* Orange/coral - Main accent color */
+  --color-primary: #dc6b4a; /* Original orange - Main accent color */
   --color-primary-foreground: #ffffff;
   --color-primary-hover: #c5563a; /* Darker shade for hover states */
 
   /* Background Colors */
-  --color-background: #fffdf7; /* Off-white/cream - Main background */
-  --color-background-secondary: #fffaf0; /* Light cream - Card backgrounds */
-  --color-background-tertiary: #f5f5f3; /* Very light gray - Progress backgrounds */
+  --color-background: #ffffff; /* Pure white - Main background */
+  --color-background-secondary: #fafafa; /* Very light gray - Card backgrounds */
+  --color-background-tertiary: #f5f5f5; /* Light gray - Progress backgrounds */
 
   /* Text Colors */
-  --color-text-primary: #262626; /* Dark gray/black - Headings */
-  --color-text-secondary: #525250; /* Dark gray - Body text */
-  --color-text-tertiary: #787872; /* Medium gray - Meta text */
-  --color-text-accent: #dc6b4a; /* Orange/coral - Links and highlights */
+  --color-text-primary: #212121; /* Near black - Headings */
+  --color-text-secondary: #424242; /* Dark gray - Body text */
+  --color-text-tertiary: #757575; /* Medium gray - Meta text */
+  --color-text-accent: #dc6b4a; /* Original orange - Links and highlights */
 
   /* Border Colors */
-  --color-border-primary: #e8e8e5; /* Light gray - Default borders */
-  --color-border-accent: #dc6b4a; /* Orange/coral - Accent borders */
+  --color-border-primary: #e0e0e0; /* Light gray - Default borders */
+  --color-border-accent: #dc6b4a; /* Original orange - Accent borders */
 
   /* Skill Progress Bar Colors */
-  --color-skill-1: #e5d4b1; /* Beige */
-  --color-skill-2: #00d184; /* Green */
-  --color-skill-3: #b8b8b2; /* Gray */
+  --color-skill-1: #dc6b4a; /* Original orange */
+  --color-skill-2: #4dd0e1; /* Cyan */
+  --color-skill-3: #9575cd; /* Purple */
 
   /* Status Colors */
-  --color-success: #00a367; /* Dark green - Success/certified text */
-  --color-success-bg: #e5f7f0; /* Light green - Success background */
-  --color-warning: #a37800; /* Dark yellow - Warning/in-progress text */
-  --color-warning-bg: #fff3d1; /* Light yellow - Warning background */
+  --color-success: #26a69a; /* Teal - Success/certified text */
+  --color-success-bg: #e0f2f1; /* Light teal - Success background */
+  --color-warning: #ffa726; /* Orange - Warning/in-progress text */
+  --color-warning-bg: #fff3e0; /* Light orange - Warning background */
 
   /* Neutral/Gray Scale */
   --color-gray-50: #fafafa;
-  --color-gray-100: #f5f5f3;
-  --color-gray-200: #e8e8e5;
-  --color-gray-300: #dbdbd7;
-  --color-gray-400: #d1d1cc;
-  --color-gray-500: #b8b8b2;
-  --color-gray-600: #a3a39c;
-  --color-gray-700: #787872;
-  --color-gray-800: #525250;
-  --color-gray-900: #262626;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #eeeeee;
+  --color-gray-300: #e0e0e0;
+  --color-gray-400: #bdbdbd;
+  --color-gray-500: #9e9e9e;
+  --color-gray-600: #757575;
+  --color-gray-700: #616161;
+  --color-gray-800: #424242;
+  --color-gray-900: #212121;
 
   /* Component-specific Colors */
   --color-hero-title-accent: #dc6b4a;
   --color-tab-active: #dc6b4a;
   --color-link-hover: #c5563a;
-  --color-progress-bg: #f5f5f3;
+  --color-progress-bg: #f5f5f5;
 
   /* Semantic Colors (HeroUI compatibility) */
-  --color-default: #e8e8e5;
-  --color-default-foreground: #262626;
-  --color-divider: #e8e8e5;
-  --color-overlay: #fafaf8;
+  --color-default: #e0e0e0;
+  --color-default-foreground: #212121;
+  --color-divider: #e0e0e0;
+  --color-overlay: #fafafa;
   --color-focus: #dc6b4a;
 
   /* Extended Semantic Colors (HeroUI compatibility) */
@@ -148,15 +148,15 @@
   --color-danger-foreground: #ffffff;
 
   /* Secondary */
-  --color-secondary: #525250;
+  --color-secondary: #757575;
   --color-secondary-foreground: #ffffff;
 
   /* Success (using existing values) */
-  --color-success: #00a367;
+  --color-success: #26a69a;
   --color-success-foreground: #ffffff;
 
   /* Warning (using existing values) */
-  --color-warning: #a37800;
+  --color-warning: #ffa726;
   --color-warning-foreground: #ffffff;
 }
 
@@ -165,8 +165,8 @@
    ================================ */
 :root {
   /* NextUI compatibility */
-  --nextui-content3: #787872;
-  --nextui-content4: #b8b8b2;
+  --nextui-content3: #757575;
+  --nextui-content4: #9e9e9e;
 }
 
 /* Dark mode adjustments */
@@ -182,13 +182,13 @@
   --color-text-tertiary: #b8b8b2;
 
   /* Borders */
-  --color-border-primary: #525250;
+  --color-border-primary: #424242;
   --color-border-accent: #dc6b4a;
 
   /* Component colors remain similar for consistency */
   --color-primary: #dc6b4a;
   --color-primary-foreground: #ffffff;
-  --color-divider: #525250;
+  --color-divider: #424242;
 
   /* Progress backgrounds */
   --color-progress-bg: #2e2e2e;
