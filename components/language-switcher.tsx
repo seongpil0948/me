@@ -1,17 +1,22 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { useCurrentLocale } from "next-i18n-router/client";
 import { Select, SelectItem } from "@heroui/select";
+import { useIsSSR } from "@react-aria/ssr";
 
 import i18nConfig from "@/i18nConfig";
-import { useIsSSR } from "@react-aria/ssr";
 
 export default function LanguageSwitcher() {
   const router = useRouter();
   const currentPathname = usePathname();
-  const currentLocale = useCurrentLocale(i18nConfig);
   const isSSR = useIsSSR();
+
+  // Extract locale from pathname
+  const segments = currentPathname.split("/").filter(Boolean);
+  const currentLocale =
+    segments.length > 0 && i18nConfig.locales.includes(segments[0])
+      ? segments[0]
+      : i18nConfig.defaultLocale;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLocale = e.target.value;
@@ -25,7 +30,7 @@ export default function LanguageSwitcher() {
     // Remove the locale from the pathname
     const segments = path.split("/");
     const localeIndex = segments.findIndex((segment) =>
-      i18nConfig.locales.includes(segment),
+      i18nConfig.locales.includes(segment)
     );
 
     if (localeIndex !== -1) {

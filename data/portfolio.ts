@@ -70,12 +70,12 @@ export const experiences: Experience[] = [
     position: "Senior Engineer",
     period: "2024년 6월 – 현재 (1년 5개월)",
     description:
-      "연 5천억 규모 TheShop 이커머스 플랫폼 지원팀 소속. 일 10억 건 메시지, 월 20TB 데이터 레이크, 200+ Airflow DAG 운영. OpenTelemetry, Kafka, EKS 기반 MSA 인프라 담당.",
+      "연 5천억 규모 TheShop 이커머스 플랫폼 지원팀 소속. 일 2~5천만 건 메시지, 월 20TB 데이터 레이크, 200+ Airflow DAG 운영. OpenTelemetry, Kafka, EKS 기반 MSA 인프라 담당.",
     achievements: [
       "OpenTelemetry 마이그레이션으로 오류 감지 시간 99% 단축 (18시간 → 10분)",
       "OpenTelemetry 오픈소스 커스텀 Exporter 개발 및 기여",
       "Nginx → APISIX 마이그레이션으로 중앙화된 API 트래픽 관리 구현",
-      "Apache Kafka 3-node HA 클러스터로 일 10억 건 메시지 안정 처리",
+      "Apache Kafka 3-node HA 클러스터로 일 2~5천만 건 메시지 안정 처리",
       "Apache Airflow 5-server 클러스터로 200+ 배치 작업 자동화",
       "Redis Sentinel Master-Slave HA 캐싱 시스템 구현",
       "ECS Fargate + CloudFormation IaC로 배포 시간 90% 단축 (2시간 → 12분)",

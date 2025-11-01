@@ -3,15 +3,22 @@ import { Link } from "@heroui/link";
 
 import { nanumMyeongjo } from "@/config/fonts";
 import { Dictionary } from "@/types/portfolio";
+import { personalInfo } from "@/data/personal";
+import { Locale } from "@/app/[locale]/dictionaries";
 
 import { HeroCanvas } from "./hero-canvas";
 
 interface HeroSectionProps {
   description: string;
   dict: Dictionary;
+  locale: Locale;
 }
 
-export default function HeroSection({ description, dict }: HeroSectionProps) {
+export default function HeroSection({
+  description,
+  dict,
+  locale,
+}: HeroSectionProps) {
   return (
     <section className="max-w-4xl mx-auto px-6 relative">
       {/* Text content - centered */}
@@ -19,8 +26,21 @@ export default function HeroSection({ description, dict }: HeroSectionProps) {
         <h1
           className={`text-5xl md:text-6xl font-bold mb-4 ${nanumMyeongjo.className}`}
         >
-          Seongpil Choi{" "}
-          <span style={{ color: "var(--color-primary)" }}>(최성필)</span>
+          {locale === "ko" ? (
+            <>
+              {personalInfo.name.ko}{" "}
+              <span style={{ color: "var(--color-primary)" }}>
+                ({personalInfo.name.en})
+              </span>
+            </>
+          ) : (
+            <>
+              {personalInfo.name.en}{" "}
+              <span style={{ color: "var(--color-primary)" }}>
+                ({personalInfo.name.ko})
+              </span>
+            </>
+          )}
         </h1>
         <p
           className="text-xl mb-8 max-w-2xl mx-auto"

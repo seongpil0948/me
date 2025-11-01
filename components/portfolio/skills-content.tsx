@@ -70,10 +70,10 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
         </h3>
         <div className="flex flex-wrap justify-center gap-3">
           {[
-            "Jira / Confluence",
-            "Git / GitHub / GitLab",
-            "MCP 세미나 개최 및 지식 공유",
-            "Cross Functional Team 협업",
+            dict.profile.teamwork.jiraConfluence,
+            dict.profile.teamwork.gitTools,
+            dict.profile.teamwork.mcpSeminar,
+            dict.profile.teamwork.crossFunctional,
           ].map((skill, idx) => (
             <Chip
               key={idx}

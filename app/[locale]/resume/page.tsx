@@ -78,7 +78,7 @@ export default async function ResumePage({
                     {dict.hero.title}
                   </p>
                 </div>
-                <Image src={"/me/face.jpg"} alt={nameByLocale} />
+                <Image width={150} src={"/me/face.jpg"} alt={nameByLocale} />
               </div>
             </div>
           </div>
@@ -382,7 +382,8 @@ export default async function ResumePage({
                 </li>
                 <li>12대 서버에 Collector 구축 및 Grafana 대시보드 연동</li>
                 <li>
-                  OpenTelemetry 오픈소스 프로젝트에 커스텀 Exporter 개발 및 기여
+                  OpenTelemetry 오픈소스 프로젝트에 AWS, Container 관련 이슈에
+                  기여하고 있음
                 </li>
               </ul>
               <div style={{ marginTop: "8px" }}>
@@ -506,7 +507,7 @@ export default async function ResumePage({
                   10분 이내로 99% 단축
                 </li>
                 <li>
-                  Apache Kafka 및 Redis Sentinel 클러스터를 구축하여 일 10억
+                  Apache Kafka 및 Redis Sentinel 클러스터를 구축하여 일 2~5천만
                   건의 대규모 메시지를 안정적으로 처리하고, 데이터 일관성 확보
                 </li>
               </ul>

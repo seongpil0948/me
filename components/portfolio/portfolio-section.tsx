@@ -7,6 +7,7 @@ import CertificationsContent from "./certifications-content";
 import PortfolioTabs from "./portfolio-tabs";
 
 import { PortfolioData } from "@/types/portfolio";
+import { Locale } from "@/app/[locale]/dictionaries";
 
 export default function PortfolioSection({
   skills,
@@ -15,15 +16,20 @@ export default function PortfolioSection({
   portfolioLinks,
   dict,
   description,
-}: PortfolioData) {
+  locale,
+}: PortfolioData & { locale: Locale }) {
   return (
     <div>
-      <HeroSection description={description} dict={dict} />
+      <HeroSection description={description} dict={dict} locale={locale} />
 
       <section className="max-w-6xl mx-auto px-6">
         <PortfolioTabs
           aboutContent={
-            <AboutContent dict={dict} portfolioLinks={portfolioLinks} />
+            <AboutContent
+              dict={dict}
+              locale={locale}
+              portfolioLinks={portfolioLinks}
+            />
           }
           certificationsContent={
             <CertificationsContent
@@ -35,7 +41,7 @@ export default function PortfolioSection({
           experienceContent={
             <ExperienceContent dict={dict} experiences={experiences} />
           }
-          projectsContent={<ProjectsContent dict={dict} />}
+          projectsContent={<ProjectsContent dict={dict} locale={locale} />}
           skillsContent={<SkillsContent dict={dict} skills={skills} />}
         />
       </section>

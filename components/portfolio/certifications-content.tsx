@@ -80,7 +80,7 @@ export default function CertificationsContent({
                 >
                   {cert.status === "certified"
                     ? dict.certifications.certified
-                    : "In Progress"}
+                    : dict.certifications.inProgress}
                 </Chip>
               </div>
             </CardBody>

@@ -7,7 +7,7 @@
   "hero": {
     "greeting": "你好",
     "title": "高级全栈工程师",
-    "description": "6年基础设施和全栈工程师，在设计和运营大规模分布式系统方面具有专业经验。专门从事MSA环境中年交易额5000亿韩元的电子商务平台的基础设施优化，并通过提升开发者体验(DevEx)来最大化组织生产力。处理日均1万-10万用户流量，日均200-500GB网络流量，月均20TB数据湖和数十个应用程序的月均3TB Trace数据，积累了大规模系统运营经验。"
+    "description": "专注于大规模分布式系统设计和运营的6年基础设施/全栈工程师。在年营业额5000亿韩元的MSA电商平台主导基础设施优化和开发生产力提升，实现错误检测时间缩短99%、部署时间缩短90%、基础设施成本降低50%等成果。在高可用环境中稳定运营日10万用户、日500GB网络流量、月20TB数据湖、月3TB分布式追踪数据。"
   },
   "common": {
     "welcome": "欢迎",
@@ -15,6 +15,10 @@
     "error": "发生错误",
     "language": "语言",
     "selectLanguage": "选择语言"
+  },
+  "error": {
+    "title": "出现问题！",
+    "tryAgain": "重试"
   },
   "profile": {
     "title": "个人简介",
@@ -29,7 +33,17 @@
     "portfolioLinks": "作品集链接",
     "aboutMe": "自我介绍",
     "skills": "技术栈",
-    "teamworkSkills": "团队合作技能"
+    "teamworkSkills": "团队合作技能",
+    "aboutMeParagraph1": "擅长系统分析复杂技术问题，通过协作导出最优解决方案的工程师。",
+    "aboutMeParagraph2": "在4家公司积累了丰富的跨职能项目经验，与不同规模和文化的团队合作。在与LG、SK等大型企业客户的合作中，展现了准确理解技术需求并提供稳定解决方案的沟通能力。",
+    "aboutMeParagraph3": "专注于基于Kubernetes、AWS、Kafka、OpenTelemetry等云原生技术的大规模分布式系统架构设计和运营。从Python/Django后端开发起步，建立了ML管道和数据处理专业能力，后扩展至React/Vue/Flutter全栈能力。拥有CKA、LFCS和3个AWS认证，验证基础设施和云计算专业性。",
+    "aboutMeParagraph4": "现任大雄集团TheShop的SRE，负责混合云基础设施运营。主导基于OpenTelemetry的可观测性平台、Kafka消息架构和基于Airflow的数据管道自动化等项目，确保系统稳定性。积极引入AI开发工具，推动团队开发速度和代码质量提升。",
+    "teamwork": {
+      "jiraConfluence": "Jira / Confluence",
+      "gitTools": "Git / GitHub / GitLab",
+      "mcpSeminar": "MCP研讨会举办及知识共享",
+      "crossFunctional": "跨职能团队协作"
+    }
   },
   "experience": {
     "title": "工作经历",
@@ -46,12 +60,183 @@
     "title": "证书",
     "certAndCredentials": "证书和资格认证",
     "issueDate": "获得日期",
-    "certified": "已认证"
+    "certified": "已认证",
+    "inProgress": "进行中"
   },
   "projects": {
     "title": "项目",
     "majorProjects": "主要项目",
-    "keyAchievements": "主要成就"
+    "keyAchievements": "主要成就",
+    "monitoring": {
+      "title": "📊 监控系统升级",
+      "subtitle": "遗留系统端到端可观测性环境",
+      "content": [
+        "期间：2024.06 ~ 至今 · 项目领导",
+        "挑战：基于Scouter的遗留监控限制以及容器化服务网格环境中可观测性断裂导致的故障检测延迟",
+        "解决方案：主导向基于OpenTelemetry、Grafana堆栈、Prometheus和AWS的统一可观测性系统迁移",
+        "在混合了10年以上运营的遗留单体系统和新MSA的环境中，在单一平台上收集端到端分布式跟踪、指标和日志",
+        "在12台服务器上构建Collector并与Grafana仪表板集成",
+        "正在为OpenTelemetry开源项目贡献AWS和容器相关问题"
+      ]
+    },
+    "dataLake": {
+      "title": "🗄️ 基于数据湖的业务指标可视化",
+      "subtitle": "使用AWS Glue & Athena的长期数据分析环境",
+      "content": [
+        "挑战：由于7天日志保留限制导致的长期数据分析和事件响应限制",
+        "解决方案：使用AWS Glue（基于Spark）和Athena（基于Hive）构建数据湖架构",
+        "使用S3作为中央存储进行10年日志保留",
+        "通过Parquet格式压缩和基于时间/日期的分区优化查询性能",
+        "成就：日志保留期扩展142倍（7天 → 10年）",
+        "从收集的数据构建Grafana仪表板，可视化保留率、购买转化率等核心电商分析指标"
+      ]
+    },
+    "theshop": {
+      "title": "🏥 TheShop医药/B2B电商平台SRE",
+      "subtitle": "混合架构运营 · 年交易额5000亿韩元",
+      "content": [
+        "情况与任务：全面负责大雄集团核心B2B/B2C电商平台'TheShop'的稳定运营和扩展的SRE工作",
+        "年交易额5000亿韩元，日均10万用户流量，月均20TB以上数据处理",
+        "行动1：设计和运营混合了AWS ECS Fargate无服务器容器环境和本地（CentOS/Ubuntu）Docker环境的混合基础设施",
+        "通过APISIX网关和Nginx集中管理微服务流量，应用速率限制和断路器模式",
+        "使用CloudFormation（IaC）自动化基础设施配置，通过EC2优化和S3生命周期策略实现月运营成本50%削减",
+        "行动2：识别和优化复杂应用堆栈的性能瓶颈：React/Next.js前端、Spring Boot/Node.js后端API服务器、Oracle DB",
+        "通过引入OpenTelemetry升级遗留监控系统，通过分布式跟踪将新系统的错误检测时间从18小时缩短到10分钟以内，减少99%",
+        "构建Apache Kafka和Redis Sentinel集群，稳定处理日均10亿条消息",
+        "结果：确保业务连续性，实现成本优化（50%削减）和部署自动化（90%加速），显著缩短平均故障恢复时间（MTTR）"
+      ]
+    },
+    "gateway": {
+      "title": "🏗️ 网关和流量管理",
+      "subtitle": "IDSTrust网关集成",
+      "content": [
+        "集成shop.co.kr和connect.shop.co.kr IDSTrust网关",
+        "通过Connect API集成进行高效流量管理",
+        "优化Platform和BO服务流量运营",
+        "构建基于APISIX的API网关并集成Eureka服务发现",
+        "通过Spring Cloud Eureka和APISIX集成实现动态服务路由和负载均衡",
+        "对所有流量应用RBAC",
+        "配置高可用（HA）环境",
+        "在APISIX POC中成功集成Kafka和Airflow"
+      ]
+    },
+    "airflow": {
+      "title": "🔄 Apache Airflow数据管道",
+      "subtitle": "5个高可用集群运营 · 批处理/CDC/统计自动化",
+      "content": [
+        "基于HA架构设计和构建5个Airflow集群",
+        "自动化批处理、CDC（变更数据捕获）和统计聚合作业",
+        "使用PostgreSQL元数据DB和Redis消息代理进行分布式工作流管理",
+        "通过基于Celery Executor的并行任务处理优化大规模数据管道性能",
+        "基于DAG（有向无环图）管理复杂数据依赖关系和调度",
+        "通过实时监控仪表板和警报系统确保数据管道稳定性",
+        "通过自动化数据仓库ETL流程提高分析工作效率"
+      ]
+    },
+    "ixiStudio": {
+      "title": "🤖 LG IXI AI解决方案（IXI Studio）",
+      "subtitle": "生成式AI企业SaaS平台",
+      "content": [
+        "为企业特性定制内部AI模型创建和管理平台",
+        "使用服务器端事件（SSE）实现实时AI响应流",
+        "通过提高Chat和Code Editor等POC质量成功完成紧张的开发日程",
+        "在Kubernetes with Istio环境中构建稳定服务",
+        "解决CodeMirror库Vite预渲染构建问题（开源修改）",
+        "使用konva.js、element-ui、apache echarts进行数据可视化",
+        "通过SSE协议经验扩展技术范围"
+      ]
+    },
+    "ixiAdmin": {
+      "title": "🛠️ LG IXI管理工具（IXI Admin）",
+      "subtitle": "AI服务TTS、NLP模型管理平台",
+      "content": [
+        "禁用词、日志、权重配置和监控",
+        "在LG Violet（Kubernetes）环境中首次开发Web服务",
+        "行级kubectl管理horizontal pod autoscaler、Notebook resource、Argo等",
+        "通过CVT测试解决Kubernetes + Istio网络问题",
+        "解决ECR镜像管理不稳定性（基于Kubernetes认证）",
+        "通过WAF解决安全问题"
+      ]
+    },
+    "drone": {
+      "title": "🚁 SK无人机控制平台",
+      "subtitle": "通过Three.js LOD优化实现3D渲染70%改进",
+      "content": [
+        "高效处理500MB以上大容量3D数据",
+        "通过Three.js LOD（细节层次）优化实现70%性能改进",
+        "构建Keycloak SSO认证系统",
+        "从照片元信息（EXIF）提取GPS（高度/纬度/经度）",
+        "通过SK T Map API集成实时无人机位置跟踪",
+        "解决AWS CloudFront + PWA缓存冲突问题",
+        "支持同时实时控制50架无人机"
+      ]
+    },
+    "robotPlatform": {
+      "title": "🤖 LG物流机器人控制平台",
+      "subtitle": "100台同时控制，自主开发M2PX算法",
+      "content": [
+        "通过Yujin Robot Gateway集成实时控制机器人状态/位置/电池",
+        "通过PWA + 响应式Web提供移动/桌面服务",
+        "自主开发M2PX算法（米到像素坐标转换）",
+        "使用RabbitMQ + AWS IoT Core MQTTS-WebSocket实现实时设备通信",
+        "提供仪表板、维修申请、通知历史等管理界面",
+        "实现平均响应时间低于200ms",
+        "通过参考代码分析解决基于楼层地图比例的位置显示"
+      ]
+    },
+    "inoutbox": {
+      "title": "💼 Inoutbox",
+      "subtitle": "东大门服装B2B/B2C平台（独立全栈开发）",
+      "content": [
+        "构建东大门专业服装批发/零售平台",
+        "零售：库存管理、销售管理、订单管理、配送管理",
+        "批发：商品注册、订单管理、配送管理、POS、赊账管理",
+        "采购：通过移动应用实现快速配送流程",
+        "基于Go-Gin开发RESTful API服务器",
+        "基于Vue.js实现前端和POS系统",
+        "使用Flutter开发跨平台应用（Android/iOS）",
+        "通过设备特定的DOM/CSS优化确保各种POS打印机型号的兼容性",
+        "使用GCP Logging + Slack构建实时故障警报系统",
+        "构建Firebase、GCP基础设施并集成FCM推送通知"
+      ]
+    },
+    "campi": {
+      "title": "🏕️ 露营SNS应用（Campi）",
+      "subtitle": "Dart自定义图像编辑库开发",
+      "content": [
+        "露营SNS平台（露营地预订、评论、照片分享）",
+        "用户/网红露营内容发布和产品销售",
+        "在Flutter应用开发过程中需要添加图像编辑功能",
+        "直接使用Dart开发图像编辑库（早期Flutter生态系统中无可用库）",
+        "实现Pinch-to-zoom、裁剪、旋转、翻转功能",
+        "处理适合手势（缩放、平移、拖动）的宽高比和裁剪",
+        "Firebase、GCP基础设施和FCM推送通知",
+        "提高Dart语言理解和库创建经验"
+      ]
+    },
+    "virtualTryOn": {
+      "title": "🎨 虚拟试穿室",
+      "subtitle": "AI模型集成Web服务（国家项目）",
+      "content": [
+        "基于AI部门模型的虚拟试穿室Web服务",
+        "应用智能个性化解决方案",
+        "集成管理3个模型的服务器：上衣/下装、鞋子",
+        "Python Django后端 + Vue.js前端",
+        "独立开发并与AI部门协作",
+        "实时模型选择和试穿结果显示"
+      ]
+    },
+    "intellisysWebsite": {
+      "title": "🏢 Intellisys公司网站",
+      "subtitle": "PM和外包管理项目",
+      "content": [
+        "从外包选择到项目执行和维护的全面管理",
+        "WBS、需求定义、开发进度、交付物管理",
+        "建立与Web代理机构的高效协作方法",
+        "利用Node.js、Express、EJS模板引擎",
+        "从PM转变为SM角色"
+      ]
+    }
   },
   "reviews": {
     "title": "最新成就",

@@ -29,6 +29,7 @@ export default async function MePage({
         description={dict.hero.description}
         dict={dict}
         experiences={experiences}
+        locale={locale}
         portfolioLinks={portfolioLinks}
         skills={skills}
       />

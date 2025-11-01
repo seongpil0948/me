@@ -87,5 +87,5 @@ export const summaryStats: SummaryStats = {
   deploymentSpeedup: 90,
   logRetentionExpansion: "142x",
   projectRevenue: 300,
-  dailyMessages: "10억 건",
+  dailyMessages: "2~5천만 건",
 };

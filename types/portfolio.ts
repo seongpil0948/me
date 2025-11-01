@@ -79,10 +79,31 @@ export interface Dictionary {
     description: string;
   };
   common: Record<string, string>;
-  profile: Record<string, string>;
+  profile: Record<string, string | any> & {
+    teamwork: {
+      jiraConfluence: string;
+      gitTools: string;
+      mcpSeminar: string;
+      crossFunctional: string;
+    };
+  };
   experience: Record<string, any>;
   certifications: Record<string, string>;
-  projects: Record<string, string>;
+  projects: Record<string, string | any> & {
+    monitoring: { title: string; subtitle: string; content: string[] };
+    dataLake: { title: string; subtitle: string; content: string[] };
+    theshop: { title: string; subtitle: string; content: string[] };
+    gateway: { title: string; subtitle: string; content: string[] };
+    airflow: { title: string; subtitle: string; content: string[] };
+    ixiStudio: { title: string; subtitle: string; content: string[] };
+    ixiAdmin: { title: string; subtitle: string; content: string[] };
+    drone: { title: string; subtitle: string; content: string[] };
+    robotPlatform: { title: string; subtitle: string; content: string[] };
+    inoutbox: { title: string; subtitle: string; content: string[] };
+    campi: { title: string; subtitle: string; content: string[] };
+    virtualTryOn: { title: string; subtitle: string; content: string[] };
+    intellisysWebsite: { title: string; subtitle: string; content: string[] };
+  };
   reviews: Record<string, any>;
   buttons: {
     visitGithub: string;
