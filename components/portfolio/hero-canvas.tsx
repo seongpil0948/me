@@ -50,7 +50,7 @@ export function HeroCanvas() {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           const scale = Math.min(
             canvas.width / img.width,
-            canvas.height / img.height
+            canvas.height / img.height,
           );
           const x = (canvas.width - img.width * scale) / 2;
           const y = (canvas.height - img.height * scale) / 2;
@@ -69,7 +69,7 @@ export function HeroCanvas() {
   useEffect(() => {
     const unsubscribe = smoothVelocity.on("change", (latest) => {
       const frame = Math.abs(
-        Math.floor(urls.length * (curFrame / urls.length + latest / 1000) * 1)
+        Math.floor(urls.length * (curFrame / urls.length + latest / 1000) * 1),
       );
 
       if (frame !== curFrame && frame < urls.length) {
@@ -94,7 +94,7 @@ export function HeroCanvas() {
     // Draw image scaled to fit canvas while maintaining aspect ratio
     const scale = Math.min(
       canvas.width / img.width,
-      canvas.height / img.height
+      canvas.height / img.height,
     );
     const x = (canvas.width - img.width * scale) / 2;
     const y = (canvas.height - img.height * scale) / 2;

@@ -74,7 +74,6 @@ export const experiences: Experience[] = [
     achievements: [
       "OpenTelemetry 마이그레이션으로 오류 감지 시간 99% 단축 (18시간 → 10분)",
       "OpenTelemetry 오픈소스 커스텀 Exporter 개발 및 기여",
-      "S3 생명주기 정책 최적화로 인프라 비용 50% 절감 (월 $5K → $2.5K)",
       "Nginx → APISIX 마이그레이션으로 중앙화된 API 트래픽 관리 구현",
       "Apache Kafka 3-node HA 클러스터로 일 10억 건 메시지 안정 처리",
       "Apache Airflow 5-server 클러스터로 200+ 배치 작업 자동화",

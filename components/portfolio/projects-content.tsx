@@ -22,16 +22,81 @@ export default function ProjectsContent({}: ProjectsContentProps) {
 
   const projects: Project[] = [
     {
+      title: "📊 모니터링 시스템 고도화",
+      subtitle: "Legacy End-to-End 관측 환경 구축",
+      content: [
+        "기간: 2024.06 ~ 현재 · Project leading",
+        "Challenge: Scouter 기반 레거시 모니터링의 한계 및 컨테이너 서비스 메시 환경에서의 관측 단절로 인한 장애 감지 지연",
+        "Solution: OpenTelemetry, Grafana stack, Prometheus, AWS 기반 통합 관측(Observability) 시스템으로 마이그레이션 주도",
+        "10년 이상 운영된 레거시 모놀리식 시스템과 신규 MSA가 혼재된 환경에서 End-to-End 분산 추적(Distributed Tracing), 메트릭, 로그를 단일 플랫폼에서 수집",
+        "12대 서버에 Collector 구축 및 Grafana 대시보드 연동",
+        "OpenTelemetry 오픈소스 프로젝트에 커스텀 Exporter 개발 및 기여",
+      ],
+      images: [
+        "/projects/otel-grafana/Grafana - System Dashboard.png",
+        "/projects/otel-grafana/Grafana - Networking.png",
+      ],
+    },
+    {
+      title: "🗄️ 데이터 레이크 기반 비즈니스 지표 시각화",
+      subtitle: "AWS Glue & Athena를 활용한 장기 데이터 분석 환경 구축",
+      content: [
+        "Challenge: 기존 7일 제한의 로그 조회 기간으로 인한 장기 데이터 분석 및 장애 대응 한계",
+        "Solution: AWS Glue (Spark 기반)와 Athena (Hive 기반)를 활용한 데이터 레이크 아키텍처 구축",
+        "S3를 중앙 저장소로 사용하여 로그 장기 보관 (10년)",
+        "Parquet 포맷 압축 및 시간/날짜 기반 파티셔닝으로 쿼리 성능 최적화",
+        "Achievement: 로그 조회 기간 142배 확장 (7일 → 10년)",
+        "수집된 데이터를 Grafana와 연동하여 리텐션, 구매 전환율 등 핵심 이커머스 분석 지표 시각화 대시보드 구축",
+      ],
+      images: ["/projects/business-grafana/Grafana NPS.png"],
+    },
+    {
+      title: "🏥 TheShop 의약/B2B 이커머스 플랫폼 SRE",
+      subtitle: "하이브리드 아키텍처 운영 · 연 5천억 규모",
+      content: [
+        "Situation & Task: 대웅 그룹의 핵심 B2B/B2C 이커머스 플랫폼 'TheShop'의 안정적인 운영 및 확장을 위한 SRE 업무 총괄",
+        "연 5천억 원의 거래 규모, 일 10만 사용자 트래픽, 월 20TB 이상의 데이터 처리",
+        "Action 1: AWS ECS Fargate 서버리스 컨테이너 환경과 온프레미스(CentOS/Ubuntu) Docker 환경이 혼재된 하이브리드 인프라 설계 및 운영",
+        "APISIX 게이트웨이 및 Nginx를 통한 마이크로서비스 트래픽 중앙 관리, Rate Limiting 및 Circuit Breaker 패턴 적용",
+        "CloudFormation(IaC)을 활용한 인프라 프로비저닝 자동화, EC2 Right-sizing 및 S3 생명주기 정책으로 월 운영 비용 50% 절감",
+        "Action 2: React/Next.js 프론트엔드와 Spring Boot, Node.js 백엔드 API 서버, Oracle DB로 구성된 복잡한 어플리케이션 스택 전반의 성능 병목 지점 식별 및 최적화",
+        "OpenTelemetry 도입으로 레거시 모니터링 시스템 고도화, 분산 추적(Tracing)을 통해 신규 시스템의 오류 감지 시간을 18시간에서 10분 이내로 99% 단축",
+        "Apache Kafka 및 Redis Sentinel 클러스터 구축으로 일 10억 건의 대규모 메시지 안정 처리",
+        "Result: 비즈니스 연속성 확보, 비용 최적화(50% 절감) 및 배포 자동화(90% 단축) 달성, 평균 장애 복구 시간(MTTR) 획기적 단축",
+      ],
+      images: [
+        "/projects/theshop/TheShop_Pharmacy.png",
+        "/projects/theshop/TheShop_Seller.png",
+      ],
+    },
+    {
       title: "🏗️ Gateway 및 트래픽 관리",
       subtitle: "IDSTrust 게이트웨이 통합",
       content: [
         "shop.co.kr, connect.shop.co.kr IDSTrust 게이트웨이 통합",
         "Connect API 연동과 트래픽 효율적 관리",
         "Platform 및 BO 서비스 트래픽 운영 최적화",
+        "APISIX 기반 API Gateway 구축 및 Eureka 서비스 디스커버리 통합",
+        "Spring Cloud Eureka와 APISIX 연동으로 동적 서비스 라우팅 및 로드밸런싱 구현",
         "전체 트래픽에 RBAC 적용",
         "고가용(HA) 환경 구성",
         "APISIX POC로 Kafka와 Airflow 연동 성공",
       ],
+      images: ["/projects/APISIX-Dashboard.png"],
+    },
+    {
+      title: "🔄 Apache Airflow 데이터 파이프라인 구축",
+      subtitle: "고가용성 5개 클러스터 운영 · 배치/CDC/통계 자동화",
+      content: [
+        "고가용성(HA) 아키텍처 기반 5개 Airflow 클러스터 설계 및 구축",
+        "배치 처리(Batch), CDC(Change Data Capture), 통계 집계 작업 자동화",
+        "PostgreSQL 메타데이터 DB와 Redis 메시지 브로커를 활용한 분산 워크플로우 관리",
+        "Celery Executor 기반 태스크 병렬 처리로 대규모 데이터 파이프라인 성능 최적화",
+        "DAG(Directed Acyclic Graph) 기반 복잡한 데이터 의존성 관리 및 스케줄링",
+        "실시간 모니터링 대시보드 및 알림 시스템 구축으로 데이터 파이프라인 안정성 확보",
+        "데이터 웨어하우스 ETL 프로세스 자동화로 분석 업무 효율성 향상",
+      ],
+      images: ["/projects/Aiflow.png"],
     },
     {
       title: "🤖 LG 익시 AI 솔루션 (IXI Studio)",
