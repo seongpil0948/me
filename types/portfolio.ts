@@ -63,11 +63,11 @@ export interface PersonalInfo {
 }
 
 export interface SummaryStats {
-  errorDetectionReduction: string;
-  costSavings: string;
-  deploymentSpeedup: string;
+  errorDetectionReduction: number;
+  costSavings: number;
+  deploymentSpeedup: number;
   logRetentionExpansion: string;
-  projectRevenue: string;
+  projectRevenue: number;
   dailyMessages: string;
 }
 
@@ -100,6 +100,7 @@ export interface Dictionary {
     education: string;
     skills: string;
     experience: string;
+    projects: string;
     certifications: string;
     downloadPdf: string;
     errorDetection: string;

@@ -5,11 +5,13 @@ import { useCurrentLocale } from "next-i18n-router/client";
 import { Select, SelectItem } from "@heroui/select";
 
 import i18nConfig from "@/i18nConfig";
+import { useIsSSR } from "@react-aria/ssr";
 
 export default function LanguageSwitcher() {
   const router = useRouter();
   const currentPathname = usePathname();
   const currentLocale = useCurrentLocale(i18nConfig);
+  const isSSR = useIsSSR();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLocale = e.target.value;
@@ -23,7 +25,7 @@ export default function LanguageSwitcher() {
     // Remove the locale from the pathname
     const segments = path.split("/");
     const localeIndex = segments.findIndex((segment) =>
-      i18nConfig.locales.includes(segment),
+      i18nConfig.locales.includes(segment)
     );
 
     if (localeIndex !== -1) {
@@ -42,6 +44,10 @@ export default function LanguageSwitcher() {
     { value: "en", label: "English" },
     { value: "zh", label: "中文" },
   ];
+
+  if (isSSR) {
+    return null;
+  }
 
   return (
     <Select

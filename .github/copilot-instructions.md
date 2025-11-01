@@ -77,7 +77,12 @@ export const title = tv({
 
 ```tsx
 // Pattern: Import from data/ → Page uses constants → Pass to components
-import { skills, certifications, experiences, portfolioLinks } from "@/data/portfolio";
+import {
+  skills,
+  certifications,
+  experiences,
+  portfolioLinks,
+} from "@/data/portfolio";
 import { personalInfo, summaryStats } from "@/data/personal";
 
 <PortfolioSection
@@ -87,7 +92,7 @@ import { personalInfo, summaryStats } from "@/data/personal";
   portfolioLinks={portfolioLinks}
   dict={dict}
   description={dict.hero.description}
-/>
+/>;
 ```
 
 **Never hardcode portfolio data directly in components**. Always import from `data/*` constants.

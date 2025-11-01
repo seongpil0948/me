@@ -73,19 +73,19 @@ export const personalInfo: PersonalInfo = {
 };
 
 export interface SummaryStats {
-  errorDetectionReduction: string;
-  costSavings: string;
-  deploymentSpeedup: string;
+  errorDetectionReduction: number;
+  costSavings: number;
+  deploymentSpeedup: number;
   logRetentionExpansion: string;
-  projectRevenue: string;
+  projectRevenue: number;
   dailyMessages: string;
 }
 
 export const summaryStats: SummaryStats = {
-  errorDetectionReduction: "99%",
-  costSavings: "50%",
-  deploymentSpeedup: "90%",
+  errorDetectionReduction: 99,
+  costSavings: 50,
+  deploymentSpeedup: 90,
   logRetentionExpansion: "142x",
-  projectRevenue: "300%",
+  projectRevenue: 300,
   dailyMessages: "10억 건",
 };

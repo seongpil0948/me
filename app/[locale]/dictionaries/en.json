@@ -7,7 +7,7 @@
   "hero": {
     "greeting": "Hello",
     "title": "Senior Full-Stack Engineer",
-    "description": "6-year infrastructure and full-stack engineer with expertise in designing and operating large-scale distributed systems. Specializing in optimizing infrastructure for a ₩500B annual revenue e-commerce platform in MSA environments, and maximizing organizational productivity through enhanced Developer Experience (DevEx)."
+    "description": "A 6-year infrastructure and full-stack engineer specializing in designing and operating large-scale distributed systems. Focused on optimizing infrastructure for an annual 500 billion won e-commerce platform in an MSA environment and maximizing organizational productivity through improved developer experience (DevEx). Experienced in handling 10K-100K daily users, 200-500GB daily network traffic, processing 20TB monthly data lake, and monitoring 3TB monthly trace data from dozens of applications."
   },
   "common": {
     "welcome": "Welcome",
@@ -125,6 +125,7 @@
     "education": "Education",
     "skills": "Technical Skills",
     "experience": "Work Experience",
+    "projects": "Key Projects",
     "certifications": "Certifications",
     "downloadPdf": "Download PDF",
     "errorDetection": "Error Detection Reduction",

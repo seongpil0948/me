@@ -72,7 +72,6 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
           {[
             "Jira / Confluence",
             "Git / GitHub / GitLab",
-            "부사관 경험 기반의 리더십",
             "MCP 세미나 개최 및 지식 공유",
             "Cross Functional Team 협업",
           ].map((skill, idx) => (
