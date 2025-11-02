@@ -72,7 +72,7 @@ export const experiences: Experience[] = [
     description:
       "연 5천억 규모 TheShop 이커머스 플랫펼 지원팀 소속. Legacy 시스템(Oracle/Tomcat) → Next.js/Spring 이관 프로젝트 주도. 일 2~5천만 건 메시지, 월 20TB 데이터 레이크, 200+ Airflow DAG 운영. OpenTelemetry, Kafka, EKS 기반 MSA 인프라 담당.",
     achievements: [
-      "Legacy 시스템 (Oracle/Tomcat) → Next.js/Spring 이관: 코어 모듈, 빠대, 애플리케이션 설계",
+      "Legacy 시스템 (Oracle/Tomcat) → Next.js/Spring 이관: 코어 모듈,  애플리케이션 설계",
       "Airflow 5-server Cluster 구축: 통계성 데이터, Data Lake, 준실시간 CDC 역할 수행",
       "OpenTelemetry 마이그레이션으로 오류 감지 시간 99% 단축 (18시간 → 10분)",
       "OpenTelemetry 오픈소스 클라우드 네이티브, Container, AWS 관련 이슈 기여",
