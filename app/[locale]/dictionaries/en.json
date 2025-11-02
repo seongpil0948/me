@@ -7,7 +7,7 @@
   "hero": {
     "greeting": "Hello",
     "title": "Senior Full-Stack Engineer",
-    "description": "6-year infrastructure and full-stack engineer specializing in large-scale distributed systems design and operations. Leading infrastructure optimization and developer productivity initiatives for a ₩500B annual revenue MSA-based e-commerce platform, achieving 99% error detection reduction, 90% deployment speedup, and 50% infrastructure cost savings. Operating high-availability environments handling 100K daily users, 500GB daily network traffic, 20TB monthly data lake, and 3TB monthly distributed tracing data."
+    "description": "6-year infrastructure and full-stack engineer specializing in large-scale distributed systems design and operations.\n\nLeading infrastructure optimization and developer productivity initiatives for a ₩500B annual revenue MSA-based e-commerce platform, achieving 99% error detection reduction, 90% deployment speedup, and 50% infrastructure cost savings.\n\nOperating high-availability environments handling 100K daily users, 500GB daily network traffic, 20TB monthly data lake, and 3TB monthly distributed tracing data."
   },
   "common": {
     "welcome": "Welcome",
@@ -164,6 +164,7 @@
       "content": [
         "Efficient processing of 500MB+ large 3D data",
         "70% performance improvement with Three.js LOD (Level of Detail) optimization",
+        "Large image optimization: 85% loading time reduction and main thread blocking prevention for drone photos up to 50MB per image using WebP conversion + Progressive Loading + PWA Web Worker background processing",
         "Built Keycloak SSO authentication system",
         "Extracted GPS (altitude/latitude/longitude) from photo metadata (EXIF)",
         "Real-time drone location tracking with SK T Map API integration",

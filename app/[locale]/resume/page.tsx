@@ -12,6 +12,7 @@ import {
 } from "@/data/portfolio";
 import { Chip } from "@heroui/chip";
 import { Image } from "@heroui/image";
+import { categorizeSkills, getSkillEmoji } from "@/lib/skill-utils";
 
 export const metadata: Metadata = {
   title: "Resume | Seongpil Choi",
@@ -33,57 +34,12 @@ export default async function ResumePage({
   const degreeByLocale = personalInfo.education.degree[locale];
   const majorByLocale = personalInfo.education.major[locale];
 
-  // Filter skills and categorize by proficiency level
-  const filteredSkills = skills.filter(
-    (skill) =>
-      skill.name !== "Terraform" &&
-      skill.name !== "Spring-boot" &&
-      skill.name !== "Three.js",
-  );
-
-  const expertSkills = filteredSkills.filter((skill) => skill.level >= 95);
-  const advancedSkills = filteredSkills.filter(
-    (skill) => skill.level >= 85 && skill.level < 95,
-  );
-  const competentSkills = filteredSkills.filter((skill) => skill.level < 85);
-
-  // Skill emoji mapping for categories
-  const getSkillEmoji = (skillName: string): string => {
-    if (
-      skillName.includes("Kubernetes") ||
-      skillName.includes("AWS") ||
-      skillName.includes("Docker") ||
-      skillName.includes("Linux")
-    )
-      return "🏗️";
-    if (
-      skillName.includes("Kafka") ||
-      skillName.includes("RabbitMQ") ||
-      skillName.includes("Airflow") ||
-      skillName.includes("Grafana") ||
-      skillName.includes("Prometheus") ||
-      skillName.includes("OpenTelemetry")
-    )
-      return "📊";
-    if (
-      skillName.includes("Python") ||
-      skillName.includes("Django") ||
-      skillName.includes("FastAPI") ||
-      skillName.includes("Go") ||
-      skillName.includes("Node.js")
-    )
-      return "💻";
-    if (
-      skillName.includes("React") ||
-      skillName.includes("Vue") ||
-      skillName.includes("Next.js") ||
-      skillName.includes("TypeScript")
-    )
-      return "🎨";
-    if (skillName.includes("Flutter")) return "📱";
-
-    return "⚙️";
-  };
+  // Categorize skills by proficiency level using utility function
+  const {
+    expert: expertSkills,
+    advanced: advancedSkills,
+    competent: competentSkills,
+  } = categorizeSkills(skills);
 
   return (
     <ResumePrintWrapper dict={dict}>
@@ -139,11 +95,21 @@ export default async function ResumePage({
           >
             <div>
               <strong>{dict.profile.email}:</strong>{" "}
-              {personalInfo.contact.email}
+              <a
+                style={{ color: "#3498db", textDecoration: "underline" }}
+                href="mailto:seongpil0948@gmail.com"
+              >
+                seongpil0948@gmail.com
+              </a>
             </div>
             <div>
               <strong>{dict.profile.phone}:</strong>{" "}
-              {personalInfo.contact.phone}
+              <a
+                style={{ color: "#3498db", textDecoration: "underline" }}
+                href="tel:+821071840948"
+              >
+                010-7184-0948
+              </a>
             </div>
             <div>
               <strong>GitHub:</strong>{" "}
@@ -167,12 +133,12 @@ export default async function ResumePage({
               <strong>{dict.profile.address}:</strong> {locationByLocale}
             </div>
             <div>
-              <strong>Portfolio:</strong>{" "}
+              <strong>🌐 이력서 웹사이트:</strong>{" "}
               <a
                 style={{ color: "#3498db", textDecoration: "underline" }}
-                href={personalInfo.contact.portfolio}
+                href={"https://sp.all-ad.in/"}
               >
-                {personalInfo.contact.portfolio}
+                {"https://sp.all-ad.in/"}
               </a>
             </div>
           </div>
@@ -228,53 +194,6 @@ export default async function ResumePage({
           >
             {dict.resume.skillsAndCertifications}
           </h2>
-
-          {/* Color Legend */}
-          <div
-            style={{
-              display: "flex",
-              gap: "16px",
-              marginBottom: "12px",
-              fontSize: "8pt",
-              color: "#7f8c8d",
-              alignItems: "center",
-            }}
-          >
-            <span style={{ fontWeight: "600" }}>{dict.resume.legend}:</span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-              <span
-                style={{
-                  width: "12px",
-                  height: "12px",
-                  backgroundColor: "#17c964",
-                  borderRadius: "2px",
-                }}
-              />
-              {dict.resume.legendExpert}
-            </span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-              <span
-                style={{
-                  width: "12px",
-                  height: "12px",
-                  backgroundColor: "#006fee",
-                  borderRadius: "2px",
-                }}
-              />
-              {dict.resume.legendAdvanced}
-            </span>
-            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-              <span
-                style={{
-                  width: "12px",
-                  height: "12px",
-                  backgroundColor: "#d4d4d8",
-                  borderRadius: "2px",
-                }}
-              />
-              {dict.resume.legendCompetent}
-            </span>
-          </div>
 
           {/* Expert Level Skills */}
           {expertSkills.length > 0 && (
@@ -749,6 +668,17 @@ export default async function ResumePage({
                 <li>전체 트래픽에 RBAC 적용 및 고가용(HA) 환경 구성</li>
                 <li>APISIX POC로 Kafka와 Airflow 연동 성공</li>
               </ul>
+              <div style={{ marginTop: "8px" }}>
+                <Image
+                  alt="APISIX Gateway 및 트래픽 관리"
+                  src="/projects/APISIX-Dashboard.png"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "4px",
+                  }}
+                />
+              </div>
             </div>
 
             <div
@@ -840,6 +770,17 @@ export default async function ResumePage({
                 <li>Server Side Event(SSE)를 활용한 실시간 AI 응답 스트리밍</li>
                 <li>Kubernetes with Istio 환경에서의 안정적 서비스 구축</li>
               </ul>
+              <div style={{ marginTop: "8px" }}>
+                <Image
+                  alt="LG 익시 AI 솔루션"
+                  src="/projects/ixi-studio/IXI_Studio.png"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "4px",
+                  }}
+                />
+              </div>
             </div>
 
             <div
@@ -858,13 +799,90 @@ export default async function ResumePage({
                   color: "#2c3e50",
                 }}
               >
-                🚁 SK 드론 관제 플랫폼
+                �️ LG 익시 관리 도구 (IXI Admin)
+              </h3>
+              <p
+                style={{
+                  fontSize: "8pt",
+                  color: "#7f8c8d",
+                  marginBottom: "6px",
+                  fontStyle: "italic",
+                }}
+              >
+                AI 서비스 TTS, NLP 모델 관리 플랫폼
+              </p>
+              <ul style={{ marginLeft: "20px", lineHeight: "1.6" }}>
+                <li>금칙어, 로그, 가중치 설정 및 모니터링 기능 제공</li>
+                <li>
+                  LG 바이올렛(Kubernetes) 환경에서 웹서비스 최초 개발 및 인프라
+                  구축
+                </li>
+                <li>
+                  horizontal pod autoscaler, Notebook resource, Argo 등 row
+                  level kubectl 관리
+                </li>
+                <li>
+                  CVT 테스트를 통한 Kubernetes + Istio 네트워킹 이슈 해결 및 ECR
+                  이미지 관리 불안정성 해결
+                </li>
+              </ul>
+              <div style={{ marginTop: "8px" }}>
+                <Image
+                  alt="LG 익시 관리 도구"
+                  src="/projects/ixi-admin/1.png"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "4px",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div
+              style={{
+                marginBottom: "12px",
+                backgroundColor: "#f8f9fa",
+                padding: "12px",
+                borderRadius: "4px",
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: "11pt",
+                  fontWeight: "bold",
+                  marginBottom: "4px",
+                  color: "#2c3e50",
+                }}
+              >
+                �🚁 SK 드론 관제 플랫폼
               </h3>
               <ul style={{ marginLeft: "20px", lineHeight: "1.6" }}>
-                <li>Three.js LOD (Level of Detail) 최적화로 성능 70% 개선</li>
+                <li>
+                  Three.js LOD (Level of Detail) 최적화로 3D 렌더링 성능 70%
+                  개선
+                </li>
+                <li>
+                  대용량 이미지 최적화: 장당 최대 50MB 드론 촬영 사진을 WebP
+                  변환 및 Progressive Loading으로 로딩 시간 85% 단축
+                </li>
                 <li>동시 50대 드론 실시간 관제 지원</li>
-                <li>사진 메타정보(EXIF)로부터 GPS 추출 및 SK T Map API 연동</li>
+                <li>
+                  사진 메타정보(EXIF)로부터 GPS(고도/위도/경도) 추출 및 SK T Map
+                  API 연동
+                </li>
               </ul>
+              <div style={{ marginTop: "8px" }}>
+                <Image
+                  alt="SK 드론 관제 플랫폼"
+                  src="/projects/drone/3.png"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "4px",
+                  }}
+                />
+              </div>
             </div>
 
             <div
@@ -892,6 +910,17 @@ export default async function ResumePage({
                 </li>
                 <li>평균 응답 시간 200ms 이하 달성</li>
               </ul>
+              <div style={{ marginTop: "8px" }}>
+                <Image
+                  alt="LG 물류 로봇 관제 플랫폼"
+                  src="/projects/robot-platform/Robot_Platform.png"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "4px",
+                  }}
+                />
+              </div>
             </div>
 
             <div
@@ -929,6 +958,172 @@ export default async function ResumePage({
                 </li>
                 <li>GCP 인프라 구축 및 Firebase FCM Push 알림 연동</li>
               </ul>
+              <div style={{ marginTop: "8px" }}>
+                <Image
+                  alt="인아웃박스"
+                  src="/projects/iobox/Inoutbox.png"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "4px",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div
+              style={{
+                marginBottom: "12px",
+                backgroundColor: "#f8f9fa",
+                padding: "12px",
+                borderRadius: "4px",
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: "11pt",
+                  fontWeight: "bold",
+                  marginBottom: "4px",
+                  color: "#2c3e50",
+                }}
+              >
+                🏕️ 캠핑 SNS 앱 (Campi)
+              </h3>
+              <p
+                style={{
+                  fontSize: "8pt",
+                  color: "#7f8c8d",
+                  marginBottom: "6px",
+                  fontStyle: "italic",
+                }}
+              >
+                Custom Image Editing Library Development in Dart
+              </p>
+              <ul style={{ marginLeft: "20px", lineHeight: "1.6" }}>
+                <li>
+                  Dart로 커스텀 이미지 편집 라이브러리 개발 (Pinch-to-zoom,
+                  Cropping, Rotation, Flip)
+                </li>
+                <li>
+                  Firebase, GCP 인프라 구축 및 FCM Push 알림 연동으로 실시간
+                  알림 시스템 구현
+                </li>
+                <li>캠핑 SNS 플랫폼 (캠핑장 예약, 리뷰, 사진 공유 기능)</li>
+              </ul>
+              <div style={{ marginTop: "8px" }}>
+                <Image
+                  alt="캠핑 SNS 앱"
+                  src="/projects/campi/feed.jpg"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "4px",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div
+              style={{
+                marginBottom: "12px",
+                backgroundColor: "#ffffff",
+                padding: "12px",
+                borderRadius: "4px",
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: "11pt",
+                  fontWeight: "bold",
+                  marginBottom: "4px",
+                  color: "#2c3e50",
+                }}
+              >
+                🎨 Virtual Try-on 가상 피팅룸
+              </h3>
+              <p
+                style={{
+                  fontSize: "8pt",
+                  color: "#7f8c8d",
+                  marginBottom: "6px",
+                  fontStyle: "italic",
+                }}
+              >
+                AI 모델 통합 웹 서비스 (국가 과제)
+              </p>
+              <ul style={{ marginLeft: "20px", lineHeight: "1.6" }}>
+                <li>AI 부서 모델 기반 가상 피팅룸 웹 서비스 구현</li>
+                <li>
+                  3개 모델 (상의/하의, 신발) 통합 관리 서버 구축 및 Python
+                  Django 백엔드 + Vue.js 프론트엔드 개발
+                </li>
+                <li>
+                  실시간 모델 선택 및 피팅 결과 표시 기능으로 사용자 경험 최적화
+                </li>
+              </ul>
+              <div style={{ marginTop: "8px" }}>
+                <Image
+                  alt="Virtual Try-on 가상 피팅룸"
+                  src="/projects/try-on.png"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "4px",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div
+              style={{
+                marginBottom: "12px",
+                backgroundColor: "#f8f9fa",
+                padding: "12px",
+                borderRadius: "4px",
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: "11pt",
+                  fontWeight: "bold",
+                  marginBottom: "4px",
+                  color: "#2c3e50",
+                }}
+              >
+                🏢 Intellisys 회사 웹사이트
+              </h3>
+              <p
+                style={{
+                  fontSize: "8pt",
+                  color: "#7f8c8d",
+                  marginBottom: "6px",
+                  fontStyle: "italic",
+                }}
+              >
+                PM & 외주 관리 프로젝트
+              </p>
+              <ul style={{ marginLeft: "20px", lineHeight: "1.6" }}>
+                <li>
+                  외주 선정부터 프로젝트 실행 및 유지보수까지 전반적인 관리
+                  (WBS, 요구사항 정의, 개발 진행도, 산출물 관리)
+                </li>
+                <li>
+                  웹 에이전시와의 효율적인 협업 방법 구축 및 Node.js, Express,
+                  EJS 템플릿 엔진 활용
+                </li>
+                <li>PM에서 SM 역할로 전환하여 프로젝트 관리 역량 강화</li>
+              </ul>
+              <div style={{ marginTop: "8px" }}>
+                <Image
+                  alt="Intellisys 회사 웹사이트"
+                  src="/projects/intellisys.png"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "4px",
+                  }}
+                />
+              </div>
             </div>
           </div>
         </section>

@@ -4,6 +4,7 @@ import { Image } from "@heroui/image";
 import { Divider } from "@heroui/divider";
 
 import { Certification, Dictionary, Skill } from "@/types/portfolio";
+import { categorizeSkills, getSkillEmoji } from "@/lib/skill-utils";
 
 interface SkillsCertificationsContentProps {
   certifications: Certification[];
@@ -16,52 +17,12 @@ export default function SkillsCertificationsContent({
   certifications,
   dict,
 }: SkillsCertificationsContentProps) {
-  // Filter skills and categorize by proficiency level
-  const filteredSkills = skills.filter((skill) => true);
-
-  const expertSkills = filteredSkills.filter((skill) => skill.level >= 95);
-  const advancedSkills = filteredSkills.filter(
-    (skill) => skill.level >= 85 && skill.level < 95
-  );
-  const competentSkills = filteredSkills.filter((skill) => skill.level < 85);
-
-  // Skill emoji mapping for categories
-  const getSkillEmoji = (skillName: string): string => {
-    if (
-      skillName.includes("Kubernetes") ||
-      skillName.includes("AWS") ||
-      skillName.includes("Docker") ||
-      skillName.includes("Linux")
-    )
-      return "🏗️";
-    if (
-      skillName.includes("Kafka") ||
-      skillName.includes("RabbitMQ") ||
-      skillName.includes("Airflow") ||
-      skillName.includes("Grafana") ||
-      skillName.includes("Prometheus") ||
-      skillName.includes("OpenTelemetry")
-    )
-      return "📊";
-    if (
-      skillName.includes("Python") ||
-      skillName.includes("Django") ||
-      skillName.includes("FastAPI") ||
-      skillName.includes("Go") ||
-      skillName.includes("Node.js")
-    )
-      return "💻";
-    if (
-      skillName.includes("React") ||
-      skillName.includes("Vue") ||
-      skillName.includes("Next.js") ||
-      skillName.includes("TypeScript")
-    )
-      return "🎨";
-    if (skillName.includes("Flutter")) return "📱";
-
-    return "⚙️";
-  };
+  // Categorize skills by proficiency level using utility function
+  const {
+    expert: expertSkills,
+    advanced: advancedSkills,
+    competent: competentSkills,
+  } = categorizeSkills(skills);
 
   // Add status to certifications based on their index
   const certsWithStatus = certifications.map((cert, idx) => ({
