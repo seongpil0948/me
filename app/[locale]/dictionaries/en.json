@@ -6,8 +6,8 @@
   },
   "hero": {
     "greeting": "Hello",
-    "title": "Senior Full-Stack Engineer",
-    "description": "6-year infrastructure and full-stack engineer specializing in large-scale distributed systems design and operations.\n\nLeading infrastructure optimization and developer productivity initiatives for a ₩500B annual revenue MSA-based e-commerce platform, achieving 99% error detection reduction, 90% deployment speedup, and 50% infrastructure cost savings.\n\nOperating high-availability environments handling 100K daily users, 500GB daily network traffic, 20TB monthly data lake, and 3TB monthly distributed tracing data."
+    "title": "Platform Lead Engineer",
+    "description": "6-year infrastructure and platform engineer specializing in large-scale distributed systems design and operations.\n\nLeading infrastructure optimization and developer productivity initiatives for a ₩500B annual revenue MSA-based e-commerce platform, achieving 99% error detection reduction, 90% deployment speedup, and 50% infrastructure cost savings.\n\nOperating high-availability environments handling 100K daily users, 500GB daily network traffic, 20TB monthly data lake, and 3TB monthly distributed tracing data."
   },
   "common": {
     "welcome": "Welcome",
@@ -36,7 +36,7 @@
     "teamworkSkills": "Teamwork Skills",
     "aboutMeParagraph1": "An engineer who excels at systematically analyzing complex technical challenges and deriving optimal solutions through collaboration.",
     "aboutMeParagraph2": "Built extensive cross-functional project experience across 4 companies, collaborating with teams of varying scales and cultures. Demonstrated strong ability to understand technical requirements and deliver stable solutions in enterprise client engagements with LG and SK.",
-    "aboutMeParagraph3": "Specializes in designing and operating large-scale distributed system architectures based on cloud-native technologies including Kubernetes, AWS, Kafka, and OpenTelemetry. Started with Django/Spring/Gin backend development and built expertise in ML pipelines and data processing, then expanded to full-stack capabilities with React/Vue/Flutter. Holds CKA, LFCS, and 3 AWS certifications validating infrastructure and cloud expertise.",
+    "aboutMeParagraph3": "Specializes in designing and operating large-scale distributed system architectures based on cloud-native technologies including Kubernetes, AWS, Kafka, and OpenTelemetry. Started with Django/Spring/Gin backend development and built expertise in data pipelines and processing, then expanded platform capabilities with React/Vue/Flutter. Holds CKA, LFCS, and 3 AWS certifications validating infrastructure and cloud expertise.",
     "aboutMeParagraph4": "Currently serving as SRE for Daewoong Group's TheShop, leading hybrid cloud infrastructure operations. Spearheading initiatives including OpenTelemetry-based observability platform, Kafka messaging architecture, and Airflow-based data pipeline automation to ensure system stability. Actively driving team development velocity and code quality improvements through AI-powered development tools.",
     "teamwork": {
       "jiraConfluence": "Jira / Confluence",
@@ -76,7 +76,7 @@
         "Solution: Led migration to unified Observability system based on OpenTelemetry, Grafana stack, Prometheus, and AWS",
         "Collected End-to-End distributed tracing, metrics, and logs on a single platform in an environment mixing legacy monolithic systems (10+ years) and new MSA",
         "Built Collectors on 12 servers and integrated with Grafana dashboards",
-        "Contributing to OpenTelemetry open-source project on AWS and Container-related issues"
+        "Contributing to OpenTelemetry open-source on cloud-native, Container, and AWS related issues"
       ]
     },
     "dataLake": {
@@ -97,6 +97,8 @@
       "content": [
         "Situation & Task: Overall SRE responsibility for stable operation and scaling of Daewoong Group's core B2B/B2C e-commerce platform 'TheShop'",
         "₩500B annual transaction volume, 100K daily users, 20TB+ monthly data processing",
+        "Led Legacy System Migration: Designed core modules, scaffold, and application architecture for Oracle/Tomcat → Next.js/Spring migration",
+        "Built Airflow 5-server Cluster: Handled statistical data, Data Lake, and near-realtime CDC for data migration (200+ DAGs)",
         "Action 1: Designed and operated hybrid infrastructure mixing AWS ECS Fargate serverless container environment and on-premise (CentOS/Ubuntu) Docker environments",
         "Centralized microservice traffic management via APISIX Gateway and Nginx, applied Rate Limiting and Circuit Breaker patterns",
         "Automated infrastructure provisioning with CloudFormation (IaC), achieved 50% monthly cost reduction through EC2 Right-sizing and S3 lifecycle policies",
@@ -165,7 +167,6 @@
         "Efficient processing of 500MB+ large 3D data",
         "70% performance improvement with Three.js LOD (Level of Detail) optimization",
         "Large image optimization: 85% loading time reduction and main thread blocking prevention for drone photos up to 50MB per image using WebP conversion + Progressive Loading + PWA Web Worker background processing",
-        "Built Keycloak SSO authentication system",
         "Extracted GPS (altitude/latitude/longitude) from photo metadata (EXIF)",
         "Real-time drone location tracking with SK T Map API integration",
         "Resolved AWS CloudFront + PWA cache conflict issues",
@@ -187,7 +188,7 @@
     },
     "inoutbox": {
       "title": "💼 Inoutbox",
-      "subtitle": "Dongdaemun Fashion B2B/B2C Platform (Solo Full-Stack Development)",
+      "subtitle": "Dongdaemun Fashion B2B/B2C Platform (Solo Platform Development)",
       "content": [
         "Built Dongdaemun-specialized fashion wholesale/retail platform",
         "Retail: Inventory management, sales management, order management, delivery management",
@@ -306,7 +307,7 @@
   },
   "resume": {
     "title": "Resume",
-    "summary": "Professional Summary",
+    "summary": "About Me",
     "contact": "Contact Information",
     "education": "Education",
     "skills": "Technical Skills",

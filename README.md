@@ -1,6 +1,6 @@
 # Portfolio Website - Seongpil Choi
 
-Personal portfolio website showcasing professional experience, skills, and certifications as a Senior Full-Stack Engineer.
+Personal portfolio website showcasing professional experience, skills, and certifications as a Platform Lead Engineer.
 
 ## 🚀 Technologies
 

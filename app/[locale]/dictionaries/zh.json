@@ -6,7 +6,7 @@
   },
   "hero": {
     "greeting": "你好",
-    "title": "高级全栈工程师",
+    "title": "Platform Lead Engineer",
     "description": "专注于大规模分布式系统设计和运营的6年基础设施/全栈工程师。\n\n在年营业额5000亿韩元的MSA电商平台主导基础设施优化和开发生产力提升，实现错误检测时间缩短99%、部署时间缩短90%、基础设施成本降低50%等成果。\n\n在高可用环境中稳定运营日10万用户、日500GB网络流量、月20TB数据湖、月3TB分布式追踪数据。"
   },
   "common": {
@@ -97,6 +97,8 @@
       "content": [
         "情况与任务：全面负责大雄集团核心B2B/B2C电商平台'TheShop'的稳定运营和扩展的SRE工作",
         "年交易额5000亿韩元，日均10万用户流量，月均20TB以上数据处理",
+        "主导遗留系统迁移：为Oracle/Tomcat → Next.js/Spring迁移设计核心模块、脚手架和应用架构",
+        "构建Airflow 5服务器集群：通过统计数据、Data Lake、准实时CDC进行数据迁移 (200+ DAGs)",
         "行动1：设计和运营混合了AWS ECS Fargate无服务器容器环境和本地（CentOS/Ubuntu）Docker环境的混合基础设施",
         "通过APISIX网关和Nginx集中管理微服务流量，应用速率限制和断路器模式",
         "使用CloudFormation（IaC）自动化基础设施配置，通过EC2优化和S3生命周期策略实现月运营成本50%削减",
@@ -165,7 +167,6 @@
         "高效处理500MB以上大容量3D数据",
         "通过Three.js LOD（细节层次）优化实现70%性能改进",
         "大型图像优化：通过WebP转换 + 渐进式加载 + PWA Web Worker后台处理，将最大50MB的无人机拍摄照片加载时间缩短85%并防止主线程阻塞",
-        "构建Keycloak SSO认证系统",
         "从照片元信息（EXIF）提取GPS（高度/纬度/经度）",
         "通过SK T Map API集成实时无人机位置跟踪",
         "解决AWS CloudFront + PWA缓存冲突问题",
@@ -306,7 +307,7 @@
   },
   "resume": {
     "title": "简历",
-    "summary": "专业总结",
+    "summary": "自我介绍",
     "contact": "联系方式",
     "education": "教育背景",
     "skills": "技术栈",

@@ -9,7 +9,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Interview Q&A Practice | Seongpil Choi",
   description:
-    "Interview preparation Q&A practice page for Seongpil Choi - Senior Full-Stack Engineer",
+    "Interview preparation Q&A practice page for Seongpil Choi - Platform Lead Engineer",
   robots: "noindex, nofollow",
 };
 

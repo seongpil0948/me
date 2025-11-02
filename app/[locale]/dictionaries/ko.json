@@ -6,8 +6,8 @@
   },
   "hero": {
     "greeting": "안녕하세요",
-    "title": "시니어 풀스택 엔지니어",
-    "description": "대규모 분산 시스템 설계 및 운영을 전문으로 하는 6년 차 인프라/풀스택 엔지니어입니다.\n\n연매출 5천억원 규모 MSA 기반 이커머스 플랫폼에서 인프라 최적화와 개발 생산성 향상을 주도하며, 오류 감지 시간 99% 단축, 배포 시간 90% 단축, 인프라 비용 50% 절감 등의 성과를 달성했습니다.\n\n일 10만 사용자, 일 500GB 네트워크 트래픽, 월 20TB 데이터레이크, 월 3TB 분산 추적 데이터를 고가용성 환경에서 안정적으로 운영하고 있습니다."
+    "title": "Platform Lead Engineer",
+    "description": "대규모 분산 시스템 설계 및 운영을 전문으로 하는 6년 차 플랫폼 엔지니어입니다.\n\n연매출 5천억원 규모 MSA 기반 이커머스 플랫폼에서 인프라 최적화와 개발 생산성 향상을 주도하며, 오류 감지 시간 99% 단축, 배포 시간 90% 단축, 인프라 비용 50% 절감 등의 성과를 달성했습니다.\n\n일 10만 사용자, 일 500GB 네트워크 트래픽, 월 20TB 데이터레이크, 월 3TB 분산 추적 데이터를 고가용성 환경에서 안정적으로 운영하고 있습니다."
   },
   "common": {
     "welcome": "환영합니다",
@@ -34,7 +34,7 @@
     "aboutMe": "자기소개",
     "skills": "기술 스택",
     "teamworkSkills": "팀워크 스킬",
-    "aboutMeParagraph1": "복잡한 기술 문제를 체계적으로 분석하고 협업을 통해 최적의 솔루션을 도출하는 것을 강점으로 하는 엔지니어입니다.",
+    "aboutMeParagraph1": "인프라부터 애플리케이션까지 전체 스택을 이해하고 최적화하는 엔지니어입니다. 스타트업 단독 개발부터 5천억 규모 엔터프라이즈까지,  다양한 환경에서 확장 가능한 시스템을 구축해왔습니다.",
     "aboutMeParagraph2": "4개 회사에서 다양한 규모와 문화의 팀과 협업하며 Cross-Functional 프로젝트 경험을 쌓았습니다. 특히 LG, SK 등 대기업 클라이언트와의 협업에서 기술적 요구사항을 명확히 파악하고 안정적인 솔루션을 제공하는 커뮤니케이션 능력을 발휘했습니다.",
     "aboutMeParagraph3": "Kubernetes, AWS, Kafka, OpenTelemetry 등 클라우드 네이티브 기술을 기반으로 대규모 분산 시스템 아키텍처 설계 및 운영을 전문으로 합니다. Django/Spring/Gin 백엔드 개발부터 시작하여 ML 파이프라인 구축 및 데이터 처리 경험을 쌓았으며, React/Vue/Flutter로 확장하여 풀스택 역량을 완성했습니다. CKA, LFCS, AWS 3개 자격증을 통해 인프라 및 클라우드 전문성을 검증받았습니다.",
     "aboutMeParagraph4": "현재 대웅 그룹 TheShop에서 SRE로서 하이브리드 클라우드 인프라를 총괄하고 있습니다. OpenTelemetry 기반 관측성 플랫폼 구축, Kafka 메시징 아키텍처 설계, Airflow 기반 데이터 파이프라인 자동화 등을 주도하며 시스템 안정성을 확보하고 있습니다. 또한 AI 기반 개발 도구를 적극 도입하여 팀의 개발 속도와 코드 품질을 향상시키는 데 주력하고 있습니다.",
@@ -76,7 +76,7 @@
         "Solution: OpenTelemetry, Grafana stack, Prometheus, AWS 기반 통합 관측(Observability) 시스템으로 마이그레이션 주도",
         "10년 이상 운영된 레거시 모놀리식 시스템과 신규 MSA가 혼재된 환경에서 End-to-End 분산 추적(Distributed Tracing), 메트릭, 로그를 단일 플랫폼에서 수집",
         "12대 서버에 Collector 구축 및 Grafana 대시보드 연동",
-        "OpenTelemetry 오픈소스 프로젝트에 AWS, Container 관련 이슈에 기여하고 있음"
+        "OpenTelemetry 오픈소스 클라우드 네이티브, Container, AWS 관련 이슈 기여"
       ]
     },
     "dataLake": {
@@ -97,6 +97,8 @@
       "content": [
         "Situation & Task: 대웅 그룹의 핵심 B2B/B2C 이커머스 플랫폼 'TheShop'의 안정적인 운영 및 확장을 위한 SRE 업무 총괄",
         "연 5천억 원의 거래 규모, 일 10만 사용자 트래픽, 월 20TB 이상의 데이터 처리",
+        "Legacy 시스템 이관 주도: Oracle/Tomcat → Next.js/Spring 이관을 위한 코어 모듈, 빠대, 애플리케이션 아키텍처 설계",
+        "Airflow 5-server Cluster 구축: 통계성 데이터, Data Lake, 준실시간 CDC를 통한 데이터 이관 (200+ DAGs)",
         "Action 1: AWS ECS Fargate 서버리스 컨테이너 환경과 온프레미스(CentOS/Ubuntu) Docker 환경이 혼재된 하이브리드 인프라 설계 및 운영",
         "APISIX 게이트웨이 및 Nginx를 통한 마이크로서비스 트래픽 중앙 관리, Rate Limiting 및 Circuit Breaker 패턴 적용",
         "CloudFormation(IaC)을 활용한 인프라 프로비저닝 자동화, EC2 Right-sizing 및 S3 생명주기 정책으로 월 운영 비용 50% 절감",
@@ -165,7 +167,6 @@
         "500MB 이상 대용량 3D 데이터 효율적 처리",
         "Three.js LOD (Level of Detail) 최적화로 성능 개선",
         "대용량 이미지 최적화: 장당 최대 50MB 드론 촬영 사진을 WebP 변환 + Progressive Loading + PWA Web Worker를 활용한 백그라운드 처리로 로딩 시간 85% 단축 및 메인 스레드 블로킹 방지",
-        "Keycloak SSO 인증 시스템 구축",
         "사진 메타정보(EXIF)로부터 GPS(고도/위도/경도) 추출",
         "SK T Map API 연동 실시간 드론 위치 추적",
         "AWS CloudFront + PWA 캐시 충돌 이슈 해결",
@@ -306,7 +307,7 @@
   },
   "resume": {
     "title": "이력서",
-    "summary": "전문 요약",
+    "summary": "자기소개",
     "contact": "연락처",
     "education": "학력",
     "skills": "기술 스택",

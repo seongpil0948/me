@@ -10,8 +10,10 @@ import {
   portfolioLinks,
   skills,
 } from "@/data/portfolio";
+import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 import { Image } from "@heroui/image";
+import { Link } from "@heroui/link";
 import { categorizeSkills, getSkillEmoji } from "@/lib/skill-utils";
 
 export const metadata: Metadata = {
@@ -33,6 +35,10 @@ export default async function ResumePage({
   const schoolByLocale = personalInfo.education.school[locale];
   const degreeByLocale = personalInfo.education.degree[locale];
   const majorByLocale = personalInfo.education.major[locale];
+  const highSchoolByLocale = personalInfo.highSchool.school[locale];
+  const militaryBranchByLocale = personalInfo.military.branch[locale];
+  const militaryRankByLocale = personalInfo.military.rank[locale];
+  const militaryStatusByLocale = personalInfo.military.status[locale];
 
   // Categorize skills by proficiency level using utility function
   const {
@@ -43,23 +49,11 @@ export default async function ResumePage({
 
   return (
     <ResumePrintWrapper dict={dict}>
-      <div
-        style={{
-          minHeight: "100vh",
-          backgroundColor: "#ffffff",
-          color: "#000000",
-          padding: "32px",
-          maxWidth: "210mm",
-          margin: "0 auto",
-          fontFamily:
-            "'Malgun Gothic', 'Noto Sans KR', system-ui, -apple-system, sans-serif",
-        }}
-      >
+      <div className="min-h-screen bg-white text-black p-8 max-w-[210mm] mx-auto font-sans">
         {/* Header */}
         <header
           style={{
             marginBottom: "32px",
-            borderBottom: "2px solid #2c3e50",
             paddingBottom: "16px",
           }}
         >
@@ -78,229 +72,226 @@ export default async function ResumePage({
                   <p className="text-xl text-gray-700 mb-4">
                     {dict.hero.title}
                   </p>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1fr",
+                      gap: "8px",
+                      fontSize: "9pt",
+                      marginTop: "16px",
+                    }}
+                  >
+                    <div>
+                      <strong>{dict.profile.email}:</strong>{" "}
+                      <a
+                        style={{
+                          color: "#3498db",
+                          textDecoration: "underline",
+                        }}
+                        href="mailto:seongpil0948@gmail.com"
+                      >
+                        seongpil0948@gmail.com
+                      </a>
+                    </div>
+                    <div>
+                      <strong>{dict.profile.phone}:</strong>{" "}
+                      <a
+                        style={{
+                          color: "#3498db",
+                          textDecoration: "underline",
+                        }}
+                        href="tel:+821071840948"
+                      >
+                        010-7184-0948
+                      </a>
+                    </div>
+                    <div>
+                      <strong>GitHub:</strong>{" "}
+                      <a
+                        style={{
+                          color: "#3498db",
+                          textDecoration: "underline",
+                        }}
+                        href={personalInfo.contact.github}
+                      >
+                        {personalInfo.contact.github}
+                      </a>
+                    </div>
+                    <div>
+                      <strong>LinkedIn:</strong>{" "}
+                      <a
+                        style={{
+                          color: "#3498db",
+                          textDecoration: "underline",
+                        }}
+                        href={personalInfo.contact.linkedin}
+                      >
+                        linkedin.com/in/choi-seongpil
+                      </a>
+                    </div>
+                    <div>
+                      <strong>{dict.profile.address}:</strong>{" "}
+                      {locationByLocale}
+                    </div>
+                    <div>
+                      <strong>🌐 이력서 웹사이트:</strong>{" "}
+                      <a
+                        style={{
+                          color: "#3498db",
+                          textDecoration: "underline",
+                        }}
+                        href={"https://sp.all-ad.in/"}
+                      >
+                        {"https://sp.all-ad.in/"}
+                      </a>
+                    </div>
+                  </div>
                 </div>
                 <Image width={150} src={"/me/face.jpg"} alt={nameByLocale} />
               </div>
             </div>
           </div>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "8px",
-              fontSize: "9pt",
-              marginTop: "16px",
-            }}
-          >
-            <div>
-              <strong>{dict.profile.email}:</strong>{" "}
-              <a
-                style={{ color: "#3498db", textDecoration: "underline" }}
-                href="mailto:seongpil0948@gmail.com"
-              >
-                seongpil0948@gmail.com
-              </a>
-            </div>
-            <div>
-              <strong>{dict.profile.phone}:</strong>{" "}
-              <a
-                style={{ color: "#3498db", textDecoration: "underline" }}
-                href="tel:+821071840948"
-              >
-                010-7184-0948
-              </a>
-            </div>
-            <div>
-              <strong>GitHub:</strong>{" "}
-              <a
-                style={{ color: "#3498db", textDecoration: "underline" }}
-                href={personalInfo.contact.github}
-              >
-                {personalInfo.contact.github}
-              </a>
-            </div>
-            <div>
-              <strong>LinkedIn:</strong>{" "}
-              <a
-                style={{ color: "#3498db", textDecoration: "underline" }}
-                href={personalInfo.contact.linkedin}
-              >
-                linkedin.com/in/choi-seongpil
-              </a>
-            </div>
-            <div>
-              <strong>{dict.profile.address}:</strong> {locationByLocale}
-            </div>
-            <div>
-              <strong>🌐 이력서 웹사이트:</strong>{" "}
-              <a
-                style={{ color: "#3498db", textDecoration: "underline" }}
-                href={"https://sp.all-ad.in/"}
-              >
-                {"https://sp.all-ad.in/"}
-              </a>
-            </div>
-          </div>
         </header>
-
-        {/* Professional Summary */}
-        <section style={{ marginBottom: "24px" }}>
-          <h2
+        {/* Education & Military Service - Compact Table Format */}
+        <section className="mb-5">
+          <h2 className="text-[13pt] font-bold mb-2.5 border-b-2 border-gray-800 pb-1 text-gray-800">
+            {dict.resume.education} / 병역
+          </h2>
+          <table
             style={{
-              fontSize: "16pt",
-              fontWeight: "bold",
-              marginBottom: "12px",
-              borderBottom: "1px solid #7f8c8d",
-              paddingBottom: "4px",
-              color: "#2c3e50",
+              width: "100%",
+              borderCollapse: "collapse",
+              fontSize: "9pt",
+              border: "1px solid #d0d0d0",
             }}
           >
+            <tbody>
+              <tr style={{ backgroundColor: "#f8f9fa" }}>
+                <td
+                  style={{
+                    padding: "10px 12px",
+                    border: "1px solid #d0d0d0",
+                    fontWeight: "600",
+                    width: "18%",
+                    backgroundColor: "#e8eef5",
+                  }}
+                >
+                  대학교
+                </td>
+                <td
+                  style={{ padding: "10px 12px", border: "1px solid #d0d0d0" }}
+                >
+                  {schoolByLocale} · {degreeByLocale} · {majorByLocale} · 학점:{" "}
+                  {personalInfo.education.gpa}
+                </td>
+                <td
+                  style={{
+                    padding: "10px 12px",
+                    border: "1px solid #d0d0d0",
+                    color: "#7f8c8d",
+                    whiteSpace: "nowrap",
+                    width: "15%",
+                    textAlign: "right",
+                  }}
+                >
+                  {personalInfo.education.period}
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style={{
+                    padding: "10px 12px",
+                    border: "1px solid #d0d0d0",
+                    fontWeight: "600",
+                    backgroundColor: "#e8eef5",
+                  }}
+                >
+                  고등학교
+                </td>
+                <td
+                  style={{ padding: "10px 12px", border: "1px solid #d0d0d0" }}
+                >
+                  {highSchoolByLocale} · 졸업
+                </td>
+                <td
+                  style={{
+                    padding: "10px 12px",
+                    border: "1px solid #d0d0d0",
+                    color: "#7f8c8d",
+                    textAlign: "right",
+                  }}
+                >
+                  {personalInfo.highSchool.period}
+                </td>
+              </tr>
+              <tr style={{ backgroundColor: "#f8f9fa" }}>
+                <td
+                  style={{
+                    padding: "10px 12px",
+                    border: "1px solid #d0d0d0",
+                    fontWeight: "600",
+                    backgroundColor: "#e8eef5",
+                  }}
+                >
+                  병역
+                </td>
+                <td
+                  style={{ padding: "10px 12px", border: "1px solid #d0d0d0" }}
+                >
+                  {militaryBranchByLocale} · {militaryRankByLocale} ·{" "}
+                  {militaryStatusByLocale}
+                </td>
+                <td
+                  style={{
+                    padding: "10px 12px",
+                    border: "1px solid #d0d0d0",
+                    color: "#7f8c8d",
+                    textAlign: "right",
+                  }}
+                >
+                  {personalInfo.military.period}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        {/* Professional Summary / About Me */}
+        <section className="mb-5">
+          <h2 className="text-[13pt] font-bold mb-2.5 border-b-2 border-gray-800 pb-1 text-gray-800">
             {dict.resume.summary}
           </h2>
-          <div
-            style={{
-              backgroundColor: "#f8f9fa",
-              padding: "16px",
-              borderRadius: "4px",
-              borderLeft: "4px solid #3498db",
-              marginBottom: "16px",
-            }}
-          >
-            <p
-              style={{
-                fontSize: "10pt",
-                lineHeight: "1.8",
-                color: "#2c3e50",
-                margin: 0,
-              }}
-            >
-              {dict.hero.description}
-            </p>
-          </div>
+          <Card>
+            <CardBody className="p-3.5">
+              <p className="text-[9pt] leading-relaxed text-gray-800 mb-2">
+                {dict.profile.aboutMeParagraph1}
+              </p>
+              <p className="text-[9pt] leading-relaxed text-gray-800 mb-2">
+                {dict.profile.aboutMeParagraph2}
+              </p>
+              <p className="text-[9pt] leading-relaxed text-gray-800 mb-2">
+                {dict.profile.aboutMeParagraph3}
+              </p>
+              <p className="text-[9pt] leading-relaxed text-gray-800 m-0">
+                {dict.profile.aboutMeParagraph4}
+              </p>
+            </CardBody>
+          </Card>
         </section>
 
         {/* Skills & Certifications */}
-        <section style={{ marginBottom: "16px" }}>
-          <h2
-            style={{
-              fontSize: "16pt",
-              fontWeight: "bold",
-              marginBottom: "12px",
-              borderBottom: "1px solid #7f8c8d",
-              paddingBottom: "4px",
-              color: "#2c3e50",
-            }}
-          >
+        <section className="mb-5">
+          <h2 className="text-[13pt] font-bold mb-2.5 border-b-2 border-gray-800 pb-1 text-gray-800">
             {dict.resume.skillsAndCertifications}
           </h2>
 
-          {/* Expert Level Skills */}
-          {expertSkills.length > 0 && (
-            <div style={{ marginBottom: "10px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "6px",
-                  fontSize: "9pt",
-                }}
-              >
-                {expertSkills.map((skill, index) => (
-                  <Chip
-                    key={index}
-                    color="success"
-                    size="sm"
-                    style={{
-                      fontSize: "8pt",
-                      height: "24px",
-                      backgroundColor: "#17c964",
-                      color: "#ffffff",
-                    }}
-                    variant="flat"
-                  >
-                    {getSkillEmoji(skill.name)} {skill.name}
-                  </Chip>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Advanced Level Skills */}
-          {advancedSkills.length > 0 && (
-            <div style={{ marginBottom: "10px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "6px",
-                  fontSize: "9pt",
-                }}
-              >
-                {advancedSkills.map((skill, index) => (
-                  <Chip
-                    key={index}
-                    color="primary"
-                    size="sm"
-                    style={{
-                      fontSize: "8pt",
-                      height: "24px",
-                      backgroundColor: "#006fee",
-                      color: "#ffffff",
-                    }}
-                    variant="flat"
-                  >
-                    {getSkillEmoji(skill.name)} {skill.name}
-                  </Chip>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Competent Level Skills */}
-          {competentSkills.length > 0 && (
-            <div style={{ marginBottom: "10px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "6px",
-                  fontSize: "9pt",
-                }}
-              >
-                {competentSkills.map((skill, index) => (
-                  <Chip
-                    key={index}
-                    color="default"
-                    size="sm"
-                    style={{
-                      fontSize: "8pt",
-                      height: "24px",
-                      backgroundColor: "#d4d4d8",
-                      color: "#27272a",
-                    }}
-                    variant="flat"
-                  >
-                    {getSkillEmoji(skill.name)} {skill.name}
-                  </Chip>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Certifications */}
-          <div
-            style={{
-              marginTop: "16px",
-              paddingTop: "12px",
-              borderTop: "1px solid #e0e0e0",
-            }}
-          >
+          <div className=" my-4">
             <h3
               style={{
-                fontSize: "11pt",
+                fontSize: "10pt",
                 fontWeight: "600",
-                marginBottom: "8px",
+                marginBottom: "10px",
                 color: "#2c3e50",
               }}
             >
@@ -318,6 +309,7 @@ export default async function ResumePage({
                     padding: "6px 8px",
                     backgroundColor: index % 2 === 0 ? "#ffffff" : "#f8f9fa",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 >
                   <div
@@ -358,20 +350,103 @@ export default async function ResumePage({
               ))}
             </div>
           </div>
+          {/* Expert Level Skills */}
+          {expertSkills.length > 0 && (
+            <div style={{ marginBottom: "8px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "6px",
+                  fontSize: "9pt",
+                }}
+              >
+                {expertSkills.map((skill, index) => (
+                  <Chip
+                    key={index}
+                    color="success"
+                    size="sm"
+                    style={{
+                      fontSize: "8pt",
+                      height: "24px",
+                      backgroundColor: "#17c964",
+                      color: "#ffffff",
+                    }}
+                    variant="flat"
+                  >
+                    {getSkillEmoji(skill.name)} {skill.name}
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Advanced Level Skills */}
+          {advancedSkills.length > 0 && (
+            <div style={{ marginBottom: "8px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "6px",
+                  fontSize: "9pt",
+                }}
+              >
+                {advancedSkills.map((skill, index) => (
+                  <Chip
+                    key={index}
+                    color="primary"
+                    size="sm"
+                    style={{
+                      fontSize: "8pt",
+                      height: "24px",
+                      backgroundColor: "#006fee",
+                      color: "#ffffff",
+                    }}
+                    variant="flat"
+                  >
+                    {getSkillEmoji(skill.name)} {skill.name}
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Competent Level Skills */}
+          {competentSkills.length > 0 && (
+            <div style={{ marginBottom: "8px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "6px",
+                  fontSize: "9pt",
+                }}
+              >
+                {competentSkills.map((skill, index) => (
+                  <Chip
+                    key={index}
+                    color="default"
+                    size="sm"
+                    style={{
+                      fontSize: "8pt",
+                      height: "24px",
+                      backgroundColor: "#d4d4d8",
+                      color: "#27272a",
+                    }}
+                    variant="flat"
+                  >
+                    {getSkillEmoji(skill.name)} {skill.name}
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* Work Experience */}
-        <section style={{ marginBottom: "24px" }}>
-          <h2
-            style={{
-              fontSize: "16pt",
-              fontWeight: "bold",
-              marginBottom: "12px",
-              borderBottom: "1px solid #7f8c8d",
-              paddingBottom: "4px",
-              color: "#2c3e50",
-            }}
-          >
+        <section className="mb-5">
+          <h2 className="text-[14pt] font-bold mb-2 border-b border-gray-500 pb-0.5 text-gray-800">
             {dict.resume.experience}
           </h2>
           {experiences.map((exp, index) => (
@@ -380,8 +455,9 @@ export default async function ResumePage({
               style={{
                 marginBottom: "16px",
                 backgroundColor: index % 2 === 0 ? "#ffffff" : "#f8f9fa",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <div
@@ -389,7 +465,7 @@ export default async function ResumePage({
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "start",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                 }}
               >
                 <div>
@@ -405,6 +481,7 @@ export default async function ResumePage({
                     fontSize: "9pt",
                     color: "#7f8c8d",
                     textAlign: "right",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {exp.period}
@@ -424,7 +501,7 @@ export default async function ResumePage({
                   <li
                     key={idx}
                     style={{
-                      marginBottom: "4px",
+                      marginBottom: "6px",
                       color: "#2c3e50",
                       lineHeight: "1.5",
                     }}
@@ -438,33 +515,25 @@ export default async function ResumePage({
         </section>
 
         {/* Key Projects */}
-        <section style={{ marginBottom: "24px" }}>
-          <h2
-            style={{
-              fontSize: "16pt",
-              fontWeight: "bold",
-              marginBottom: "12px",
-              borderBottom: "1px solid #7f8c8d",
-              paddingBottom: "4px",
-              color: "#2c3e50",
-            }}
-          >
+        <section className="mb-5">
+          <h2 className="text-[13pt] font-bold mb-2.5 border-b-2 border-gray-800 pb-1 text-gray-800">
             {dict.resume.projects}
           </h2>
           <div style={{ fontSize: "9pt" }}>
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#ffffff",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -496,8 +565,8 @@ export default async function ResumePage({
                 </li>
                 <li>12대 서버에 Collector 구축 및 Grafana 대시보드 연동</li>
                 <li>
-                  OpenTelemetry 오픈소스 프로젝트에 AWS, Container 관련 이슈에
-                  기여하고 있음
+                  OpenTelemetry 오픈소스 클라우드 네이티브, Container, AWS 관련
+                  이슈 기여
                 </li>
               </ul>
               <div style={{ marginTop: "8px" }}>
@@ -508,6 +577,7 @@ export default async function ResumePage({
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -515,17 +585,18 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#f8f9fa",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -559,6 +630,7 @@ export default async function ResumePage({
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -566,17 +638,18 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#ffffff",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -633,6 +706,7 @@ export default async function ResumePage({
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -640,17 +714,18 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#f8f9fa",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -676,6 +751,7 @@ export default async function ResumePage({
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -683,17 +759,18 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#ffffff",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -742,6 +819,7 @@ export default async function ResumePage({
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -749,17 +827,18 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#f8f9fa",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -773,11 +852,12 @@ export default async function ResumePage({
               <div style={{ marginTop: "8px" }}>
                 <Image
                   alt="LG 익시 AI 솔루션"
-                  src="/projects/ixi-studio/IXI_Studio.png"
+                  src="/projects/ixi-studio/0.png"
                   style={{
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -785,17 +865,18 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#ffffff",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -834,6 +915,7 @@ export default async function ResumePage({
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -841,17 +923,18 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#f8f9fa",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -880,6 +963,7 @@ export default async function ResumePage({
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -887,17 +971,18 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#f8f9fa",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -913,11 +998,12 @@ export default async function ResumePage({
               <div style={{ marginTop: "8px" }}>
                 <Image
                   alt="LG 물류 로봇 관제 플랫폼"
-                  src="/projects/robot-platform/Robot_Platform.png"
+                  src="/projects/robot-platform/1.png"
                   style={{
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -925,15 +1011,16 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#ffffff",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
                   marginBottom: "6px",
                   color: "#2c3e50",
@@ -961,11 +1048,12 @@ export default async function ResumePage({
               <div style={{ marginTop: "8px" }}>
                 <Image
                   alt="인아웃박스"
-                  src="/projects/iobox/Inoutbox.png"
+                  src="/projects/iobox/app-store.jpeg"
                   style={{
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -973,17 +1061,18 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#f8f9fa",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -1018,6 +1107,7 @@ export default async function ResumePage({
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -1025,17 +1115,18 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#ffffff",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -1069,6 +1160,7 @@ export default async function ResumePage({
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -1076,17 +1168,18 @@ export default async function ResumePage({
 
             <div
               style={{
-                marginBottom: "12px",
+                marginBottom: "14px",
                 backgroundColor: "#f8f9fa",
-                padding: "12px",
+                padding: "14px",
                 borderRadius: "4px",
+                border: "1px solid #e8e8e8",
               }}
             >
               <h3
                 style={{
-                  fontSize: "11pt",
+                  fontSize: "10pt",
                   fontWeight: "bold",
-                  marginBottom: "4px",
+                  marginBottom: "6px",
                   color: "#2c3e50",
                 }}
               >
@@ -1121,6 +1214,7 @@ export default async function ResumePage({
                     width: "100%",
                     height: "auto",
                     borderRadius: "4px",
+                    border: "1px solid #e8e8e8",
                   }}
                 />
               </div>
@@ -1128,59 +1222,12 @@ export default async function ResumePage({
           </div>
         </section>
 
-        {/* Page break before education */}
+        {/* Page break before portfolio links */}
         <div style={{ pageBreakBefore: "always" }} />
 
-        {/* Education */}
-        <section style={{ marginBottom: "24px" }}>
-          <h2
-            style={{
-              fontSize: "16pt",
-              fontWeight: "bold",
-              marginBottom: "12px",
-              borderBottom: "1px solid #7f8c8d",
-              paddingBottom: "4px",
-              color: "#2c3e50",
-            }}
-          >
-            {dict.resume.education}
-          </h2>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "start",
-              backgroundColor: "#f8f9fa",
-              padding: "12px",
-              borderRadius: "4px",
-            }}
-          >
-            <div>
-              <h3 style={{ fontSize: "12pt", fontWeight: "600" }}>
-                {schoolByLocale}
-              </h3>
-              <p style={{ fontSize: "9pt", color: "#34495e" }}>
-                {degreeByLocale}, {majorByLocale}
-              </p>
-            </div>
-            <p style={{ fontSize: "9pt", color: "#7f8c8d" }}>
-              {personalInfo.education.period}
-            </p>
-          </div>
-        </section>
-
         {/* Portfolio Links */}
-        <section style={{ marginBottom: "24px" }}>
-          <h2
-            style={{
-              fontSize: "16pt",
-              fontWeight: "bold",
-              marginBottom: "12px",
-              borderBottom: "1px solid #7f8c8d",
-              paddingBottom: "4px",
-              color: "#2c3e50",
-            }}
-          >
+        <section className="mb-5">
+          <h2 className="text-[13pt] font-bold mb-2.5 border-b-2 border-gray-800 pb-1 text-gray-800">
             {dict.profile.portfolioLinks}
           </h2>
           <div
@@ -1196,7 +1243,7 @@ export default async function ResumePage({
                 key={index}
                 style={{
                   backgroundColor: "#ffffff",
-                  padding: "12px",
+                  padding: "14px",
                   borderRadius: "4px",
                   border: "1px solid #e0e0e0",
                   transition: "all 0.2s ease",
@@ -1207,7 +1254,7 @@ export default async function ResumePage({
                     fontSize: "10pt",
                     fontWeight: "600",
                     color: "#2c3e50",
-                    marginBottom: "4px",
+                    marginBottom: "6px",
                   }}
                 >
                   {link.name}

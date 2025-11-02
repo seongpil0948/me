@@ -32,7 +32,35 @@ export interface PersonalInfo {
       zh: string;
     };
     period: string;
+    gpa: string;
   };
+  highSchool: {
+    school: {
+      ko: string;
+      en: string;
+      zh: string;
+    };
+    period: string;
+  };
+  military: {
+    branch: {
+      ko: string;
+      en: string;
+      zh: string;
+    };
+    rank: {
+      ko: string;
+      en: string;
+      zh: string;
+    };
+    period: string;
+    status: {
+      ko: string;
+      en: string;
+      zh: string;
+    };
+  };
+  careerYears: number;
 }
 
 export const personalInfo: PersonalInfo = {
@@ -64,12 +92,40 @@ export const personalInfo: PersonalInfo = {
       zh: "学士",
     },
     major: {
-      ko: "정보통신공학",
+      ko: "정보통신공학과",
       en: "Information and Communication Engineering",
       zh: "信息通信工程",
     },
-    period: "2016 - 2020",
+    period: "2015.03 - 2019.03",
+    gpa: "3.35 / 4.5",
   },
+  highSchool: {
+    school: {
+      ko: "경기영상과학고등학교",
+      en: "Gyeonggi Media Science High School",
+      zh: "京畿影像科学高等学校",
+    },
+    period: "2014.02",
+  },
+  military: {
+    branch: {
+      ko: "육군",
+      en: "Republic of Korea Army",
+      zh: "陆军",
+    },
+    rank: {
+      ko: "중사",
+      en: "Staff Sergeant",
+      zh: "中士",
+    },
+    period: "2014.02 - 2018.05",
+    status: {
+      ko: "만기 제대",
+      en: "Honorably Discharged",
+      zh: "满期退伍",
+    },
+  },
+  careerYears: 6,
 };
 
 export interface SummaryStats {
