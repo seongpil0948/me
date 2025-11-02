@@ -1,9 +1,8 @@
 import HeroSection from "./hero-section";
 import AboutContent from "./about-content";
-import SkillsContent from "./skills-content";
+import SkillsCertificationsContent from "./skills-certifications-content";
 import ExperienceContent from "./experience-content";
 import ProjectsContent from "./projects-content";
-import CertificationsContent from "./certifications-content";
 import PortfolioTabs from "./portfolio-tabs";
 
 import { PortfolioData } from "@/types/portfolio";
@@ -31,18 +30,18 @@ export default function PortfolioSection({
               portfolioLinks={portfolioLinks}
             />
           }
-          certificationsContent={
-            <CertificationsContent
-              certifications={certifications}
-              dict={dict}
-            />
-          }
           dict={dict}
           experienceContent={
             <ExperienceContent dict={dict} experiences={experiences} />
           }
           projectsContent={<ProjectsContent dict={dict} locale={locale} />}
-          skillsContent={<SkillsContent dict={dict} skills={skills} />}
+          skillsCertificationsContent={
+            <SkillsCertificationsContent
+              certifications={certifications}
+              dict={dict}
+              skills={skills}
+            />
+          }
         />
       </section>
     </div>

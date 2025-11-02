@@ -8,19 +8,17 @@ import { Dictionary } from "@/types/portfolio";
 interface PortfolioTabsProps {
   dict: Dictionary;
   aboutContent: React.ReactNode;
-  skillsContent: React.ReactNode;
+  skillsCertificationsContent: React.ReactNode;
   experienceContent: React.ReactNode;
   projectsContent: React.ReactNode;
-  certificationsContent: React.ReactNode;
 }
 
 export default function PortfolioTabs({
   dict,
   aboutContent,
-  skillsContent,
+  skillsCertificationsContent,
   experienceContent,
   projectsContent,
-  certificationsContent,
 }: PortfolioTabsProps) {
   const [selected, setSelected] = useState("about");
 
@@ -37,7 +35,7 @@ export default function PortfolioTabs({
           "gap-0 w-full relative rounded-none p-0 border-b border-divider",
         cursor: "w-full",
         tab: "max-w-fit px-8 h-12",
-        tabContent: "group-data-[selected=true]:text-[#DC6B4A]",
+        tabContent: "group-data-[selected=true]:text-[var(--color-primary)]",
       }}
       selectedKey={selected}
       onSelectionChange={(key) => {
@@ -48,17 +46,14 @@ export default function PortfolioTabs({
       <Tab key="about" title="프로필">
         {aboutContent}
       </Tab>
-      <Tab key="skills" title="기술 스택">
-        {skillsContent}
+      <Tab key="skills-certifications" title="기술 스택 및 자격증">
+        {skillsCertificationsContent}
       </Tab>
       <Tab key="experience" title="경력">
         {experienceContent}
       </Tab>
       <Tab key="projects" title="프로젝트">
         {projectsContent}
-      </Tab>
-      <Tab key="certifications" title="자격증">
-        {certificationsContent}
       </Tab>
     </Tabs>
   );

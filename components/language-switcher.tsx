@@ -5,51 +5,35 @@ import { Select, SelectItem } from "@heroui/select";
 import { useIsSSR } from "@react-aria/ssr";
 
 import i18nConfig from "@/i18nConfig";
+import { LANGUAGES } from "@/constants/languages";
+import { useLocale } from "@/hooks/use-locale";
+import { setLocaleCookie, buildLocalePath } from "@/lib/i18n/locale-utils";
 
+/**
+ * Language switcher component
+ * Allows users to change the application locale
+ */
 export default function LanguageSwitcher() {
   const router = useRouter();
-  const currentPathname = usePathname();
+  const pathname = usePathname();
+  const currentLocale = useLocale();
   const isSSR = useIsSSR();
-
-  // Extract locale from pathname
-  const segments = currentPathname.split("/").filter(Boolean);
-  const currentLocale =
-    segments.length > 0 && i18nConfig.locales.includes(segments[0])
-      ? segments[0]
-      : i18nConfig.defaultLocale;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLocale = e.target.value;
 
-    // Set the cookie for locale
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Strict`;
+    // Set locale cookie for persistence
+    setLocaleCookie(newLocale);
 
-    // Redirect to the new locale path
-    const path = currentPathname;
+    // Build new path with updated locale
+    const newPath = buildLocalePath(pathname, newLocale, i18nConfig.locales);
 
-    // Remove the locale from the pathname
-    const segments = path.split("/");
-    const localeIndex = segments.findIndex((segment) =>
-      i18nConfig.locales.includes(segment)
-    );
-
-    if (localeIndex !== -1) {
-      segments.splice(localeIndex, 1);
-    }
-
-    // Build the new path
-    const newPath = `/${newLocale}${segments.join("/")}`;
-
+    // Navigate to new locale
     router.push(newPath);
     router.refresh();
   };
 
-  const languages = [
-    { value: "ko", label: "한국어" },
-    { value: "en", label: "English" },
-    { value: "zh", label: "中文" },
-  ];
-
+  // Don't render during SSR to avoid hydration mismatch
   if (isSSR) {
     return null;
   }
@@ -60,10 +44,11 @@ export default function LanguageSwitcher() {
       className="w-32"
       selectedKeys={currentLocale ? [currentLocale] : []}
       size="sm"
+      color="primary"
       variant="bordered"
       onChange={handleChange}
     >
-      {languages.map((lang) => (
+      {LANGUAGES.map((lang) => (
         <SelectItem key={lang.value}>{lang.label}</SelectItem>
       ))}
     </Select>

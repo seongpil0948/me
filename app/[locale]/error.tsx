@@ -33,7 +33,7 @@ export default function Error({
   const params = useParams();
   const locale = (params?.locale as string) || "ko";
   const [dict, setDict] = useState<ErrorDict>(
-    errorTranslations[locale] || errorTranslations.ko
+    errorTranslations[locale] || errorTranslations.ko,
   );
 
   useEffect(() => {

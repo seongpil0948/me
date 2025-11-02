@@ -14,15 +14,15 @@ export const skills: Skill[] = [
   { name: "Spring-boot", level: 78 },
   { name: "Node.js", level: 85 },
   { name: "Kubernetes(CKA)", level: 95 },
-  { name: "AWS(3 Certs)", level: 92 },
+  { name: "AWS(3 Certs)", level: 95 },
   { name: "Linux(LFCS)", level: 90 },
   { name: "Docker", level: 93 },
   { name: "Kafka&RabbitMQ", level: 88 },
   { name: "Airflow", level: 87 },
-  { name: "OpenTelemetry", level: 90 },
+  { name: "OpenTelemetry", level: 95 },
   { name: "Grafana&Prometheus", level: 88 },
   { name: "Three.js", level: 75 },
-  { name: "Terraform", level: 60 },
+  { name: "Terraform", level: 82 },
 ];
 
 export const certifications: Certification[] = [

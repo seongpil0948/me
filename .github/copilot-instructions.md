@@ -143,6 +143,55 @@ import { siteConfig } from "@/config/site";
 import { Navbar } from "@/components/navbar";
 ```
 
+## Code Organization & Utilities
+
+**Centralized Utilities**: Reusable functions are organized in `/lib` directory:
+
+- **`lib/i18n/locale-utils.ts`**: Locale extraction, cookie management, path building
+- **`lib/error-handler.ts`**: Custom error classes and error handling utilities
+
+**Custom Hooks**: Reusable React hooks in `/hooks` directory:
+
+- **`hooks/use-locale.ts`**: Extract current locale from URL pathname
+- **`hooks/use-hero-animation.ts`**: Hero canvas animation logic with scroll-based frame updates
+
+**Constants**: Application-wide constants in `/constants` directory:
+
+- **`constants/languages.ts`**: Supported languages configuration (ko/en/zh)
+- **`constants/images.ts`**: Image URLs and optimization defaults
+
+**Configuration**: Centralized configuration in `/config` directory:
+
+- **`config/env.ts`**: Type-safe environment variables and validation
+- **`config/fonts.ts`**: Font family configurations
+- **`config/site.ts`**: Site metadata and navigation
+
+**Type Definitions**: Comprehensive TypeScript types in `/types` directory:
+
+- **`types/i18n.ts`**: i18n-related types (LocaleParams, PageProps, LayoutProps)
+- **`types/portfolio.ts`**: Portfolio data structures and dictionary types
+
+**Usage Examples**:
+
+```tsx
+// Using locale utilities
+import { useLocale } from "@/hooks/use-locale";
+import { setLocaleCookie, buildLocalePath } from "@/lib/i18n/locale-utils";
+
+const locale = useLocale();
+setLocaleCookie("en");
+const newPath = buildLocalePath(pathname, "en", locales);
+
+// Using constants
+import { LANGUAGES } from "@/constants/languages";
+import { HERO_IMAGE_URLS } from "@/constants/images";
+
+// Using error handling
+import { AppError, logError, handleError } from "@/lib/error-handler";
+
+throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
+```
+
 ## Key Files Reference
 
 - `i18nConfig.ts` - Locale configuration (ko/en/zh)
@@ -150,7 +199,15 @@ import { Navbar } from "@/components/navbar";
 - `app/[locale]/page.tsx` - Main portfolio page with data definitions
 - `components/primitives.ts` - Tailwind variant utilities
 - `config/site.ts` - Site metadata (name, description, links)
+- `config/env.ts` - Environment configuration
 - `types/portfolio.ts` - TypeScript interfaces for data structures
+- `types/i18n.ts` - i18n type definitions
+- `lib/i18n/locale-utils.ts` - Locale management utilities
+- `lib/error-handler.ts` - Error handling utilities
+- `hooks/use-locale.ts` - Locale hook
+- `hooks/use-hero-animation.ts` - Hero animation hook
+- `constants/languages.ts` - Language configurations
+- `constants/images.ts` - Image constants
 
 ## Common Pitfalls
 

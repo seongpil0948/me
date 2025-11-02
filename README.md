@@ -1,55 +1,179 @@
-# Next.js & HeroUI Template
+# Portfolio Website - Seongpil Choi
 
-This is a template for creating applications using Next.js 14 (app directory) and HeroUI (v2).
+Personal portfolio website showcasing professional experience, skills, and certifications as a Senior Full-Stack Engineer.
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
+## 🚀 Technologies
 
-## Technologies Used
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **UI Library**: [HeroUI v2](https://heroui.com/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) + [Tailwind Variants](https://tailwind-variants.org)
+- **Language**: [TypeScript 5.9](https://www.typescriptlang.org/)
+- **Animation**: [Framer Motion](https://www.framer.com/motion/)
+- **Theming**: [next-themes](https://github.com/pacocoursey/next-themes)
+- **i18n**: Custom implementation with Next.js 16
+- **Package Manager**: [pnpm](https://pnpm.io/)
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [HeroUI v2](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+## 📁 Project Structure
 
-## How to Use
-
-### Use the template with create-next-app
-
-To create a new project based on this template using `create-next-app`, run the following command:
-
-```bash
-npx create-next-app -e https://github.com/heroui-inc/next-app-template
+```
+├── app/                      # Next.js App Router
+│   ├── [locale]/            # Internationalized routes (ko/en/zh)
+│   │   ├── dictionaries/    # Translation files
+│   │   ├── layout.tsx       # Root layout
+│   │   ├── page.tsx         # Main portfolio page
+│   │   └── resume/          # PDF-optimized resume page
+│   └── global-error.tsx     # Global error boundary
+├── components/              # React components
+│   ├── portfolio/           # Portfolio-specific components
+│   └── ui/                  # Reusable UI components
+├── lib/                     # Utility functions
+│   ├── i18n/               # i18n utilities
+│   └── error-handler.ts    # Error handling
+├── hooks/                   # Custom React hooks
+│   ├── use-locale.ts       # Locale management
+│   └── use-hero-animation.ts # Animation logic
+├── constants/              # App-wide constants
+│   ├── languages.ts        # Language configs
+│   └── images.ts           # Image constants
+├── config/                 # Configuration files
+│   ├── env.ts             # Environment variables
+│   ├── fonts.ts           # Font configurations
+│   └── site.ts            # Site metadata
+├── types/                  # TypeScript type definitions
+│   ├── i18n.ts            # i18n types
+│   └── portfolio.ts       # Portfolio data types
+├── data/                   # Portfolio data
+│   ├── personal.ts        # Personal information
+│   └── portfolio.ts       # Professional data
+└── docs/                   # Documentation
+    ├── 경력기술서.md       # Career details (Korean)
+    ├── 이력서.md           # Resume (Korean)
+    └── REFACTORING.md     # Refactoring documentation
 ```
 
-### Install dependencies
+## 🛠️ Development
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+### Prerequisites
 
-```bash
-npm install
-```
+- Node.js 18+
+- pnpm 8+
 
-### Run the development server
-
-```bash
-npm run dev
-```
-
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+### Setup
 
 ```bash
-public-hoist-pattern[]=*@heroui/*
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
 ```
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+### Available Scripts
 
-## License
+```bash
+pnpm dev          # Start development server with Turbopack
+pnpm build        # Build for production
+pnpm start        # Start production server
+pnpm lint         # Run ESLint with auto-fix
+pnpm format       # Format code with Prettier
+pnpm tsc --noEmit # TypeScript type checking
+```
 
-Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).
+## 🌍 Internationalization
 
-# me
+The project supports three languages:
+
+- 🇰🇷 Korean (ko) - Default
+- 🇺🇸 English (en)
+- 🇨🇳 Chinese (zh)
+
+**URL Structure**: `/[locale]/...` (e.g., `/ko`, `/en`, `/zh`)
+
+**How it works**:
+
+- Locale detection via URL pathname
+- Cookie persistence for user preference
+- Server-only dictionary loading
+- Type-safe translations
+
+## 🏗️ Architecture Highlights
+
+### Utility-First Approach
+
+- **`lib/i18n/locale-utils.ts`**: Reusable i18n functions
+- **`lib/error-handler.ts`**: Custom error classes
+- **`hooks/use-locale.ts`**: Locale extraction hook
+- **`hooks/use-hero-animation.ts`**: Animation logic hook
+
+### Type Safety
+
+- Comprehensive TypeScript types in `/types`
+- Type-safe environment variables in `config/env.ts`
+- Strict props validation
+
+### Data Management
+
+- Single source of truth in `/data`
+- No hardcoded data in components
+- Synchronized with documentation
+
+### Code Quality
+
+- ESLint with strict rules
+- Prettier for consistent formatting
+- Import ordering enforcement
+- TypeScript strict mode
+
+## 📄 Documentation
+
+- **[Refactoring Guide](./docs/REFACTORING.md)**: Details on code organization
+- **[Copilot Instructions](./.github/copilot-instructions.md)**: Development guidelines
+- **[Career Details](./docs/경력기술서.md)**: Professional experience (Korean)
+- **[Resume](./docs/이력서.md)**: Formatted resume (Korean)
+
+## 🎨 Features
+
+- ✅ Responsive design (mobile/tablet/desktop)
+- ✅ Dark theme by default
+- ✅ Multilingual support (KO/EN/ZH)
+- ✅ PDF resume generation
+- ✅ Scroll-based animations
+- ✅ Optimized performance
+- ✅ SEO optimized
+- ✅ Type-safe throughout
+
+## 📦 Key Dependencies
+
+| Package                        | Purpose              |
+| ------------------------------ | -------------------- |
+| `next`                         | React framework      |
+| `@heroui/*`                    | UI component library |
+| `framer-motion`                | Animation library    |
+| `tailwindcss`                  | Utility-first CSS    |
+| `next-themes`                  | Theme management     |
+| `@formatjs/intl-localematcher` | Locale matching      |
+| `swiper`                       | Image carousel       |
+
+## 🚀 Deployment
+
+Build the project for production:
+
+```bash
+pnpm build
+pnpm start
+```
+
+The app is optimized for:
+
+- Static site generation (SSG)
+- Server-side rendering (SSR)
+- Edge runtime compatibility
+
+## 📝 License
+
+Private portfolio project - All rights reserved
+
+---
+
+**Author**: Seongpil Choi  
+**Contact**: [GitHub](https://github.com/seongpil0948)

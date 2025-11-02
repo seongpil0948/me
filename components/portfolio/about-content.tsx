@@ -19,16 +19,22 @@ export default function AboutContent({
     <div className="pb-2 pt-4 grid grid-cols-1 md:grid-cols-3 gap-12">
       {/* Contact Info */}
       <div>
-        <h2 className="text-2xl font-bold mb-6" style={{ color: "#262626" }}>
+        <h2
+          className="text-2xl font-bold mb-6"
+          style={{ color: "var(--color-text-primary)" }}
+        >
           {dict.profile.contactInfo}
         </h2>
-        <div className="space-y-3" style={{ color: "#525250" }}>
+        <div
+          className="space-y-3"
+          style={{ color: "var(--color-text-secondary)" }}
+        >
           <p>📱 {personalInfo.contact.phone}</p>
           <p>📧 {personalInfo.contact.email}</p>
           <Link
             isExternal
             href="https://idstrust.com"
-            style={{ color: "#DC6B4A" }}
+            style={{ color: "var(--color-primary)" }}
           >
             🌐 {dict.companies.daewoong} → {dict.companies.idstrust}
           </Link>
@@ -36,24 +42,27 @@ export default function AboutContent({
         </div>
         <h2
           className="text-2xl font-bold mt-12 mb-6"
-          style={{ color: "#262626" }}
+          style={{ color: "var(--color-text-primary)" }}
         >
           {dict.profile.education}
         </h2>
-        <div style={{ color: "#525250" }}>
+        <div style={{ color: "var(--color-text-secondary)" }}>
           <p className="font-semibold">
             {personalInfo.education.school[locale]}
           </p>
           <p>{personalInfo.education.degree[locale]}</p>
           <p>{personalInfo.education.major[locale]}</p>
-          <p className="text-sm" style={{ color: "#787872" }}>
+          <p
+            className="text-sm"
+            style={{ color: "var(--color-text-tertiary)" }}
+          >
             {personalInfo.education.period}
           </p>
         </div>
 
         <h2
           className="text-2xl font-bold mt-12 mb-6"
-          style={{ color: "#262626" }}
+          style={{ color: "var(--color-text-primary)" }}
         >
           {dict.profile.portfolioLinks}
         </h2>
@@ -66,7 +75,7 @@ export default function AboutContent({
                 isExternal
                 className="block hover:translate-x-1 transition-transform"
                 href={link.url}
-                style={{ color: "#DC6B4A" }}
+                style={{ color: "var(--color-primary)" }}
               >
                 {link.name} →
               </Link>
@@ -76,12 +85,15 @@ export default function AboutContent({
 
       {/* About Me */}
       <div className="md:col-span-2">
-        <h2 className="text-2xl font-bold mb-6" style={{ color: "#262626" }}>
+        <h2
+          className="text-2xl font-bold mb-6"
+          style={{ color: "var(--color-text-primary)" }}
+        >
           {dict.profile.aboutMe}
         </h2>
         <div
           className="prose prose-lg"
-          style={{ color: "#525250", lineHeight: "1.8" }}
+          style={{ color: "var(--color-text-secondary)", lineHeight: "1.8" }}
         >
           <p className="mb-6">{dict.profile.aboutMeParagraph1}</p>
           <p className="mb-6">{dict.profile.aboutMeParagraph2}</p>

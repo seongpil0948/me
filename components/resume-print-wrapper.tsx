@@ -54,7 +54,7 @@ export function ResumePrintWrapper({
         <button
           onClick={handlePrint}
           style={{
-            backgroundColor: "#3498db",
+            backgroundColor: "var(--color-primary)",
             color: "white",
             padding: "12px 24px",
             borderRadius: "8px",

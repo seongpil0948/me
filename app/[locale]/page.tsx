@@ -52,11 +52,10 @@ export default async function MePage({
         <Button
           as={Link}
           isExternal
-          className="shadow-lg"
           radius="full"
+          color="primary"
           style={{
             backgroundColor: "var(--color-primary)",
-            color: "#FFFFFF",
           }}
           href="http://all-ad.in"
         >

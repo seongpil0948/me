@@ -10,8 +10,8 @@ import {
   portfolioLinks,
   skills,
 } from "@/data/portfolio";
+import { Chip } from "@heroui/chip";
 import { Image } from "@heroui/image";
-import { Progress } from "@heroui/progress";
 
 export const metadata: Metadata = {
   title: "Resume | Seongpil Choi",
@@ -33,11 +33,56 @@ export default async function ResumePage({
   const degreeByLocale = personalInfo.education.degree[locale];
   const majorByLocale = personalInfo.education.major[locale];
 
-  const getSkillBarColor = (level: number): string => {
-    if (level >= 90) return "#27ae60";
-    if (level >= 80) return "#3498db";
+  // Filter skills and categorize by proficiency level
+  const filteredSkills = skills.filter(
+    (skill) =>
+      skill.name !== "Terraform" &&
+      skill.name !== "Spring-boot" &&
+      skill.name !== "Three.js",
+  );
 
-    return "#95a5a6";
+  const expertSkills = filteredSkills.filter((skill) => skill.level >= 95);
+  const advancedSkills = filteredSkills.filter(
+    (skill) => skill.level >= 85 && skill.level < 95,
+  );
+  const competentSkills = filteredSkills.filter((skill) => skill.level < 85);
+
+  // Skill emoji mapping for categories
+  const getSkillEmoji = (skillName: string): string => {
+    if (
+      skillName.includes("Kubernetes") ||
+      skillName.includes("AWS") ||
+      skillName.includes("Docker") ||
+      skillName.includes("Linux")
+    )
+      return "🏗️";
+    if (
+      skillName.includes("Kafka") ||
+      skillName.includes("RabbitMQ") ||
+      skillName.includes("Airflow") ||
+      skillName.includes("Grafana") ||
+      skillName.includes("Prometheus") ||
+      skillName.includes("OpenTelemetry")
+    )
+      return "📊";
+    if (
+      skillName.includes("Python") ||
+      skillName.includes("Django") ||
+      skillName.includes("FastAPI") ||
+      skillName.includes("Go") ||
+      skillName.includes("Node.js")
+    )
+      return "💻";
+    if (
+      skillName.includes("React") ||
+      skillName.includes("Vue") ||
+      skillName.includes("Next.js") ||
+      skillName.includes("TypeScript")
+    )
+      return "🎨";
+    if (skillName.includes("Flutter")) return "📱";
+
+    return "⚙️";
   };
 
   return (
@@ -169,8 +214,8 @@ export default async function ResumePage({
           </div>
         </section>
 
-        {/* Technical Skills */}
-        <section style={{ marginBottom: "24px" }}>
+        {/* Skills & Certifications */}
+        <section style={{ marginBottom: "16px" }}>
           <h2
             style={{
               fontSize: "16pt",
@@ -181,68 +226,218 @@ export default async function ResumePage({
               color: "#2c3e50",
             }}
           >
-            {dict.resume.skills}
+            {dict.resume.skillsAndCertifications}
           </h2>
+
+          {/* Color Legend */}
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "12px",
-              fontSize: "9pt",
+              display: "flex",
+              gap: "16px",
+              marginBottom: "12px",
+              fontSize: "8pt",
+              color: "#7f8c8d",
+              alignItems: "center",
             }}
           >
-            {skills.map((skill, index) => (
+            <span style={{ fontWeight: "600" }}>{dict.resume.legend}:</span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <span
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  backgroundColor: "#17c964",
+                  borderRadius: "2px",
+                }}
+              />
+              {dict.resume.legendExpert}
+            </span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <span
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  backgroundColor: "#006fee",
+                  borderRadius: "2px",
+                }}
+              />
+              {dict.resume.legendAdvanced}
+            </span>
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <span
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  backgroundColor: "#d4d4d8",
+                  borderRadius: "2px",
+                }}
+              />
+              {dict.resume.legendCompetent}
+            </span>
+          </div>
+
+          {/* Expert Level Skills */}
+          {expertSkills.length > 0 && (
+            <div style={{ marginBottom: "10px" }}>
               <div
-                key={index}
                 style={{
                   display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  backgroundColor: index % 2 === 0 ? "#ffffff" : "#f8f9fa",
-                  padding: "8px",
-                  borderRadius: "4px",
+                  flexWrap: "wrap",
+                  gap: "6px",
+                  fontSize: "9pt",
                 }}
               >
-                <span
-                  style={{
-                    fontWeight: "600",
-                    minWidth: "140px",
-                    fontSize: "9pt",
-                  }}
-                >
-                  {skill.name}
-                </span>
-                <div style={{ flex: 1 }}>
-                  <Progress
-                    aria-label={skill.name}
-                    classNames={{
-                      base: "max-w-full",
-                      track: "h-2",
-                      indicator: `bg-[${getSkillBarColor(skill.level)}]`,
-                    }}
+                {expertSkills.map((skill, index) => (
+                  <Chip
+                    key={index}
+                    color="success"
                     size="sm"
-                    style={
-                      {
-                        "--heroui-progress-indicator": getSkillBarColor(
-                          skill.level,
-                        ),
-                      } as React.CSSProperties
-                    }
-                    value={skill.level}
-                  />
-                </div>
-                <span
+                    style={{
+                      fontSize: "8pt",
+                      height: "24px",
+                      backgroundColor: "#17c964",
+                      color: "#ffffff",
+                    }}
+                    variant="flat"
+                  >
+                    {getSkillEmoji(skill.name)} {skill.name}
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Advanced Level Skills */}
+          {advancedSkills.length > 0 && (
+            <div style={{ marginBottom: "10px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "6px",
+                  fontSize: "9pt",
+                }}
+              >
+                {advancedSkills.map((skill, index) => (
+                  <Chip
+                    key={index}
+                    color="primary"
+                    size="sm"
+                    style={{
+                      fontSize: "8pt",
+                      height: "24px",
+                      backgroundColor: "#006fee",
+                      color: "#ffffff",
+                    }}
+                    variant="flat"
+                  >
+                    {getSkillEmoji(skill.name)} {skill.name}
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Competent Level Skills */}
+          {competentSkills.length > 0 && (
+            <div style={{ marginBottom: "10px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "6px",
+                  fontSize: "9pt",
+                }}
+              >
+                {competentSkills.map((skill, index) => (
+                  <Chip
+                    key={index}
+                    color="default"
+                    size="sm"
+                    style={{
+                      fontSize: "8pt",
+                      height: "24px",
+                      backgroundColor: "#d4d4d8",
+                      color: "#27272a",
+                    }}
+                    variant="flat"
+                  >
+                    {getSkillEmoji(skill.name)} {skill.name}
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Certifications */}
+          <div
+            style={{
+              marginTop: "16px",
+              paddingTop: "12px",
+              borderTop: "1px solid #e0e0e0",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: "11pt",
+                fontWeight: "600",
+                marginBottom: "8px",
+                color: "#2c3e50",
+              }}
+            >
+              🏆 {dict.resume.certifications}
+            </h3>
+            <div style={{ fontSize: "9pt" }}>
+              {certifications.map((cert, index) => (
+                <div
+                  key={index}
                   style={{
-                    fontSize: "8pt",
-                    color: "#7f8c8d",
-                    minWidth: "35px",
-                    textAlign: "right",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "6px",
+                    padding: "6px 8px",
+                    backgroundColor: index % 2 === 0 ? "#ffffff" : "#f8f9fa",
+                    borderRadius: "4px",
                   }}
                 >
-                  {skill.level}%
-                </span>
-              </div>
-            ))}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      flex: 1,
+                    }}
+                  >
+                    {cert.logo && (
+                      <Image
+                        alt={cert.org}
+                        src={cert.logo}
+                        style={{
+                          width: "20px",
+                          height: "20px",
+                          objectFit: "contain",
+                          flexShrink: 0,
+                        }}
+                      />
+                    )}
+                    <span style={{ fontWeight: "600", fontSize: "9pt" }}>
+                      {cert.name}
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "8pt",
+                      color: "#7f8c8d",
+                      whiteSpace: "nowrap",
+                      marginLeft: "8px",
+                    }}
+                  >
+                    {cert.date}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -738,50 +933,8 @@ export default async function ResumePage({
           </div>
         </section>
 
-        {/* Page break before certifications */}
+        {/* Page break before education */}
         <div style={{ pageBreakBefore: "always" }} />
-
-        {/* Certifications */}
-        <section style={{ marginBottom: "24px" }}>
-          <h2
-            style={{
-              fontSize: "16pt",
-              fontWeight: "bold",
-              marginBottom: "12px",
-              borderBottom: "1px solid #7f8c8d",
-              paddingBottom: "4px",
-              color: "#2c3e50",
-            }}
-          >
-            {dict.resume.certifications}
-          </h2>
-          <div>
-            {certifications.map((cert, index) => (
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "start",
-                  marginBottom: "12px",
-                  backgroundColor: index % 2 === 0 ? "#ffffff" : "#f8f9fa",
-                  padding: "8px",
-                  borderRadius: "4px",
-                }}
-              >
-                <div style={{ flex: 1 }}>
-                  <h3 style={{ fontSize: "10pt", fontWeight: "600" }}>
-                    {cert.name}
-                  </h3>
-                  <p style={{ fontSize: "8pt", color: "#7f8c8d" }}>
-                    {cert.org}
-                  </p>
-                </div>
-                <p style={{ fontSize: "9pt", color: "#7f8c8d" }}>{cert.date}</p>
-              </div>
-            ))}
-          </div>
-        </section>
 
         {/* Education */}
         <section style={{ marginBottom: "24px" }}>

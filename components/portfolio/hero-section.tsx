@@ -48,29 +48,6 @@ export default function HeroSection({
         >
           {description}
         </p>
-        <div className="flex justify-center gap-4">
-          <Button
-            as={Link}
-            className="bg-transparent border-2"
-            href="https://github.com/seongpil0948"
-            style={{
-              borderColor: "var(--color-text-primary)",
-              color: "var(--color-text-primary)",
-            }}
-            target="_blank"
-            variant="flat"
-          >
-            {dict.buttons.visitGithub}
-          </Button>
-          <Button
-            as={Link}
-            color="primary"
-            href="http://all-ad.in"
-            style={{ backgroundColor: "var(--color-primary)" }}
-          >
-            {dict.buttons.visitPortfolio}
-          </Button>
-        </div>
       </div>
 
       {/* Canvas animation - absolute positioned */}

@@ -16,7 +16,7 @@ export default function CertificationsContent({
   // Add status to certifications based on their index
   const certsWithStatus = certifications.map((cert, idx) => ({
     ...cert,
-    status: idx < 3 ? ("certified" as const) : ("in-progress" as const),
+    status: "certified",
   }));
 
   return (
