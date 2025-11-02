@@ -158,3 +158,60 @@ export const portfolioLinks: PortfolioLink[] = [
   },
   { name: "All-ad", url: "http://all-ad.in" },
 ];
+
+/**
+ * Project image paths organized by project key
+ */
+export const projectImages = {
+  monitoring: [
+    "/projects/otel-grafana/Grafana - System Dashboard.png",
+    "/projects/otel-grafana/Grafana - Networking.png",
+  ],
+  dataLake: ["/projects/business-grafana/Grafana NPS.png"],
+  theshop: [
+    "/projects/theshop/TheShop_Pharmacy.png",
+    "/projects/theshop/TheShop_Seller.png",
+  ],
+  gateway: ["/projects/APISIX-Dashboard.png"],
+  airflow: ["/projects/Aiflow.png"],
+  ixiStudio: [
+    "/projects/ixi-studio/0.png",
+    "/projects/ixi-studio/1.png",
+    "/projects/ixi-studio/2.png",
+    "/projects/ixi-studio/3.png",
+    "/projects/ixi-studio/4.png",
+  ],
+  ixiAdmin: [
+    "/projects/ixi-admin/1.png",
+    "/projects/ixi-admin/2.png",
+    "/projects/ixi-admin/3.png",
+    "/projects/ixi-admin/4.png",
+    "/projects/ixi-admin/5.png",
+    "/projects/ixi-admin/6.png",
+  ],
+  drone: [
+    "/projects/drone/1.jpeg",
+    "/projects/drone/2.jpeg",
+    "/projects/drone/3.png",
+    "/projects/drone/4.png",
+  ],
+  robotPlatform: [
+    "/projects/robot-platform/1.png",
+    "/projects/robot-platform/2.png",
+    "/projects/robot-platform/3.png",
+    "/projects/robot-platform/4.png",
+  ],
+  inoutbox: [
+    "/projects/iobox/inout-login.png",
+    "/projects/iobox/main.png",
+    "/projects/iobox/shop-main.png",
+    "/projects/iobox/uncle-main.png",
+    "/projects/iobox/vendor-main.png",
+    "/projects/iobox/inquiry.png",
+    "/projects/iobox/uncle-app-1.png",
+    "/projects/iobox/uncle-app-2.png",
+  ],
+  campi: ["/projects/campi/feed.jpg", "/projects/campi/my-page.jpg"],
+  virtualTryOn: ["/projects/try-on.png"],
+  intellisysWebsite: ["/projects/intellisys.png"],
+} as const;

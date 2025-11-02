@@ -19,28 +19,30 @@ export default function HeroSection({
   dict,
   locale,
 }: HeroSectionProps) {
+  const nameDisplay =
+    locale === "ko" ? (
+      <>
+        {personalInfo.name.ko}{" "}
+        <span style={{ color: "var(--color-primary)" }}>
+          ({personalInfo.name.en})
+        </span>
+      </>
+    ) : (
+      <>
+        {personalInfo.name.en}{" "}
+        <span style={{ color: "var(--color-primary)" }}>
+          ({personalInfo.name.ko})
+        </span>
+      </>
+    );
+
   return (
     <section className="max-w-4xl mx-auto px-6 relative">
-      {/* Text content - centered */}
       <div className="text-center">
         <h1
           className={`text-5xl md:text-6xl font-bold mb-4 ${nanumMyeongjo.className}`}
         >
-          {locale === "ko" ? (
-            <>
-              {personalInfo.name.ko}{" "}
-              <span style={{ color: "var(--color-primary)" }}>
-                ({personalInfo.name.en})
-              </span>
-            </>
-          ) : (
-            <>
-              {personalInfo.name.en}{" "}
-              <span style={{ color: "var(--color-primary)" }}>
-                ({personalInfo.name.ko})
-              </span>
-            </>
-          )}
+          {nameDisplay}
         </h1>
         <p
           className="text-xl mb-8 max-w-2xl mx-auto"
@@ -50,7 +52,6 @@ export default function HeroSection({
         </p>
       </div>
 
-      {/* Canvas animation - absolute positioned */}
       <div
         className="hidden md:block"
         style={{

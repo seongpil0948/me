@@ -19,7 +19,7 @@ import "swiper/css/scrollbar";
 interface ProjectImageSwiperProps {
   alt?: string;
   autoplay?: boolean;
-  images: string[];
+  images: readonly string[];
 }
 
 export default function ProjectImageSwiper({

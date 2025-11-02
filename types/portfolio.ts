@@ -71,66 +71,111 @@ export interface SummaryStats {
   dailyMessages: string;
 }
 
+/**
+ * Project details with localized content
+ */
+export interface ProjectDetails {
+  title: string;
+  subtitle: string;
+  content: string[];
+}
+
+/**
+ * Teamwork skills structure
+ */
+export interface TeamworkSkills {
+  jiraConfluence: string;
+  gitTools: string;
+  mcpSeminar: string;
+  crossFunctional: string;
+}
+
+/**
+ * Profile section of dictionary - contains both string fields and nested teamwork object
+ */
+export interface ProfileDictionary extends Record<string, any> {
+  skills: string;
+  teamworkSkills: string;
+  teamwork: TeamworkSkills;
+}
+
+/**
+ * Resume section of dictionary
+ */
+export interface ResumeDictionary {
+  title: string;
+  summary: string;
+  contact: string;
+  education: string;
+  skills: string;
+  experience: string;
+  projects: string;
+  certifications: string;
+  downloadPdf: string;
+  errorDetection: string;
+  costSavings: string;
+  deploymentSpeedup: string;
+  logRetention: string;
+  projectRevenue: string;
+  dailyMessages: string;
+}
+
+/**
+ * Button labels
+ */
+export interface ButtonLabels {
+  visitGithub: string;
+  visitPortfolio: string;
+  downloadResume: string;
+}
+
+/**
+ * Hero section of dictionary
+ */
+export interface HeroDictionary {
+  greeting: string;
+  title: string;
+  description: string;
+}
+
+/**
+ * Projects section with all project details
+ */
+export interface ProjectsDictionary {
+  monitoring: ProjectDetails;
+  dataLake: ProjectDetails;
+  theshop: ProjectDetails;
+  gateway: ProjectDetails;
+  airflow: ProjectDetails;
+  ixiStudio: ProjectDetails;
+  ixiAdmin: ProjectDetails;
+  drone: ProjectDetails;
+  robotPlatform: ProjectDetails;
+  inoutbox: ProjectDetails;
+  campi: ProjectDetails;
+  virtualTryOn: ProjectDetails;
+  intellisysWebsite: ProjectDetails;
+  [key: string]: ProjectDetails | string;
+}
+
+/**
+ * Complete dictionary interface with all translations
+ */
 export interface Dictionary {
   nav: Record<string, string>;
-  hero: {
-    greeting: string;
-    title: string;
-    description: string;
-  };
+  hero: HeroDictionary;
   common: Record<string, string>;
-  profile: Record<string, string | any> & {
-    teamwork: {
-      jiraConfluence: string;
-      gitTools: string;
-      mcpSeminar: string;
-      crossFunctional: string;
-    };
-  };
+  profile: ProfileDictionary;
   experience: Record<string, any>;
   certifications: Record<string, string>;
-  projects: Record<string, string | any> & {
-    monitoring: { title: string; subtitle: string; content: string[] };
-    dataLake: { title: string; subtitle: string; content: string[] };
-    theshop: { title: string; subtitle: string; content: string[] };
-    gateway: { title: string; subtitle: string; content: string[] };
-    airflow: { title: string; subtitle: string; content: string[] };
-    ixiStudio: { title: string; subtitle: string; content: string[] };
-    ixiAdmin: { title: string; subtitle: string; content: string[] };
-    drone: { title: string; subtitle: string; content: string[] };
-    robotPlatform: { title: string; subtitle: string; content: string[] };
-    inoutbox: { title: string; subtitle: string; content: string[] };
-    campi: { title: string; subtitle: string; content: string[] };
-    virtualTryOn: { title: string; subtitle: string; content: string[] };
-    intellisysWebsite: { title: string; subtitle: string; content: string[] };
-  };
+  projects: ProjectsDictionary;
   reviews: Record<string, any>;
-  buttons: {
-    visitGithub: string;
-    visitPortfolio: string;
-    downloadResume: string;
-  };
+  buttons: ButtonLabels;
   tabs: Record<string, string>;
   companies: Record<string, string>;
   dates: Record<string, string>;
   achievements: Record<string, string>;
-  resume: {
-    title: string;
-    summary: string;
-    contact: string;
-    education: string;
-    skills: string;
-    experience: string;
-    projects: string;
-    certifications: string;
-    downloadPdf: string;
-    errorDetection: string;
-    costSavings: string;
-    deploymentSpeedup: string;
-    logRetention: string;
-    projectRevenue: string;
-    dailyMessages: string;
-  };
+  resume: ResumeDictionary;
 }
 
 export interface PortfolioData {
@@ -140,4 +185,14 @@ export interface PortfolioData {
   portfolioLinks: PortfolioLink[];
   dict: Dictionary;
   description: string;
+}
+
+export type Category1 = "General" | "Infrastructure" | "Frontend" | "Backend";
+
+export interface InterviewQuestion {
+  id: number;
+  category1: Category1;
+  category2: string;
+  question: string;
+  answer: string;
 }

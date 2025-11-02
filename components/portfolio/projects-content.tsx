@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Dictionary } from "@/types/portfolio";
 import { Locale } from "@/app/[locale]/dictionaries";
+import { projectImages } from "@/data/portfolio";
 
 import ProjectImageSwiper from "./project-image-swiper";
 
@@ -14,136 +15,107 @@ interface ProjectsContentProps {
 
 interface Project {
   content: string[];
-  images?: string[];
+  images?: readonly string[];
   subtitle: string;
   title: string;
 }
 
+const DEFAULT_EXPANDED_COUNT = 3;
+
 export default function ProjectsContent({ dict }: ProjectsContentProps) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
-  const projects: Project[] = [
-    {
-      title: dict.projects.monitoring.title,
-      subtitle: dict.projects.monitoring.subtitle,
-      content: dict.projects.monitoring.content,
-      images: [
-        "/projects/otel-grafana/Grafana - System Dashboard.png",
-        "/projects/otel-grafana/Grafana - Networking.png",
-      ],
-    },
-    {
-      title: dict.projects.dataLake.title,
-      subtitle: dict.projects.dataLake.subtitle,
-      content: dict.projects.dataLake.content,
-      images: ["/projects/business-grafana/Grafana NPS.png"],
-    },
-    {
-      title: dict.projects.theshop.title,
-      subtitle: dict.projects.theshop.subtitle,
-      content: dict.projects.theshop.content,
-      images: [
-        "/projects/theshop/TheShop_Pharmacy.png",
-        "/projects/theshop/TheShop_Seller.png",
-      ],
-    },
-    {
-      title: dict.projects.gateway.title,
-      subtitle: dict.projects.gateway.subtitle,
-      content: dict.projects.gateway.content,
-      images: ["/projects/APISIX-Dashboard.png"],
-    },
-    {
-      title: dict.projects.airflow.title,
-      subtitle: dict.projects.airflow.subtitle,
-      content: dict.projects.airflow.content,
-      images: ["/projects/Aiflow.png"],
-    },
-    {
-      title: dict.projects.ixiStudio.title,
-      subtitle: dict.projects.ixiStudio.subtitle,
-      content: dict.projects.ixiStudio.content,
-      images: [
-        "/projects/ixi-studio/0.png",
-        "/projects/ixi-studio/1.png",
-        "/projects/ixi-studio/2.png",
-        "/projects/ixi-studio/3.png",
-        "/projects/ixi-studio/4.png",
-      ],
-    },
-    {
-      title: dict.projects.ixiAdmin.title,
-      subtitle: dict.projects.ixiAdmin.subtitle,
-      content: dict.projects.ixiAdmin.content,
-      images: [
-        "/projects/ixi-admin/1.png",
-        "/projects/ixi-admin/2.png",
-        "/projects/ixi-admin/3.png",
-        "/projects/ixi-admin/4.png",
-        "/projects/ixi-admin/5.png",
-        "/projects/ixi-admin/6.png",
-      ],
-    },
-    {
-      title: dict.projects.drone.title,
-      subtitle: dict.projects.drone.subtitle,
-      content: dict.projects.drone.content,
-      images: [
-        "/projects/drone/1.jpeg",
-        "/projects/drone/2.jpeg",
-        "/projects/drone/3.png",
-        "/projects/drone/4.png",
-      ],
-    },
-    {
-      title: dict.projects.robotPlatform.title,
-      subtitle: dict.projects.robotPlatform.subtitle,
-      content: dict.projects.robotPlatform.content,
-      images: [
-        "/projects/robot-platform/1.png",
-        "/projects/robot-platform/2.png",
-        "/projects/robot-platform/3.png",
-        "/projects/robot-platform/4.png",
-      ],
-    },
-    {
-      title: dict.projects.inoutbox.title,
-      subtitle: dict.projects.inoutbox.subtitle,
-      content: dict.projects.inoutbox.content,
-      images: [
-        "/projects/iobox/inout-login.png",
-        "/projects/iobox/main.png",
-        "/projects/iobox/shop-main.png",
-        "/projects/iobox/uncle-main.png",
-        "/projects/iobox/vendor-main.png",
-        "/projects/iobox/inquiry.png",
-        "/projects/iobox/uncle-app-1.png",
-        "/projects/iobox/uncle-app-2.png",
-      ],
-    },
-    {
-      title: dict.projects.campi.title,
-      subtitle: dict.projects.campi.subtitle,
-      content: dict.projects.campi.content,
-      images: ["/projects/campi/feed.jpg", "/projects/campi/my-page.jpg"],
-    },
-    {
-      title: dict.projects.virtualTryOn.title,
-      subtitle: dict.projects.virtualTryOn.subtitle,
-      content: dict.projects.virtualTryOn.content,
-      images: ["/projects/try-on.png"],
-    },
-    {
-      title: dict.projects.intellisysWebsite.title,
-      subtitle: dict.projects.intellisysWebsite.subtitle,
-      content: dict.projects.intellisysWebsite.content,
-      images: ["/projects/intellisys.png"],
-    },
-  ];
+  const projects: Project[] = useMemo(
+    () => [
+      {
+        title: dict.projects.monitoring.title,
+        subtitle: dict.projects.monitoring.subtitle,
+        content: dict.projects.monitoring.content,
+        images: projectImages.monitoring,
+      },
+      {
+        title: dict.projects.dataLake.title,
+        subtitle: dict.projects.dataLake.subtitle,
+        content: dict.projects.dataLake.content,
+        images: projectImages.dataLake,
+      },
+      {
+        title: dict.projects.theshop.title,
+        subtitle: dict.projects.theshop.subtitle,
+        content: dict.projects.theshop.content,
+        images: projectImages.theshop,
+      },
+      {
+        title: dict.projects.gateway.title,
+        subtitle: dict.projects.gateway.subtitle,
+        content: dict.projects.gateway.content,
+        images: projectImages.gateway,
+      },
+      {
+        title: dict.projects.airflow.title,
+        subtitle: dict.projects.airflow.subtitle,
+        content: dict.projects.airflow.content,
+        images: projectImages.airflow,
+      },
+      {
+        title: dict.projects.ixiStudio.title,
+        subtitle: dict.projects.ixiStudio.subtitle,
+        content: dict.projects.ixiStudio.content,
+        images: projectImages.ixiStudio,
+      },
+      {
+        title: dict.projects.ixiAdmin.title,
+        subtitle: dict.projects.ixiAdmin.subtitle,
+        content: dict.projects.ixiAdmin.content,
+        images: projectImages.ixiAdmin,
+      },
+      {
+        title: dict.projects.drone.title,
+        subtitle: dict.projects.drone.subtitle,
+        content: dict.projects.drone.content,
+        images: projectImages.drone,
+      },
+      {
+        title: dict.projects.robotPlatform.title,
+        subtitle: dict.projects.robotPlatform.subtitle,
+        content: dict.projects.robotPlatform.content,
+        images: projectImages.robotPlatform,
+      },
+      {
+        title: dict.projects.inoutbox.title,
+        subtitle: dict.projects.inoutbox.subtitle,
+        content: dict.projects.inoutbox.content,
+        images: projectImages.inoutbox,
+      },
+      {
+        title: dict.projects.campi.title,
+        subtitle: dict.projects.campi.subtitle,
+        content: dict.projects.campi.content,
+        images: projectImages.campi,
+      },
+      {
+        title: dict.projects.virtualTryOn.title,
+        subtitle: dict.projects.virtualTryOn.subtitle,
+        content: dict.projects.virtualTryOn.content,
+        images: projectImages.virtualTryOn,
+      },
+      {
+        title: dict.projects.intellisysWebsite.title,
+        subtitle: dict.projects.intellisysWebsite.subtitle,
+        content: dict.projects.intellisysWebsite.content,
+        images: projectImages.intellisysWebsite,
+      },
+    ],
+    [dict]
+  );
 
   const toggleExpanded = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
+
+  const isExpanded = (idx: number) =>
+    expandedIndex === idx ||
+    (expandedIndex === null && idx < DEFAULT_EXPANDED_COUNT);
 
   return (
     <div className="py-12">
@@ -177,7 +149,7 @@ export default function ProjectsContent({ dict }: ProjectsContentProps) {
                   </div>
 
                   <svg
-                    className={`w-5 h-5 transform transition-transform ${expandedIndex === idx || idx < 3 ? "rotate-180" : ""}`}
+                    className={`w-5 h-5 transform transition-transform ${isExpanded(idx) ? "rotate-180" : ""}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -192,8 +164,7 @@ export default function ProjectsContent({ dict }: ProjectsContentProps) {
                 </div>
               </button>
 
-              {(expandedIndex === idx ||
-                (expandedIndex === null && idx < 3)) && (
+              {isExpanded(idx) && (
                 <div className="px-2 pb-4">
                   {project.images && project.images.length > 0 && (
                     <div className="mb-4">

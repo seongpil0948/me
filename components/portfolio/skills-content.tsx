@@ -8,15 +8,20 @@ interface SkillsContentProps {
   dict: Dictionary;
 }
 
+const getSkillColor = (index: number): string => {
+  const colors = [
+    "var(--color-skill-1)",
+    "var(--color-skill-2)",
+    "var(--color-skill-3)",
+  ];
+
+  return colors[index % colors.length];
+};
+
 export default function SkillsContent({ skills, dict }: SkillsContentProps) {
   const skillsWithColor = skills.map((skill, index) => ({
     ...skill,
-    color:
-      index % 3 === 0
-        ? "var(--color-skill-1)"
-        : index % 3 === 1
-          ? "var(--color-skill-2)"
-          : "var(--color-skill-3)",
+    color: getSkillColor(index),
   }));
 
   return (

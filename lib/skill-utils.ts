@@ -18,7 +18,7 @@ export function categorizeSkills(skills: Skill[]) {
   return {
     expert: filteredSkills.filter((skill) => skill.level >= 95),
     advanced: filteredSkills.filter(
-      (skill) => skill.level >= 85 && skill.level < 95
+      (skill) => skill.level >= 85 && skill.level < 95,
     ),
     competent: filteredSkills.filter((skill) => skill.level < 85),
   };
