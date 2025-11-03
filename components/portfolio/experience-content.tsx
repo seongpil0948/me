@@ -1,12 +1,15 @@
+import { Locale } from "@/app/[locale]/dictionaries";
 import { Dictionary, Experience } from "@/types/portfolio";
 
 interface ExperienceContentProps {
   experiences: Experience[];
   dict: Dictionary;
+  locale: Locale;
 }
 
 export default function ExperienceContent({
   experiences,
+  locale,
 }: ExperienceContentProps) {
   return (
     <div className="py-12">
@@ -27,7 +30,7 @@ export default function ExperienceContent({
                 className="text-xl font-bold mb-1"
                 style={{ color: "var(--color-text-primary)" }}
               >
-                {exp.position}
+                {exp.position[locale]}
               </h3>
               <p
                 className="text-lg mb-1"
@@ -39,7 +42,7 @@ export default function ExperienceContent({
                 className="text-sm"
                 style={{ color: "var(--color-text-tertiary)" }}
               >
-                {exp.period}
+                {exp.period[locale]}
               </p>
             </div>
 
@@ -47,11 +50,11 @@ export default function ExperienceContent({
               className="mb-4"
               style={{ color: "var(--color-text-secondary)" }}
             >
-              {exp.description}
+              {exp.description[locale]}
             </p>
 
             <ul className="space-y-2">
-              {exp.achievements.map((achievement, aidx) => (
+              {exp.achievements[locale].map((achievement, aidx) => (
                 <li
                   key={aidx}
                   className="text-sm"

@@ -32,7 +32,11 @@ export default function PortfolioSection({
           }
           dict={dict}
           experienceContent={
-            <ExperienceContent dict={dict} experiences={experiences} />
+            <ExperienceContent
+              dict={dict}
+              experiences={experiences}
+              locale={locale}
+            />
           }
           projectsContent={<ProjectsContent dict={dict} locale={locale} />}
           skillsCertificationsContent={

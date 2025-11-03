@@ -13,10 +13,26 @@ export interface Certification {
 
 export interface Experience {
   company: string;
-  position: string;
-  period: string;
-  description: string;
-  achievements: string[];
+  position: {
+    ko: string;
+    en: string;
+    zh: string;
+  };
+  period: {
+    ko: string;
+    en: string;
+    zh: string;
+  };
+  description: {
+    ko: string;
+    en: string;
+    zh: string;
+  };
+  achievements: {
+    ko: string[];
+    en: string[];
+    zh: string[];
+  };
 }
 
 export interface PortfolioLink {

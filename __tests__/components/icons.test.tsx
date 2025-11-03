@@ -27,7 +27,7 @@ describe("Icons", () => {
 
     it("should prioritize size over width/height when size is provided", () => {
       const { container } = render(
-        <GithubIcon height={48} size={32} width={48} />
+        <GithubIcon height={48} size={32} width={48} />,
       );
       const svg = container.querySelector("svg");
 

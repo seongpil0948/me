@@ -106,7 +106,7 @@ export default function ProjectsContent({ dict }: ProjectsContentProps) {
         images: projectImages.intellisysWebsite,
       },
     ],
-    [dict]
+    [dict],
   );
 
   const toggleExpanded = (index: number) => {

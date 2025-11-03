@@ -10,19 +10,19 @@ describe("locale-utils", () => {
   describe("getLocaleFromPathname", () => {
     it("should extract locale from path", () => {
       expect(getLocaleFromPathname("/ko/about", ["ko", "en", "zh"], "ko")).toBe(
-        "ko"
+        "ko",
       );
       expect(
-        getLocaleFromPathname("/en/contact", ["ko", "en", "zh"], "ko")
+        getLocaleFromPathname("/en/contact", ["ko", "en", "zh"], "ko"),
       ).toBe("en");
       expect(
-        getLocaleFromPathname("/zh/profile", ["ko", "en", "zh"], "ko")
+        getLocaleFromPathname("/zh/profile", ["ko", "en", "zh"], "ko"),
       ).toBe("zh");
     });
 
     it("should return default locale for invalid locale", () => {
       expect(
-        getLocaleFromPathname("/invalid/path", ["ko", "en", "zh"], "ko")
+        getLocaleFromPathname("/invalid/path", ["ko", "en", "zh"], "ko"),
       ).toBe("ko");
     });
 
@@ -38,10 +38,10 @@ describe("locale-utils", () => {
   describe("buildLocalePath", () => {
     it("should build path with new locale", () => {
       expect(buildLocalePath("/ko/about", "en", ["ko", "en", "zh"])).toBe(
-        "/en/about"
+        "/en/about",
       );
       expect(buildLocalePath("/en/contact", "zh", ["ko", "en", "zh"])).toBe(
-        "/zh/contact"
+        "/zh/contact",
       );
     });
 
@@ -52,16 +52,16 @@ describe("locale-utils", () => {
 
     it("should handle path without locale", () => {
       expect(buildLocalePath("/about", "ko", ["ko", "en", "zh"])).toBe(
-        "/ko/about"
+        "/ko/about",
       );
       expect(buildLocalePath("/contact/form", "en", ["ko", "en", "zh"])).toBe(
-        "/en/contact/form"
+        "/en/contact/form",
       );
     });
 
     it("should replace existing locale", () => {
       expect(buildLocalePath("/ko/about/team", "zh", ["ko", "en", "zh"])).toBe(
-        "/zh/about/team"
+        "/zh/about/team",
       );
     });
   });
@@ -69,23 +69,23 @@ describe("locale-utils", () => {
   describe("removeLocaleFromPathname", () => {
     it("should remove locale from pathname", () => {
       expect(removeLocaleFromPathname("/ko/about", ["ko", "en", "zh"])).toBe(
-        "/about"
+        "/about",
       );
       expect(removeLocaleFromPathname("/en/contact", ["ko", "en", "zh"])).toBe(
-        "/contact"
+        "/contact",
       );
     });
 
     it("should handle path without locale", () => {
       expect(removeLocaleFromPathname("/about", ["ko", "en", "zh"])).toBe(
-        "/about"
+        "/about",
       );
       expect(removeLocaleFromPathname("/", ["ko", "en", "zh"])).toBe("/");
     });
 
     it("should handle nested paths", () => {
       expect(
-        removeLocaleFromPathname("/ko/about/team", ["ko", "en", "zh"])
+        removeLocaleFromPathname("/ko/about/team", ["ko", "en", "zh"]),
       ).toBe("/about/team");
     });
   });
