@@ -179,9 +179,6 @@ export default async function ResumePage({
               <p className="text-[10pt] leading-relaxed text-gray-800 mb-2.5">
                 {dict.profile.aboutMeParagraph3}
               </p>
-              <p className="text-[9pt] leading-relaxed text-gray-800 mb-2">
-                {dict.profile.aboutMeParagraph3}
-              </p>
               <p className="text-[10pt] leading-relaxed text-gray-800 m-0">
                 {dict.profile.aboutMeParagraph4}
               </p>
