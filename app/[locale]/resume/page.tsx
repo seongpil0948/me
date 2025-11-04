@@ -129,7 +129,8 @@ export default async function ResumePage({
                   {dict.resume.university}
                 </td>
                 <td className="py-2.5 px-3 border border-gray-300">
-                  {schoolByLocale} · {degreeByLocale} · {majorByLocale}
+                  {schoolByLocale} · {degreeByLocale} · {majorByLocale} ·{" "}
+                  {dict.profile.education}: {personalInfo.education.gpa}
                 </td>
                 <td className="py-2.5 px-3 border border-gray-300 text-gray-600 whitespace-nowrap w-[15%] text-right">
                   {personalInfo.education.period}
