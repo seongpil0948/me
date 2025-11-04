@@ -23,7 +23,7 @@
     overflow: visible;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-    color-adjust: exact !important;
+    accent-color: exact !important;
   }
 
   /* Remove shadows and animations */
@@ -34,7 +34,8 @@
   }
 
   /* Page breaks */
-  .page-break {
+  .page-break,
+  .break-before-page {
     page-break-before: always;
   }
 
@@ -52,5 +53,45 @@
   ol,
   section {
     page-break-inside: avoid;
+  }
+
+  /* Improved typography for professional print */
+  body {
+    font-smooth: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Ensure consistent link colors in print */
+  a {
+    color: #2563eb !important;
+    text-decoration: none;
+  }
+
+  /* Professional color palette enforcement */
+  .text-gray-800 {
+    color: #1f2937 !important;
+  }
+
+  .text-gray-700 {
+    color: #374151 !important;
+  }
+
+  .text-gray-600 {
+    color: #4b5563 !important;
+  }
+
+  .border-gray-800 {
+    border-color: #1f2937 !important;
+  }
+
+  /* Ensure proper spacing in print */
+  .mb-6 {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .mb-3 {
+    margin-bottom: 0.75rem !important;
   }
 }

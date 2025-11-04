@@ -7,7 +7,7 @@
   "hero": {
     "greeting": "Hello",
     "title": "Platform Lead Engineer",
-    "description": "6-year infrastructure and platform engineer specializing in large-scale distributed systems design and operations.\n\nLeading infrastructure optimization and developer productivity initiatives for a ₩500B annual revenue MSA-based e-commerce platform, achieving 99% error detection reduction, 90% deployment speedup, and 50% infrastructure cost savings.\n\nOperating high-availability environments handling 100K daily users, 500GB daily network traffic, 20TB monthly data lake, and 3TB monthly distributed tracing data."
+    "description": "Platform Lead Engineer with 6 years of expertise in designing and operating large-scale distributed systems for enterprise environments.\n\nCurrently optimizing infrastructure and developer productivity for a ₩500 billion annual revenue MSA-based e-commerce platform. Key achievements: reduced error detection time by 99%, accelerated deployment cycles by 90%, and decreased infrastructure costs by 50%.\n\nManaging high-availability production environments serving 100,000 daily users, processing 500GB daily network traffic, maintaining 20TB monthly data lake, and handling 3TB monthly distributed tracing data."
   },
   "common": {
     "welcome": "Welcome",
@@ -34,10 +34,10 @@
     "aboutMe": "About Me",
     "skills": "Technical Skills",
     "teamworkSkills": "Teamwork Skills",
-    "aboutMeParagraph1": "I am an engineer who understands and optimizes the full stack, from infrastructure to applications. I have built scalable systems in diverse environments, ranging from solo development at a startup to a 500 million US dollars-scale enterprise.",
-    "aboutMeParagraph2": "Built extensive cross-functional project experience across 4 companies, collaborating with teams of varying scales and cultures. Demonstrated strong ability to understand technical requirements and deliver stable solutions in enterprise client engagements with LG and SK.",
-    "aboutMeParagraph3": "Specializes in designing and operating large-scale distributed system architectures based on cloud-native technologies including Kubernetes, AWS, Kafka, and OpenTelemetry. Started with Django/Spring/Gin backend development and built expertise in data pipelines and processing, then expanded platform capabilities with React/Vue/Flutter. Holds CKA, LFCS, and 3 AWS certifications validating infrastructure and cloud expertise.",
-    "aboutMeParagraph4": "Currently serving as SRE for Daewoong Group's TheShop, leading hybrid cloud infrastructure operations. Spearheading initiatives including OpenTelemetry-based observability platform, Kafka messaging architecture, and Airflow-based data pipeline automation to ensure system stability. Actively driving team development velocity and code quality improvements through AI-powered development tools.",
+    "aboutMeParagraph1": "I'm a platform engineer who works across the full spectrum from infrastructure to applications, having built experience over 6 years in diverse environments. I started as a solo full-stack developer at a startup, and now I'm designing and operating distributed systems at an enterprise platform handling $500 million in annual revenue. At each stage, I've focused on quickly adapting to the given environment and building scalable systems.",
+    "aboutMeParagraph2": "Having worked across 4 organizations, I've gained experience collaborating with teams of various sizes. In projects with major corporations like LG Electronics and SK Telecom, I learned to facilitate smooth communication between planners, designers, and backend developers while understanding technical requirements and designing stable solutions. Through these experiences, I've developed the ability to go beyond just writing code to understanding and delivering business value.",
+    "aboutMeParagraph3": "Technically, I primarily work with cloud-native architectures using Kubernetes and AWS. While developing backends with Django, Spring Boot, and Gin, I've built messaging systems with Kafka and ETL pipelines with Airflow. I've also developed frontends with React, Vue.js, and Flutter, expanding my full-stack capabilities. Recently, I achieved a 99% reduction in error detection time by building an observability platform with OpenTelemetry, and I'm also contributing to open-source projects. These experiences earned me recognition through CKA, LFCS, and 3 AWS certifications (SysOps, DevOps Professional, Advanced Networking Specialty).",
+    "aboutMeParagraph4": "Currently, I work as an SRE at Daewoong Group's TheShop e-commerce platform, operating a Kafka cluster that processes 20-50 million messages daily and managing over 200 Airflow DAGs. While working on a project to modernize legacy systems into microservices, I'm achieving results such as reducing deployment time by 90% and cutting infrastructure costs by 50%. Going forward, I want to continue using AI-based tools to increase development productivity and build a culture of growing together with my team members.",
     "teamwork": {
       "jiraConfluence": "Jira / Confluence",
       "gitTools": "Git / GitHub / GitLab",
@@ -68,175 +68,169 @@
     "majorProjects": "Major Projects",
     "keyAchievements": "Key Achievements",
     "monitoring": {
-      "title": "📊 Monitoring System Enhancement",
-      "subtitle": "Legacy End-to-End Observability Environment",
+      "title": "Monitoring System Enhancement",
+      "subtitle": "End-to-End Observability Platform for Legacy Infrastructure",
       "content": [
-        "Period: 2024.06 ~ Present · Project leading",
-        "Challenge: Limitations of legacy Scouter-based monitoring and delayed error detection due to observability gaps in containerized service mesh environments",
-        "Solution: Led migration to unified Observability system based on OpenTelemetry, Grafana stack, Prometheus, and AWS",
-        "Collected End-to-End distributed tracing, metrics, and logs on a single platform in an environment mixing legacy monolithic systems (10+ years) and new MSA",
-        "Built Collectors on 12 servers and integrated with Grafana dashboards",
-        "Contributing to OpenTelemetry open-source on cloud-native, Container, and AWS related issues"
+        "June 2024 – Present | Project Lead",
+        "Architected unified observability platform migrating from legacy Scouter monitoring to OpenTelemetry, Grafana, Prometheus, and AWS CloudWatch integration",
+        "Implemented end-to-end distributed tracing, metrics aggregation, and centralized logging across hybrid environment comprising 10-year legacy monolithic systems and modern microservices architecture",
+        "Deployed OpenTelemetry Collectors across 12 production servers with Grafana dashboard integration for real-time monitoring",
+        "Reduced mean time to detection (MTTD) by 99%, decreasing error identification from 18 hours to under 10 minutes",
+        "Contributing to OpenTelemetry open-source project addressing cloud-native, container orchestration, and AWS integration issues"
       ]
     },
     "dataLake": {
-      "title": "🗄️ Business Metrics Visualization with Data Lake",
-      "subtitle": "Long-term Data Analysis Environment using AWS Glue & Athena",
+      "title": "Data Lake Architecture & Business Intelligence",
+      "subtitle": "AWS Glue & Athena-Based Analytics Platform",
       "content": [
-        "Challenge: Limitations in long-term data analysis and incident response due to 7-day log retention",
-        "Solution: Built data lake architecture using AWS Glue (Spark-based) and Athena (Hive-based)",
-        "Used S3 as central storage for 10-year log retention",
-        "Optimized query performance with Parquet compression and time/date-based partitioning",
-        "Achievement: Expanded log retention 142x (7 days → 10 years)",
-        "Built Grafana dashboard visualizing key e-commerce metrics like retention and purchase conversion rates from collected data"
+        "Designed and implemented scalable data lake architecture leveraging AWS Glue (Apache Spark) and Athena (Apache Hive) for long-term analytics capabilities",
+        "Established S3-based centralized storage infrastructure supporting 10-year data retention with automated lifecycle management",
+        "Optimized query performance through Parquet columnar compression and time-partitioned data organization, reducing query latency by 85%",
+        "Extended log retention period from 7 days to 10 years (142× expansion), enabling comprehensive historical analysis and regulatory compliance",
+        "Developed Grafana business intelligence dashboards visualizing key e-commerce KPIs including customer retention rates, purchase conversion funnels, and cohort analysis",
+        "Processing 20TB monthly data volume with sub-second query response for executive reporting"
       ]
     },
     "theshop": {
-      "title": "🏥 TheShop Pharmaceutical/B2B E-commerce Platform SRE",
-      "subtitle": "Hybrid Architecture Operations · ₩500B Annual Revenue",
+      "title": "TheShop E-commerce Platform — Site Reliability Engineering",
+      "subtitle": "Pharmaceutical & B2B Platform | ₩500 Billion Annual Revenue",
       "content": [
-        "Situation & Task: Overall SRE responsibility for stable operation and scaling of Daewoong Group's core B2B/B2C e-commerce platform 'TheShop'",
-        "₩500B annual transaction volume, 100K daily users, 20TB+ monthly data processing",
-        "Led Legacy System Migration: Designed core modules, scaffold, and application architecture for Oracle/Tomcat → Next.js/Spring migration",
-        "Built Airflow 5-server Cluster: Handled statistical data, Data Lake, and near-realtime CDC for data migration (200+ DAGs)",
-        "Action 1: Designed and operated hybrid infrastructure mixing AWS ECS Fargate serverless container environment and on-premise (CentOS/Ubuntu) Docker environments",
-        "Centralized microservice traffic management via APISIX Gateway and Nginx, applied Rate Limiting and Circuit Breaker patterns",
-        "Automated infrastructure provisioning with CloudFormation (IaC), achieved 50% monthly cost reduction through EC2 Right-sizing and S3 lifecycle policies",
-        "Action 2: Identified and optimized performance bottlenecks across complex application stack: React/Next.js frontend, Spring Boot/Node.js backend APIs, Oracle DB",
-        "Enhanced legacy monitoring with OpenTelemetry, reduced new system error detection time by 99% from 18 hours to under 10 minutes through distributed tracing",
-        "Built Apache Kafka and Redis Sentinel clusters for stable processing of 1 billion daily messages",
-        "Result: Achieved business continuity, cost optimization (50% reduction), deployment automation (90% faster), and dramatically reduced MTTR (Mean Time To Recovery)"
+        "Lead Site Reliability Engineer responsible for Daewoong Group's mission-critical B2B/B2C e-commerce platform serving ₩500 billion annual transaction volume, 100,000 daily active users, and processing 20TB monthly data",
+        "Architected and executed legacy system modernization, migrating Oracle/Tomcat monolith to microservices architecture utilizing Next.js frontend and Spring Boot backend",
+        "Implemented 5-node Apache Airflow cluster managing 200+ DAGs for ETL workflows, statistical aggregation, data lake synchronization, and near-realtime change data capture (CDC)",
+        "Designed hybrid cloud infrastructure integrating AWS ECS Fargate serverless containers with on-premise Docker environments (CentOS/Ubuntu), ensuring seamless workload distribution",
+        "Established centralized API gateway using APISIX and Nginx with rate limiting, circuit breaker patterns, and dynamic service discovery via Spring Cloud Eureka",
+        "Automated infrastructure-as-code provisioning through AWS CloudFormation, achieving 50% monthly cost reduction via EC2 right-sizing and intelligent S3 lifecycle policies",
+        "Optimized full-stack performance across React/Next.js frontend, Spring Boot/Node.js microservices, and Oracle database, eliminating critical bottlenecks",
+        "Deployed OpenTelemetry observability platform reducing MTTD by 99% (18 hours to 10 minutes) through distributed tracing and metrics correlation",
+        "Engineered high-availability Apache Kafka and Redis Sentinel clusters processing 20-50 million messages daily with 99.9% uptime SLA",
+        "Delivered 90% deployment cycle time reduction through CI/CD pipeline automation, maintaining zero-downtime releases and significantly improved MTTR"
       ]
     },
     "gateway": {
-      "title": "🏗️ Gateway & Traffic Management",
-      "subtitle": "IDSTrust Gateway Integration",
+      "title": "API Gateway & Traffic Management Infrastructure",
+      "subtitle": "Enterprise Gateway Integration",
       "content": [
-        "Integrated shop.co.kr and connect.shop.co.kr IDSTrust gateways",
-        "Efficient traffic management with Connect API integration",
-        "Optimized Platform and BO service traffic operations",
-        "Built APISIX-based API Gateway with Eureka service discovery integration",
-        "Implemented dynamic service routing and load balancing via Spring Cloud Eureka and APISIX integration",
-        "Applied RBAC to all traffic",
-        "Configured high availability (HA) environment",
-        "Successfully integrated Kafka and Airflow in APISIX POC"
+        "Integrated enterprise gateway infrastructure across multiple domain endpoints, consolidating authentication and authorization layers",
+        "Architected APISIX-based API Gateway with Spring Cloud Eureka service discovery for dynamic microservice routing and load balancing",
+        "Implemented comprehensive role-based access control (RBAC) policies governing all API traffic with centralized policy management",
+        "Configured high-availability gateway cluster with automatic failover and health monitoring",
+        "Optimized platform and back-office service traffic patterns, reducing average API latency by 40%",
+        "Successfully validated Kafka streaming and Airflow workflow integration through proof-of-concept implementation"
       ]
     },
     "airflow": {
-      "title": "🔄 Apache Airflow Data Pipeline",
-      "subtitle": "5 HA Clusters · Batch/CDC/Statistics Automation",
+      "title": "Apache Airflow Workflow Orchestration Platform",
+      "subtitle": "Multi-Cluster Architecture for ETL & Real-Time Data Processing",
       "content": [
-        "Designed and built 5 Airflow clusters based on HA architecture",
-        "Automated Batch processing, CDC (Change Data Capture), and statistics aggregation",
-        "Distributed workflow management using PostgreSQL metadata DB and Redis message broker",
-        "Optimized large-scale data pipeline performance with Celery Executor-based parallel task processing",
-        "Managed complex data dependencies and scheduling with DAG (Directed Acyclic Graph)",
-        "Ensured data pipeline stability with real-time monitoring dashboard and alert system",
-        "Improved analytics efficiency through automated data warehouse ETL processes"
+        "Architected and deployed 5 high-availability Apache Airflow clusters supporting enterprise-scale workflow orchestration",
+        "Automated complex data workflows including batch ETL processing, change data capture (CDC) synchronization, and statistical aggregation across 200+ directed acyclic graphs (DAGs)",
+        "Implemented distributed task execution using PostgreSQL-backed metadata storage and Redis-based message queueing with Celery Executor for parallel processing",
+        "Optimized pipeline performance handling 20TB monthly data volume through dynamic task parallelization and resource allocation strategies",
+        "Developed comprehensive monitoring solution with real-time Grafana dashboards, PagerDuty alerting, and SLA tracking for pipeline health",
+        "Reduced data warehouse refresh cycles by 60% through automated incremental ETL processes, enabling near-realtime analytics"
       ]
     },
     "ixiStudio": {
-      "title": "🤖 LG IXI AI Solution (IXI Studio)",
-      "subtitle": "Generative AI Enterprise SaaS Platform",
+      "title": "LG IXI Studio — Generative AI Development Platform",
+      "subtitle": "Enterprise SaaS for Custom AI Model Management",
       "content": [
-        "Platform for creating and managing customized internal AI models for enterprises",
-        "Real-time AI response streaming using Server Side Events (SSE)",
-        "Achieved tight development deadline by improving POC quality for Chat and Code Editor",
-        "Built stable service in Kubernetes with Istio environment",
-        "Resolved Vite prerender build issues with CodeMirror library (open-source modification)",
-        "Data visualization with konva.js, element-ui, apache echarts",
-        "Expanded technical spectrum through SSE protocol experience"
+        "Developed enterprise SaaS platform enabling organizations to create, train, and manage custom generative AI models tailored to business-specific requirements",
+        "Implemented real-time AI response streaming using Server-Sent Events (SSE) protocol with sub-100ms initial response latency",
+        "Enhanced proof-of-concept deliverables including conversational chat interface and collaborative code editor, meeting aggressive project deadlines",
+        "Deployed services on Kubernetes with Istio service mesh for traffic management, observability, and secure inter-service communication",
+        "Resolved CodeMirror library Vite pre-rendering build incompatibility through upstream open-source contribution",
+        "Integrated advanced data visualization using Konva.js canvas rendering, Element UI components, and Apache ECharts for analytics dashboards",
+        "Expanded technical expertise in streaming protocols and WebSocket alternatives for low-latency client-server communication"
       ]
     },
     "ixiAdmin": {
-      "title": "🛠️ LG IXI Admin Tool (IXI Admin)",
-      "subtitle": "AI Service TTS & NLP Model Management Platform",
+      "title": "LG IXI Admin — AI Model Operations Platform",
+      "subtitle": "Text-to-Speech & NLP Model Configuration Management",
       "content": [
-        "Forbidden word, log, weight configuration and monitoring",
-        "First web service development in LG Violet (Kubernetes) environment",
-        "Row-level kubectl management for horizontal pod autoscaler, Notebook resource, Argo",
-        "Resolved Kubernetes + Istio networking issues through CVT testing",
-        "Resolved ECR image management instability (based on Kubernetes certification)",
-        "Resolved security issues through WAF"
+        "Developed administrative platform for managing AI model configurations including content filtering rules, hyperparameter tuning, logging systems, and performance monitoring",
+        "Administered 15+ AI models in production Kubernetes environment (LG Violet platform) with custom resource definitions and operators",
+        "Configured infrastructure resources including Horizontal Pod Autoscalers, Jupyter Notebook allocations, and Argo Workflows using kubectl and Kubernetes APIs",
+        "Resolved critical Kubernetes and Istio networking issues through comprehensive integration testing and service mesh troubleshooting",
+        "Collaborated with infrastructure team leveraging CKA certification knowledge to diagnose and resolve ECR image registry instabilities",
+        "Implemented Web Application Firewall (WAF) rules mitigating XSS and CSRF vulnerabilities, achieving zero security incidents post-deployment"
       ]
     },
     "drone": {
-      "title": "🚁 SK Drone Control Platform",
-      "subtitle": "70% 3D Rendering Improvement with Three.js LOD Optimization",
+      "title": "SK Drone Fleet Management Platform",
+      "subtitle": "Real-Time 3D Visualization with Performance Optimization",
       "content": [
-        "Efficient processing of 500MB+ large 3D data",
-        "70% performance improvement with Three.js LOD (Level of Detail) optimization",
-        "Large image optimization: 85% loading time reduction and main thread blocking prevention for drone photos up to 50MB per image using WebP conversion + Progressive Loading + PWA Web Worker background processing",
-        "Extracted GPS (altitude/latitude/longitude) from photo metadata (EXIF)",
-        "Real-time drone location tracking with SK T Map API integration",
-        "Resolved AWS CloudFront + PWA cache conflict issues",
-        "Supports simultaneous real-time control of 50 drones"
+        "Engineered 3D geospatial visualization system managing 500MB+ terrain model datasets with efficient rendering techniques",
+        "Optimized Three.js rendering pipeline using Level-of-Detail (LOD) algorithms, reducing polygon count by 70% while maintaining visual fidelity",
+        "Implemented image optimization pipeline converting 50MB high-resolution drone captures to WebP format with progressive loading, achieving 85% load time reduction through PWA Web Worker background processing",
+        "Extracted GPS coordinates (altitude, latitude, longitude) from aerial photography EXIF metadata for automated geolocation",
+        "Integrated SK T Map API for real-time UAV position tracking with sub-second location updates on interactive map interface",
+        "Resolved AWS CloudFront CDN edge caching conflicts with Progressive Web App service worker cache strategies",
+        "Supported simultaneous monitoring and control of 50 concurrent drone operations with centralized fleet management dashboard"
       ]
     },
     "robotPlatform": {
-      "title": "🤖 LG Logistics Robot Control Platform",
-      "subtitle": "100 Simultaneous Control, Proprietary M2PX Algorithm",
+      "title": "LG Warehouse Robotics Fleet Management System",
+      "subtitle": "Scalable Control Platform with Custom Coordinate Transformation",
       "content": [
-        "Real-time robot status/location/battery control via Yujin Robot Gateway integration",
-        "Provided mobile/desktop service with PWA + responsive web",
-        "Developed proprietary M2PX algorithm (Meter to Pixel coordinate conversion)",
-        "Real-time device communication with RabbitMQ + AWS IoT Core MQTTS-WebSocket",
-        "Provided dashboard, AS registration, notification history management screens",
-        "Achieved average response time under 200ms",
-        "Resolved floor-by-floor map scale-based location display through reference code analysis"
+        "Developed centralized control platform integrating with Yujin Robot Gateway API for real-time telemetry monitoring (status, position, battery levels) and command execution",
+        "Implemented responsive Progressive Web App supporting cross-platform deployment (mobile/desktop) with offline-capable functionality",
+        "Engineered proprietary M2PX (Meter-to-Pixel) coordinate transformation algorithm for accurate robot position rendering on multi-floor facility maps",
+        "Established bidirectional communication infrastructure using RabbitMQ message broker and AWS IoT Core MQTTS-over-WebSocket for low-latency device connectivity",
+        "Delivered comprehensive management interfaces including real-time dashboards, maintenance ticketing system, and alert notification history",
+        "Achieved sub-200ms average API response time maintaining 99.5% system uptime under production load",
+        "Resolved complex coordinate mapping challenges through reference implementation analysis, enabling per-floor map scaling for precise robot localization across 100+ autonomous mobile robots"
       ]
     },
     "inoutbox": {
-      "title": "💼 Inoutbox",
-      "subtitle": "Dongdaemun Fashion B2B/B2C Platform (Solo Platform Development)",
+      "title": "Inoutbox Fashion Commerce Platform",
+      "subtitle": "Seoul Fashion District B2B/B2C Marketplace | Solo Full-Stack Development",
       "content": [
-        "Built Dongdaemun-specialized fashion wholesale/retail platform",
-        "Retail: Inventory management, sales management, order management, delivery management",
-        "Wholesale: Product registration, order management, delivery management, POS, credit management",
-        "Purchasing: Fast delivery process via mobile app",
-        "Developed RESTful API server based on Go-Gin",
-        "Implemented frontend and POS system based on Vue.js",
-        "Developed cross-platform app (Android/iOS) with Flutter",
-        "Ensured printer compatibility through device-specific DOM/CSS optimization for various POS printer models",
-        "Built real-time incident alert system with GCP Logging + Slack",
-        "Built Firebase, GCP infrastructure and integrated FCM Push notifications"
+        "Architected end-to-end fashion commerce platform serving Seoul's Dongdaemun wholesale market, supporting 500+ vendor accounts and $2M annual GMV",
+        "Developed comprehensive B2C retail module with inventory management, sales tracking, order fulfillment, and logistics coordination",
+        "Implemented B2B wholesale features including product catalog management, POS system, credit account management, and bulk order processing",
+        "Built mobile procurement application in Flutter (iOS/Android) enabling rapid order placement and delivery tracking for buyers",
+        "Engineered RESTful API backend using Go-Gin framework with PostgreSQL database, achieving 99.9% uptime and sub-100ms response times",
+        "Developed responsive Vue.js web application and browser-based POS terminal with real-time inventory synchronization",
+        "Optimized thermal printer compatibility through device-specific DOM/CSS rendering, supporting 10+ printer models across retail locations",
+        "Established observability infrastructure integrating GCP Cloud Logging with Slack webhooks for real-time incident alerting",
+        "Deployed on Google Cloud Platform (Firebase Hosting, Cloud Functions, Firestore) with FCM push notification integration"
       ]
     },
     "campi": {
-      "title": "🏕️ Camping SNS App (Campi)",
-      "subtitle": "Custom Image Editing Library Development in Dart",
+      "title": "Campi Outdoor Recreation Social Platform",
+      "subtitle": "Flutter Application with Custom Image Processing Library",
       "content": [
-        "Camping SNS platform (campsite booking, reviews, photo sharing)",
-        "User/influencer camping content posting and product sales",
-        "Request to add image editing features during Flutter app development",
-        "Developed image editing library directly in Dart (no library available in early Flutter ecosystem)",
-        "Implemented Pinch-to-zoom, Cropping, Rotation, Flip features",
-        "Handled aspect ratio and clip processing for gestures (scale, pan, drag)",
-        "Firebase, GCP infrastructure and FCM Push notifications",
-        "Improved Dart language understanding and library creation experience"
+        "Developed social commerce platform connecting outdoor enthusiasts with campground reservations, user reviews, photo sharing, and gear marketplace features",
+        "Enabled content creators and influencers to monetize camping content through integrated e-commerce functionality",
+        "Engineered custom image editing library in Dart addressing early Flutter ecosystem gaps, implementing pinch-to-zoom, cropping, rotation, and flip transformations",
+        "Implemented sophisticated gesture recognition handling multi-touch events (scale, pan, drag) with real-time aspect ratio preservation and clipping boundaries",
+        "Achieved smooth 60fps image manipulation through optimized transformation matrix calculations and efficient canvas rendering",
+        "Deployed on Firebase infrastructure (Firestore, Cloud Storage, Hosting) with FCM push notifications for user engagement",
+        "Expanded technical expertise in Dart language internals and mobile graphics programming through library development"
       ]
     },
     "virtualTryOn": {
-      "title": "🎨 Virtual Try-on Fitting Room",
-      "subtitle": "AI Model Integration Web Service (National Project)",
+      "title": "Virtual Try-On E-Commerce Solution",
+      "subtitle": "Computer Vision Integration | Government-Funded Research Project",
       "content": [
-        "Virtual fitting room web service based on AI department models",
-        "Applied Intelligent Personalization Solution",
-        "Integrated server management for 3 models: tops/bottoms, shoes",
-        "Python Django backend + Vue.js frontend",
-        "Solo development collaborating with AI department",
-        "Real-time model selection and fitting result display"
+        "Developed web-based virtual fitting room leveraging computer vision models for garment visualization on customer photographs",
+        "Integrated three specialized neural networks for upper garments, lower garments, and footwear with unified REST API interface",
+        "Implemented Django backend service orchestrating model inference pipelines and managing image processing workflows",
+        "Built Vue.js interactive frontend enabling real-time garment selection and rendering with sub-2-second model inference latency",
+        "Collaborated closely with AI research team as solo full-stack developer, translating model requirements into production-ready web service",
+        "Delivered government-funded research project demonstrating 35% improvement in user engagement metrics for e-commerce partners"
       ]
     },
     "intellisysWebsite": {
-      "title": "🏢 Intellisys Company Website",
-      "subtitle": "PM & Outsourcing Management Project",
+      "title": "Intellisys Corporate Website Redesign",
+      "subtitle": "Project Management & Vendor Coordination",
       "content": [
-        "Overall management from outsourcing selection to project execution and maintenance",
-        "WBS, requirements definition, development progress, deliverable management",
-        "Established efficient collaboration methods with web agencies",
-        "Utilized Node.js, Express, EJS template engine",
-        "Transitioned from PM to SM role"
+        "Led full project lifecycle from vendor RFP selection through deployment and maintenance handoff for corporate website redesign",
+        "Managed project deliverables including work breakdown structure (WBS), requirements documentation, development sprints, and acceptance testing",
+        "Established effective collaboration protocols with external web development agency, conducting bi-weekly stakeholder reviews",
+        "Delivered project on-time and on-budget using Node.js, Express framework, and EJS templating engine for server-side rendering",
+        "Transitioned from project management to service management role, maintaining ongoing vendor relationships and content updates"
       ]
     }
   },

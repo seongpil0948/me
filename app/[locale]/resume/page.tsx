@@ -118,19 +118,18 @@ export default async function ResumePage({
           </div>
         </header>
         {/* Education & Military Service - Compact Table Format */}
-        <section className="mb-5">
-          <h2 className="text-[13pt] font-bold mb-2.5 border-b-2 border-gray-800 pb-1 text-gray-800">
+        <section className="mb-6">
+          <h2 className="text-[14pt] font-bold mb-3 border-b-2 border-gray-800 pb-1.5 text-gray-800">
             {dict.resume.education} / {dict.resume.military}
           </h2>
-          <table className="w-full border-collapse text-[9pt] border border-gray-300">
+          <table className="w-full border-collapse text-[10pt] border border-gray-300">
             <tbody>
               <tr className="bg-gray-50">
                 <td className="py-2.5 px-3 border border-gray-300 font-semibold w-[18%] bg-blue-50">
                   {dict.resume.university}
                 </td>
                 <td className="py-2.5 px-3 border border-gray-300">
-                  {schoolByLocale} · {degreeByLocale} · {majorByLocale} ·{" "}
-                  {dict.profile.education}: {personalInfo.education.gpa}
+                  {schoolByLocale} · {degreeByLocale} · {majorByLocale}
                 </td>
                 <td className="py-2.5 px-3 border border-gray-300 text-gray-600 whitespace-nowrap w-[15%] text-right">
                   {personalInfo.education.period}
@@ -164,22 +163,25 @@ export default async function ResumePage({
         </section>
 
         {/* Professional Summary / About Me */}
-        <section className="mb-5">
-          <h2 className="text-[13pt] font-bold mb-2.5 border-b-2 border-gray-800 pb-1 text-gray-800">
+        <section className="mb-6">
+          <h2 className="text-[14pt] font-bold mb-3 border-b-2 border-gray-800 pb-1.5 text-gray-800">
             {dict.resume.summary}
           </h2>
           <Card>
-            <CardBody className="p-3.5">
-              <p className="text-[9pt] leading-relaxed text-gray-800 mb-2">
+            <CardBody className="p-4">
+              <p className="text-[10pt] leading-relaxed text-gray-800 mb-2.5">
                 {dict.profile.aboutMeParagraph1}
               </p>
-              <p className="text-[9pt] leading-relaxed text-gray-800 mb-2">
+              <p className="text-[10pt] leading-relaxed text-gray-800 mb-2.5">
                 {dict.profile.aboutMeParagraph2}
+              </p>
+              <p className="text-[10pt] leading-relaxed text-gray-800 mb-2.5">
+                {dict.profile.aboutMeParagraph3}
               </p>
               <p className="text-[9pt] leading-relaxed text-gray-800 mb-2">
                 {dict.profile.aboutMeParagraph3}
               </p>
-              <p className="text-[9pt] leading-relaxed text-gray-800 m-0">
+              <p className="text-[10pt] leading-relaxed text-gray-800 m-0">
                 {dict.profile.aboutMeParagraph4}
               </p>
             </CardBody>
@@ -187,17 +189,17 @@ export default async function ResumePage({
         </section>
 
         {/* Skills & Certifications */}
-        <section className="mb-5">
-          <h2 className="text-[13pt] font-bold mb-2.5 border-b-2 border-gray-800 pb-1 text-gray-800">
+        <section className="mb-6">
+          <h2 className="text-[14pt] font-bold mb-3 border-b-2 border-gray-800 pb-1.5 text-gray-800">
             {dict.resume.skillsAndCertifications}
           </h2>
 
           {/* Certifications */}
           <div className="my-4">
-            <h3 className="text-[10pt] font-semibold mb-2.5 text-gray-800">
+            <h3 className="text-[11pt] font-semibold mb-3 text-gray-800">
               🏆 {dict.resume.certifications}
             </h3>
-            <div className="text-[9pt]">
+            <div className="text-[10pt]">
               {certifications.map((cert, index) => (
                 <div
                   key={index}
@@ -209,15 +211,15 @@ export default async function ResumePage({
                     {cert.logo && (
                       <Image
                         alt={cert.org}
-                        className="w-5 h-5 object-contain flex-shrink-0"
+                        className="w-5 h-5 object-contain shrink-0"
                         src={cert.logo}
                       />
                     )}
-                    <span className="font-semibold text-[9pt]">
+                    <span className="font-semibold text-[10pt]">
                       {cert.name}
                     </span>
                   </div>
-                  <span className="text-[8pt] text-gray-600 whitespace-nowrap ml-2">
+                  <span className="text-[9pt] text-gray-600 whitespace-nowrap ml-2">
                     {cert.date}
                   </span>
                 </div>
@@ -228,7 +230,7 @@ export default async function ResumePage({
           {/* Expert Level Skills */}
           {expertSkills.length > 0 && (
             <div className="mb-2">
-              <div className="flex flex-wrap gap-1.5 text-[9pt]">
+              <div className="flex flex-wrap gap-1.5 text-[10pt]">
                 {expertSkills.map((skill, index) => (
                   <Chip
                     key={index}
@@ -247,7 +249,7 @@ export default async function ResumePage({
           {/* Advanced Level Skills */}
           {advancedSkills.length > 0 && (
             <div className="mb-2">
-              <div className="flex flex-wrap gap-1.5 text-[9pt]">
+              <div className="flex flex-wrap gap-1.5 text-[10pt]">
                 {advancedSkills.map((skill, index) => (
                   <Chip
                     key={index}
@@ -266,7 +268,7 @@ export default async function ResumePage({
           {/* Competent Level Skills */}
           {competentSkills.length > 0 && (
             <div className="mb-2">
-              <div className="flex flex-wrap gap-1.5 text-[9pt]">
+              <div className="flex flex-wrap gap-1.5 text-[10pt]">
                 {competentSkills.map((skill, index) => (
                   <Chip
                     key={index}
@@ -284,8 +286,8 @@ export default async function ResumePage({
         </section>
 
         {/* Work Experience */}
-        <section className="mb-5">
-          <h2 className="text-[13pt] font-bold mb-2.5 border-b-2 border-gray-800 pb-1 text-gray-800">
+        <section className="mb-6">
+          <h2 className="text-[14pt] font-bold mb-3 border-b-2 border-gray-800 pb-1.5 text-gray-800">
             {dict.resume.experience}
           </h2>
           {experiences.map((exp, index) => (
@@ -297,19 +299,21 @@ export default async function ResumePage({
             >
               <div className="flex justify-between items-start mb-1.5">
                 <div>
-                  <h3 className="text-[12pt] font-bold">{exp.company}</h3>
-                  <p className="text-[9pt] text-gray-700">
+                  <h3 className="text-[11pt] font-bold text-gray-800">
+                    {exp.company}
+                  </h3>
+                  <p className="text-[10pt] text-gray-700">
                     {exp.position[locale]}
                   </p>
                 </div>
-                <p className="text-[9pt] text-gray-600 text-right whitespace-nowrap">
+                <p className="text-[10pt] text-gray-600 text-right whitespace-nowrap">
                   {exp.period[locale]}
                 </p>
               </div>
-              <p className="text-[9pt] mb-2 text-gray-700">
+              <p className="text-[10pt] mb-2 text-gray-700">
                 {exp.description[locale]}
               </p>
-              <ul className="ml-5 text-[9pt] list-disc">
+              <ul className="ml-5 text-[10pt] list-disc">
                 {exp.achievements[locale].map((achievement, idx) => (
                   <li
                     key={idx}
@@ -324,17 +328,17 @@ export default async function ResumePage({
         </section>
 
         {/* Key Projects */}
-        <section className="mb-5">
-          <h2 className="text-[13pt] font-bold mb-2.5 border-b-2 border-gray-800 pb-1 text-gray-800">
+        <section className="mb-6">
+          <h2 className="text-[14pt] font-bold mb-3 border-b-2 border-gray-800 pb-1.5 text-gray-800">
             {dict.resume.projects}
           </h2>
-          <div className="text-[9pt]">
-            <Card className="mb-3.5 p-3.5">
+          <div className="text-[10pt]">
+            <Card className="mb-3.5 p-4">
               <CardBody className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
+                <h3 className="text-[11pt] font-bold mb-2 text-gray-800">
                   {dict.projects.monitoring.title}
                 </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
+                <p className="text-[9pt] text-gray-600 mb-2 italic">
                   {dict.projects.monitoring.subtitle}
                 </p>
                 <ul className="ml-5 leading-relaxed list-disc">
@@ -660,11 +664,11 @@ export default async function ResumePage({
         <div className="break-before-page" />
 
         {/* Portfolio Links */}
-        <section className="mb-5">
-          <h2 className="text-[13pt] font-bold mb-2.5 border-b-2 border-gray-800 pb-1 text-gray-800">
+        <section className="mb-6">
+          <h2 className="text-[14pt] font-bold mb-3 border-b-2 border-gray-800 pb-1.5 text-gray-800">
             {dict.profile.portfolioLinks}
           </h2>
-          <div className="grid grid-cols-2 gap-3 text-[9pt]">
+          <div className="grid grid-cols-2 gap-3 text-[10pt]">
             {portfolioLinks.map((link, index) => (
               <Card key={index} className="p-3.5 transition-all duration-200">
                 <CardBody className="p-0">
@@ -684,7 +688,7 @@ export default async function ResumePage({
         </section>
 
         {/* Footer */}
-        <footer className="mt-8 pt-4 border-t border-gray-300 text-[8pt] text-gray-500 text-center">
+        <footer className="mt-8 pt-4 border-t border-gray-300 text-[9pt] text-gray-500 text-center">
           Last updated: {new Date().toLocaleDateString(locale)}
         </footer>
       </div>
