@@ -454,16 +454,14 @@ export function InterviewQATable({ questions }: InterviewQATableProps) {
         topContent={topContent}
         topContentPlacement="outside"
         onSortChange={(descriptor) =>
-          setSortDescriptor(
-            descriptor as {
-              column: string;
-              direction: "ascending" | "descending";
-            },
-          )
+          setSortDescriptor({
+            column: String(descriptor.column),
+            direction: descriptor.direction as "ascending" | "descending",
+          })
         }
       >
         <TableHeader columns={columns}>
-          {(column) => (
+          {(column: { uid: string; sortable: boolean; name: string }) => (
             <TableColumn
               key={column.uid}
               align={column.uid === "favorite" ? "center" : "start"}
@@ -474,14 +472,14 @@ export function InterviewQATable({ questions }: InterviewQATableProps) {
           )}
         </TableHeader>
         <TableBody emptyContent="No questions found" items={sortedItems}>
-          {(item) => (
+          {(item: InterviewQuestion) => (
             <TableRow
               key={item.id}
               style={{ cursor: "pointer" }}
               onClick={() => handleRowClick(item)}
             >
               {(columnKey) => (
-                <TableCell>{renderCell(item, columnKey)}</TableCell>
+                <TableCell>{renderCell(item, String(columnKey))}</TableCell>
               )}
             </TableRow>
           )}
@@ -496,7 +494,7 @@ export function InterviewQATable({ questions }: InterviewQATableProps) {
         onOpenChange={onOpenChange}
       >
         <ModalContent>
-          {(onClose) => (
+          {(onClose: () => void) => (
             <>
               <ModalHeader
                 style={{ display: "flex", flexDirection: "column", gap: "4px" }}

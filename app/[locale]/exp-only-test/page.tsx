@@ -91,7 +91,7 @@ ${dict.resume.certifications}
           {certifications
             .map(
               (cert, index) =>
-                `${index + 1}. ${cert.name} - ${cert.org} (${cert.date})\n`
+                `${index + 1}. ${cert.name} - ${cert.org} (${cert.date})\n`,
             )
             .join("")}
           {`
@@ -248,7 +248,7 @@ ${dict.profile.openSourceContributions}
           {openSourceContributions
             .map(
               (contribution, index) =>
-                `${index + 1}. ${contribution.name}: ${contribution.url}\n`
+                `${index + 1}. ${contribution.name}: ${contribution.url}\n`,
             )
             .join("")}
           {`
