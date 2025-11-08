@@ -5,6 +5,7 @@ import PortfolioActionButtons from "@/components/portfolio/portfolio-action-butt
 import {
   certifications,
   experiences,
+  openSourceContributions,
   portfolioLinks,
   skills,
 } from "@/data/portfolio";
@@ -25,6 +26,7 @@ export default async function MePage({
         dict={dict}
         experiences={experiences}
         locale={locale}
+        openSourceContributions={openSourceContributions}
         portfolioLinks={portfolioLinks}
         skills={skills}
       />

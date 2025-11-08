@@ -13,6 +13,7 @@ export default function PortfolioSection({
   certifications,
   experiences,
   portfolioLinks,
+  openSourceContributions,
   dict,
   description,
   locale,
@@ -27,6 +28,7 @@ export default function PortfolioSection({
             <AboutContent
               dict={dict}
               locale={locale}
+              openSourceContributions={openSourceContributions}
               portfolioLinks={portfolioLinks}
             />
           }

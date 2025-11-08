@@ -6,23 +6,23 @@ import type {
 } from "@/types/portfolio";
 
 export const skills: Skill[] = [
-  { name: "React&Vue&Next.js", level: 95 },
-  { name: "TypeScript", level: 92 },
-  { name: "Flutter(Mobile)", level: 85 },
-  { name: "Python,Django&FastAPI", level: 90 },
-  { name: "Go-Gin", level: 82 },
-  { name: "Spring-boot", level: 78 },
-  { name: "Node.js", level: 85 },
-  { name: "Kubernetes(CKA)", level: 95 },
-  { name: "AWS(3 Certs)", level: 95 },
-  { name: "Linux(LFCS)", level: 90 },
-  { name: "Docker", level: 93 },
-  { name: "Kafka&RabbitMQ", level: 88 },
-  { name: "Airflow", level: 87 },
-  { name: "OpenTelemetry", level: 95 },
-  { name: "Grafana&Prometheus", level: 88 },
-  { name: "Three.js", level: 75 },
-  { name: "Terraform", level: 82 },
+  { name: "React&Vue&Next.js", level: 95, proficiency: 95 },
+  { name: "TypeScript", level: 92, proficiency: 92 },
+  { name: "Flutter(Mobile)", level: 85, proficiency: 85 },
+  { name: "Python,Django&FastAPI", level: 90, proficiency: 90 },
+  { name: "Go-Gin", level: 82, proficiency: 82 },
+  { name: "Spring-boot", level: 78, proficiency: 78 },
+  { name: "Node.js", level: 85, proficiency: 85 },
+  { name: "Kubernetes(CKA)", level: 95, proficiency: 95 },
+  { name: "AWS(3 Certs)", level: 95, proficiency: 95 },
+  { name: "Linux(LFCS)", level: 90, proficiency: 90 },
+  { name: "Docker", level: 93, proficiency: 93 },
+  { name: "Kafka&RabbitMQ", level: 88, proficiency: 88 },
+  { name: "Airflow", level: 87, proficiency: 87 },
+  { name: "OpenTelemetry", level: 95, proficiency: 95 },
+  { name: "Grafana&Prometheus", level: 88, proficiency: 88 },
+  { name: "Three.js", level: 75, proficiency: 75 },
+  { name: "Terraform", level: 82, proficiency: 82 },
 ];
 
 export const certifications: Certification[] = [
@@ -59,7 +59,7 @@ export const certifications: Certification[] = [
   {
     name: "정보처리기사",
     org: "한국산업인력공단",
-    date: "2019년",
+    date: "2019년 8월",
     logo: "/other/logo/hrd_korea_logo.jpeg",
   },
 ];
@@ -129,6 +129,21 @@ export const experiences: Experience[] = [
         "构建自动化开发者沙箱环境配置系统，将设置时间减少 80%",
       ],
     },
+    technologies: [
+      "AWS ECS",
+      "AWS Glue",
+      "AWS Athena",
+      "CloudFormation",
+      "OpenTelemetry",
+      "Apache Kafka",
+      "Apache Airflow",
+      "APISIX Gateway",
+      "Redis Sentinel",
+      "Next.js",
+      "Spring Boot",
+      "Grafana",
+      "Prometheus",
+    ],
   },
   {
     company: "애버커스 (Abacus)",
@@ -188,6 +203,20 @@ export const experiences: Experience[] = [
         "使用tailwind-variants的高效样式配置系统",
       ],
     },
+    technologies: [
+      "Kubernetes",
+      "APISIX Gateway",
+      "RabbitMQ",
+      "AWS IoT Core",
+      "Three.js",
+      "Next.js",
+      "React",
+      "Vue.js",
+      "Vite",
+      "TypeScript",
+      "SSE",
+      "CodeMirror",
+    ],
   },
   {
     company: "인아웃박스 (Inoutbox)",
@@ -238,6 +267,18 @@ export const experiences: Experience[] = [
         "Firebase、GCP基础设施搭建和FCM推送通知集成",
       ],
     },
+    technologies: [
+      "Go",
+      "Gin",
+      "Vue.js",
+      "Flutter",
+      "Dart",
+      "Firebase",
+      "GCP",
+      "FCM",
+      "PostgreSQL",
+      "TypeScript",
+    ],
   },
   {
     company: "인텔리시스 (Intellisys)",
@@ -294,6 +335,21 @@ export const experiences: Experience[] = [
         "Django ORM、PostgreSQL数据库管理",
       ],
     },
+    technologies: [
+      "Kubernetes",
+      "Argo Workflows",
+      "Helm",
+      "RabbitMQ",
+      "Dramatiq",
+      "Python",
+      "Django",
+      "FastAPI",
+      "Vue.js",
+      "React",
+      "PostgreSQL",
+      "n2 (ANN)",
+      "TF-IDF",
+    ],
   },
 ];
 
@@ -308,6 +364,25 @@ export const portfolioLinks: PortfolioLink[] = [
     url: "https://www.codingame.com/profile/f98c28095b66d60aa9adc3f62e04210e6669263",
   },
   { name: "All-ad", url: "http://all-ad.in" },
+];
+
+/**
+ * Open Source Contributions
+ * GitHub issues and pull requests contributed to open source projects
+ */
+export const openSourceContributions: PortfolioLink[] = [
+  {
+    name: "OpenTelemetry Collector Contrib PR #40123",
+    url: "https://github.com/open-telemetry/opentelemetry-collector-contrib/pull/40123",
+  },
+  {
+    name: "OpenTelemetry JS Contrib PR #2855",
+    url: "https://github.com/open-telemetry/opentelemetry-js-contrib/pull/2855#event-19481138394",
+  },
+  {
+    name: "OpenTelemetry Collector Contrib Issue #40645",
+    url: "https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/40645#issuecomment-3100995291",
+  },
 ];
 
 /**

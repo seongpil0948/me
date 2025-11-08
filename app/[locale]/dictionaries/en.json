@@ -7,7 +7,7 @@
   "hero": {
     "greeting": "Hello",
     "title": "Platform Lead Engineer",
-    "description": "Platform Lead Engineer with 6 years of expertise in designing and operating large-scale distributed systems for enterprise environments.\n\nCurrently optimizing infrastructure and developer productivity for a ₩500 billion annual revenue MSA-based e-commerce platform. Key achievements: reduced error detection time by 99%, accelerated deployment cycles by 90%, and decreased infrastructure costs by 50%.\n\nManaging high-availability production environments serving 100,000 daily users, processing 500GB daily network traffic, maintaining 20TB monthly data lake, and handling 3TB monthly distributed tracing data."
+    "description": "Platform Engineer specializing in large-scale distributed system design and operations (6 years)\n\nLed infrastructure optimization and developer productivity improvements for an MSA-based e-commerce platform. Reduced error detection time by 99%, deployment time by 90%, and infrastructure costs by 50%.\n\nOperates high-availability environments handling 100K daily users, 500GB/day network traffic, 20TB/month data lake, and 3TB/month distributed tracing data."
   },
   "common": {
     "welcome": "Welcome",
@@ -31,13 +31,14 @@
     "degree": "Bachelor's Degree",
     "major": "Information and Communication Engineering",
     "portfolioLinks": "Portfolio Links",
+    "openSourceContributions": "Open Source Contributions",
     "aboutMe": "About Me",
     "skills": "Technical Skills",
     "teamworkSkills": "Teamwork Skills",
-    "aboutMeParagraph1": "I'm a platform engineer who works across the full spectrum from infrastructure to applications, having built experience over 6 years in diverse environments. I started as a solo full-stack developer at a startup, and now I'm designing and operating distributed systems at an enterprise platform handling $500 million in annual revenue. At each stage, I've focused on quickly adapting to the given environment and building scalable systems.",
-    "aboutMeParagraph2": "Having worked across 4 organizations, I've gained experience collaborating with teams of various sizes. In projects with major corporations like LG Electronics and SK Telecom, I learned to facilitate smooth communication between planners, designers, and backend developers while understanding technical requirements and designing stable solutions. Through these experiences, I've developed the ability to go beyond just writing code to understanding and delivering business value.",
-    "aboutMeParagraph3": "Technically, I primarily work with cloud-native architectures using Kubernetes and AWS. While developing backends with Django, Spring Boot, and Gin, I've built messaging systems with Kafka and ETL pipelines with Airflow. I've also developed frontends with React, Vue.js, and Flutter, expanding my full-stack capabilities. Recently, I achieved a 99% reduction in error detection time by building an observability platform with OpenTelemetry, and I'm also contributing to open-source projects. These experiences earned me recognition through CKA, LFCS, and 3 AWS certifications (SysOps, DevOps Professional, Advanced Networking Specialty).",
-    "aboutMeParagraph4": "Currently, I work as an SRE at Daewoong Group's TheShop e-commerce platform, operating a Kafka cluster that processes 20-50 million messages daily and managing over 200 Airflow DAGs. While working on a project to modernize legacy systems into microservices, I'm achieving results such as reducing deployment time by 90% and cutting infrastructure costs by 50%. Going forward, I want to continue using AI-based tools to increase development productivity and build a culture of growing together with my team members.",
+    "aboutMeParagraph1": "Over 6 years, I've worked across organizations of varying scales, designing and operating scalable distributed systems spanning infrastructure to applications. Starting as a solo full-stack developer at a startup, I now serve as Platform Lead Engineer for an enterprise e-commerce platform with ₩500 billion in annual revenue.",
+    "aboutMeParagraph2": "Key achievements include reducing error detection time by 99%, deployment cycles by 90%, and infrastructure costs by 50%. I reliably operate services used by 100K daily users, managing a 20TB/month data lake and 3TB of distributed tracing data, enhancing system efficiency and reliability in high-availability environments. Through diverse projects with LG Electronics, SK Telecom, and others, I gained deep understanding of collaboration structures between product managers, designers, and developers, building the capability to design systems that realize business objectives beyond mere technical implementation.",
+    "aboutMeParagraph3": "My core tech stack centers on Kubernetes and AWS-based cloud-native architectures. On the backend, I develop services and APIs with Django, Spring Boot, and Gin, building reliable messaging and data pipelines using Kafka and Airflow. I've developed frontend applications with React, Vue.js, and Flutter, gaining full-stack experience. Recently, I built an OpenTelemetry-based observability platform that significantly reduced error detection time, and actively contribute to multiple open source projects. Certifications: CKA, LFCS, AWS SysOps, DevOps Professional, Advanced Networking Specialty.",
+    "aboutMeParagraph4": "Currently serving as SRE for Daewoong Group's TheShop e-commerce platform. I operate Kafka clusters processing 20-50 million daily messages and manage 200+ Airflow DAGs while leading the microservices transformation of legacy systems. Through this process, I reduced deployment time by 90% and cut infrastructure costs in half. Moving forward, I aim to actively adopt AI-based development tools to further elevate development productivity and build a technical culture of collective growth.",
     "teamwork": {
       "jiraConfluence": "Jira / Confluence",
       "gitTools": "Git / GitHub / GitLab",
@@ -49,6 +50,7 @@
     "title": "Experience",
     "careerHistory": "Career History",
     "keyAchievements": "Key Achievements",
+    "description": "Description",
     "position": {
       "seniorEngineer": "Senior Engineer",
       "seniorResearcher": "Senior Researcher",
@@ -259,9 +261,10 @@
     }
   },
   "buttons": {
-    "visitGithub": "Visit Github",
-    "visitPortfolio": "Visit Portfolio Site",
-    "downloadResume": "Download Resume PDF"
+    "visitGithub": "Visit GitHub",
+    "visitPortfolio": "Visit Portfolio",
+    "downloadResume": "Download Resume PDF",
+    "viewTextResume": "View Text Career Description"
   },
   "tabs": {
     "profile": "Profile",

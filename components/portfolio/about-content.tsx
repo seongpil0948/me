@@ -7,12 +7,14 @@ import { Locale } from "@/app/[locale]/dictionaries";
 interface AboutContentProps {
   dict: Dictionary;
   portfolioLinks: PortfolioLink[];
+  openSourceContributions?: PortfolioLink[];
   locale: Locale;
 }
 
 export default function AboutContent({
   dict,
   portfolioLinks,
+  openSourceContributions,
   locale,
 }: AboutContentProps) {
   return (
@@ -81,6 +83,30 @@ export default function AboutContent({
               </Link>
             ))}
         </div>
+
+        {openSourceContributions && openSourceContributions.length > 0 && (
+          <>
+            <h2
+              className="text-xl font-bold mt-8 mb-4"
+              style={{ color: "var(--color-text-primary)" }}
+            >
+              {dict.profile.openSourceContributions}
+            </h2>
+            <div className="space-y-1.5">
+              {openSourceContributions.map((contribution, idx) => (
+                <Link
+                  key={idx}
+                  isExternal
+                  className="block text-sm hover:translate-x-1 transition-transform"
+                  href={contribution.url}
+                  style={{ color: "var(--color-text-secondary)" }}
+                >
+                  🔗 {contribution.name}
+                </Link>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* About Me */}

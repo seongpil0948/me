@@ -7,13 +7,13 @@ import { personalInfo, summaryStats } from "@/data/personal";
 import {
   certifications,
   experiences,
+  openSourceContributions,
   portfolioLinks,
   skills,
 } from "@/data/portfolio";
-import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Card, CardBody } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 import { Image } from "@heroui/image";
-import { Link } from "@heroui/link";
 import { categorizeSkills, getSkillEmoji } from "@/lib/skill-utils";
 
 export const metadata: Metadata = {
@@ -315,7 +315,7 @@ export default async function ResumePage({
                 {exp.achievements[locale].map((achievement, idx) => (
                   <li
                     key={idx}
-                    className="mb-1.5 text-gray-800 leading-relaxed"
+                    className="mb-1.5 text-gray-800 leading-relaxed list-none"
                   >
                     {achievement}
                   </li>
@@ -439,7 +439,7 @@ export default async function ResumePage({
                 <p className="text-[8pt] text-gray-600 mb-1.5 italic">
                   {dict.projects.airflow.subtitle}
                 </p>
-                <ul className="ml-5 leading-relaxed list-disc">
+                <ul className=" leading-relaxed">
                   {dict.projects.airflow.content.map((item, idx) => (
                     <li key={idx} className="mb-1">
                       {item}
@@ -681,6 +681,26 @@ export default async function ResumePage({
                   </a>
                 </CardBody>
               </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Open Source Contributions */}
+        <section className="mb-6">
+          <h2 className="text-[13pt] font-bold mb-3 border-b border-gray-600 pb-1.5 text-gray-800">
+            {dict.profile.openSourceContributions}
+          </h2>
+          <div className="space-y-1.5 text-[9pt]">
+            {openSourceContributions.map((contribution, index) => (
+              <div key={index} className="flex items-start">
+                <span className="mr-2">•</span>
+                <a
+                  className="text-blue-600 no-underline hover:text-blue-700 break-all"
+                  href={contribution.url}
+                >
+                  {contribution.name}
+                </a>
+              </div>
             ))}
           </div>
         </section>

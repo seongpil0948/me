@@ -46,7 +46,7 @@ describe("portfolio data", () => {
 
     it("should contain AWS certifications", () => {
       const awsCerts = certifications.filter((cert) =>
-        cert.name.includes("AWS"),
+        cert.name.includes("AWS")
       );
 
       expect(awsCerts.length).toBeGreaterThan(0);
@@ -54,7 +54,7 @@ describe("portfolio data", () => {
 
     it("should contain Linux Foundation certifications", () => {
       const lfCerts = certifications.filter(
-        (cert) => cert.org === "The Linux Foundation",
+        (cert) => cert.org === "The Linux Foundation"
       );
 
       expect(lfCerts.length).toBeGreaterThan(0);
@@ -71,8 +71,15 @@ describe("portfolio data", () => {
         expect(exp).toHaveProperty("period");
         expect(exp).toHaveProperty("description");
         expect(exp).toHaveProperty("achievements");
-        expect(Array.isArray(exp.achievements)).toBe(true);
-        expect(exp.achievements.length).toBeGreaterThan(0);
+        expect(exp).toHaveProperty("technologies");
+        expect(Array.isArray(exp.achievements.ko)).toBe(true);
+        expect(exp.achievements.ko.length).toBeGreaterThan(0);
+        expect(Array.isArray(exp.achievements.en)).toBe(true);
+        expect(exp.achievements.en.length).toBeGreaterThan(0);
+        expect(Array.isArray(exp.achievements.zh)).toBe(true);
+        expect(exp.achievements.zh.length).toBeGreaterThan(0);
+        expect(Array.isArray(exp.technologies)).toBe(true);
+        expect(exp.technologies.length).toBeGreaterThan(0);
       });
     });
 
@@ -96,7 +103,7 @@ describe("portfolio data", () => {
 
     it("should contain GitHub link", () => {
       const githubLink = portfolioLinks.find((link) =>
-        link.name.toLowerCase().includes("github"),
+        link.name.toLowerCase().includes("github")
       );
 
       expect(githubLink).toBeDefined();

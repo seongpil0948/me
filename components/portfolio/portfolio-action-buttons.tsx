@@ -17,7 +17,7 @@ export default function PortfolioActionButtons({
   locale,
 }: PortfolioActionButtonsProps) {
   return (
-    <div className="flex justify-center gap-4 mt-8 mb-16">
+    <div className="flex justify-center gap-4 mt-8 mb-16 flex-wrap">
       <Button
         as={Link}
         isExternal
@@ -40,6 +40,16 @@ export default function PortfolioActionButtons({
         {dict.buttons.visitPortfolio}
       </Button>
       <ResumePrintButton label={dict.buttons.downloadResume} locale={locale} />
+      <Button
+        as={Link}
+        className="shadow-lg"
+        color="default"
+        href={`/${locale}/exp-only-test`}
+        radius="full"
+        style={commonStyles.button.secondary}
+      >
+        📝 {dict.buttons.viewTextResume}
+      </Button>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 export interface Skill {
   name: string;
   level: number;
+  proficiency: number;
 }
 
 export interface Certification {
@@ -33,6 +34,7 @@ export interface Experience {
     en: string[];
     zh: string[];
   };
+  technologies: string[];
 }
 
 export interface PortfolioLink {
@@ -124,6 +126,7 @@ export interface ResumeDictionary {
   contact: string;
   education: string;
   skills: string;
+  skillsTitle?: string;
   experience: string;
   projects: string;
   certifications: string;
@@ -134,6 +137,14 @@ export interface ResumeDictionary {
   logRetention: string;
   projectRevenue: string;
   dailyMessages: string;
+  university: string;
+  highSchool: string;
+  military: string;
+  period?: string;
+  position?: string;
+  techStack?: string;
+  resumeWebsite: string;
+  skillsAndCertifications: string;
 }
 
 /**
@@ -143,6 +154,7 @@ export interface ButtonLabels {
   visitGithub: string;
   visitPortfolio: string;
   downloadResume: string;
+  viewTextResume: string;
 }
 
 /**
@@ -192,6 +204,11 @@ export interface Dictionary {
   dates: Record<string, string>;
   achievements: Record<string, string>;
   resume: ResumeDictionary;
+  expOnlyTest?: {
+    title: string;
+    copyInstructions: string;
+    lastUpdated: string;
+  };
 }
 
 export interface PortfolioData {
@@ -199,6 +216,7 @@ export interface PortfolioData {
   certifications: Certification[];
   experiences: Experience[];
   portfolioLinks: PortfolioLink[];
+  openSourceContributions?: PortfolioLink[];
   dict: Dictionary;
   description: string;
 }
