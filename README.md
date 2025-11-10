@@ -44,11 +44,19 @@ Personal portfolio website showcasing professional experience, skills, and certi
 │   └── portfolio.ts       # Portfolio data types
 ├── data/                   # Portfolio data
 │   ├── personal.ts        # Personal information
-│   └── portfolio.ts       # Professional data
+│   ├── portfolio.ts       # Professional data
+│   └── interview/         # Interview Q&A (category-based)
+│       ├── index.ts       # Aggregator
+│       ├── general.ts     # General questions (20)
+│       ├── infrastructure.ts # Infrastructure (11)
+│       ├── backend.ts     # Backend (6)
+│       ├── frontend.ts    # Frontend (5)
+│       ├── toss-tech.ts   # Toss technical (13, Korean)
+│       └── toss-company.ts # Toss company (5, Korean)
 └── docs/                   # Documentation
     ├── 경력기술서.md       # Career details (Korean)
     ├── 이력서.md           # Resume (Korean)
-    └── REFACTORING.md     # Refactoring documentation
+    └── 면접-질의응답.md    # Interview Q&A (archived)
 ```
 
 ## 🛠️ Development
@@ -89,12 +97,20 @@ The project supports three languages:
 
 **URL Structure**: `/[locale]/...` (e.g., `/ko`, `/en`, `/zh`)
 
+**Routes**:
+
+- `/[locale]` - Main portfolio page
+- `/[locale]/resume` - PDF-optimized resume
+- `/[locale]/interview` - General interview Q&A (60+ questions)
+- `/[locale]/interview/toss` - Toss DevOps interview prep (Korean only, 18 questions)
+
 **How it works**:
 
 - Locale detection via URL pathname
 - Cookie persistence for user preference
 - Server-only dictionary loading
 - Type-safe translations
+- Company-specific pages can be language-restricted
 
 ## 🏗️ Architecture Highlights
 
@@ -126,12 +142,13 @@ The project supports three languages:
 
 ## 📄 Documentation
 
-- **[Refactoring Guide](./docs/REFACTORING.md)**: Details on code organization
-- **[Copilot Instructions](./.github/copilot-instructions.md)**: Development guidelines
-- **[Career Details](./docs/경력기술서.md)**: Professional experience (Korean)
-- **[Resume](./docs/이력서.md)**: Formatted resume (Korean)
+- **[Copilot Instructions](./.github/copilot-instructions.md)**: Development guidelines and architecture patterns
+- **[Interview Guide](./docs/company/common/경력직%20기술%20인터뷰%20핵심%20가이드.md)**: Technical interview preparation guide (Korean)
+- **[Toss Research](./docs/company/toss/)**: Toss DevOps Engineer JD and research materials (Korean)
 
 ## 🎨 Features
+
+### Portfolio
 
 - ✅ Responsive design (mobile/tablet/desktop)
 - ✅ Dark theme by default
@@ -140,7 +157,23 @@ The project supports three languages:
 - ✅ Scroll-based animations
 - ✅ Optimized performance
 - ✅ SEO optimized
+
+### Interview System
+
+- ✅ Category-based Q&A (60+ questions)
+- ✅ Company-specific preparation pages
+- ✅ Interactive table with search & filters
+- ✅ Favorites system (localStorage)
+- ✅ Modal view for detailed answers
+- ✅ STAR method examples
+- ✅ Korean/English bilingual support
+
+### Code Quality
+
 - ✅ Type-safe throughout
+- ✅ ESLint strict rules
+- ✅ Prettier formatting
+- ✅ Comprehensive test coverage
 
 ## 📦 Key Dependencies
 

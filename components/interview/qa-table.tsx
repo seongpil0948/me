@@ -111,19 +111,25 @@ const category1Options: { name: string; uid: Category1 }[] = [
 ];
 
 interface InterviewQATableProps {
+  companyFilter?: string;
   questions: InterviewQuestion[];
+  title?: string;
 }
 
-export function InterviewQATable({ questions }: InterviewQATableProps) {
+export function QATable({
+  companyFilter,
+  questions,
+  title = "Interview Q&A",
+}: InterviewQATableProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedQuestion, setSelectedQuestion] =
     React.useState<InterviewQuestion | null>(null);
   const [filterValue, setFilterValue] = React.useState("");
   const [category1Filter, setCategory1Filter] = React.useState<Set<string>>(
-    new Set()
+    new Set(),
   );
   const [category2Filter, setCategory2Filter] = React.useState<Set<string>>(
-    new Set()
+    new Set(),
   );
   const [showFavoritesOnly, setShowFavoritesOnly] = React.useState(false);
   const [favorites, setFavorites] = React.useState<Set<number>>(new Set());
@@ -185,7 +191,7 @@ export function InterviewQATable({ questions }: InterviewQATableProps) {
       const filteredCat2 = new Set(
         questions
           .filter((q) => selectedCat1.includes(q.category1))
-          .map((q) => q.category2)
+          .map((q) => q.category2),
       );
 
       return Array.from(filteredCat2).map((cat2) => ({
@@ -208,7 +214,7 @@ export function InterviewQATable({ questions }: InterviewQATableProps) {
     // Search filter
     if (hasSearchFilter) {
       filtered = filtered.filter((q) =>
-        q.question.toLowerCase().includes(filterValue.toLowerCase())
+        q.question.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
 
@@ -265,7 +271,7 @@ export function InterviewQATable({ questions }: InterviewQATableProps) {
       setSelectedQuestion(question);
       onOpen();
     },
-    [onOpen]
+    [onOpen],
   );
 
   const columns = [
@@ -333,7 +339,7 @@ export function InterviewQATable({ questions }: InterviewQATableProps) {
           return null;
       }
     },
-    [favorites, toggleFavorite]
+    [favorites, toggleFavorite],
   );
 
   const topContent = React.useMemo(() => {

@@ -166,10 +166,20 @@ import { Navbar } from "@/components/navbar";
 - **`config/fonts.ts`**: Font family configurations
 - **`config/site.ts`**: Site metadata and navigation
 
+**Interview Data**: Category-based interview Q&A system in `/data/interview` directory:
+
+- **`data/interview/general.ts`**: 20 general interview questions (behavioral, career)
+- **`data/interview/infrastructure.ts`**: 11 infrastructure/DevOps questions
+- **`data/interview/backend.ts`**: 6 backend development questions
+- **`data/interview/frontend.ts`**: 5 frontend development questions
+- **`data/interview/toss-tech.ts`**: 13 Toss-specific technical questions (Korean, Istio/mTLS)
+- **`data/interview/toss-company.ts`**: 5 Toss company/culture questions (Korean)
+- **`data/interview/index.ts`**: Aggregator exporting `interviewQuestions` and `tossInterviewQuestions`
+
 **Type Definitions**: Comprehensive TypeScript types in `/types` directory:
 
 - **`types/i18n.ts`**: i18n-related types (LocaleParams, PageProps, LayoutProps)
-- **`types/portfolio.ts`**: Portfolio data structures and dictionary types
+- **`types/portfolio.ts`**: Portfolio data structures, dictionary types, and InterviewQuestion interface
 
 **Usage Examples**:
 
@@ -194,20 +204,50 @@ throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
 
 ## Key Files Reference
 
+### Core Configuration
+
 - `i18nConfig.ts` - Locale configuration (ko/en/zh)
-- `app/[locale]/layout.tsx` - Root layout with font loading and metadata
-- `app/[locale]/page.tsx` - Main portfolio page with data definitions
-- `components/primitives.ts` - Tailwind variant utilities
 - `config/site.ts` - Site metadata (name, description, links)
 - `config/env.ts` - Environment configuration
-- `types/portfolio.ts` - TypeScript interfaces for data structures
-- `types/i18n.ts` - i18n type definitions
+- `config/fonts.ts` - Font family configurations
+
+### Routes & Pages
+
+- `app/[locale]/layout.tsx` - Root layout with font loading and metadata
+- `app/[locale]/page.tsx` - Main portfolio page with data definitions
+- `app/[locale]/resume/page.tsx` - PDF-optimized resume page
+- `app/[locale]/interview/page.tsx` - Main interview Q&A page
+- `app/[locale]/interview/toss/page.tsx` - Toss-specific interview preparation page (Korean)
+
+### Data Layer
+
+- `data/portfolio.ts` - Professional data (skills, certifications, experiences)
+- `data/personal.ts` - Personal information and summary statistics
+- `data/interview/*.ts` - Interview questions (general + company-specific)
+
+### Components
+
+- `components/primitives.ts` - Tailwind variant utilities
+- `components/interview/qa-table.tsx` - Interview Q&A table with filters and favorites
+- `components/portfolio/*.tsx` - Portfolio-specific components
+
+### Utilities & Hooks
+
 - `lib/i18n/locale-utils.ts` - Locale management utilities
 - `lib/error-handler.ts` - Error handling utilities
-- `hooks/use-locale.ts` - Locale hook
+- `hooks/use-locale.ts` - Locale extraction hook
 - `hooks/use-hero-animation.ts` - Hero animation hook
+
+### Type Definitions
+
+- `types/portfolio.ts` - Portfolio data structures and InterviewQuestion interface
+- `types/i18n.ts` - i18n type definitions
+
+### Constants
+
 - `constants/languages.ts` - Language configurations
 - `constants/images.ts` - Image constants
+- `constants/styles.ts` - Inline style constants
 
 ## Common Pitfalls
 
@@ -240,14 +280,82 @@ throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
 4. Select "Save as PDF" as destination
 5. Download generated PDF resume
 
+## Interview Q&A System
+
+**Category-Based Structure**: Interview questions are split into maintainable category files:
+
+- **General Questions** (20): `data/interview/general.ts` - Behavioral, career change, problem-solving
+- **Infrastructure** (11): `data/interview/infrastructure.ts` - K8s, AWS, Observability, Kafka, Airflow
+- **Backend** (6): `data/interview/backend.ts` - Go, Python, Spring Boot, Django, databases
+- **Frontend** (5): `data/interview/frontend.ts` - React, Next.js, Vue.js, Flutter
+- **Toss Technical** (13): `data/interview/toss-tech.ts` - Istio, mTLS, Service Mesh (Korean)
+- **Toss Company** (5): `data/interview/toss-company.ts` - Company culture, strengths, gaps (Korean)
+
+**ID Ranges**:
+
+- General questions: 1-100
+- Toss technical: 101-200
+- Toss company: 201-300
+- Future companies: 301+ (reserved)
+
+**Component Usage**:
+
+```tsx
+import { interviewQuestions, tossInterviewQuestions } from "@/data/interview";
+import { QATable } from "@/components/interview/qa-table";
+
+// General questions
+<QATable questions={interviewQuestions} />
+
+// Company-specific with filter
+<QATable questions={tossInterviewQuestions} companyFilter="toss" title="토스 면접" />
+```
+
+**Company-Specific Pages**:
+
+- `/ko/interview/toss` - Toss DevOps Engineer interview prep (Korean only)
+- Features: Self-intro, strengths mapping, gap analysis, 18 Q&A
+- Future: `/ko/interview/kakaobank`, `/ko/interview/naver`, etc.
+
+## User Background & Key Experiences
+
+**Professional Context**: Portfolio owner is Platform Lead Engineer with 3+ years experience operating ₩500B e-commerce platform processing 20-50M daily Kafka messages.
+
+**Legacy System Modernization Experience**:
+- **System**: 10+ year old production system with Tomcat, Spring, React, Vue.js, Kafka
+- **Challenges**: Zero monitoring/observability → 18-hour manual log investigation during incidents
+- **Service Discovery**: Implemented Netflix Eureka for service discovery, Spring Cloud for service mesh patterns
+- **Traffic Management & Security**: Built centralized traffic management with authentication/authorization policies
+  - Gateway-level security controls for microservices
+  - Policy-driven access control and rate limiting
+  - Service-to-service authentication mechanisms
+- **Observability Solution**: Built OpenTelemetry-based distributed tracing system from scratch
+  - Custom Span design integrating business + infrastructure metrics
+  - Trace ID-based request tracking across 10+ services
+  - Grafana dashboard design for real-time monitoring
+- **Results**: MTTI reduced from 18 hours → 10 minutes (99% improvement)
+
+**Technical Expertise**:
+- **Certifications**: CKA (Certified Kubernetes Administrator), AWS Advanced Networking Specialty, AWS DevOps Professional
+- **Cloud & Infrastructure**: AWS EKS, Kubernetes, Istio evaluation (Ambient Mode), APISIX Gateway production experience
+- **Observability**: OpenTelemetry contributor, Prometheus, Grafana, distributed tracing architecture
+- **Service Mesh**: Evaluated Istio Ambient Mode for EKS migration, expertise in mTLS and zero-trust networking
+- **DevOps**: CI/CD pipeline design, IaC (Terraform), GitOps workflows
+
+**Interview Preparation Context**: These experiences form the foundation for interview answers, particularly for DevOps/Platform/SRE positions requiring:
+- Legacy system modernization expertise
+- Service mesh and microservices architecture knowledge
+- Observability and root cause analysis capabilities
+- Production-grade security and traffic management implementation
+
 ## Content Synchronization (Critical)
 
 **The centralized data constants in `data/` MUST always match the markdown documentation in `./docs/`:**
 
 - `data/portfolio.ts` + `data/personal.ts` ↔ `docs/경력기술서.md` & `docs/이력서.md`
+- `data/interview/*.ts` ↔ `docs/면접-질의응답.md` (archived, TypeScript is now source of truth)
 - When updating portfolio data, update BOTH sources simultaneously
-- Korean documentation files are the source of truth for career details
-- Files in `./docs/`: `경력기술서.md` (career details), `이력서.md` (resume), `면접-질의응답.md` (interview Q&A)
+- Korean documentation files are the reference for career details
 
 **Workflow for portfolio updates**:
 
@@ -256,3 +364,11 @@ throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
 3. Update all three language dictionaries (`ko.json`, `en.json`, `zh.json`) for any new text
 4. Verify consistency between markdown docs, data constants, and live web app content
 5. Test PDF generation on `/[locale]/resume` route
+
+**Workflow for interview question updates**:
+
+1. Edit appropriate category file in `data/interview/`
+2. Use proper ID range (general: 1-100, toss: 101-300, future: 301+)
+3. Maintain TypeScript type safety with `InterviewQuestion` interface
+4. Test on `/[locale]/interview` or company-specific page
+5. No markdown sync needed (TypeScript is source of truth)
