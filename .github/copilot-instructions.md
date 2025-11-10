@@ -322,6 +322,7 @@ import { QATable } from "@/components/interview/qa-table";
 **Professional Context**: Portfolio owner is Platform Lead Engineer with 3+ years experience operating ₩500B e-commerce platform processing 20-50M daily Kafka messages.
 
 **Legacy System Modernization Experience**:
+
 - **System**: 10+ year old production system with Tomcat, Spring, React, Vue.js, Kafka
 - **Challenges**: Zero monitoring/observability → 18-hour manual log investigation during incidents
 - **Service Discovery**: Implemented Netflix Eureka for service discovery, Spring Cloud for service mesh patterns
@@ -336,6 +337,7 @@ import { QATable } from "@/components/interview/qa-table";
 - **Results**: MTTI reduced from 18 hours → 10 minutes (99% improvement)
 
 **Technical Expertise**:
+
 - **Certifications**: CKA (Certified Kubernetes Administrator), AWS Advanced Networking Specialty, AWS DevOps Professional
 - **Cloud & Infrastructure**: AWS EKS, Kubernetes, Istio evaluation (Ambient Mode), APISIX Gateway production experience
 - **Observability**: OpenTelemetry contributor, Prometheus, Grafana, distributed tracing architecture
@@ -343,6 +345,7 @@ import { QATable } from "@/components/interview/qa-table";
 - **DevOps**: CI/CD pipeline design, IaC (Terraform), GitOps workflows
 
 **Interview Preparation Context**: These experiences form the foundation for interview answers, particularly for DevOps/Platform/SRE positions requiring:
+
 - Legacy system modernization expertise
 - Service mesh and microservices architecture knowledge
 - Observability and root cause analysis capabilities
