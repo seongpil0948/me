@@ -126,10 +126,10 @@ export function QATable({
     React.useState<InterviewQuestion | null>(null);
   const [filterValue, setFilterValue] = React.useState("");
   const [category1Filter, setCategory1Filter] = React.useState<Set<string>>(
-    new Set()
+    new Set(),
   );
   const [category2Filter, setCategory2Filter] = React.useState<Set<string>>(
-    new Set()
+    new Set(),
   );
   const [showFavoritesOnly, setShowFavoritesOnly] = React.useState(false);
   const [favorites, setFavorites] = React.useState<Set<number>>(new Set());
@@ -191,7 +191,7 @@ export function QATable({
       const filteredCat2 = new Set(
         questions
           .filter((q) => selectedCat1.includes(q.category1))
-          .map((q) => q.category2)
+          .map((q) => q.category2),
       );
 
       return Array.from(filteredCat2).map((cat2) => ({
@@ -214,7 +214,7 @@ export function QATable({
     // Search filter
     if (hasSearchFilter) {
       filtered = filtered.filter((q) =>
-        q.question.toLowerCase().includes(filterValue.toLowerCase())
+        q.question.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
 
@@ -271,7 +271,7 @@ export function QATable({
       setSelectedQuestion(question);
       onOpen();
     },
-    [onOpen]
+    [onOpen],
   );
 
   const columns = [
@@ -347,7 +347,7 @@ export function QATable({
           return null;
       }
     },
-    [favorites, toggleFavorite]
+    [favorites, toggleFavorite],
   );
 
   const topContent = React.useMemo(() => {

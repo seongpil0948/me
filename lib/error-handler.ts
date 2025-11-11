@@ -10,7 +10,7 @@ export class AppError extends Error {
     message: string,
     public code?: string,
     public statusCode?: number,
-    public context?: Record<string, any>
+    public context?: Record<string, any>,
   ) {
     super(message);
     this.name = "AppError";
@@ -64,7 +64,7 @@ export function logError(error: Error, context?: Record<string, any>): void {
  */
 export function handleError(
   error: unknown,
-  fallbackMessage: string = "An unexpected error occurred"
+  fallbackMessage: string = "An unexpected error occurred",
 ): string {
   if (error instanceof AppError) {
     logError(error, error.context);
@@ -90,7 +90,7 @@ export function handleError(
  */
 export async function withErrorHandling<T>(
   fn: () => Promise<T>,
-  errorHandler?: (error: Error) => void
+  errorHandler?: (error: Error) => void,
 ): Promise<T | null> {
   try {
     return await fn();

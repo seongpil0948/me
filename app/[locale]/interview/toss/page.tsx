@@ -50,6 +50,9 @@ export default function TossInterviewPage() {
               <Chip color="secondary" variant="flat">
                 회사/문화 {tossCompanyQuestionsCount}개
               </Chip>
+              <Chip color="warning" variant="flat">
+                방어 전술 {defensiveTacticsCount}개
+              </Chip>
             </div>
           </div>
         </CardHeader>
@@ -71,5 +74,8 @@ const tossTechQuestionsCount = tossInterviewQuestions.filter(
   (q) => q.id >= 101 && q.id < 200,
 ).length;
 const tossCompanyQuestionsCount = tossInterviewQuestions.filter(
-  (q) => q.id >= 201,
+  (q) => q.id >= 201 && q.id < 300,
+).length;
+const defensiveTacticsCount = tossInterviewQuestions.filter(
+  (q) => q.id >= 301,
 ).length;

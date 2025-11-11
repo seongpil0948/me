@@ -1,6 +1,7 @@
 import type { InterviewQuestion } from "@/types/portfolio";
 
 import { backendQuestions } from "./backend";
+import { defensiveTacticsQuestions } from "./defensive-tactics";
 import { frontendQuestions } from "./frontend";
 import { generalQuestions } from "./general";
 import { infrastructureQuestions } from "./infrastructure";
@@ -16,15 +17,17 @@ export const interviewQuestions: InterviewQuestion[] = [
   ...infrastructureQuestions,
   ...backendQuestions,
   ...frontendQuestions,
+  ...defensiveTacticsQuestions,
 ];
 
 /**
  * Toss-specific interview questions
- * Technical (Istio, mTLS, Service Mesh) + Company/Culture
+ * Technical (Istio, mTLS, Service Mesh) + Company/Culture + Defensive Tactics
  */
 export const tossInterviewQuestions: InterviewQuestion[] = [
   ...tossTechQuestions,
   ...tossCompanyQuestions,
+  ...defensiveTacticsQuestions,
 ];
 
 /**
@@ -32,6 +35,7 @@ export const tossInterviewQuestions: InterviewQuestion[] = [
  */
 export {
   backendQuestions,
+  defensiveTacticsQuestions,
   frontendQuestions,
   generalQuestions,
   infrastructureQuestions,

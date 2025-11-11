@@ -86,8 +86,8 @@ export function useHeroAnimation({
     const unsubscribe = smoothVelocity.on("change", (latest) => {
       const frame = Math.abs(
         Math.floor(
-          imageUrls.length * (currentFrame / imageUrls.length + latest / 1000)
-        )
+          imageUrls.length * (currentFrame / imageUrls.length + latest / 1000),
+        ),
       );
 
       if (frame !== currentFrame && frame < imageUrls.length) {
@@ -114,7 +114,7 @@ export function useHeroAnimation({
  */
 export function drawImageOnCanvas(
   canvas: HTMLCanvasElement,
-  image: HTMLImageElement
+  image: HTMLImageElement,
 ): void {
   const ctx = canvas.getContext("2d");
 
@@ -125,7 +125,7 @@ export function drawImageOnCanvas(
   // Calculate scale to fit canvas while maintaining aspect ratio
   const scale = Math.min(
     canvas.width / image.width,
-    canvas.height / image.height
+    canvas.height / image.height,
   );
   const x = (canvas.width - image.width * scale) / 2;
   const y = (canvas.height - image.height * scale) / 2;
