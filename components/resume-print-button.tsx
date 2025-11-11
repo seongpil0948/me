@@ -1,9 +1,9 @@
 "use client";
 
+import type { Locale } from "@/app/[locale]/dictionaries";
+
 import { useRouter } from "next/navigation";
 import { Button } from "@heroui/button";
-
-import type { Locale } from "@/app/[locale]/dictionaries";
 
 interface ResumePrintButtonProps {
   locale: Locale;

@@ -25,7 +25,7 @@ export default function SkillsCertificationsContent({
   } = categorizeSkills(skills);
 
   // Add status to certifications based on their index
-  const certsWithStatus = certifications.map((cert, idx) => ({
+  const certsWithStatus = certifications.map((cert) => ({
     ...cert,
     status: "certified",
   }));

@@ -38,6 +38,7 @@ export default function ProjectImageSwiper({
   return (
     <div className="w-full my-4">
       <Swiper
+        navigation
         autoplay={
           autoplay
             ? {
@@ -59,7 +60,6 @@ export default function ProjectImageSwiper({
         }}
         className="rounded-lg"
         modules={modules}
-        navigation
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         slidesPerView={1}

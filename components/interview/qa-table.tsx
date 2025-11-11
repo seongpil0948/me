@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-
 import type { Category1, InterviewQuestion } from "@/types/portfolio";
+
+import React from "react";
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import {
@@ -117,19 +117,19 @@ interface InterviewQATableProps {
 }
 
 export function QATable({
-  companyFilter,
+  companyFilter: _companyFilter,
   questions,
-  title = "Interview Q&A",
+  title: _title = "Interview Q&A",
 }: InterviewQATableProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedQuestion, setSelectedQuestion] =
     React.useState<InterviewQuestion | null>(null);
   const [filterValue, setFilterValue] = React.useState("");
   const [category1Filter, setCategory1Filter] = React.useState<Set<string>>(
-    new Set(),
+    new Set()
   );
   const [category2Filter, setCategory2Filter] = React.useState<Set<string>>(
-    new Set(),
+    new Set()
   );
   const [showFavoritesOnly, setShowFavoritesOnly] = React.useState(false);
   const [favorites, setFavorites] = React.useState<Set<number>>(new Set());
@@ -150,8 +150,8 @@ export function QATable({
         const parsed = JSON.parse(stored);
 
         setFavorites(new Set(parsed));
-      } catch (e) {
-        console.error("Failed to parse favorites from localStorage", e);
+      } catch {
+        // Failed to parse favorites, continue with empty set
       }
     }
   }, []);
@@ -191,7 +191,7 @@ export function QATable({
       const filteredCat2 = new Set(
         questions
           .filter((q) => selectedCat1.includes(q.category1))
-          .map((q) => q.category2),
+          .map((q) => q.category2)
       );
 
       return Array.from(filteredCat2).map((cat2) => ({
@@ -214,7 +214,7 @@ export function QATable({
     // Search filter
     if (hasSearchFilter) {
       filtered = filtered.filter((q) =>
-        q.question.toLowerCase().includes(filterValue.toLowerCase()),
+        q.question.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
 
@@ -271,7 +271,7 @@ export function QATable({
       setSelectedQuestion(question);
       onOpen();
     },
-    [onOpen],
+    [onOpen]
   );
 
   const columns = [
@@ -287,9 +287,17 @@ export function QATable({
         case "favorite":
           return (
             <div
+              role="button"
+              tabIndex={0}
               onClick={(e) => {
                 e.stopPropagation();
                 toggleFavorite(question.id);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.stopPropagation();
+                  toggleFavorite(question.id);
+                }
               }}
             >
               <Button isIconOnly size="sm" variant="light">
@@ -339,7 +347,7 @@ export function QATable({
           return null;
       }
     },
-    [favorites, toggleFavorite],
+    [favorites, toggleFavorite]
   );
 
   const topContent = React.useMemo(() => {
@@ -493,10 +501,10 @@ export function QATable({
       </Table>
 
       <Modal
+        isDismissable={false}
         isOpen={isOpen}
         scrollBehavior="inside"
         size="3xl"
-        isDismissable={false}
         onOpenChange={onOpenChange}
       >
         <ModalContent>

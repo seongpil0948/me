@@ -20,7 +20,7 @@ export default function PortfolioSection({
 }: PortfolioData & { locale: Locale }) {
   return (
     <div>
-      <HeroSection description={description} dict={dict} locale={locale} />
+      <HeroSection description={description} locale={locale} />
 
       <section className="max-w-6xl mx-auto px-6">
         <PortfolioTabs
@@ -32,7 +32,6 @@ export default function PortfolioSection({
               portfolioLinks={portfolioLinks}
             />
           }
-          dict={dict}
           experienceContent={
             <ExperienceContent
               dict={dict}

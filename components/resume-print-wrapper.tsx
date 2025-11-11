@@ -1,9 +1,9 @@
 "use client";
 
+import type { Dictionary } from "@/types/portfolio";
+
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-
-import type { Dictionary } from "@/types/portfolio";
 
 interface ResumePrintWrapperProps {
   children: React.ReactNode;
@@ -52,7 +52,6 @@ export function ResumePrintWrapper({
         }}
       >
         <button
-          onClick={handlePrint}
           style={{
             backgroundColor: "var(--color-primary)",
             color: "white",
@@ -67,20 +66,21 @@ export function ResumePrintWrapper({
             alignItems: "center",
             gap: "8px",
           }}
+          onClick={handlePrint}
         >
           <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
             fill="none"
+            height="20"
             stroke="currentColor"
-            strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            width="20"
           >
             <polyline points="6 9 6 2 18 2 18 9" />
             <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
-            <rect x="6" y="14" width="12" height="8" />
+            <rect height="8" width="12" x="6" y="14" />
           </svg>
           {dict.buttons.downloadResume}
         </button>

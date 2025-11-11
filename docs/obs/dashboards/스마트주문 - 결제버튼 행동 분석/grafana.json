@@ -1,0 +1,595 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum(\n  count_over_time(\n    {service_name=\"theshop-pharmacy\"} |= `commerce.button.click` | action = `smart_order_open`\n  [$__range]\n  )\n)",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "퀵오더 진입 버튼 클릭 수",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "count(count by (userKey) (count_over_time({service_name=\"theshop-pharmacy\"} |= `commerce.button.click` | action = `smart_order_open` [$__range])))",
+          "hide": false,
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "고유 진입 회원수",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 8,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum(\n  count_over_time(\n    {service_name=\"theshop-pharmacy\"} |= `commerce.cart.add` | is_quick_order = \"true\"\n  [$__range]\n  )\n)",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "장바구니 담기 클릭 수",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 13,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum(\n  count_over_time(\n    {service_name=\"theshop-pharmacy\"} |= `commerce.checkout.start` | is_quick_order = \"true\"\n  [$__range]\n  )\n)",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "바로 결제 클릭 수",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "count(count by (userKey) (count_over_time({service_name=\"theshop-pharmacy\"} |~ `commerce.cart.add|commerce.checkout.start` | is_quick_order = \"true\" [$__range])))",
+          "hide": false,
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "고유 사용자 수",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "{basePrice=\"0\", dayOfWeek=\"1\", deployment_environment_env=\"DEV\", deployment_environment_node_env=\"development\", deployment_environment_profile=\"dev\", detected_level=\"INFO\", flags=\"1\", fromSmartCart=\"true\", goodsCd=\"1002348420\", hasCostDiscount=\"false\", hasGroupDiscount=\"false\", hasScaleDiscount=\"false\", host=\"localhost:3000\", host_name=\"47743b09ed63\", hour=\"16\", is_quick_order=\"true\", level=\"INFO\", manufacturer=\"(주)퍼슨\", observed_timestamp=\"1762154684560000000\", os_type=\"linux\", price=\"0\", productName=\"성광관장약\", quantity=\"10\", scope_name=\"ids-otel-logger\", scope_version=\"1.0.0\", sellerCd=\"50004\", sellerNm=\"한신약품\", service_name=\"theshop-pharmacy\", service_namespace=\"Frontend\", service_version=\"1.0.0\", sessionId=\"26d05dff-257d-47ec-9f7d-11c809c1f5d0\", severity_number=\"9\", severity_text=\"INFO\", source=\"cart\", span_id=\"4736382d895b5b28\", specification=\"20밀리리터\", timestamp=\"20251103T162444\", trace_id=\"6bd42475161606c9b69081964493a7c8\", unit=\"1개\", userKey=\"1000000200\"}",
+                  "{basePrice=\"0\", dayOfWeek=\"1\", deployment_environment_env=\"DEV\", deployment_environment_node_env=\"development\", deployment_environment_profile=\"dev\", detected_level=\"INFO\", flags=\"1\", fromSmartCart=\"true\", goodsCd=\"1002487386\", hasCostDiscount=\"false\", hasGroupDiscount=\"false\", hasScaleDiscount=\"false\", host=\"localhost:3000\", host_name=\"47743b09ed63\", hour=\"16\", is_quick_order=\"true\", level=\"INFO\", manufacturer=\"123테스트\", observed_timestamp=\"1762154684561000000\", os_type=\"linux\", price=\"0\", productName=\"test상품\", quantity=\"1\", scope_name=\"ids-otel-logger\", scope_version=\"1.0.0\", sellerCd=\"50004\", sellerNm=\"한신약품\", service_name=\"theshop-pharmacy\", service_namespace=\"Frontend\", service_version=\"1.0.0\", sessionId=\"26d05dff-257d-47ec-9f7d-11c809c1f5d0\", severity_number=\"9\", severity_text=\"INFO\", source=\"cart\", span_id=\"5f50652264053964\", specification=\"123\", timestamp=\"20251103T162444\", trace_id=\"96dc2408e2b32b28b61c1784375f60c7\", unit=\"456\", userKey=\"1000000200\"}",
+                  "{basePrice=\"0\", dayOfWeek=\"2\", deployment_environment_env=\"DEV\", deployment_environment_node_env=\"development\", deployment_environment_profile=\"dev\", detected_level=\"INFO\", flags=\"1\", fromSmartCart=\"true\", goodsCd=\"1002341997\", hasCostDiscount=\"false\", hasGroupDiscount=\"false\", hasScaleDiscount=\"false\", host=\"localhost:3000\", host_name=\"47743b09ed63\", hour=\"10\", is_quick_order=\"true\", level=\"INFO\", manufacturer=\"(주)대웅\", observed_timestamp=\"1762220343205000000\", os_type=\"linux\", price=\"0\", productName=\"알파우루사연질캡슐\", quantity=\"4\", scope_name=\"ids-otel-logger\", scope_version=\"1.0.0\", sellerCd=\"12095\", sellerNm=\"경동사(수원)\", service_name=\"theshop-pharmacy\", service_namespace=\"Frontend\", service_version=\"1.0.0\", sessionId=\"26d05dff-257d-47ec-9f7d-11c809c1f5d0\", severity_number=\"9\", severity_text=\"INFO\", source=\"cart\", span_id=\"1782e1ca19611d90\", specification=\"50밀리그램\", timestamp=\"20251104T103903\", trace_id=\"c7d4b61cff21c2af99c9d542150e6ce7\", unit=\"100캡슐\", userKey=\"1000000200\"}",
+                  "{basePrice=\"0\", dayOfWeek=\"2\", deployment_environment_env=\"DEV\", deployment_environment_node_env=\"production\", detected_level=\"INFO\", flags=\"1\", fromSmartCart=\"true\", goodsCd=\"1002487384\", hasCostDiscount=\"false\", hasGroupDiscount=\"false\", hasScaleDiscount=\"false\", host=\"dev-the.shop.co.kr\", host_name=\"47743b09ed63\", hour=\"13\", is_quick_order=\"true\", level=\"INFO\", manufacturer=\"1\", observed_timestamp=\"1762231443957000000\", os_type=\"linux\", price=\"0\", productName=\"민준테스트상품명검색\", quantity=\"1\", scope_name=\"ids-otel-logger\", scope_version=\"1.0.0\", sellerCd=\"12082\", sellerNm=\"엠서클_찐테스트(부외)\", service_name=\"theshop-pharmacy\", service_namespace=\"Frontend\", service_version=\"1.0.0\", sessionId=\"ee848d03-e40d-4714-a6c9-f7a8a9df3041\", severity_number=\"9\", severity_text=\"INFO\", source=\"cart\", span_id=\"d89823b26857ad32\", specification=\"1\", timestamp=\"20251104T134403\", trace_id=\"015c5f08be7fbaaef85714664d6ba515\", unit=\"1\", userKey=\"1000082617\"}",
+                  "장바구니 담기",
+                  "바로 결제하기",
+                  "Value #A",
+                  "Value #B",
+                  "{deployment_environment_env=\"DEV\", deployment_environment_node_env=\"production\", detected_level=\"INFO\", flags=\"1\", host=\"dev-the.shop.co.kr\", host_name=\"47743b09ed63\", is_quick_order=\"true\", itemCount=\"1\", level=\"INFO\", observed_timestamp=\"1762231992087000000\", os_type=\"linux\", scope_name=\"ids-otel-logger\", scope_version=\"1.0.0\", service_name=\"theshop-pharmacy\", service_namespace=\"Frontend\", service_version=\"1.0.0\", sessionId=\"ee848d03-e40d-4714-a6c9-f7a8a9df3041\", severity_number=\"9\", severity_text=\"INFO\", source=\"cart\", span_id=\"1e6fdac688e7684b\", timestamp=\"20251104T135312\", trace_id=\"0bb4e7d889fb1aa562ca4c2c9d467aa5\", userKey=\"1000082617\"}",
+                  "{deployment_environment_env=\"DEV\", deployment_environment_node_env=\"development\", deployment_environment_profile=\"dev\", detected_level=\"INFO\", flags=\"1\", host=\"localhost:3000\", host_name=\"47743b09ed63\", is_quick_order=\"true\", itemCount=\"1\", level=\"INFO\", observed_timestamp=\"1762220350169000000\", os_type=\"linux\", scope_name=\"ids-otel-logger\", scope_version=\"1.0.0\", service_name=\"theshop-pharmacy\", service_namespace=\"Frontend\", service_version=\"1.0.0\", sessionId=\"26d05dff-257d-47ec-9f7d-11c809c1f5d0\", severity_number=\"9\", severity_text=\"INFO\", source=\"cart\", span_id=\"ce716060c0b7e2d1\", timestamp=\"20251104T103910\", trace_id=\"c00e6c80c48fa47ec230978d00e81e0c\", userKey=\"1000000200\"}",
+                  "바로구매",
+                  "장바구니"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": true,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 9,
+        "x": 0,
+        "y": 4
+      },
+      "id": 6,
+      "options": {
+        "displayLabels": ["percent"],
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true,
+          "values": []
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "sort": "desc",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum(count_over_time({service_name=\"theshop-pharmacy\"} |= `commerce.cart.add` | is_quick_order = \"true\" [$__range]))",
+          "legendFormat": "장바구니",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum(count_over_time({service_name=\"theshop-pharmacy\"} |= `commerce.checkout.start` | is_quick_order = \"true\" [$__range]))",
+          "hide": false,
+          "legendFormat": "바로구매",
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "클릭 비율 분석",
+      "transparent": true,
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 15,
+        "x": 9,
+        "y": 4
+      },
+      "id": 7,
+      "options": {
+        "dedupStrategy": "none",
+        "enableInfiniteScrolling": false,
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "{service_name=\"theshop-pharmacy\"} | is_quick_order = \"true\" or action = \"smart_order_open\"  |~ `$search` ",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Raw 로그",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "delimiter": ",",
+            "format": "auto",
+            "source": "labels"
+          }
+        }
+      ],
+      "type": "logs"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "id": 8,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "# 📊 스마트주문(퀵오더) 행동 분석 가이드\n\n## 핵심 지표 (KPI)\n\n### 퀵오더 진입 버튼 클릭 수\n- **의미**: 스마트주문 화면 진입 버튼을 클릭한 총 횟수\n- **이벤트**: `commerce.button.click` (action = `smart_order_open`)\n- **활용**: 퀵오더 기능 노출 효과성 측정\n\n### 고유 진입 회원수\n- **의미**: 스마트주문 버튼을 클릭한 고유 사용자 수\n- **계산**: userKey 기준 중복 제거\n- **활용**: 실제 관심 사용자 규모 파악\n\n### 장바구니 담기 클릭 수\n- **이벤트**: `commerce.cart.add` (is_quick_order = \"true\")\n- **의미**: 퀵오더에서 장바구니에 상품을 담은 횟수\n- **활용**: 장바구니 경유 전환 측정\n\n### 바로 결제 클릭 수\n- **이벤트**: `commerce.checkout.start` (is_quick_order = \"true\")\n- **의미**: 퀵오더에서 즉시 결제를 시작한 횟수\n- **활용**: 즉시 구매 전환 측정\n\n### 고유 사용자 수\n- **의미**: 장바구니 또는 바로결제를 실행한 고유 사용자 수\n- **활용**: 실제 전환 사용자 규모 파악\n\n---\n\n## 전환 퍼널 분석\n\n```\n퀵오더 진입 버튼 클릭 (100%)\n    ↓\n장바구니 담기 OR 바로 결제\n    ↓\n최종 전환\n```\n\n### 전환율 계산 방법\n\n**진입 대비 전환율** = (장바구니 담기 + 바로 결제) ÷ 퀵오더 진입 클릭 수 × 100\n\n**예시**:\n- 퀵오더 진입 클릭: 100회\n- 장바구니 담기: 30회\n- 바로 결제: 20회\n- **전환율**: (30 + 20) ÷ 100 × 100 = **50%**\n\n---\n\n## 클릭 비율 분석 (Donut Chart)\n\n### 장바구니 vs 바로구매 비율\n- **장바구니**: 상품을 장바구니에 담고 나중에 결제하려는 사용자\n- **바로구매**: 즉시 결제를 원하는 사용자\n\n**활용 예시**:\n- 바로구매 비율이 높으면 → 긴급 구매 니즈가 강함\n- 장바구니 비율이 높으면 → 비교/검토 후 구매 성향\n\n---\n\n## 주요 필터 조건\n\n### Loki 쿼리 필터\n- **서비스**: `service_name=\"theshop-pharmacy\"`\n- **퀵오더 식별**: `is_quick_order = \"true\"`\n- **진입 이벤트**: `action = \"smart_order_open\"`\n\n### 시간 범위\n- 대시보드 기본값: **최근 7일**\n- 우측 상단 Time Picker에서 조정 가능\n- 실시간 모니터링: `$__range` 변수 사용\n\n---\n\n## Raw 로그 활용\n\n### 검색 변수 ($search)\n- 우측 상단 \"search\" 입력창 사용\n- 예시:\n  - `userKey=\"1000000200\"` → 특정 사용자 로그\n  - `productName=~\".*타이레놀.*\"` → 특정 상품 로그\n  - `source=\"cart\"` → 장바구니 출처 로그\n\n### 로그 분석 TIP\n- **userKey**: 사용자 행동 추적\n- **sessionId**: 세션별 행동 분석\n- **source**: 진입 경로 (cart, routine, favorites 등)\n- **quantity**: 주문 수량 패턴\n- **timestamp**: 시간대별 패턴 분석\n\n---\n\n자세한 내용은 [데이터 플랫폼 문서](/docs) 참고",
+        "mode": "markdown"
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "title": "그라파나 지표 확인 관련 Guide",
+      "type": "text"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "description": "search",
+        "label": "search",
+        "name": "search",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "type": "textbox"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "스마트주문 - 결제버튼 행동 분석",
+  "uid": "sed2dw4",
+  "version": 14
+}

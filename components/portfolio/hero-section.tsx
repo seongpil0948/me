@@ -1,24 +1,15 @@
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
+import { HeroCanvas } from "./hero-canvas";
 
 import { nanumMyeongjo } from "@/config/fonts";
-import { Dictionary } from "@/types/portfolio";
 import { personalInfo } from "@/data/personal";
 import { Locale } from "@/app/[locale]/dictionaries";
 
-import { HeroCanvas } from "./hero-canvas";
-
 interface HeroSectionProps {
   description: string;
-  dict: Dictionary;
   locale: Locale;
 }
 
-export default function HeroSection({
-  description,
-  dict,
-  locale,
-}: HeroSectionProps) {
+export default function HeroSection({ description, locale }: HeroSectionProps) {
   const nameDisplay =
     locale === "ko" ? (
       <>

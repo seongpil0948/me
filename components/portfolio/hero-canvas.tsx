@@ -33,9 +33,9 @@ export function HeroCanvas() {
   return (
     <motion.div
       ref={containerRef}
+      animate={{ opacity: isLoading ? 0 : 1 }}
       className="relative w-full aspect-square"
       initial={{ opacity: 0 }}
-      animate={{ opacity: isLoading ? 0 : 1 }}
       style={{
         rotate,
       }}

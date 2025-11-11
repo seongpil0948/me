@@ -3,10 +3,7 @@
 import { useState } from "react";
 import { Tabs, Tab } from "@heroui/tabs";
 
-import { Dictionary } from "@/types/portfolio";
-
 interface PortfolioTabsProps {
-  dict: Dictionary;
   aboutContent: React.ReactNode;
   skillsCertificationsContent: React.ReactNode;
   experienceContent: React.ReactNode;
@@ -14,7 +11,6 @@ interface PortfolioTabsProps {
 }
 
 export default function PortfolioTabs({
-  dict,
   aboutContent,
   skillsCertificationsContent,
   experienceContent,
@@ -22,13 +18,10 @@ export default function PortfolioTabs({
 }: PortfolioTabsProps) {
   const [selected, setSelected] = useState("about");
 
-  console.log("Current selected tab:", selected);
-
   return (
     <Tabs
       aria-label="Portfolio sections"
       className="w-full"
-      variant="underlined"
       classNames={{
         base: "w-full",
         tabList:
@@ -38,8 +31,8 @@ export default function PortfolioTabs({
         tabContent: "group-data-[selected=true]:text-[var(--color-primary)]",
       }}
       selectedKey={selected}
+      variant="underlined"
       onSelectionChange={(key) => {
-        console.log("Tab clicked:", key);
         setSelected(String(key));
       }}
     >

@@ -5,7 +5,6 @@ import { Chip } from "@heroui/chip";
 import { Divider } from "@heroui/divider";
 
 import { tossInterviewQuestions } from "@/data/interview";
-
 import { QATable } from "@/components/interview/qa-table";
 
 export const metadata: Metadata = {

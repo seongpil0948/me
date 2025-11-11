@@ -1,0 +1,475 @@
+{
+  "Comment": "Athena OTEL Summary Queries - Multi-Service Support with Sequential Batches",
+  "StartAt": "TransformServiceNames",
+  "States": {
+    "TransformServiceNames": {
+      "Type": "Pass",
+      "Comment": "Transform service_names array to create table_prefix per service",
+      "Parameters": {
+        "services.$": "$.service_names",
+        "database": "log_db",
+        "output_location": "s3://aws-athena-query-results-725129837589-ap-northeast-2",
+        "workgroup": "primary",
+        "s3_base": "s3://aws-athena-query-results-725129837589-ap-northeast-2/summary",
+        "execution_time.$": "$$.Execution.StartTime"
+      },
+      "Next": "ProcessEachService"
+    },
+    "ProcessEachService": {
+      "Type": "Map",
+      "Comment": "Iterate over each service and create its summary tables",
+      "ItemsPath": "$.services",
+      "MaxConcurrency": 1,
+      "Parameters": {
+        "service_name.$": "$$.Map.Item.Value",
+        "service_names.$": "States.Array($$.Map.Item.Value)",
+        "database.$": "$.database",
+        "output_location.$": "$.output_location",
+        "workgroup.$": "$.workgroup",
+        "s3_base.$": "$.s3_base",
+        "execution_time.$": "$.execution_time"
+      },
+      "Iterator": {
+        "StartAt": "ComputeTablePrefix",
+        "States": {
+          "ComputeTablePrefix": {
+            "Type": "Pass",
+            "Comment": "Convert service name to table prefix: theshop-brand -> theshop_brand",
+            "Parameters": {
+              "service_name.$": "$.service_name",
+              "service_names.$": "$.service_names",
+              "table_prefix.$": "States.Format('{}_{}', States.ArrayGetItem(States.StringSplit($.service_name, '-'), 0), States.ArrayGetItem(States.StringSplit($.service_name, '-'), 1))",
+              "database.$": "$.database",
+              "output_location.$": "$.output_location",
+              "workgroup.$": "$.workgroup",
+              "s3_base.$": "$.s3_base",
+              "execution_time.$": "$.execution_time"
+            },
+            "Next": "Batch1_MAU_DAU"
+          },
+          "Batch1_MAU_DAU": {
+            "Type": "Parallel",
+            "Comment": "Batch 1: MAU + DAU (2 concurrent queries)",
+            "Branches": [
+              {
+                "StartAt": "DropMAUTable",
+                "States": {
+                  "DropMAUTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_mau_summary', $.table_prefix)",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "Next": "BuildMAUQuery"
+                  },
+                  "BuildMAUQuery": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::lambda:invoke",
+                    "Parameters": {
+                      "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:athena-query-builder",
+                      "Payload": {
+                        "query_type": "mau",
+                        "table_prefix.$": "$.table_prefix",
+                        "s3_base.$": "$.s3_base",
+                        "service_names.$": "$.service_names"
+                      }
+                    },
+                    "ResultSelector": {
+                      "query_string.$": "$.Payload.query_string"
+                    },
+                    "ResultPath": "$.query_info",
+                    "Next": "CreateMAUTable"
+                  },
+                  "CreateMAUTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "$.query_info.query_string",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "End": true
+                  }
+                }
+              },
+              {
+                "StartAt": "DropDAUTable",
+                "States": {
+                  "DropDAUTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_dau_summary', $.table_prefix)",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "Next": "BuildDAUQuery"
+                  },
+                  "BuildDAUQuery": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::lambda:invoke",
+                    "Parameters": {
+                      "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:athena-query-builder",
+                      "Payload": {
+                        "query_type": "dau",
+                        "table_prefix.$": "$.table_prefix",
+                        "s3_base.$": "$.s3_base",
+                        "service_names.$": "$.service_names"
+                      }
+                    },
+                    "ResultSelector": {
+                      "query_string.$": "$.Payload.query_string"
+                    },
+                    "ResultPath": "$.query_info",
+                    "Next": "CreateDAUTable"
+                  },
+                  "CreateDAUTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "$.query_info.query_string",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "End": true
+                  }
+                }
+              }
+            ],
+            "ResultPath": null,
+            "Next": "Batch2_Retention_Conversion"
+          },
+          "Batch2_Retention_Conversion": {
+            "Type": "Parallel",
+            "Comment": "Batch 2: Retention + Conversion (2 concurrent queries)",
+            "Branches": [
+              {
+                "StartAt": "DropRetentionTable",
+                "States": {
+                  "DropRetentionTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_retention_summary', $.table_prefix)",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "Next": "BuildRetentionQuery"
+                  },
+                  "BuildRetentionQuery": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::lambda:invoke",
+                    "Parameters": {
+                      "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:athena-query-builder",
+                      "Payload": {
+                        "query_type": "retention",
+                        "table_prefix.$": "$.table_prefix",
+                        "s3_base.$": "$.s3_base",
+                        "service_names.$": "$.service_names"
+                      }
+                    },
+                    "ResultSelector": {
+                      "query_string.$": "$.Payload.query_string"
+                    },
+                    "ResultPath": "$.query_info",
+                    "Next": "CreateRetentionTable"
+                  },
+                  "CreateRetentionTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "$.query_info.query_string",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "End": true
+                  }
+                }
+              },
+              {
+                "StartAt": "DropConversionTable",
+                "States": {
+                  "DropConversionTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_conversion_summary', $.table_prefix)",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "Next": "BuildConversionQuery"
+                  },
+                  "BuildConversionQuery": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::lambda:invoke",
+                    "Parameters": {
+                      "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:athena-query-builder",
+                      "Payload": {
+                        "query_type": "conversion",
+                        "table_prefix.$": "$.table_prefix",
+                        "s3_base.$": "$.s3_base",
+                        "service_names.$": "$.service_names"
+                      }
+                    },
+                    "ResultSelector": {
+                      "query_string.$": "$.Payload.query_string"
+                    },
+                    "ResultPath": "$.query_info",
+                    "Next": "CreateConversionTable"
+                  },
+                  "CreateConversionTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "$.query_info.query_string",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "End": true
+                  }
+                }
+              }
+            ],
+            "ResultPath": null,
+            "Next": "Batch3_UserCohort_SessionMetrics"
+          },
+          "Batch3_UserCohort_SessionMetrics": {
+            "Type": "Parallel",
+            "Comment": "Batch 3: UserCohort + SessionMetrics (2 concurrent queries)",
+            "Branches": [
+              {
+                "StartAt": "DropUserCohortTable",
+                "States": {
+                  "DropUserCohortTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_user_cohort_summary', $.table_prefix)",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "Next": "BuildUserCohortQuery"
+                  },
+                  "BuildUserCohortQuery": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::lambda:invoke",
+                    "Parameters": {
+                      "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:athena-query-builder",
+                      "Payload": {
+                        "query_type": "user_cohort",
+                        "table_prefix.$": "$.table_prefix",
+                        "s3_base.$": "$.s3_base",
+                        "service_names.$": "$.service_names"
+                      }
+                    },
+                    "ResultSelector": {
+                      "query_string.$": "$.Payload.query_string"
+                    },
+                    "ResultPath": "$.query_info",
+                    "Next": "CreateUserCohortTable"
+                  },
+                  "CreateUserCohortTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "$.query_info.query_string",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "End": true
+                  }
+                }
+              },
+              {
+                "StartAt": "DropSessionMetricsTable",
+                "States": {
+                  "DropSessionMetricsTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_session_metrics_summary', $.table_prefix)",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "Next": "BuildSessionMetricsQuery"
+                  },
+                  "BuildSessionMetricsQuery": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::lambda:invoke",
+                    "Parameters": {
+                      "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:athena-query-builder",
+                      "Payload": {
+                        "query_type": "session_metrics",
+                        "table_prefix.$": "$.table_prefix",
+                        "s3_base.$": "$.s3_base",
+                        "service_names.$": "$.service_names"
+                      }
+                    },
+                    "ResultSelector": {
+                      "query_string.$": "$.Payload.query_string"
+                    },
+                    "ResultPath": "$.query_info",
+                    "Next": "CreateSessionMetricsTable"
+                  },
+                  "CreateSessionMetricsTable": {
+                    "Type": "Task",
+                    "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+                    "Parameters": {
+                      "QueryString.$": "$.query_info.query_string",
+                      "QueryExecutionContext": {
+                        "Database.$": "$.database"
+                      },
+                      "WorkGroup.$": "$.workgroup",
+                      "ResultConfiguration": {
+                        "OutputLocation.$": "$.output_location"
+                      }
+                    },
+                    "ResultPath": null,
+                    "End": true
+                  }
+                }
+              }
+            ],
+            "ResultPath": null,
+            "Next": "Batch4_EventDistribution"
+          },
+          "Batch4_EventDistribution": {
+            "Type": "Task",
+            "Comment": "Batch 4: EventDistribution (1 query, sequential)",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_event_distribution_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildEventDistributionQuery"
+          },
+          "BuildEventDistributionQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:athena-query-builder",
+              "Payload": {
+                "query_type": "event_distribution",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.event_query_info",
+            "Next": "CreateEventDistributionTable"
+          },
+          "CreateEventDistributionTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.event_query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "End": true
+          }
+        }
+      },
+      "ResultPath": null,
+      "Next": "SummarizeResults"
+    },
+    "SummarizeResults": {
+      "Type": "Pass",
+      "Parameters": {
+        "status": "COMPLETED",
+        "services.$": "$.services",
+        "execution_summary": {
+          "database.$": "$.database",
+          "output_location.$": "$.output_location",
+          "execution_time.$": "$.execution_time",
+          "processed_services.$": "States.ArrayLength($.services)"
+        }
+      },
+      "End": true
+    }
+  }
+}

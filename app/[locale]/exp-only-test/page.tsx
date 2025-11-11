@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { getDictionary, Locale } from "../dictionaries";
 
-import { personalInfo, summaryStats } from "@/data/personal";
+import { personalInfo } from "@/data/personal";
 import {
   certifications,
   experiences,

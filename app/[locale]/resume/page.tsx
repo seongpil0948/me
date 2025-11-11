@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 
+import { Card, CardBody } from "@heroui/card";
+import { Chip } from "@heroui/chip";
+import { Image } from "@heroui/image";
+
 import { getDictionary, Locale } from "../dictionaries";
 
 import { ResumePrintWrapper } from "@/components/resume-print-wrapper";
-import { personalInfo, summaryStats } from "@/data/personal";
+import { personalInfo } from "@/data/personal";
 import {
   certifications,
   experiences,
@@ -11,9 +15,6 @@ import {
   portfolioLinks,
   skills,
 } from "@/data/portfolio";
-import { Card, CardBody } from "@heroui/card";
-import { Chip } from "@heroui/chip";
-import { Image } from "@heroui/image";
 import { categorizeSkills, getSkillEmoji } from "@/lib/skill-utils";
 
 export const metadata: Metadata = {
@@ -112,7 +113,7 @@ export default async function ResumePage({
                     </div>
                   </div>
                 </div>
-                <Image width={150} src="/me/face.jpg" alt={nameByLocale} />
+                <Image alt={nameByLocale} src="/me/face.jpg" width={150} />
               </div>
             </div>
           </div>

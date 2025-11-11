@@ -42,9 +42,9 @@ export default function LanguageSwitcher() {
     <Select
       aria-label="Language selector"
       className="w-32"
+      color="primary"
       selectedKeys={currentLocale ? [currentLocale] : []}
       size="sm"
-      color="primary"
       variant="bordered"
       onChange={handleChange}
     >

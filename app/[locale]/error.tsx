@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
 
 type ErrorDict = {
@@ -32,19 +32,13 @@ export default function Error({
 }) {
   const params = useParams();
   const locale = (params?.locale as string) || "ko";
-  const [dict, setDict] = useState<ErrorDict>(
-    errorTranslations[locale] || errorTranslations.ko,
-  );
+  const dict = errorTranslations[locale] || errorTranslations.ko;
 
   useEffect(() => {
     // Log the error to an error reporting service
     /* eslint-disable no-console */
     console.error(error);
   }, [error]);
-
-  useEffect(() => {
-    setDict(errorTranslations[locale] || errorTranslations.ko);
-  }, [locale]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] p-4">

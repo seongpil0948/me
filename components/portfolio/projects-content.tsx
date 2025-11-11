@@ -2,11 +2,11 @@
 
 import { useMemo, useState } from "react";
 
+import ProjectImageSwiper from "./project-image-swiper";
+
 import { Dictionary } from "@/types/portfolio";
 import { Locale } from "@/app/[locale]/dictionaries";
 import { projectImages } from "@/data/portfolio";
-
-import ProjectImageSwiper from "./project-image-swiper";
 
 interface ProjectsContentProps {
   dict: Dictionary;
@@ -155,10 +155,10 @@ export default function ProjectsContent({ dict }: ProjectsContentProps) {
                     viewBox="0 0 24 24"
                   >
                     <path
+                      d="M19 9l-7 7-7-7"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
                     />
                   </svg>
                 </div>

@@ -19,8 +19,8 @@ export default function PortfolioActionButtons({
   return (
     <div className="flex justify-center gap-4 mt-8 mb-16 flex-wrap">
       <Button
-        as={Link}
         isExternal
+        as={Link}
         className="shadow-lg"
         href="https://github.com/seongpil0948"
         radius="full"
@@ -30,8 +30,8 @@ export default function PortfolioActionButtons({
         {dict.buttons.visitGithub}
       </Button>
       <Button
-        as={Link}
         isExternal
+        as={Link}
         color="primary"
         href="http://all-ad.in"
         radius="full"

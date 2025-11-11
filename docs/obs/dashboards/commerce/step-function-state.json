@@ -1,0 +1,921 @@
+{
+  "Comment": "Commerce Analytics Pipeline - Athena CTAS Queries with Sequential Batches for E-commerce Events",
+  "StartAt": "TransformServiceNames",
+  "States": {
+    "TransformServiceNames": {
+      "Type": "Pass",
+      "Comment": "Transform service_names array to create table_prefix per service",
+      "Parameters": {
+        "services.$": "$.service_names",
+        "database": "log_db",
+        "output_location": "s3://aws-athena-query-results-725129837589-ap-northeast-2",
+        "workgroup": "primary",
+        "s3_base": "s3://aws-athena-query-results-725129837589-ap-northeast-2/commerce-summary",
+        "execution_time.$": "$$.Execution.StartTime"
+      },
+      "Next": "ProcessEachService"
+    },
+    "ProcessEachService": {
+      "Type": "Map",
+      "Comment": "Iterate over each service and create commerce analytics summary tables",
+      "ItemsPath": "$.services",
+      "MaxConcurrency": 1,
+      "Parameters": {
+        "service_name.$": "$$.Map.Item.Value",
+        "service_names.$": "States.Array($$.Map.Item.Value)",
+        "database.$": "$.database",
+        "output_location.$": "$.output_location",
+        "workgroup.$": "$.workgroup",
+        "s3_base.$": "$.s3_base",
+        "execution_time.$": "$.execution_time"
+      },
+      "Iterator": {
+        "StartAt": "ComputeTablePrefix",
+        "States": {
+          "ComputeTablePrefix": {
+            "Type": "Pass",
+            "Comment": "Convert service name to table prefix: theshop-brand -> theshop_brand_commerce",
+            "Parameters": {
+              "service_name.$": "$.service_name",
+              "service_names.$": "$.service_names",
+              "table_prefix.$": "States.Format('{}_{}_commerce', States.ArrayGetItem(States.StringSplit($.service_name, '-'), 0), States.ArrayGetItem(States.StringSplit($.service_name, '-'), 1))",
+              "database.$": "$.database",
+              "output_location.$": "$.output_location",
+              "workgroup.$": "$.workgroup",
+              "s3_base.$": "$.s3_base",
+              "execution_time.$": "$.execution_time"
+            },
+            "Next": "Batch1a_ButtonInteraction"
+          },
+          "Batch1a_ButtonInteraction": {
+            "Type": "Task",
+            "Comment": "Batch 1a: Button Interaction - Step 1: Drop 1M Table",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_button_interaction_1m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildButtonInteraction1MQuery"
+          },
+          "BuildButtonInteraction1MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "button_interaction",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "1m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateButtonInteraction1MTable"
+          },
+          "CreateButtonInteraction1MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "DropButtonInteraction3MTable"
+          },
+          "DropButtonInteraction3MTable": {
+            "Type": "Task",
+            "Comment": "Batch 1a: Button Interaction - Step 2: Drop 3M Table (Sequential)",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_button_interaction_3m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildButtonInteraction3MQuery"
+          },
+          "BuildButtonInteraction3MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "button_interaction",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "3m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateButtonInteraction3MTable"
+          },
+          "CreateButtonInteraction3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "Batch1b_HourlyTraffic"
+          },
+          "Batch1b_HourlyTraffic": {
+            "Type": "Task",
+            "Comment": "Batch 1b: Hourly Traffic - Step 1: Drop 1M Table",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_hourly_traffic_1m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildHourlyTraffic1MQuery"
+          },
+          "BuildHourlyTraffic1MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "hourly_traffic",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "1m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateHourlyTraffic1MTable"
+          },
+          "CreateHourlyTraffic1MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "DropHourlyTraffic3MTable"
+          },
+          "DropHourlyTraffic3MTable": {
+            "Type": "Task",
+            "Comment": "Batch 1b: Hourly Traffic - Step 2: Drop 3M Table (Sequential)",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_hourly_traffic_3m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildHourlyTraffic3MQuery"
+          },
+          "BuildHourlyTraffic3MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "hourly_traffic",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "3m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateHourlyTraffic3MTable"
+          },
+          "CreateHourlyTraffic3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "Batch2a_ProductRanking"
+          },
+          "Batch2a_ProductRanking": {
+            "Type": "Task",
+            "Comment": "Batch 2a: Product Ranking - Step 1: Drop 1M Table",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_product_ranking_1m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildProductRanking1MQuery"
+          },
+          "BuildProductRanking1MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "product_ranking",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "1m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateProductRanking1MTable"
+          },
+          "CreateProductRanking1MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "DropProductRanking3MTable"
+          },
+          "DropProductRanking3MTable": {
+            "Type": "Task",
+            "Comment": "Batch 2a: Product Ranking - Step 2: Drop 3M Table (Sequential)",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_product_ranking_3m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildProductRanking3MQuery"
+          },
+          "BuildProductRanking3MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "product_ranking",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "3m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateProductRanking3MTable"
+          },
+          "CreateProductRanking3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "Batch2b_CategoryPerformance"
+          },
+          "Batch2b_CategoryPerformance": {
+            "Type": "Task",
+            "Comment": "Batch2b_CategoryPerformance - Step 1: Drop 1M Table",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_category_performance_1m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildCategoryPerformance1MQuery"
+          },
+          "Batch3a_SearchAnalytics": {
+            "Type": "Task",
+            "Comment": "Batch3a_SearchAnalytics - Step 1: Drop 1M Table",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_search_analytics_1m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildSearchAnalytics1MQuery"
+          },
+          "Batch3b_PurchaseAnalytics": {
+            "Type": "Task",
+            "Comment": "Batch3b_PurchaseAnalytics - Step 1: Drop 1M Table",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_purchase_analytics_1m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildPurchaseAnalytics1MQuery"
+          },
+          "Batch4_Navigation": {
+            "Type": "Task",
+            "Comment": "Batch4_Navigation - Step 1: Drop 1M Table",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_navigation_flow_1m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildNavigationFlow1MQuery"
+          },
+          "Batch5_CartSource": {
+            "Type": "Task",
+            "Comment": "Batch5_CartSource - Step 1: Drop 1M Table",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_cart_source_analytics_1m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildCartSource1MQuery"
+          },
+          "BuildCategoryPerformance1MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "category_performance",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "1m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateCategoryPerformance1MTable"
+          },
+          "CreateCategoryPerformance1MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "DropCategoryPerformance3MTable"
+          },
+          "DropCategoryPerformance3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_category_performance_3m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildCategoryPerformance3MQuery",
+            "Comment": " (Sequential)"
+          },
+          "BuildCategoryPerformance3MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "category_performance",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "3m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateCategoryPerformance3MTable"
+          },
+          "CreateCategoryPerformance3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "Batch3a_SearchAnalytics"
+          },
+          "BuildSearchAnalytics1MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "search_analytics",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "1m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateSearchAnalytics1MTable"
+          },
+          "CreateSearchAnalytics1MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "DropSearchAnalytics3MTable"
+          },
+          "DropSearchAnalytics3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_search_analytics_3m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildSearchAnalytics3MQuery",
+            "Comment": " (Sequential)"
+          },
+          "BuildSearchAnalytics3MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "search_analytics",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "3m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateSearchAnalytics3MTable"
+          },
+          "CreateSearchAnalytics3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "Batch3b_PurchaseAnalytics"
+          },
+          "BuildPurchaseAnalytics1MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "purchase_analytics",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "1m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreatePurchaseAnalytics1MTable"
+          },
+          "CreatePurchaseAnalytics1MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "DropPurchaseAnalytics3MTable"
+          },
+          "DropPurchaseAnalytics3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_purchase_analytics_3m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildPurchaseAnalytics3MQuery",
+            "Comment": " (Sequential)"
+          },
+          "BuildPurchaseAnalytics3MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "purchase_analytics",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "3m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreatePurchaseAnalytics3MTable"
+          },
+          "CreatePurchaseAnalytics3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "Batch4_Navigation"
+          },
+          "BuildNavigationFlow1MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "navigation_flow",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "1m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateNavigationFlow1MTable"
+          },
+          "CreateNavigationFlow1MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "DropNavigationFlow3MTable"
+          },
+          "DropNavigationFlow3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_navigation_flow_3m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildNavigationFlow3MQuery",
+            "Comment": " (Sequential)"
+          },
+          "BuildNavigationFlow3MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "navigation_flow",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "3m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateNavigationFlow3MTable"
+          },
+          "CreateNavigationFlow3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "Batch5_CartSource"
+          },
+          "BuildCartSource1MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "cart_source_analytics",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "1m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateCartSource1MTable"
+          },
+          "CreateCartSource1MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "DropCartSource3MTable"
+          },
+          "DropCartSource3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "States.Format('DROP TABLE IF EXISTS {}_cart_source_analytics_3m_summary', $.table_prefix)",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "Next": "BuildCartSource3MQuery",
+            "Comment": " (Sequential)"
+          },
+          "BuildCartSource3MQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:ap-northeast-2:725129837589:function:commerce-query-builder",
+              "Payload": {
+                "query_type": "cart_source_analytics",
+                "table_prefix.$": "$.table_prefix",
+                "s3_base.$": "$.s3_base",
+                "service_names.$": "$.service_names",
+                "period": "3m"
+              }
+            },
+            "ResultSelector": {
+              "query_string.$": "$.Payload.query_string"
+            },
+            "ResultPath": "$.query_info",
+            "Next": "CreateCartSource3MTable"
+          },
+          "CreateCartSource3MTable": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+            "Parameters": {
+              "QueryString.$": "$.query_info.query_string",
+              "QueryExecutionContext": {
+                "Database.$": "$.database"
+              },
+              "WorkGroup.$": "$.workgroup",
+              "ResultConfiguration": {
+                "OutputLocation.$": "$.output_location"
+              }
+            },
+            "ResultPath": null,
+            "End": true
+          }
+        }
+      },
+      "ResultPath": null,
+      "Next": "SummarizeResults"
+    },
+    "SummarizeResults": {
+      "Type": "Pass",
+      "Parameters": {
+        "status": "COMPLETED",
+        "pipeline": "commerce-analytics",
+        "services.$": "$.services",
+        "execution_summary": {
+          "database.$": "$.database",
+          "output_location.$": "$.output_location",
+          "execution_time.$": "$.execution_time",
+          "processed_services.$": "States.ArrayLength($.services)",
+          "query_types": [
+            "button_interaction_1m",
+            "button_interaction_3m",
+            "product_ranking_1m",
+            "product_ranking_3m",
+            "search_analytics_1m",
+            "search_analytics_3m",
+            "category_performance_1m",
+            "category_performance_3m",
+            "hourly_traffic_1m",
+            "hourly_traffic_3m",
+            "purchase_analytics_1m",
+            "purchase_analytics_3m",
+            "navigation_flow_1m",
+            "navigation_flow_3m",
+            "cart_source_analytics_1m",
+            "cart_source_analytics_3m"
+          ]
+        }
+      },
+      "End": true
+    }
+  }
+}

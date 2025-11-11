@@ -330,11 +330,59 @@ import { QATable } from "@/components/interview/qa-table";
   - Gateway-level security controls for microservices
   - Policy-driven access control and rate limiting
   - Service-to-service authentication mechanisms
-- **Observability Solution**: Built OpenTelemetry-based distributed tracing system from scratch
-  - Custom Span design integrating business + infrastructure metrics
-  - Trace ID-based request tracking across 10+ services
-  - Grafana dashboard design for real-time monitoring
-- **Results**: MTTI reduced from 18 hours → 10 minutes (99% improvement)
+
+**SRE & Observability Platform**:
+
+- **Full-Stack Distributed Tracing**: Single Trace ID tracking across entire service mesh
+  - End-to-end flow: Client → Nginx/Gateway → Frontend → Backend → Batch → Kafka → Backend2
+  - Unified observability across FE/BE/Infrastructure boundaries
+  - OpenTelemetry auto-instrumentation (Java, JavaScript, Go) + custom Span design
+  - Trace ID propagation via HTTP headers (W3C Trace Context) and Kafka message headers
+  - Log-trace correlation: Automatic trace_id injection into logs via Logrus → OTEL bridge
+
+- **Custom Infrastructure Metrics**: Built company-specific metrics infrastructure
+  - Per-API request counts and latency distribution (P50/P90/P95/P99 percentiles)
+  - Redis Cache Hit/Miss rates with Prometheus exporter integration (real-time monitoring on 4 cluster nodes)
+  - Custom Span design integrating business + infrastructure context
+  - HTTP instrumentation: Client duration, request/response sizes, error rates
+
+- **Business Analytics Platform**: Self-service dashboards for non-technical stakeholders
+  - **Planning team metrics**: MAU (Monthly Active Users), DAU (Daily Active Users), Retention (D+1/D+7/D+30 cohort analysis)
+  - **Commerce team metrics**: CTR (Click-Through Rate), Conversion funnels (Session → View → Cart → Purchase), Cart source tracking
+  - **E-commerce analytics**: Product rankings (top 100 by revenue), search effectiveness (200 top terms), category performance
+  - Weekly/Monthly/Quarterly/Annual service performance reports
+  - 15+ self-service Grafana dashboards with 5-minute auto-refresh
+
+- **Data Pipeline Architecture**: AWS Step Functions orchestrating batch analytics
+  - Processing 20-50M daily Kafka messages via Athena queries
+  - Parquet-formatted OTEL logs in S3 (partitioned by year/month/day)
+  - 7 user behavior query types + 8 commerce analytics query types
+  - Lambda (Python 3.11, athena-query-builder) generating dynamic CTAS queries
+  - Execution time: 12-18 minutes per service, 2-4 hour data latency
+
+- **InfluxDB Time-Series Integration**: High-velocity metrics storage
+  - Configuration: 1GB cache for hot data, query concurrency 1,024, 7-day retention
+  - LZ4 compression achieving 10x reduction (10GB → 1GB)
+  - Use cases: API performance metrics, Redis cache analytics, system monitoring
+  - Query performance: 95% queries <1 second, handling 400 events/second peak load
+
+- **S3 Throttling Solution**: Optimized parallel processing for large-scale data
+  - Challenge: 4+ parallel Athena queries caused S3 429 throttling errors
+  - Solution: Batch strategy with max 2 concurrent queries, 8 sequential batches
+  - S3 path optimization: Separated output prefixes by query type
+  - Monitoring: CloudWatch alarms, automatic retry with exponential backoff
+  - Result: Zero throttling errors, consistent 12-18 minute execution times
+
+- **Visualization & Monitoring**: Grafana dashboard design for real-time and historical analysis
+  - OpenTelemetry Collector (v0.132.2): Multi-protocol ingestion (OTLP gRPC/HTTP, Loki, Prometheus)
+  - Grafana Stack: Loki (8GB mem, log aggregation), Tempo (distributed tracing), Prometheus (v3.5.0, native histograms)
+  - ClickHouse integration: Long-term storage with LZ4 compression, 7-day TTL, async inserts
+
+- **Results**: Enterprise-grade observability platform
+  - MTTI reduced from 18 hours → 10 minutes (99% improvement)
+  - Engineering time saved: 2-3 days/week on manual reports → fully automated
+  - Cost optimization: ~$40/month Athena + S3 vs $500/month real-time streaming alternative
+  - Data volumes: 2-5TB monthly Athena scans, 100+ GB daily raw logs (10 GB after Parquet compression)
 
 **Technical Expertise**:
 

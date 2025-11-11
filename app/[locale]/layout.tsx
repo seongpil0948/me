@@ -85,7 +85,7 @@ export default async function RootLayout({
   return (
     <html suppressHydrationWarning lang={locale}>
       <head />
-      <meta name="locale" content={locale} />
+      <meta content={locale} name="locale" />
       <body
         className={clsx(
           "min-h-screen bg-background antialiased ",

@@ -1,9 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { renderHook } from "@testing-library/react";
-import { useLocale } from "@/hooks/use-locale";
 
-// Mock usePathname from next/navigation
-const mockPathnames = ["/ko/about", "/en/contact", "/zh/profile", "/invalid"];
+import { useLocale } from "@/hooks/use-locale";
 
 describe("useLocale", () => {
   it("should extract locale from Korean path", () => {

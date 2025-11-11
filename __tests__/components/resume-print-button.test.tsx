@@ -1,10 +1,13 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "../test-utils";
 import { userEvent } from "@testing-library/user-event";
+
+import { render, screen } from "../test-utils";
+
 import ResumePrintButton from "@/components/resume-print-button";
 
 // Mock next/navigation
 const mockPush = vi.fn();
+
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
     push: mockPush,
@@ -34,6 +37,7 @@ describe("ResumePrintButton", () => {
     render(<ResumePrintButton label="Download" locale="ko" />);
 
     const button = screen.getByRole("button", { name: "Download" });
+
     await userEvent.click(button);
 
     expect(mockPush).toHaveBeenCalledWith("/ko/resume");
@@ -44,6 +48,7 @@ describe("ResumePrintButton", () => {
     render(<ResumePrintButton label="Download" locale="en" />);
 
     const button = screen.getByRole("button", { name: "Download" });
+
     await userEvent.click(button);
 
     expect(mockPush).toHaveBeenCalledWith("/en/resume");

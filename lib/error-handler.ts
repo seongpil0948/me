@@ -10,7 +10,7 @@ export class AppError extends Error {
     message: string,
     public code?: string,
     public statusCode?: number,
-    public context?: Record<string, any>,
+    public context?: Record<string, any>
   ) {
     super(message);
     this.name = "AppError";
@@ -43,15 +43,19 @@ export class NotFoundError extends AppError {
  */
 export function logError(error: Error, context?: Record<string, any>): void {
   if (process.env.NODE_ENV === "development") {
+    /* eslint-disable no-console */
     console.error("❌ Error:", {
       name: error.name,
       message: error.message,
       stack: error.stack,
       context,
     });
+    /* eslint-enable no-console */
   } else {
     // In production, send to error tracking service (Sentry, etc.)
+    /* eslint-disable no-console */
     console.error(error.message);
+    /* eslint-enable no-console */
   }
 }
 
@@ -60,7 +64,7 @@ export function logError(error: Error, context?: Record<string, any>): void {
  */
 export function handleError(
   error: unknown,
-  fallbackMessage: string = "An unexpected error occurred",
+  fallbackMessage: string = "An unexpected error occurred"
 ): string {
   if (error instanceof AppError) {
     logError(error, error.context);
@@ -74,7 +78,9 @@ export function handleError(
     return error.message;
   }
 
+  /* eslint-disable no-console */
   console.error("Unknown error:", error);
+  /* eslint-enable no-console */
 
   return fallbackMessage;
 }
@@ -84,7 +90,7 @@ export function handleError(
  */
 export async function withErrorHandling<T>(
   fn: () => Promise<T>,
-  errorHandler?: (error: Error) => void,
+  errorHandler?: (error: Error) => void
 ): Promise<T | null> {
   try {
     return await fn();

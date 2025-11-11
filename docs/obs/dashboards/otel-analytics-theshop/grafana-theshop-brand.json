@@ -1,0 +1,1829 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": 0,
+  "links": [],
+  "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 112,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "# 📊 그라파나 지표 확인 가이드\n\n## 핵심 성과 지표 (KPI)\n\n### 월간 활성 사용자 (MAU)\n- **계산식**: 해당 월에 1회 이상 방문한 고유 사용자 수\n- **데이터**: `theshop_brand_mau_summary` 테이블\n- **업데이트**: 매일 새벽 2시\n- **활용**: 서비스 전체 규모와 성장세 파악\n\n### 세션 전환율\n- **계산식**: (장바구니 담은 세션 수 ÷ 전체 세션 수) × 100\n- **의미**: 방문 세션 중 장바구니에 상품을 담은 비율\n- **목표 범위**: 3-8% (이커머스 평균)\n- **활용**: 구매 퍼널 효율성 측정\n\n### 일일 활성 사용자 (DAU)\n- **계산식**: 어제 하루 동안 1회 이상 방문한 고유 사용자 수\n- **활용**: 일별 트렌드 및 요일별 패턴 분석\n\n---\n\n## 리텐션 분석\n\n### 재방문율 계산 방법\n**재방문율** = (재방문 사용자 수 ÷ 기준일 방문자 수) × 100\n\n**재방문 기간 설명**:\n- **D+1**: 기준일 2일 전 방문자 중 1일 전에 재방문한 비율\n  - 예: 11/3 실행 시 → 11/1 방문자가 11/2에 재방문한 비율\n- **D+7**: 기준일 8일 전 방문자 중 1일 전에 재방문한 비율\n  - 예: 11/3 실행 시 → 10/26 방문자가 11/2에 재방문한 비율\n- **D+30**: 기준일 31일 전 방문자 중 1일 전에 재방문한 비율\n  - 예: 11/3 실행 시 → 10/3 방문자가 11/2에 재방문한 비율\n\n**건강한 리텐션 지표**:\n- D+1: 30-40% 이상 → 우수\n- D+7: 15-25% 이상 → 양호\n- D+30: 5-10% 이상 → 정상\n\n---\n\n## 전환 분석\n\n### 구매 퍼널 (세션 기준)\n```\n세션 시작 (100%)\n    ↓ 상품 조회율 (60-80%)\n상품 조회\n    ↓ 장바구니 전환율 (7-12%)\n장바구니 담기\n```\n\n**퍼널 단계별 전환율**:\n\n1. **상품 조회율** = (상품 조회 세션 수 ÷ 총 세션 수) × 100\n   - 의미: 방문 세션 중 상품을 본 비율\n   - 목표: 60% 이상\n\n2. **장바구니 전환율** = (장바구니 담기 세션 수 ÷ 상품 조회 세션 수) × 100\n   - 의미: 상품을 본 세션 중 장바구니에 담은 비율\n   - 목표: 7-12%\n\n3. **세션 전환율** = (장바구니 담기 세션 수 ÷ 총 세션 수) × 100\n   - 의미: 전체 방문 중 장바구니까지 진행한 비율 (종합 지표)\n   - 목표: 3-8%\n\n**주요 컬럼 설명**:\n- **총 세션 수**: 세션 시작 이벤트 발생 횟수\n- **상품 조회 세션 수**: 상품 조회 이벤트가 발생한 세션\n- **장바구니 담기 세션 수**: 장바구니 추가 이벤트가 발생한 세션\n- **장바구니 담은 사용자 수**: 장바구니에 상품을 담은 고유 사용자 (구매 완료 아님)\n\n---\n\n자세한 내용은 [데이터 플랫폼 문서](/docs) 참고",
+        "mode": "markdown"
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "title": "그라파나 지표 확인 관련 Guide",
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 200,
+      "panels": [],
+      "title": "🔴 실시간 데이터 현황",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 16,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 0,
+        "y": 8
+      },
+      "id": 109,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum by (host)(count_over_time({service_name=\"theshop-brand\"} |= \"commerce.session.start\" [$__interval]))",
+          "legendFormat": "{{host}}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "세션 시작 추이",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 16,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 6,
+        "y": 8
+      },
+      "id": 110,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum by (host)(count_over_time({service_name=\"theshop-brand\"} |= \"commerce.cart.add\" [$__interval]))",
+          "legendFormat": "{{host}}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "장바구니 담기 추이",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 6,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 111,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum by(query) (count_over_time({service_name=\"theshop-brand\"} |= `commerce.search` [$__interval])) > 1",
+          "legendFormat": "{{query}}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "검색어 추이",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "description": "선택한 시간 범위 동안 발생한 세션 시작 이벤트 수",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 17
+      },
+      "id": 201,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum(\n  count_over_time(\n    {service_name=\"theshop-brand\"} |= `commerce.session.start`\n  [15m]\n  )\n)",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "세션 시작",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "description": "선택한 시간 범위 동안 장바구니에 상품을 담은 횟수",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 50
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 17
+      },
+      "id": 202,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum(\n  count_over_time(\n    {service_name=\"theshop-brand\"} |= `commerce.cart.add`\n  [15m]\n  )\n)",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "장바구니 담기",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "description": "선택한 시간 범위 동안 발생한 검색 횟수",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 30
+              },
+              {
+                "color": "red",
+                "value": 60
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 17
+      },
+      "id": 203,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum(\n  count_over_time(\n    {service_name=\"theshop-brand\"} |= `commerce.search`\n  [15m]\n  )\n)",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "검색",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "description": "선택한 시간 범위 동안 활동한 고유 사용자 수",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 20
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 17
+      },
+      "id": 204,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "count(sum by(userKey) (count_over_time({service_name=\"theshop-brand\"} |= `commerce.session.start` [$__range])))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "활성 사용자",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "dezponszo114wa"
+      },
+      "description": "주요 이벤트의 시간대별 발생 추이",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "id": 205,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "max"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum by (host)(\n  count_over_time(\n    {service_name=\"theshop-brand\"} |= `commerce.session.start`\n  [$__interval]\n  )\n)",
+          "legendFormat": "세션 시작",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum by (host)(\n  count_over_time(\n    {service_name=\"theshop-brand\"} |= `commerce.cart.add`\n  [$__interval]\n  )\n)",
+          "legendFormat": "장바구니 담기",
+          "queryType": "range",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "dezponszo114wa"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum by (host)(\n  count_over_time(\n    {service_name=\"theshop-brand\"} |= `commerce.search`\n  [$__interval]\n  )\n)",
+          "legendFormat": "검색",
+          "queryType": "range",
+          "refId": "C"
+        }
+      ],
+      "title": "실시간 이벤트 추이",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "id": 101,
+      "panels": [],
+      "title": "핵심 성과 지표 (KPI)",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-athena-datasource",
+        "uid": "grafana-athena-datasource"
+      },
+      "description": "이번 달 1회 이상 방문한 고유 사용자 수",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 5000
+              },
+              {
+                "color": "red",
+                "value": 10000
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "monthly_active_users"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "월간 활성 사용자 수"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 30
+      },
+      "id": 105,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default",
+            "resultReuseEnabled": true,
+            "resultReuseMaxAgeInMinutes": 60
+          },
+          "datasource": {
+            "type": "grafana-athena-datasource",
+            "uid": "grafana-athena-datasource"
+          },
+          "format": 1,
+          "rawSQL": "SELECT \n    monthly_active_users\nFROM theshop_brand_mau_summary\nWHERE service_name = 'theshop-brand'\n    AND CAST(year_month || '-01' AS DATE) >= date_trunc('month', current_date - interval '1' month)\n    AND execution_date = (SELECT MAX(execution_date) FROM theshop_brand_mau_summary)\nORDER BY year_month DESC\nLIMIT 1",
+          "refId": "A"
+        }
+      ],
+      "title": "이번 달 MAU",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-athena-datasource",
+        "uid": "grafana-athena-datasource"
+      },
+      "description": "세션 전환율 = (장바구니 담은 세션 수 ÷ 전체 세션 수) × 100\n\n장바구니 담기까지 진행한 세션의 비율을 측정합니다.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 3
+              },
+              {
+                "color": "green",
+                "value": 5
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "conversion_rate"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "세션 전환율(%)"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 30
+      },
+      "id": 103,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default",
+            "resultReuseEnabled": true,
+            "resultReuseMaxAgeInMinutes": 60
+          },
+          "datasource": {
+            "type": "grafana-athena-datasource",
+            "uid": "grafana-athena-datasource"
+          },
+          "format": 1,
+          "rawSQL": "SELECT \n    overall_conversion_rate as conversion_rate\nFROM theshop_brand_conversion_summary\nWHERE service_name = 'theshop-brand'\n    AND execution_date = (SELECT MAX(execution_date) FROM theshop_brand_conversion_summary)\nORDER BY calculation_date DESC\nLIMIT 1",
+          "refId": "A"
+        }
+      ],
+      "title": "최근 세션 전환율",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "grafana-athena-datasource",
+        "uid": "grafana-athena-datasource"
+      },
+      "description": "어제 하루 동안 1회 이상 방문한 고유 사용자 수",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 100
+              },
+              {
+                "color": "green",
+                "value": 500
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "daily_active_users"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "일일 활성 사용자 수"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 30
+      },
+      "id": 104,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default",
+            "resultReuseEnabled": true,
+            "resultReuseMaxAgeInMinutes": 60
+          },
+          "datasource": {
+            "type": "grafana-athena-datasource",
+            "uid": "grafana-athena-datasource"
+          },
+          "format": 1,
+          "rawSQL": "SELECT \n    daily_active_users\nFROM theshop_brand_dau_summary\nWHERE service_name = 'theshop-brand'\n    AND date = CURRENT_DATE - INTERVAL '1' DAY\n    AND execution_date = (SELECT MAX(execution_date) FROM theshop_brand_dau_summary)\nLIMIT 1",
+          "refId": "A"
+        }
+      ],
+      "title": "어제 DAU",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-athena-datasource",
+        "uid": "grafana-athena-datasource"
+      },
+      "description": "일별 세션 전환율 = (장바구니 담은 세션 수 ÷ 전체 세션 수) × 100",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "conversion_rate"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "세션 전환율(%)"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 35
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default",
+            "resultReuseEnabled": true,
+            "resultReuseMaxAgeInMinutes": 60
+          },
+          "datasource": {
+            "type": "grafana-athena-datasource",
+            "uid": "grafana-athena-datasource"
+          },
+          "format": 1,
+          "rawSQL": "SELECT \n    calculation_date AS time,\n    overall_conversion_rate as conversion_rate\nFROM theshop_brand_conversion_summary\nWHERE service_name = 'theshop-brand'\n    AND calculation_date >= current_date - interval '30' day\n    AND execution_date = (SELECT MAX(execution_date) FROM theshop_brand_conversion_summary)\nORDER BY calculation_date",
+          "refId": "A"
+        }
+      ],
+      "title": "세션 전환율 추이 (30일)",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 47
+      },
+      "id": 106,
+      "panels": [],
+      "title": "사용자 트렌드 분석",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-athena-datasource",
+        "uid": "grafana-athena-datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "daily_active_users"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "일일 활성 사용자 수"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 48
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default",
+            "resultReuseEnabled": true,
+            "resultReuseMaxAgeInMinutes": 60
+          },
+          "datasource": {
+            "type": "grafana-athena-datasource",
+            "uid": "grafana-athena-datasource"
+          },
+          "format": 1,
+          "rawSQL": "SELECT \n    date AS time,\n    daily_active_users\nFROM theshop_brand_dau_summary\nWHERE service_name = 'theshop-brand'\n    AND date >= current_date - interval '30' day\n    AND execution_date = (SELECT MAX(execution_date) FROM theshop_brand_dau_summary)\nORDER BY date",
+          "refId": "A"
+        }
+      ],
+      "title": "일일 활성 사용자(DAU) 추이 (30일)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-athena-datasource",
+        "uid": "grafana-athena-datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "monthly_active_users"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "월간 활성 사용자 수"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 48
+      },
+      "id": 2,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default",
+            "resultReuseEnabled": true,
+            "resultReuseMaxAgeInMinutes": 60
+          },
+          "datasource": {
+            "type": "grafana-athena-datasource",
+            "uid": "grafana-athena-datasource"
+          },
+          "format": 1,
+          "rawSQL": "SELECT \n    CAST(year_month || '-01' AS DATE) AS time,\n    monthly_active_users\nFROM theshop_brand_mau_summary\nWHERE service_name = 'theshop-brand'\n    AND CAST(year_month || '-01' AS DATE) >= date_trunc('month', current_date - interval '12' month)\n    AND execution_date = (SELECT MAX(execution_date) FROM theshop_brand_mau_summary)\nORDER BY year_month",
+          "refId": "A"
+        }
+      ],
+      "title": "월별 활성 사용자(MAU) 추이 (12개월)",
+      "type": "barchart"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      },
+      "id": 107,
+      "panels": [],
+      "title": "리텐션 및 전환 분석",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-athena-datasource",
+        "uid": "grafana-athena-datasource"
+      },
+      "description": "재방문율 = (재방문 사용자 수 ÷ 기준일 방문자 수) × 100\n\n- 기준일: 특정 날짜에 방문한 사용자 집단\n- 재방문 사용자: 기준일 이후 다시 방문한 사용자",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "retention_type"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "리텐션 유형"
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "base_users"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "기준일 방문자 수"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "retained_users"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "재방문 사용자 수"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "retention_rate"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "재방문율(%)"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 15
+                    },
+                    {
+                      "color": "green",
+                      "value": 30
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "calculation_date"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "기준일"
+              },
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 57
+      },
+      "id": 3,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default",
+            "resultReuseEnabled": true,
+            "resultReuseMaxAgeInMinutes": 60
+          },
+          "datasource": {
+            "type": "grafana-athena-datasource",
+            "uid": "grafana-athena-datasource"
+          },
+          "format": 1,
+          "rawSQL": "WITH LatestRetention AS (\n    SELECT \n        service_name,\n        retention_type,\n        base_users,\n        retained_users,\n        retention_rate,\n        calculation_date,\n        ROW_NUMBER() OVER (PARTITION BY retention_type ORDER BY calculation_date DESC) as rn\n    FROM theshop_brand_retention_summary\n    WHERE service_name = 'theshop-brand'\n        AND retention_rate IS NOT NULL\n        AND execution_date = (SELECT MAX(execution_date) FROM theshop_brand_retention_summary)\n)\nSELECT\n    retention_type,\n    base_users,\n    retained_users,\n    retention_rate,\n    calculation_date\nFROM LatestRetention\nWHERE rn = 1\nORDER BY \n    CASE retention_type\n        WHEN 'D+1' THEN 1\n        WHEN 'D+7' THEN 2\n        WHEN 'D+30' THEN 3\n    END",
+          "refId": "A"
+        }
+      ],
+      "title": "재방문율 (리텐션)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-athena-datasource",
+        "uid": "grafana-athena-datasource"
+      },
+      "description": "구매 퍼널의 단계별 세션 수와 전환율을 보여줍니다.\n\n세션 전환율 = (장바구니 담기 세션 수 ÷ 전체 세션 수) × 100",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "date"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "날짜"
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "total_sessions"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "총 세션 수"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "product_view_sessions"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "상품 조회 세션 수"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cart_add_sessions"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "장바구니 담기 세션 수"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "total_users"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "총 사용자 수"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "purchasing_users"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "장바구니 담은 사용자 수"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "overall_conversion_rate"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "세션 전환율(%)"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 3
+                    },
+                    {
+                      "color": "green",
+                      "value": 5
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 57
+      },
+      "id": 6,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true
+      },
+      "pluginVersion": "12.3.0-18578466485",
+      "targets": [
+        {
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default",
+            "resultReuseEnabled": true,
+            "resultReuseMaxAgeInMinutes": 60
+          },
+          "datasource": {
+            "type": "grafana-athena-datasource",
+            "uid": "grafana-athena-datasource"
+          },
+          "format": 1,
+          "rawSQL": "SELECT \n    calculation_date as date,\n    total_sessions,\n    product_view_sessions,\n    cart_add_sessions,\n    total_users,\n    purchasing_users,\n    overall_conversion_rate\nFROM theshop_brand_conversion_summary\nWHERE service_name = 'theshop-brand'\n    AND calculation_date >= current_date - interval '30' day\n    AND execution_date = (SELECT MAX(execution_date) FROM theshop_brand_conversion_summary)\nORDER BY calculation_date DESC",
+          "refId": "A"
+        }
+      ],
+      "title": "종합 일일 대시보드 (30일)",
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 65
+      },
+      "id": 108,
+      "panels": [],
+      "title": "사용자 세분화 및 상세 분석",
+      "type": "row"
+    }
+  ],
+  "preload": false,
+  "refresh": "5m",
+  "schemaVersion": 42,
+  "tags": ["otel", "analytics", "user-behavior", "theshop-brand"],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-2d",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": ["5m", "15m", "30m", "1h", "2h", "1d"]
+  },
+  "timezone": "browser",
+  "title": "더샵 브랜드 성과 분석",
+  "uid": "otel-analytics-theshop_brand",
+  "version": 13
+}
