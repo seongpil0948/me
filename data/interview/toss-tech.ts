@@ -128,4 +128,504 @@ export const tossTechQuestions: InterviewQuestion[] = [
     answer:
       '**문제 상황 (토스 사례):**\nmTLS 통신은 암호화되어 있어 L7 프록시 장비가 요청자의 실제 IP를 볼 수 없습니다. 이는 보안 감사, 로깅, IP 기반 접근 제어에 문제를 일으킵니다.\n\n**Proxy Protocol 원리:**\n암호화 전에 TCP 커넥션 시작 부분에 클라이언트 IP 정보를 헤더로 추가하는 프로토콜입니다.\n\n```\nPROXY TCP4 192.0.2.1 198.51.100.1 54321 443\\r\\n\n<TLS handshake starts>\n```\n\n**Istio에서 구성:**\n\n**1. Gateway에 Proxy Protocol 수신 설정**\n```yaml\napiVersion: networking.istio.io/v1beta1\nkind: Gateway\nmetadata:\n  name: external-gateway\nspec:\n  selector:\n    istio: ingressgateway\n  servers:\n  - port:\n      number: 443\n      name: https\n      protocol: HTTPS\n    tls:\n      mode: SIMPLE\n    hosts:\n    - "*"\n---\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: istio-custom-bootstrap\ndata:\n  custom_bootstrap.yaml: |\n    static_resources:\n      listeners:\n      - name: proxy_proto_listener\n        address:\n          socket_address:\n            address: 0.0.0.0\n            port_value: 443\n        listener_filters:\n        - name: envoy.filters.listener.proxy_protocol\n          typed_config:\n            "@type": type.googleapis.com/envoy.extensions.filters.listener.proxy_protocol.v3.ProxyProtocol\n```\n\n**2. 앞단 Load Balancer 설정 (AWS NLB 예시)**\n```yaml\napiVersion: v1\nkind: Service\nmetadata:\n  name: istio-ingressgateway\n  annotations:\n    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"\nspec:\n  type: LoadBalancer\n  ports:\n  - port: 443\n    targetPort: 443\n```\n\n**3. EnvoyFilter로 X-Forwarded-For 헤더 설정**\n```yaml\napiVersion: networking.istio.io/v1alpha3\nkind: EnvoyFilter\nmetadata:\n  name: preserve-client-ip\nspec:\n  configPatches:\n  - applyTo: NETWORK_FILTER\n    match:\n      listener:\n        filterChain:\n          filter:\n            name: envoy.filters.network.http_connection_manager\n    patch:\n      operation: MERGE\n      value:\n        typed_config:\n          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager\n          use_remote_address: true\n          xff_num_trusted_hops: 1\n```\n\n**결과:**\n- 애플리케이션은 `X-Forwarded-For` 헤더로 실제 클라이언트 IP 획득\n- 보안 로그에 정확한 접속 IP 기록\n- IP 기반 Rate Limiting/Geoblocking 가능\n\n**제 경험과의 연결:**\n- **AWS Advanced Networking Specialty**: Proxy Protocol, X-Forwarded-For 원리 깊이 이해\n- **APISIX Gateway**: X-Real-IP 헤더 처리 구현 경험\n- **Site-to-Site VPN**: 네트워크 레벨 IP 라우팅 설정 경험\n\n**토스 환경 적용:**\n토스는 계열사, 마이데이터 외부 기관과의 mTLS 통신에서 Proxy Protocol로 IP 보존 문제를 해결했습니다. 이는 금융 규제의 접속 로그 요구사항 준수에 필수적입니다.',
   },
+
+  // 오픈소스 기여 및 수정
+  {
+    id: 114,
+    category1: "Infrastructure",
+    category2: "OpenSource",
+    question:
+      "토스 JD에서 강조하는 '오픈소스를 읽고, 필요하다면 직접 수정해본 경험'에 대해 설명해주세요.",
+    answer:
+      "**오픈소스 기여가 필수인 이유:**\\n\\n" +
+      "DevOps에서 다루는 시스템은 복잡한 오픈소스 조합입니다. 프로덕션 환경에서는 공식 문서에 없는 엣지 케이스나 버그를 마주하게 되고, 이때 오픈소스를 직접 수정할 수 있는 역량이 차별화 요소입니다.\\n\\n" +
+      "**제 OpenTelemetry 기여 사례:**\\n\\n" +
+      "**1. AWS SDK Context Propagation Bug 수정:**\\n" +
+      "```go\\n" +
+      "// 문제: AWS SDK 호출 시 trace context 손실\\n" +
+      "// 기여한 패치\\n" +
+      "func (t *awsTracer) Start(ctx context.Context, spanName string) (context.Context, trace.Span) {\\n" +
+      "    // AWS SDK의 context.Value 호환성 보장\\n" +
+      "    if awsCtx, ok := ctx.(awscontext.Context); ok {\\n" +
+      "        ctx = awscontext.BackgroundContext()\\n" +
+      "        // trace context 수동 전파\\n" +
+      "    }\\n" +
+      "    return t.tracer.Start(ctx, spanName)\\n" +
+      "}\\n" +
+      "```\\n\\n" +
+      "**2. Container Environment Detection 개선:**\\n" +
+      "컨테이너 런타임 감지 로직 개선으로 Kubernetes 환경에서 더 정확한 서비스 식별 가능하게 만들었습니다.\\n\\n" +
+      "**오픈소스 수정 프로세스:**\\n\\n" +
+      "**1단계: 문제 재현**\\n" +
+      "- 로컬 환경에서 최소 재현 케이스 작성\\n" +
+      "- Issue에 재현 방법과 기대 동작 명확히 기술\\n" +
+      "- 커뮤니티 피드백 수렴\\n\\n" +
+      "**2단계: 코드 분석**\\n" +
+      "- 관련 모듈의 아키텍처 파악\\n" +
+      "- 테스트 케이스 분석으로 의도한 동작 이해\\n" +
+      "- 수정 시 다른 부분에 미치는 영향 검토\\n\\n" +
+      "**3단계: 패치 개발**\\n" +
+      "- 기존 코드 스타일 준수\\n" +
+      "- 충분한 테스트 케이스 작성\\n" +
+      "- 문서 업데이트 (필요 시)\\n\\n" +
+      "**4단계: 커뮤니티 기여**\\n" +
+      "- PR 작성 시 변경 이유와 영향 범위 명확히 설명\\n" +
+      "- 리뷰어 피드백에 적극적으로 대응\\n" +
+      "- 병합 후 관련 이슈들 follow-up\\n\\n" +
+      "**토스에서 기대되는 기여:**\\n\\n" +
+      "- **Istio Telemetry 개선**: 토스 특화 메트릭 요구사항 반영\\n" +
+      "- **Kubernetes Networking**: 멀티 클러스터 환경 최적화\\n" +
+      "- **Observability 도구**: 금융권 컴플라이언스 요구사항 지원\\n\\n" +
+      "**핵심 역량:**\\n" +
+      "단순히 오픈소스를 '사용'하는 것을 넘어 '개선'하고 '확장'할 수 있는 엔지니어가 되어, 토스의 기술적 차별화에 기여하고 싶습니다.",
+  },
+
+  // 자동화 및 툴 개발
+  {
+    id: 115,
+    category1: "Infrastructure",
+    category2: "Automation",
+    question:
+      "개발자 경험 개선을 위해 어떤 자동화나 툴을 만들어본 경험이 있나요?",
+    answer:
+      "**개발자 경험(DevEx) 개선이 DevOps의 핵심 가치라고 생각합니다. 실제 구축한 자동화 툴들을 소개하겠습니다.**\\n\\n" +
+      "**1. 개발자 샌드박스 환경 자동화**\\n\\n" +
+      "**문제:**\\n" +
+      "개발자들이 새 기능 테스트하려면 인프라팀에 환경 생성을 요청해야 했고, 수동 설정으로 3-4시간 소요\\n\\n" +
+      "**해결:**\\n" +
+      "Terraform 모듈로 개발자 셀프서비스 환경 구축\\n" +
+      "```bash\\n" +
+      "# 개발자가 직접 실행\\n" +
+      "./create-sandbox.sh --branch feature/new-payment --duration 24h\\n" +
+      "\\n" +
+      "# 자동 생성되는 것들:\\n" +
+      "# 1. 격리된 VPC + Subnets\\n" +
+      "# 2. ECS Task 정의 (해당 브랜치 이미지)\\n" +
+      "# 3. RDS 스냅샷 기반 테스트DB\\n" +
+      "# 4. Redis 인스턴스\\n" +
+      "# 5. 24시간 후 자동 정리\\n" +
+      "```\\n" +
+      "**결과:** 환경 생성 시간 80% 단축, 개발자 만족도 크게 향상\\n\\n" +
+      "**2. CI/CD 파이프라인 최적화**\\n\\n" +
+      "**문제:**\\n" +
+      "기존 파이프라인이 2시간이나 걸려 개발자들이 피드백을 늦게 받음\\n\\n" +
+      "**해결:**\\n" +
+      "CloudFormation으로 파이프라인 재설계\\n" +
+      "- 병렬 빌드: Frontend + Backend 동시 진행\\n" +
+      "- Docker 이미지 레이어 캐싱\\n" +
+      "- 테스트 병렬화: Unit + Integration 분리 실행\\n" +
+      "- 조건부 배포: 변경된 서비스만 배포\\n\\n" +
+      "**결과:** 배포 시간 2시간 → 12분 (90% 개선)\\n\\n" +
+      "**3. Observability 민주화 도구**\\n\\n" +
+      "**문제:**\\n" +
+      "개발자들이 서비스 상태 확인하려면 DevOps 팀에 문의해야 함\\n\\n" +
+      "**해결:**\\n" +
+      "셀프서비스 디버깅 툴킷 구축\\n" +
+      "```python\\n" +
+      "# Slack Bot 명령어\\n" +
+      "@devops-bot thread-dump user-service pod-abc123\\n" +
+      "@devops-bot memory-profile payment-service --duration 30s\\n" +
+      "@devops-bot trace-lookup trace-id-xyz\\n" +
+      "```\\n" +
+      "- Grafana 개인 대시보드 템플릿\\n" +
+      "- JVM 프로파일링 원클릭 실행\\n" +
+      "- 로그 검색 GUI (ELK 스택 래핑)\\n\\n" +
+      "**4. 데이터 파이프라인 자동화**\\n\\n" +
+      "**문제:**\\n" +
+      "기획팀의 주간 보고서 작성을 위해 엔지니어가 수동 SQL 쿼리 작성 (2-3일 소요)\\n\\n" +
+      "**해결:**\\n" +
+      "AWS Step Functions + Lambda 기반 자가치유 파이프라인\\n" +
+      "- Kafka → S3 → Athena 자동 처리\\n" +
+      "- 15개 비즈니스 지표 자동 집계\\n" +
+      "- Grafana 대시보드 자동 업데이트\\n" +
+      "- Slack으로 주간 리포트 자동 발송\\n\\n" +
+      "**결과:** 엔지니어링 시간 주간 2-3일 → 0시간\\n\\n" +
+      "**5. 장애 대응 자동화**\\n\\n" +
+      "```python\\n" +
+      "# 자동 치유 봇\\n" +
+      "class AutoHealer:\\n" +
+      "    def handle_high_cpu(self, service):\\n" +
+      "        # 1. 추가 인스턴스 자동 스케일링\\n" +
+      "        # 2. Thread dump 자동 수집\\n" +
+      "        # 3. Slack 알람 + Grafana 링크\\n" +
+      "        # 4. 5분 후에도 지속되면 온콜 호출\\n" +
+      "        pass\\n" +
+      "```\\n\\n" +
+      "**토스에서 기대하는 자동화:**\\n\\n" +
+      "- **Istio 설정 자동화**: 새 서비스 온보딩 원클릭\\n" +
+      "- **멀티 클러스터 배포**: 계열사 간 일관된 배포 파이프라인\\n" +
+      "- **컴플라이언스 자동화**: 금융 규제 요구사항 자동 검증\\n" +
+      "- **Chaos Engineering**: 장애 시뮬레이션 자동화\\n\\n" +
+      "**핵심 철학:**\\n" +
+      '> \\"개발자가 반복하는 것은 모두 자동화할 수 있고, 자동화해야 한다. 그래야 개발자가 비즈니스 로직에 집중할 수 있다.\\"',
+  },
+
+  // 멀티 클러스터 운영
+  {
+    id: 116,
+    category1: "Infrastructure",
+    category2: "Multi-Cluster",
+    question:
+      "토스처럼 여러 계열사와 도메인별로 쿠버네티스 클러스터를 운영할 때 어떤 전략이 필요한가요?",
+    answer:
+      "**멀티 클러스터의 복잡성:**\\n" +
+      "토스는 슈퍼앱으로 토스뱅크, 토스증권, 토스페이먼츠 등 여러 계열사와 도메인이 각자의 클러스터를 운영합니다. 이는 단순한 기술 문제가 아니라 '거버넌스'와 '운영 일관성'의 문제입니다.\\n\\n" +
+      "**핵심 도전 과제:**\\n\\n" +
+      "**1. 표준화 vs 자율성 균형**\\n" +
+      "- 각 계열사는 독립적인 비즈니스 요구사항\\n" +
+      "- 하지만 운영 효율을 위해서는 표준 스택 필요\\n" +
+      "- 토스 해법: 공통 기술 스택(K8s + Istio + Prometheus) + 계열사별 커스터마이징\\n\\n" +
+      "**2. 네트워크 분리와 연결**\\n" +
+      "```yaml\\n" +
+      "# 계열사 간 네트워크 정책 예시\\n" +
+      "apiVersion: networking.k8s.io/v1\\n" +
+      "kind: NetworkPolicy\\n" +
+      "metadata:\\n" +
+      "  name: tossbank-isolation\\n" +
+      "  namespace: tossbank\\n" +
+      "spec:\\n" +
+      "  podSelector: {}\\n" +
+      "  policyTypes:\\n" +
+      "  - Ingress\\n" +
+      "  - Egress\\n" +
+      "  ingress:\\n" +
+      "  # 토스뱅크는 토스 코어 API만 접근 허용\\n" +
+      "  - from:\\n" +
+      "    - namespaceSelector:\\n" +
+      "        matchLabels:\\n" +
+      '          affiliate: \\"toss-core\\"\\n' +
+      "```\\n\\n" +
+      "**3. 중앙 집중식 관리 도구**\\n" +
+      "- **ArgoCD Multi-Cluster**: GitOps로 모든 클러스터 배포 관리\\n" +
+      "- **Rancher**: 클러스터 lifecycle 관리\\n" +
+      "- **Prometheus Federation**: 통합 메트릭 수집\\n\\n" +
+      "**제 멀티 환경 운영 경험:**\\n\\n" +
+      "**AWS Multi-AZ 설계:**\\n" +
+      "```\\n" +
+      "┌─────────────┬─────────────┬─────────────┐\\n" +
+      "│   AZ-1a     │    AZ-1b    │   AZ-1c     │\\n" +
+      "├─────────────┼─────────────┼─────────────┤\\n" +
+      "│ ECS Fargate │ ECS Fargate │ ECS Fargate │\\n" +
+      "│   (Primary) │  (Secondary)│  (Standby)  │\\n" +
+      "├─────────────┼─────────────┼─────────────┤\\n" +
+      "│ RDS Primary │ RDS Replica │      -      │\\n" +
+      "├─────────────┼─────────────┼─────────────┤\\n" +
+      "│ Redis Node1 │ Redis Node2 │ Redis Node3 │\\n" +
+      "│ (Sentinel)  │ (Sentinel)  │ (Sentinel)  │\\n" +
+      "└─────────────┴─────────────┴─────────────┘\\n" +
+      "```\\n\\n" +
+      "**Airflow 5개 클러스터 HA 운영:**\\n" +
+      "- 각 클러스터마다 독립적인 PostgreSQL 메타데이터\\n" +
+      "- Redis 기반 Celery 클러스터링\\n" +
+      "- 중앙화된 로그 수집 (ELK Stack)\\n" +
+      "- 200+ DAG 관리와 의존성 오케스트레이션\\n\\n" +
+      "**토스 환경 적용 전략:**\\n\\n" +
+      "**1. GitOps 기반 통합 배포**\\n" +
+      "```yaml\\n" +
+      "# ArgoCD Application of Applications\\n" +
+      "apiVersion: argoproj.io/v1alpha1\\n" +
+      "kind: Application\\n" +
+      "metadata:\\n" +
+      "  name: toss-infrastructure\\n" +
+      "spec:\\n" +
+      "  source:\\n" +
+      "    repoURL: https://github.com/toss/k8s-configs\\n" +
+      "    path: environments/\\n" +
+      "  destination:\\n" +
+      "    server: https://kubernetes.default.svc\\n" +
+      "```\\n\\n" +
+      "**2. Istio Multi-Primary 연합**\\n" +
+      "- 각 클러스터가 독립적으로 서비스 제공\\n" +
+      "- Cross-cluster service discovery\\n" +
+      "- mTLS로 안전한 계열사 간 통신\\n\\n" +
+      "**3. 통합 Observability**\\n" +
+      "- Prometheus Federation으로 모든 클러스터 메트릭 중앙화\\n" +
+      "- Grafana Multi-Datasource로 통합 대시보드\\n" +
+      "- Trace 상관 분석으로 cross-cluster 장애 추적\\n\\n" +
+      "**4. 정책 기반 거버넌스**\\n" +
+      "- OPA Gatekeeper로 보안 정책 강제\\n" +
+      "- Resource Quota로 계열사별 리소스 제한\\n" +
+      "- RBAC으로 계열사 간 접근 권한 분리\\n\\n" +
+      "**운영 효율성 지표:**\\n" +
+      "- 클러스터 간 설정 일관성: 95% 이상\\n" +
+      "- 배포 시간: 단일 클러스터와 동일 (병렬 처리)\\n" +
+      "- 장애 격리: 한 계열사 문제가 다른 계열사에 영향 0%\\n" +
+      "- 운영 인력 효율: 클러스터 개수에 비례하지 않는 선형 증가\\n\\n" +
+      "**토스 DevOps 위클리 기여 방향:**\\n" +
+      "각 계열사의 운영 노하우를 공유하고, 공통 문제에 대한 표준 솔루션을 만들어 전체 조직의 시너지를 극대화하는 것이 목표입니다.",
+  },
+
+  // 금융 규제 대응
+  {
+    id: 117,
+    category1: "Infrastructure",
+    category2: "Compliance",
+    question:
+      "금융권에서 전자금융감독규정 등의 제약사항이 DevOps 업무에 어떤 영향을 미치나요?",
+    answer:
+      "**금융 규제는 제약이 아니라 '더 높은 보안 목표'입니다.**\\n\\n" +
+      "**전자금융감독규정의 핵심 요구사항:**\\n\\n" +
+      "**1. 접근 통제 (Access Control)**\\n" +
+      "- 모든 시스템 접근에 대한 인증/인가 로그 5년 보관\\n" +
+      "- 특권 계정 사용 시 승인 절차 필수\\n" +
+      "- 업무 분리: 개발/운영/감사 권한 완전 분리\\n\\n" +
+      "**DevOps 구현:**\\n" +
+      "```yaml\\n" +
+      "# Kubernetes RBAC + 감사 로그\\n" +
+      "apiVersion: v1\\n" +
+      "kind: ConfigMap\\n" +
+      "metadata:\\n" +
+      "  name: audit-policy\\n" +
+      "data:\\n" +
+      "  audit-policy.yaml: |\\n" +
+      "    rules:\\n" +
+      "    - level: RequestResponse\\n" +
+      "      resources:\\n" +
+      '      - group: \\"apps\\"\\n' +
+      '        resources: [\\"deployments\\", \\"services\\"]\\n' +
+      '      namespaces: [\\"production\\"]\\n' +
+      "```\\n\\n" +
+      "**2. 데이터 보호 (Data Protection)**\\n" +
+      "- 개인정보 및 금융정보 암호화 저장/전송 의무\\n" +
+      "- 데이터 접근 시 목적 명시 및 로깅\\n" +
+      "- 데이터 보관/파기 정책 준수\\n\\n" +
+      "**DevOps 구현:**\\n" +
+      "- **Istio mTLS**: 모든 서비스 간 통신 암호화\\n" +
+      "- **Sealed Secrets**: K8s Secret 암호화 저장\\n" +
+      "- **Vault**: 동적 credential 관리\\n" +
+      "```yaml\\n" +
+      "apiVersion: bitnami.com/v1alpha1\\n" +
+      "kind: SealedSecret\\n" +
+      "metadata:\\n" +
+      "  name: db-credentials\\n" +
+      "spec:\\n" +
+      "  encryptedData:\\n" +
+      "    password: AgBy3i4OJSWK+PiTySYZZA9rO43cGDEQAx...\\n" +
+      "```\\n\\n" +
+      "**3. 시스템 보안 (System Security)**\\n" +
+      "- 보안 패치 적시 적용 (30일 이내)\\n" +
+      "- 취약점 스캔 정기 실시\\n" +
+      "- 비인가 소프트웨어 설치 차단\\n\\n" +
+      "**DevOps 구현:**\\n" +
+      "- **Falco**: 런타임 보안 감시\\n" +
+      "- **Trivy**: 컨테이너 이미지 취약점 스캔\\n" +
+      "- **OPA Gatekeeper**: 정책 기반 보안 강제\\n" +
+      "```yaml\\n" +
+      "# 보안 정책 예시\\n" +
+      "apiVersion: kyverno.io/v1\\n" +
+      "kind: ClusterPolicy\\n" +
+      "metadata:\\n" +
+      "  name: require-pod-security-standards\\n" +
+      "spec:\\n" +
+      "  validationFailureAction: enforce\\n" +
+      "  background: false\\n" +
+      "  rules:\\n" +
+      "  - name: check-privileged\\n" +
+      "    match:\\n" +
+      "      resources:\\n" +
+      "        kinds:\\n" +
+      "        - Pod\\n" +
+      "    validate:\\n" +
+      '      message: \\"Privileged containers are not allowed\\"\\n' +
+      "      pattern:\\n" +
+      "        spec:\\n" +
+      "          =(securityContext):\\n" +
+      '            =(privileged): \\"false\\"\\n' +
+      "```\\n\\n" +
+      "**4. 장애 대응 (Incident Response)**\\n" +
+      "- 보안 사고 시 24시간 내 신고\\n" +
+      "- 장애 대응 절차 문서화\\n" +
+      "- 복구 계획 정기 테스트\\n\\n" +
+      "**실제 적용 사례:**\\n\\n" +
+      "**보안 vs 생산성 균형:**\\n" +
+      "- **문제**: 프로덕션 접근 시 승인 절차로 장애 대응 지연\\n" +
+      "- **해결**: Break-glass 절차 + 사후 감사\\n" +
+      "  1. 긴급 시 임시 권한 자동 부여\\n" +
+      "  2. 24시간 후 자동 회수\\n" +
+      "  3. 모든 액션 로깅 및 사후 리뷰\\n\\n" +
+      "**CI/CD 보안 강화:**\\n" +
+      "```yaml\\n" +
+      "# GitOps + 4-eyes principle\\n" +
+      "apiVersion: argoproj.io/v1alpha1\\n" +
+      "kind: Application\\n" +
+      "metadata:\\n" +
+      "  name: production-app\\n" +
+      "spec:\\n" +
+      "  syncPolicy:\\n" +
+      "    manual: {}  # 자동 배포 금지\\n" +
+      "    syncOptions:\\n" +
+      "    - CreateNamespace=false  # 네임스페이스 생성 금지\\n" +
+      "```\\n\\n" +
+      "**컴플라이언스 자동화:**\\n" +
+      "```python\\n" +
+      "# 규제 준수 체크 자동화\\n" +
+      "class ComplianceChecker:\\n" +
+      "    def check_data_retention(self):\\n" +
+      "        # 5년 로그 보관 확인\\n" +
+      "        pass\\n" +
+      "    \\n" +
+      "    def check_access_logs(self):\\n" +
+      "        # 접근 로그 무결성 검증\\n" +
+      "        pass\\n" +
+      "    \\n" +
+      "    def check_encryption(self):\\n" +
+      "        # 데이터 암호화 상태 확인\\n" +
+      "        pass\\n" +
+      "```\\n\\n" +
+      "**토스의 접근 (블로그 기반):**\\n" +
+      '\\"보안엔지니어분들과 최대한 협업하면서 해결하고, 더 편리하고 안전하게 만들방법이 없을지 치열하게 고민하고 개선\\"\\n\\n' +
+      "**제 기여 방향:**\\n" +
+      "- **DevSecOps 통합**: 보안을 개발 프로세스에 자연스럽게 내재화\\n" +
+      "- **자동화된 컴플라이언스**: 수동 체크를 자동화로 대체\\n" +
+      "- **개발자 친화적**: 보안 정책이 생산성을 해치지 않도록 UX 개선\\n\\n" +
+      "**핵심 철학:**\\n" +
+      '> \\"규제는 제약이 아니라 더 견고한 시스템을 만들어가는 가이드라인입니다. DevOps 플랫폼에서 보안을 더 높이기 위한 새로운 목표에 가깝습니다.\\"',
+  },
+
+  // EKS 네트워킹 (패킷 흐름)
+  {
+    id: 118,
+    category1: "Infrastructure",
+    category2: "EKS-Networking",
+    question:
+      "EKS 클러스터 API 서버에 내부/외부에서 접근할 때 패킷 흐름과 네트워킹 구성을 설명해주세요.",
+    answer:
+      "**EKS Cluster Endpoint 접근 방식 3가지:**\n\n" +
+      "**1. Public Endpoint Only (기본값)**\n" +
+      "- Kubernetes API 서버가 퍼블릭 인터넷에 노출\n" +
+      "- CIDR 블록으로 접근 제한 가능 (2025년부터 IPv6 CIDR도 지원)\n" +
+      "- VPC 외부에서 `kubectl` 명령 실행 가능\n\n" +
+      "**패킷 흐름:**\n" +
+      "```\n" +
+      "개발자 로컬 PC\n" +
+      "  │\n" +
+      "  ├─> Internet Gateway\n" +
+      "  │\n" +
+      "  └─> EKS Public Endpoint (eks.{region}.amazonaws.com)\n" +
+      "        │\n" +
+      "        └─> EKS Control Plane (AWS 관리 VPC)\n" +
+      "```\n\n" +
+      "**2. Public + Private Endpoint (하이브리드)**\n" +
+      "- **외부 접근**: Public Endpoint 통해 접근 (CIDR 제한)\n" +
+      "- **내부 접근**: VPC 내부에서 Private Endpoint 통해 직접 접근\n\n" +
+      "**패킷 흐름 (VPC 내부):**\n" +
+      "```\n" +
+      "EKS Node (Worker)\n" +
+      "  │\n" +
+      "  ├─> VPC Private Subnet\n" +
+      "  │\n" +
+      "  └─> ENI (Elastic Network Interface)\n" +
+      "        │\n" +
+      "        └─> EKS Private Endpoint (10.x.x.x)\n" +
+      "              │\n" +
+      "              └─> EKS Control Plane (PrivateLink)\n" +
+      "```\n" +
+      "**핵심:** PrivateLink 사용으로 **VPC 내부 트래픽이 인터넷을 거치지 않음**\n\n" +
+      "**3. Private Endpoint Only (최고 보안)**\n" +
+      "- Public 접근 완전 차단\n" +
+      "- VPN/Direct Connect 통해서만 접근 가능\n" +
+      "- **금융권 필수 구성**: 외부 노출 제로\n\n" +
+      "**패킷 흐름 (온프레미스 → EKS):**\n" +
+      "```\n" +
+      "온프레미스 개발자\n" +
+      "  │\n" +
+      "  ├─> AWS Direct Connect / VPN\n" +
+      "  │\n" +
+      "  └─> Transit Gateway (Multi-VPC 연결)\n" +
+      "        │\n" +
+      "        └─> VPC Private Subnet\n" +
+      "              │\n" +
+      "              └─> EKS Private Endpoint\n" +
+      "                    │\n" +
+      "                    └─> EKS Control Plane\n" +
+      "```\n\n" +
+      "**2025년 새 기능: Dual-Stack Endpoint (IPv6 지원)**\n\n" +
+      "```yaml\n" +
+      "# 새 IPv6 클러스터 엔드포인트\n" +
+      "Public Endpoint: eks-cluster.{region}.api.aws\n" +
+      "  - IPv4: 54.x.x.x\n" +
+      "  - IPv6: 2600:1f18:xxxx::1\n" +
+      "\n" +
+      "Private Endpoint: {cluster-id}.{region}.eks.amazonaws.com\n" +
+      "  - IPv4: 10.x.x.x\n" +
+      "  - IPv6: fd00:ec2::xxxx (VPC 내부)\n" +
+      "```\n\n" +
+      "**IPv6 접근 제어 (2025년 6월 출시):**\n" +
+      "```bash\n" +
+      "# IPv4 + IPv6 CIDR 둘 다 설정 가능\n" +
+      "aws eks update-cluster-config \\\n" +
+      "  --name my-cluster \\\n" +
+      "  --resources-vpc-config \\\n" +
+      "    publicAccessCidrs='203.0.113.0/24,2001:db8::/32'\n" +
+      "```\n\n" +
+      "**실제 네트워크 구성 예시 (토스 환경 추정):**\n\n" +
+      "```yaml\n" +
+      "# 금융권 보안 강화 설정\n" +
+      "apiVersion: eksctl.io/v1alpha5\n" +
+      "kind: ClusterConfig\n" +
+      "metadata:\n" +
+      "  name: toss-prod-cluster\n" +
+      "  region: ap-northeast-2\n" +
+      "\n" +
+      "vpc:\n" +
+      "  clusterEndpoints:\n" +
+      "    publicAccess: false    # Public 접근 완전 차단\n" +
+      "    privateAccess: true    # Private만 허용\n" +
+      "  # PrivateLink VPC Endpoint 자동 생성\n" +
+      "```\n\n" +
+      "**보안 심화: Network ACL + Security Group:**\n\n" +
+      "```yaml\n" +
+      "# Control Plane Security Group\n" +
+      "apiVersion: v1\n" +
+      "kind: SecurityGroup\n" +
+      "spec:\n" +
+      "  ingress:\n" +
+      "    - protocol: tcp\n" +
+      "      fromPort: 443\n" +
+      "      toPort: 443\n" +
+      "      # 특정 VPN Gateway IP만 허용\n" +
+      "      cidrBlocks: ['10.0.0.0/8']  # 내부망만\n" +
+      "```\n\n" +
+      "**제 경험과 AWS Networking Specialty 지식:**\n\n" +
+      "**1. VPC PrivateLink 아키텍처 이해:**\n" +
+      "- AWS Advanced Networking Specialty 자격증으로 PrivateLink 내부 동작 원리 숙지\n" +
+      "- ENI, Route Table, DNS resolution 흐름 완벽 이해\n\n" +
+      "**2. Site-to-Site VPN 구축 경험:**\n" +
+      "- 온프레미스와 AWS 간 IPsec VPN 터널 구성\n" +
+      "- BGP 라우팅으로 동적 경로 전파\n" +
+      "- 이 경험이 EKS Private Endpoint 접근에 직접 적용\n\n" +
+      "**3. Multi-AZ HA 설계:**\n" +
+      "```\n" +
+      "┌─────────────────────────────────────────┐\n" +
+      "│          EKS Control Plane              │\n" +
+      "│         (AWS Managed VPC)               │\n" +
+      "└─────────────────────────────────────────┘\n" +
+      "         │              │              │\n" +
+      "    PrivateLink    PrivateLink    PrivateLink\n" +
+      "         │              │              │\n" +
+      "┌────────┴───────┬──────┴───────┬──────┴────────┐\n" +
+      "│   AZ-1a        │    AZ-1b     │    AZ-1c      │\n" +
+      "│  ENI (Private) │ ENI (Private)│ ENI (Private) │\n" +
+      "│  10.0.1.5      │ 10.0.2.5     │ 10.0.3.5      │\n" +
+      "└────────────────┴──────────────┴───────────────┘\n" +
+      "```\n" +
+      "각 AZ에 ENI 배포로 고가용성 보장\n\n" +
+      "**토스 환경 적용 포인트:**\n\n" +
+      "**1. 계열사 간 VPC Peering + Private Endpoint:**\n" +
+      "- 토스뱅크, 토스증권 등 각자의 VPC\n" +
+      "- EKS Private Endpoint를 VPC Peering으로 공유\n" +
+      "- Transit Gateway로 중앙 집중식 라우팅\n\n" +
+      "**2. 금융 규제 준수:**\n" +
+      "- Public Endpoint 완전 비활성화\n" +
+      "- 모든 API 호출이 내부망 통과 (감사 로그)\n" +
+      "- Network ACL로 계층적 방어\n\n" +
+      "**3. 하이브리드 클라우드 (Hybrid Nodes):**\n" +
+      "- 2024년 12월 출시: EKS Hybrid Nodes\n" +
+      "- 온프레미스 서버를 EKS 클러스터 노드로 등록\n" +
+      "- Private Endpoint 통해 Control Plane 접근\n\n" +
+      "**핵심 요약:**\n" +
+      "> **금융권은 Private Endpoint Only + Direct Connect 구성이 표준**\n" +
+      "> **제 AWS Networking Specialty와 VPN 구축 경험이 직접 활용 가능**\n" +
+      "> **2025년 IPv6 지원으로 더 유연한 네트워킹 구성 가능**",
+  },
 ];

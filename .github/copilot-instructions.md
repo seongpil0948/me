@@ -4,6 +4,8 @@
 
 Personal portfolio website built with Next.js 16 (App Router), React 19, HeroUI v2 component library, and Tailwind CSS v4. Features multilingual support (Korean/English/Chinese) and a dark theme-focused design showcasing professional experience and certifications.
 
+- 질의응답, QA 작성 가이드라인 문서: docs/company/common/QA작성가이드.md
+
 ## Critical Development Workflow
 
 ```bash
