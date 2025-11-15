@@ -209,6 +209,34 @@ export interface Dictionary {
     copyInstructions: string;
     lastUpdated: string;
   };
+  interview: {
+    title: string;
+    practice: string;
+    tableView: string;
+    quiz: {
+      title: string;
+      showAnswer: string;
+      hideAnswer: string;
+      nextQuestion: string;
+      previousQuestion: string;
+      randomQuestion: string;
+      shuffle: string;
+      progress: string;
+      question: string;
+      answer: string;
+    };
+    stats: {
+      totalQuestions: string;
+      viewedQuestions: string;
+      remainingQuestions: string;
+      progress: string;
+    };
+    settings: {
+      title: string;
+      category: string;
+      allCategories: string;
+    };
+  };
 }
 
 export interface PortfolioData {
@@ -221,7 +249,16 @@ export interface PortfolioData {
   description: string;
 }
 
-export type Category1 = "General" | "Infrastructure" | "Frontend" | "Backend";
+export type Category1 =
+  | "General"
+  | "Infrastructure"
+  | "Frontend"
+  | "Backend"
+  | "Defensive Tactics"
+  | "Data Pipeline"
+  | "Infrastructure/Operations"
+  | "OpenSource"
+  | "Observability";
 
 export interface InterviewQuestion {
   id: number;

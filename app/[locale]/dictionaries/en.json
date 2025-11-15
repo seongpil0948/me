@@ -328,5 +328,33 @@
     "logRetention": "Log Retention Expansion",
     "projectRevenue": "Revenue Increase",
     "dailyMessages": "Daily Messages"
+  },
+  "interview": {
+    "title": "Interview Q&A",
+    "practice": "Practice Mode",
+    "tableView": "Table View",
+    "quiz": {
+      "title": "Quiz Mode",
+      "showAnswer": "Show Answer",
+      "hideAnswer": "Hide Answer",
+      "nextQuestion": "Next Question",
+      "previousQuestion": "Previous Question",
+      "randomQuestion": "Random Question",
+      "shuffle": "Shuffle",
+      "progress": "Progress",
+      "question": "Question",
+      "answer": "Answer"
+    },
+    "stats": {
+      "totalQuestions": "Total Questions",
+      "viewedQuestions": "Viewed Questions",
+      "remainingQuestions": "Remaining Questions",
+      "progress": "Progress"
+    },
+    "settings": {
+      "title": "Settings",
+      "category": "Select Category",
+      "allCategories": "All"
+    }
   }
 }

@@ -29,79 +29,12 @@ import {
   TableRow,
 } from "@heroui/table";
 
-const STORAGE_KEY = "interview-favorites";
+import { ChevronDownIcon, SearchIcon, StarIcon } from "./icons";
 
-const ChevronDownIcon = ({ strokeWidth = 1.5, ...props }: any) => (
-  <svg
-    aria-hidden="true"
-    fill="none"
-    focusable="false"
-    height="1em"
-    role="presentation"
-    viewBox="0 0 24 24"
-    width="1em"
-    {...props}
-  >
-    <path
-      d="m19.92 8.95-6.52 6.52c-.77.77-2.03.77-2.8 0L4.08 8.95"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeMiterlimit={10}
-      strokeWidth={strokeWidth}
-    />
-  </svg>
-);
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { QUIZ_STORAGE_KEYS } from "@/constants/quiz";
 
-const SearchIcon = (props: any) => (
-  <svg
-    aria-hidden="true"
-    fill="none"
-    focusable="false"
-    height="1em"
-    role="presentation"
-    viewBox="0 0 24 24"
-    width="1em"
-    {...props}
-  >
-    <path
-      d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-    />
-    <path
-      d="M22 22L20 20"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-    />
-  </svg>
-);
-
-const StarIcon = ({
-  filled,
-  ...props
-}: {
-  filled?: boolean;
-  [key: string]: any;
-}) => (
-  <svg
-    fill={filled ? "currentColor" : "none"}
-    height="1em"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth="2"
-    viewBox="0 0 24 24"
-    width="1em"
-    {...props}
-  >
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-  </svg>
-);
+const STORAGE_KEY = QUIZ_STORAGE_KEYS.favorites;
 
 const category1Options: { name: string; uid: Category1 }[] = [
   { name: "General", uid: "General" },
@@ -544,41 +477,9 @@ export function QATable({
                 </div>
               </ModalHeader>
               <ModalBody>
-                <div
-                  style={{
-                    fontSize: "15px",
-                    lineHeight: "1.8",
-                    color: "#34495e",
-                    whiteSpace: "pre-wrap",
-                  }}
-                >
-                  {selectedQuestion?.answer.split("\n").map((line, idx) => {
-                    // Process markdown bold syntax **text**
-                    const parts = line.split(/(\*\*.*?\*\*)/g);
-
-                    return (
-                      <React.Fragment key={idx}>
-                        {parts.map((part, partIdx) => {
-                          if (part.startsWith("**") && part.endsWith("**")) {
-                            return (
-                              <strong key={partIdx}>{part.slice(2, -2)}</strong>
-                            );
-                          }
-
-                          return (
-                            <React.Fragment key={partIdx}>
-                              {part}
-                            </React.Fragment>
-                          );
-                        })}
-                        {idx <
-                          selectedQuestion.answer.split("\n").length - 1 && (
-                          <br />
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
-                </div>
+                <MarkdownRenderer>
+                  {selectedQuestion?.answer ?? ""}
+                </MarkdownRenderer>
               </ModalBody>
               <ModalFooter>
                 <Button

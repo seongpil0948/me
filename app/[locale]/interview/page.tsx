@@ -1,10 +1,13 @@
+import type { Locale } from "../dictionaries";
 import type { Metadata } from "next";
 
 import { Button } from "@heroui/button";
 import { Card } from "@heroui/card";
 import Link from "next/link";
 
-import { QATable } from "@/components/interview/qa-table";
+import { getDictionary } from "../dictionaries";
+
+import { InterviewTabs } from "@/components/interview/interview-tabs";
 import { interviewQuestions } from "@/data/interview";
 import { layoutStyles, spacing } from "@/constants/styles";
 
@@ -17,12 +20,19 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow",
 };
 
-export default function InterviewPage() {
+export default async function InterviewPage({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+  const dict = await getDictionary(locale);
+
   return (
     <div style={layoutStyles.interviewPage}>
       <div style={layoutStyles.maxWidthContainer}>
         <header style={{ marginBottom: spacing.xl }}>
-          <h1 style={layoutStyles.interviewHeader}>Interview Q&A Practice</h1>
+          <h1 style={layoutStyles.interviewHeader}>{dict.interview.title}</h1>
           <p style={layoutStyles.interviewDescription}>
             Prepare for technical interviews with categorized questions and
             answers. Click any question to view the full answer in a modal.
@@ -30,7 +40,7 @@ export default function InterviewPage() {
         </header>
 
         {/* Company-Specific Interview Links */}
-        <Card className="mb-6 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20">
+        <Card className="mb-6 bg-linear-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20">
           <div className="flex items-center justify-between p-4">
             <div>
               <h2 className="font-semibold text-lg">
@@ -40,7 +50,7 @@ export default function InterviewPage() {
                 Tailored interview questions for specific companies
               </p>
             </div>
-            <Link href="/ko/interview/toss">
+            <Link href={`/${locale}/interview/toss`}>
               <Button color="primary" variant="flat">
                 토스 DevOps Engineer 🇰🇷
               </Button>
@@ -48,7 +58,8 @@ export default function InterviewPage() {
           </div>
         </Card>
 
-        <QATable questions={interviewQuestions} />
+        {/* Tabs for Table and Quiz Modes */}
+        <InterviewTabs dict={dict} questions={interviewQuestions} />
       </div>
     </div>
   );

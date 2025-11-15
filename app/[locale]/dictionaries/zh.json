@@ -343,5 +343,33 @@
     "title": "职业经历描述（纯文本）",
     "copyInstructions": "复制上述内容并粘贴到文本表单中。",
     "lastUpdated": "最后更新"
+  },
+  "interview": {
+    "title": "面试问答",
+    "practice": "练习模式",
+    "tableView": "列表视图",
+    "quiz": {
+      "title": "测验模式",
+      "showAnswer": "显示答案",
+      "hideAnswer": "隐藏答案",
+      "nextQuestion": "下一题",
+      "previousQuestion": "上一题",
+      "randomQuestion": "随机题目",
+      "shuffle": "随机排序",
+      "progress": "进度",
+      "question": "问题",
+      "answer": "答案"
+    },
+    "stats": {
+      "totalQuestions": "总题数",
+      "viewedQuestions": "已查看",
+      "remainingQuestions": "剩余题目",
+      "progress": "进度"
+    },
+    "settings": {
+      "title": "设置",
+      "category": "选择类别",
+      "allCategories": "全部"
+    }
   }
 }

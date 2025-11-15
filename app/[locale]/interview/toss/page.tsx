@@ -1,11 +1,12 @@
+import type { Locale } from "../../dictionaries";
 import type { Metadata } from "next";
 
-import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Chip } from "@heroui/chip";
-import { Divider } from "@heroui/divider";
+
+import { getDictionary } from "../../dictionaries";
 
 import { tossInterviewQuestions } from "@/data/interview";
-import { QATable } from "@/components/interview/qa-table";
+import { InterviewTabs } from "@/components/interview/interview-tabs";
 
 export const metadata: Metadata = {
   title: "토스 DevOps Engineer 면접 준비 | Toss Interview Prep",
@@ -17,7 +18,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TossInterviewPage() {
+export default async function TossInterviewPage({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+  const dict = await getDictionary(locale);
+
   return (
     <div className="container mx-auto max-w-7xl px-6 py-8">
       {/* Header Section */}
@@ -36,46 +44,8 @@ export default function TossInterviewPage() {
         </p>
       </div>
 
-      {/* Interview Questions Section */}
-      <Card>
-        <CardHeader>
-          <div className="flex w-full items-center justify-between">
-            <h2 className="font-nanum-myeongjo text-2xl font-bold">
-              📝 면접 질의응답 ({tossInterviewQuestions.length}개)
-            </h2>
-            <div className="flex gap-2">
-              <Chip color="primary" variant="flat">
-                기술 {tossTechQuestionsCount}개
-              </Chip>
-              <Chip color="secondary" variant="flat">
-                회사/문화 {tossCompanyQuestionsCount}개
-              </Chip>
-              <Chip color="warning" variant="flat">
-                방어 전술 {defensiveTacticsCount}개
-              </Chip>
-            </div>
-          </div>
-        </CardHeader>
-        <Divider />
-        <CardBody>
-          <QATable
-            companyFilter="toss"
-            questions={tossInterviewQuestions}
-            title="토스 면접 질의응답"
-          />
-        </CardBody>
-      </Card>
+      {/* Tabs for different modes */}
+      <InterviewTabs dict={dict} questions={tossInterviewQuestions} />
     </div>
   );
 }
-
-// Helper to count questions by category
-const tossTechQuestionsCount = tossInterviewQuestions.filter(
-  (q) => q.id >= 101 && q.id < 200,
-).length;
-const tossCompanyQuestionsCount = tossInterviewQuestions.filter(
-  (q) => q.id >= 201 && q.id < 300,
-).length;
-const defensiveTacticsCount = tossInterviewQuestions.filter(
-  (q) => q.id >= 301,
-).length;

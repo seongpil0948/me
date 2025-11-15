@@ -50,6 +50,16 @@ export default function PortfolioActionButtons({
       >
         📝 {dict.buttons.viewTextResume}
       </Button>
+      <Button
+        as={Link}
+        className="shadow-lg"
+        color="default"
+        href={`/interview`}
+        radius="full"
+        style={commonStyles.button.secondary}
+      >
+        IV
+      </Button>
     </div>
   );
 }

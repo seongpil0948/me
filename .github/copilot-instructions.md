@@ -225,7 +225,10 @@ throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
 
 - `data/portfolio.ts` - Professional data (skills, certifications, experiences)
 - `data/personal.ts` - Personal information and summary statistics
-- `data/interview/*.ts` - Interview questions (general + company-specific)
+- `data/interview/` - Interview questions organized by category:
+  - `general.ts`, `backend.ts`, `frontend.ts`, `defensive-tactics.ts`
+  - `infra/` - Infrastructure questions split into 6 category files (23 questions)
+  - `toss/` - Toss-specific questions split into 9 category files (23 questions)
 
 ### Components
 
@@ -284,20 +287,57 @@ throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
 
 ## Interview Q&A System
 
-**Category-Based Structure**: Interview questions are split into maintainable category files:
+**Category-Based Structure**: Interview questions are split into maintainable category files for better organization:
 
-- **General Questions** (20): `data/interview/general.ts` - Behavioral, career change, problem-solving
-- **Infrastructure** (11): `data/interview/infrastructure.ts` - K8s, AWS, Observability, Kafka, Airflow
-- **Backend** (6): `data/interview/backend.ts` - Go, Python, Spring Boot, Django, databases
-- **Frontend** (5): `data/interview/frontend.ts` - React, Next.js, Vue.js, Flutter
-- **Toss Technical** (13): `data/interview/toss-tech.ts` - Istio, mTLS, Service Mesh (Korean)
-- **Toss Company** (5): `data/interview/toss-company.ts` - Company culture, strengths, gaps (Korean)
+### General Questions (20 questions)
+
+- `data/interview/general.ts` - Behavioral, career change, problem-solving
+
+### Infrastructure Questions (23 questions) - Organized by subdirectory
+
+**Location**: `data/interview/infra/`
+
+- **Core** (`core.ts`): Kubernetes, AWS, IaC (3 questions)
+- **Observability** (`observability.ts`): Monitoring, Distributed Tracing, Time-Series DB, SRE (7 questions)
+- **Data & Messaging** (`data.ts`): Data Pipeline, Messaging, Stream Processing (5 questions)
+- **Operations** (`operations.ts`): Redis, Cost Optimization, Security, Disaster Recovery (5 questions)
+- **Networking** (`networking.ts`): Network Architecture, CI/CD (2 questions)
+- **Soft Skills** (`soft-skills.ts`): Philosophy, Leadership (1 question)
+- **Index** (`index.ts`): Aggregates all infra questions into `infraQuestions` export
+
+### Backend Questions (6 questions)
+
+- `data/interview/backend.ts` - Go, Python, Spring Boot, Django, databases
+
+### Frontend Questions (5 questions)
+
+- `data/interview/frontend.ts` - React, Next.js, Vue.js, Flutter
+
+### Toss-Specific Questions (23 questions) - Organized by subdirectory
+
+**Location**: `data/interview/toss/`
+
+- **Istio** (`istio.ts`): Service Mesh, mTLS, Ambient Mode (6 questions)
+- **Gateway** (`gateway.ts`): APISIX, API Gateway patterns (3 questions)
+- **Migration** (`migration.ts`): Legacy system modernization (1 question)
+- **Observability** (`observability.ts`): OpenTelemetry, monitoring (3 questions)
+- **Open Source** (`opensource.ts`): Contribution experience (2 questions)
+- **Automation** (`automation.ts`): CI/CD, GitOps (2 questions)
+- **Multi-Cluster** (`multi-cluster.ts`): Multi-cluster management (2 questions)
+- **Compliance** (`compliance.ts`): Security compliance (2 questions)
+- **Company** (`company.ts`): Company culture, strengths, gaps (5 questions)
+- **Index** (`index.ts`): Aggregates toss questions into `tossInterviewQuestions` export
+
+### Defensive Tactics Questions
+
+- `data/interview/defensive-tactics.ts` - Reverse questions for interviewers
 
 **ID Ranges**:
 
 - General questions: 1-100
-- Toss technical: 101-200
-- Toss company: 201-300
+- Infrastructure technical: 9-76 (organized in infra/ subdirectory)
+- Toss technical: 101-200 (organized in toss/ subdirectory)
+- Toss company: 201-300 (organized in toss/ subdirectory)
 - Future companies: 301+ (reserved)
 
 **Component Usage**:
@@ -306,18 +346,29 @@ throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
 import { interviewQuestions, tossInterviewQuestions } from "@/data/interview";
 import { QATable } from "@/components/interview/qa-table";
 
-// General questions
+// General questions (includes general + infrastructure + backend + frontend)
 <QATable questions={interviewQuestions} />
 
 // Company-specific with filter
 <QATable questions={tossInterviewQuestions} companyFilter="toss" title="토스 면접" />
+
+// Individual category imports (if needed)
+import { infraCoreQuestions, infraObservabilityQuestions } from "@/data/interview/infra";
+import { tossIstioQuestions, tossGatewayQuestions } from "@/data/interview/toss";
 ```
 
 **Company-Specific Pages**:
 
 - `/ko/interview/toss` - Toss DevOps Engineer interview prep (Korean only)
-- Features: Self-intro, strengths mapping, gap analysis, 18 Q&A
+- Features: Self-intro, strengths mapping, gap analysis, 23 Q&A (technical + company)
 - Future: `/ko/interview/kakaobank`, `/ko/interview/naver`, etc.
+
+**File Organization Benefits**:
+
+- **Maintainability**: Large files (4500+ lines) split into focused category files (50-300 lines each)
+- **Natural Format**: All answers follow QA writing guidelines (natural Korean, no code blocks/headers)
+- **Type Safety**: All questions use `InterviewQuestion` interface with proper ID ranges
+- **Aggregation**: Index files combine categories while preserving individual imports
 
 ## User Background & Key Experiences
 
@@ -344,7 +395,12 @@ import { QATable } from "@/components/interview/qa-table";
 
 - **Custom Infrastructure Metrics**: Built company-specific metrics infrastructure
   - Per-API request counts and latency distribution (P50/P90/P95/P99 percentiles)
-  - Redis Cache Hit/Miss rates with Prometheus exporter integration (real-time monitoring on 4 cluster nodes)
+  - Redis Cache Hit/Miss rates with custom Signal SDK (not just server-level, but per-API business metrics)
+    - Backend API team requested silo/module-specific caching hit rates for performance optimization
+    - Evaluated Redis Exporter, OTEL Redis Receiver, OTEL/JMX Java Agent (only provided compute metrics)
+    - Built custom Signal SDK for FE/BE to measure per-route caching attempts, hits, and misses
+    - Achieved granular metrics: Product List API 85%, Cart API 92%, Order Lookup API 78% hit rates
+    - Combined with Prometheus exporter for real-time monitoring on 4 cluster nodes
   - Custom Span design integrating business + infrastructure context
   - HTTP instrumentation: Client duration, request/response sizes, error rates
 
@@ -420,8 +476,10 @@ import { QATable } from "@/components/interview/qa-table";
 
 **Workflow for interview question updates**:
 
-1. Edit appropriate category file in `data/interview/`
-2. Use proper ID range (general: 1-100, toss: 101-300, future: 301+)
+1. Edit appropriate category file in `data/interview/` (or subdirectory like `infra/` or `toss/`)
+2. Use proper ID range (general: 1-100, infra: 9-76, toss: 101-300, future: 301+)
 3. Maintain TypeScript type safety with `InterviewQuestion` interface
-4. Test on `/[locale]/interview` or company-specific page
-5. No markdown sync needed (TypeScript is source of truth)
+4. Follow QA writing guidelines: natural conversational Korean, no code blocks (```), no \*\* headers
+5. Update index.ts if adding new category files
+6. Test on `/[locale]/interview` or company-specific page
+7. No markdown sync needed (TypeScript is source of truth)

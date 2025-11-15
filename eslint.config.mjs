@@ -150,7 +150,7 @@ const eslintConfig = [
       ],
 
       // Prettier
-      "prettier/prettier": "warn",
+      "prettier/prettier": "off",
     },
   },
   // Prettier config (must be last to override formatting rules)

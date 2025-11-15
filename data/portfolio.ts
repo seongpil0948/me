@@ -85,6 +85,7 @@ export const experiences: Experience[] = [
     achievements: {
       ko: [
         "레거시 시스템(Oracle/Tomcat)을 Next.js/Spring 마이크로서비스로 전환하기 위한 코어 모듈 및 애플리케이션 아키텍처 설계 및 실행",
+        "Apache Airflow 클러스터 관리 주도: 클라이언트(데이터/상품/마케팅팀)와 SLA 협의, 동시성 분석(분당 22 Task → 110 Core 필요), 서버 증설 의사결정 체계 구축으로 5노드 클러스터 확장 (20개 → 200+ DAG), 배치 완료 시간 67% 개선 (12시간 → 4시간)",
         "Apache Airflow 5노드 클러스터로 통계 데이터, 데이터 레이크, 준실시간 CDC 워크플로우 관리 인프라 구축",
         "OpenTelemetry 마이그레이션을 통해 오류 감지 시간 99% 개선 (18시간 → 10분)",
         "OpenTelemetry 오픈소스 프로젝트의 클라우드 네이티브, 컨테이너, AWS 관련 이슈 해결에 기여",
@@ -100,6 +101,7 @@ export const experiences: Experience[] = [
       ],
       en: [
         "Architected and executed legacy system modernization from Oracle/Tomcat monolith to Next.js/Spring microservices including core module design",
+        "Led Apache Airflow cluster management: negotiated SLAs with clients (Data/Product/Marketing teams), analyzed concurrency requirements (22 tasks/min → 110 cores needed), established data-driven decision-making framework for 5-node cluster expansion (20 → 200+ DAGs), improved batch completion time by 67% (12h → 4h)",
         "Deployed 5-node Apache Airflow cluster managing 200+ DAGs for statistical workflows, data lake synchronization, and near-realtime CDC",
         "Reduced mean time to detection (MTTD) by 99% through OpenTelemetry migration, decreasing error identification from 18 hours to 10 minutes",
         "Contributed to OpenTelemetry open-source project resolving cloud-native, container orchestration, and AWS integration issues",
@@ -115,6 +117,7 @@ export const experiences: Experience[] = [
       ],
       zh: [
         "架构设计并执行从 Oracle/Tomcat 单体应用到 Next.js/Spring 微服务的遗留系统现代化，包括核心模块设计",
+        "主导Apache Airflow集群管理：与客户（数据/产品/营销团队）协商SLA，分析并发需求（每分钟22个任务→需要110核），建立数据驱动决策框架用于5节点集群扩展（20→200+ DAG），批处理完成时间改善67%（12小时→4小时）",
         "部署 5 节点 Apache Airflow 集群管理 200+ DAG，用于统计工作流、数据湖同步和近实时 CDC",
         "通过 OpenTelemetry 迁移将平均检测时间(MTTD)缩短 99%，从 18 小时减少到 10 分钟",
         "为 OpenTelemetry 开源项目贡献，解决云原生、容器编排和 AWS 集成问题",
