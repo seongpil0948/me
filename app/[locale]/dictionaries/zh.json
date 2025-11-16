@@ -37,7 +37,7 @@
     "teamworkSkills": "团队合作技能",
     "aboutMeParagraph1": "6年来在不同规模的组织中，负责从基础设施到应用的全栈系统，设计和运营可扩展的分布式系统。从创业公司的单人全栈开发者起步，现在担任年营业额5000亿韩元企业电商平台的平台负责工程师。",
     "aboutMeParagraph2": "主要成果包括：错误检测时间缩短99%、部署周期缩短90%、基础设施成本降低50%。稳定运营日活10万用户的服务，管理月20TB规模的数据湖和3TB分布式追踪数据，在高可用环境中提升了系统效率和可靠性。通过参与LG电子、SK电信等多样化项目，深入理解了产品经理、设计师和开发者之间的协作结构，培养了超越单纯技术实现、设计实现业务目标系统的能力。",
-    "aboutMeParagraph3": "核心技术栈以Kubernetes和AWS为基础的云原生架构为中心。后端使用Django、Spring Boot、Gin开发服务和API，利用Kafka和Airflow构建稳定的消息传递和数据管道。前端使用React、Vue.js、Flutter开发，积累了全栈经验。最近构建了基于OpenTelemetry的可观察性平台，大幅缩短了错误检测时间，并积极为多个开源项目做贡献。持有认证：CKA、LFCS、AWS SysOps、DevOps Professional、Advanced Networking Specialty。",
+    "aboutMeParagraph3": "核心技术栈以Kubernetes和AWS为基础的云原生架构为中心。后端使用Django、Spring Boot、Gin开发服务和API，利用Kafka和Airflow构建稳定的消息传递和数据管道。前端使用React、Vue.js、Flutter开发，积累了全栈经验。出于对容器编排和云基础设施的深厚兴趣，获得了CKA（Certified Kubernetes Administrator）和LFCS（Linux Foundation Certified SysOps）认证，并为优化AWS环境取得了AWS SysOps Administrator、DevOps Professional和Advanced Networking Specialty认证。最近构建了基于OpenTelemetry的可观察性平台，大幅缩短了错误检测时间，并积极为多个开源项目做贡献。",
     "aboutMeParagraph4": "目前担任大雄集团TheShop电商平台的SRE。运营处理日2000-5000万条消息的Kafka集群和200+个Airflow DAG，主导了遗留系统向微服务的转型。在此过程中，将部署时间减少了90%，基础设施成本减半。今后计划积极采用基于AI的开发工具，进一步提升开发生产力，构建共同成长的技术文化。",
     "teamwork": {
       "jiraConfluence": "Jira / Confluence",

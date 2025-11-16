@@ -12,48 +12,31 @@ export const infraNetworkingQuestions: InterviewQuestion[] = [
     question:
       "Describe your experience with network architecture and VPN setup.",
     answer:
-      "네트워크 아키텍처에서 가장 중요한 것은 보안과 성능의 균형, 그리고 장애 도메인 분리입니다.\n\n" +
-      "Site-to-Site VPN을 1.25Gbps로 구성하여 온프레미스와 AWS를 연결했습니다. " +
-      "BGP 라우팅 대신 정적 라우팅을 선택한 이유는 온프레미스 네트워크팀의 BGP 운영 경험 부족과 " +
-      "라우팅 테이블의 예측 가능성이 필요했기 때문입니다. " +
-      "결과적으로 평균 800Mbps 처리량과 P95 기준 15ms 지연시간을 달성했습니다.\n\n" +
-      "Multi-AZ 네트워크 설계로 고가용성을 보장했습니다. " +
-      "AZ-1a에 Primary 서비스, AZ-1b에 Secondary, AZ-1c에 Standby를 배치하고, " +
-      "각 AZ별로 독립적인 NAT Gateway와 Internet Gateway를 구성했습니다. " +
-      "단일 AZ 장애 시에도 서비스 연속성을 유지했습니다.\n\n" +
-      "VPC Peering과 Transit Gateway의 trade-off를 분석했습니다. " +
-      "5개 미만의 VPC는 Peering으로 직접 연결하고, " +
-      "그 이상은 Transit Gateway로 hub-and-spoke 모델을 구현했습니다. " +
-      "네트워크 복잡도를 줄이면서도 통신 지연을 최소화했습니다.\n\n" +
-      "Security Group과 NACL의 계층화된 보안을 구현했습니다. " +
-      "NACL로 서브넷 레벨에서 거친 필터링을 하고, " +
-      "Security Group으로 인스턴스 레벨에서 세밀한 제어를 적용했습니다. " +
-      "Deny-by-default 원칙으로 필요한 포트만 선택적으로 개방했습니다.\n\n" +
-      "Network Segmentation으로 보안을 강화했습니다. " +
-      "Public Subnet에는 Load Balancer와 NAT Gateway만, " +
-      "Private Subnet에는 애플리케이션 서버, " +
-      "Database Subnet에는 DB만 배치하여 공격 표면을 최소화했습니다.\n\n" +
-      "VPC Flow Logs로 네트워크 트래픽을 모니터링했습니다. " +
-      "Athena 쿼리로 Top Talkers와 이상 트래픽 패턴을 분석하고, " +
-      "DDoS 공격이나 데이터 유출 시도를 조기 탐지했습니다. " +
-      "GuardDuty와 연동하여 위협 인텔리전스를 강화했습니다.\n\n" +
-      "CDN과 글로벌 네트워크 최적화를 구현했습니다. " +
-      "CloudFront로 정적 콘텐츠를 엣지에 캐싱하고, " +
-      "Global Accelerator로 동적 콘텐츠의 네트워크 경로를 최적화했습니다. " +
-      "전 세계 사용자의 응답시간을 평균 40% 단축했습니다.\n\n" +
-      "Network Performance 튜닝으로 처리량을 최적화했습니다. " +
-      "Enhanced Networking과 SR-IOV를 활성화하고, " +
-      "Placement Group으로 인스턴스 간 네트워크 지연을 최소화했습니다. " +
-      "10Gbps 네트워크를 활용하여 data-intensive 애플리케이션 성능을 향상시켰습니다.\n\n" +
-      "결과적으로 네트워크 가용성 99.99%를 달성하고, " +
-      "평균 응답시간을 200ms에서 50ms로 단축했으며, " +
-      "보안 인시던트 zero를 유지했습니다.",
+      "네트워크 아키텍처에서 가장 어려웠던 것은 온프레미스와 AWS 간 안정적인 연결을 보장하면서도 비용을 최적화하는 것이었어요.\n\n" +
+      "문제 상황: ₩500B 규모 이커머스 플랫폼을 AWS로 마이그레이션하면서 온프레미스 레거시 시스템과 실시간 데이터 동기화가 필수였어요. 기존에는 Public Internet으로 연결했는데, 보안팀에서 '고객 개인정보가 Public으로 전송되면 안 된다'고 강력히 반대했죠.\n\n" +
+      "고민했던 3가지 선택지:\n\n" +
+      "첫째, AWS Direct Connect: 가장 안정적이지만 월 500만원 이상 비용에 구축 기간 3개월. 당시 우리에겐 시간이 없었어요.\n\n" +
+      "둘째, Public VPN: 비용은 저렴하지만 Internet 품질에 의존. 트래픽 급증 시 지연 예측 불가.\n\n" +
+      "셋째, Site-to-Site VPN 1.25Gbps: Direct Connect 대비 1/10 비용, 2주 내 구축 가능. 다만 온프레미스 네트워크팀의 BGP 경험 부족이 걸림돌.\n\n" +
+      "최종 선택과 이유:\n\n" +
+      "Site-to-Site VPN을 선택했어요. BGP 라우팅 대신 정적 라우팅을 적용했는데, 이유는 온프레미스 네트워크팀이 BGP 운영 경험이 없어서 장애 시 대응이 어려울 것 같았거든요. 정적 라우팅은 설정이 단순하고 라우팅 테이블이 명확해서 트러블슈팅도 쉬웠죠.\n\n" +
+      "실제 구현 과정에서 마주친 문제들:\n\n" +
+      "처음엔 1개 VPN 터널만 구성했는데, 온프레미스 라우터 장애로 새벽 2시에 전체 서비스가 중단됐어요. 그때 '아, 이건 SPOF였구나'를 깨달았죠. 즉시 이중화를 추가했어요. Primary와 Secondary VPN 터널을 각각 다른 AWS Availability Zone에 연결하고, 온프레미스 측도 2대의 라우터로 이중화했습니다.\n\n" +
+      "처리량 테스트에서도 문제가 있었어요. 스펙상 1.25Gbps지만 실제로는 평균 800Mbps만 나왔죠. 원인은 VPN 암호화 오버헤드와 패킷 단편화였어요. MTU를 1500에서 1400으로 낮추고, TCP Window Scaling을 조정하니 안정적으로 900Mbps 이상 나왔습니다.\n\n" +
+      "Multi-AZ 네트워크 설계로 가용성을 높였어요:\n\n" +
+      "AZ-1a에 Primary ECS 클러스터, AZ-1b에 Secondary, AZ-1c에 Standby를 배치했어요. 각 AZ마다 독립적인 NAT Gateway와 Internet Gateway를 두어서 단일 AZ 장애가 다른 AZ에 영향을 주지 않도록 했습니다. 실제로 AZ-1a에서 AWS 측 네트워크 장애가 발생했을 때도 트래픽이 자동으로 AZ-1b로 전환되어 서비스가 유지됐어요.\n\n" +
+      "보안 설계에서 배운 점:\n\n" +
+      "Security Group과 NACL을 계층화했어요. 처음엔 Security Group만 썼는데, 서브넷 레벨에서 한번 더 필터링하는 게 심층 방어에 유리하더라고요. NACL로 알려진 공격 IP 대역을 차단하고, Security Group으로 애플리케이션별 세밀한 제어를 했습니다. Deny-by-default 원칙으로 필요한 포트만 선택적으로 열었어요.\n\n" +
+      "VPC Flow Logs로 이상 트래픽을 모니터링했어요. Athena 쿼리로 Top Talkers를 분석하니까, 특정 IP에서 초당 10만 건 이상 요청이 들어오는 게 보였어요. GuardDuty와 연동해서 자동으로 차단하는 Lambda를 만들었죠.\n\n" +
+      "결과적으로:\n\n" +
+      "네트워크 가용성 99.9%에서 99.95%로 개선했고, VPN 평균 지연시간 P95 기준 15ms를 유지했어요. 가장 큰 성과는 보안 인시던트 제로를 달성한 거였죠.\n\n" +
+      "핵심 교훈은, 최신 기술(BGP, Direct Connect)이 항상 정답은 아니라는 겁니다. 팀 상황과 비용, 시간을 고려한 현실적인 선택이 더 중요하더라고요.",
   },
   {
-    id: 64,
+    id: 67,
     category1: "Infrastructure",
     category2: "CI/CD",
-    question: "What's your approach to building robust CI/CD pipelines?",
+    question: "강력한 CI/CD 파이프라인 구축에 대한 접근 방식은 무엇인가요?",
     answer:
       "견고한 CI/CD 파이프라인 구축에서 가장 중요한 것은 fast feedback과 안전한 배포 전략입니다.\n\n" +
       "GitOps 워크플로우를 GitHub Actions와 ArgoCD로 구현했습니다. " +

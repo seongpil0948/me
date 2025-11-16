@@ -2,19 +2,17 @@ import type { InterviewQuestion } from "@/types/portfolio";
 
 /**
  * Data & Messaging 질문들
- * ID: 12, 13, 58, 61, 65
+ * ID: 66, 13, 58, 60, 65, 69
  */
 export const infraDataQuestions: InterviewQuestion[] = [
   {
-    id: 12,
+    id: 66,
     category1: "Infrastructure",
     category2: "Messaging",
     question: "Describe your experience with message queues like Kafka.",
     answer:
-      "Kafka 운영에서 가장 어려운 것은 파티션 전략과 컨슈머 그룹 리밸런싱 최적화입니다.\n\n" +
-      "20-50M 메시지/일 처리하는 Kafka 클러스터를 운영했습니다. " +
-      "3개 브로커에 replication factor 3으로 무손실 메시징을 보장했고, " +
-      "파티션 수를 컨슈머 인스턴스 수의 2배로 설정하여 확장성을 확보했습니다.\n\n" +
+      "Kafka 운영에서 가장 어려웠던 것은 하루 2천만~5천만 건 메시지가 쏟아지는데 어느 하나 놓치면 안 된다는 부담감이었어요. 특히 결제 관련 메시지는 단 1건도 손실되면 안 되거든요.\n\n" +
+      "문제 상황: ₩500B 이커머스 플랫폼의 Kafka 클러스터를 운영했는데, 크게 세 종류의 토픽이 있었어요. 첫째, CDC(Change Data Capture) 토픽으로 MySQL binlog를 실시간 스트리밍해서 주문, 결제, 재고 변경사항을 전파했습니다. 둘째, 모니터링 토픽으로 OpenTelemetry Span, 메트릭, 로그를 수집했어요. 셋째, 운영 토픽으로 알림, 배치 트리거, 이벤트 발행을 처리했죠. 이 세 가지를 합치면 하루 2천만~5천만 건이었어요.\n\n" +
       "파티셔닝 전략이 성능에 미치는 영향이 컸습니다. " +
       "처음에는 user_id 해싱으로 파티셔닝했는데 특정 사용자의 활동이 집중되어 " +
       "hot partition 문제가 발생했습니다. " +
@@ -47,15 +45,13 @@ export const infraDataQuestions: InterviewQuestion[] = [
       "99.99% 가용성을 달성했으며, zero message loss를 보장했습니다.",
   },
   {
-    id: 13,
+    id: 59,
     category1: "Infrastructure",
     category2: "Data Pipeline",
-    question: "What is your experience building data pipelines?",
+    question: "데이터 파이프라인 구축 경험은 어떤가요?",
     answer:
-      "데이터 파이프라인 구축에서 가장 중요한 것은 데이터 품질 보장과 장애 복구 전략입니다.\n\n" +
-      "20-50M 메시지/일을 처리하는 실시간 분석 파이프라인을 설계했습니다. " +
-      "Kafka → AWS Lambda → Athena → S3의 아키텍처로 " +
-      "원시 이벤트를 비즈니스 인사이트로 변환하는 시스템을 구축했습니다.\n\n" +
+      "데이터 파이프라인 구축에서 가장 어려웠던 것은 '실시간'과 '정확성' 사이의 trade-off였어요. 기획팀은 5분마다 업데이트되는 대시보드를 원했지만, 데이터 품질이 떨어지면 잘못된 의사결정으로 이어질 수 있었거든요.\n\n" +
+      "문제 상황: ₩500B 플랫폼의 비즈니스 인사이트가 필요했어요. MAU, DAU, Conversion Rate, Cart Source 같은 지표를 실시간으로 봐야 하는데, 기존엔 개발자가 SQL 쿼리를 직접 짜서 수동으로 추출했죠. 일주일에 2-3일을 리포트 만드는 데 쓰고 있었어요. 이건 비효율의 극치였죠.\n\n" +
       "AWS Step Functions로 복잡한 ETL 워크플로우를 오케스트레이션했습니다. " +
       "15개의 병렬 처리 단계로 구성하여 전체 처리 시간을 12-18분으로 최적화했습니다. " +
       "각 단계별 retry 정책과 error handling으로 장애 전파를 방지했습니다.\n\n" +
@@ -86,10 +82,10 @@ export const infraDataQuestions: InterviewQuestion[] = [
       "데이터 정확성을 95%에서 99.5%로 향상시켰습니다.",
   },
   {
-    id: 58,
+    id: 60,
     category1: "Infrastructure",
     category2: "Data Pipeline",
-    question: "How do you handle data pipeline failure recovery?",
+    question: "데이터 파이프라인 장애 복구를 어떻게 처리하나요?",
     answer:
       "데이터 파이프라인 장애 복구에서 가장 중요한 것은 빠른 감지와 자동 복구, 그리고 데이터 일관성 보장입니다.\n\n" +
       "Circuit Breaker 패턴으로 장애 전파를 차단했습니다. " +
@@ -128,10 +124,28 @@ export const infraDataQuestions: InterviewQuestion[] = [
       "파이프라인 가용성을 99.5%에서 99.9%로 향상시켰습니다.",
   },
   {
-    id: 61,
+    id: 68,
     category1: "Infrastructure",
     category2: "Data Pipeline",
-    question: "What's your experience with stream processing frameworks?",
+    question:
+      "Airflow 또는 유사한 워크플로우 오케스트레이션 도구 경험은 어떤가요?",
+    answer:
+      "Airflow 운영에서 가장 중요한 것은 DAG 의존성 관리와 실패 복구 전략입니다. 저는 20개에서 시작해서 200개 이상의 DAG로 확장하면서, 확장성과 안정성을 동시에 달성하는 여정을 겪었습니다.\n\n" +
+      "초기 상황을 먼저 설명하겠습니다. TheShop의 데이터 파이프라인은 처음엔 단순했어요. 매일 오전 9시에 실행되는 일일 배치 20개가 전부였죠. 그런데 비즈니스가 성장하면서 요구사항이 폭발적으로 증가했습니다. CDC 처리, 실시간 스트리밍 데이터 가공, ML 모델 학습, 분석 리포트 생성 등 다양한 워크로드가 추가되었어요. 6개월 만에 DAG가 100개를 넘었고, 1년 후엔 200개를 돌파했습니다. 이 과정에서 Airflow 아키텍처를 3번이나 재설계했죠.\n\n" +
+      "DAG 설계에서 멱등성(Idempotency)을 최우선으로 고려했습니다. 재실행해도 결과가 동일하도록 upsert 패턴을 사용하고, 파티션 기반 처리로 중복 실행에도 안전하게 설계했습니다. 예를 들어 Athena CTAS 쿼리는 CREATE OR REPLACE 구문을 사용해서 중복 실행 시 기존 테이블을 덮어쓰도록 했어요. S3 파일 업로드는 고유한 파일명(날짜+시간+UUID)을 사용해서 충돌을 방지했죠. 날짜 파라미터를 명시적으로 전달하여 execution_date 기반으로 재처리가 가능하게 만들었습니다.\n\n" +
+      "의존성 관리가 가장 복잡했습니다. DAG 간 의존성을 처음엔 ExternalTaskSensor로 관리했지만, upstream DAG 지연으로 downstream이 타임아웃되는 문제가 빈번했습니다. 예를 들어 일일 매출 집계 DAG(A)가 완료되어야 주간 매출 리포트 DAG(B)가 실행되는 구조였는데, A가 평소 30분 걸리다가 어느 날 2시간 걸리면 B가 타임아웃으로 실패했죠. TriggerDagRunOperator로 명시적 트리거 패턴으로 전환하고, SLA 알림을 설정해서 upstream 지연을 조기에 감지하도록 했습니다. 이렇게 해서 의존성 타임아웃 실패율을 30%에서 5%로 줄였어요.\n\n" +
+      "리소스 경합 해결이 중요했습니다. 여러 DAG가 동시 실행되면서 Celery Worker가 고갈되는 문제를 겪었습니다. 매일 오전 8-10시, 특히 월요일 오전이 가장 바빴어요. 20개 DAG가 동시에 트리거되면서 Worker 큐가 포화 상태가 되었고, 중요한 실시간 데이터 처리 DAG조차 대기해야 했죠. Pool을 업무별(ETL, ML, Reporting)로 분리하고 우선순위 큐를 설정했습니다. 중요 DAG는 전용 pool에서 실행되도록 격리했어요. 예를 들어 결제 데이터 처리는 priority_weight=10으로 설정해서 항상 먼저 실행되도록 했습니다.\n\n" +
+      "실패 복구 전략으로 자동 재시도와 알림을 구현했습니다. Task별로 retry 정책을 차등 적용했어요. 네트워크 오류나 AWS throttling 같은 transient error는 retries=3, retry_delay=5분, retry_exponential_backoff=True로 자동 재시도했습니다. 하지만 데이터 품질 오류나 syntax error는 재시도해도 의미가 없으니 on_failure_callback으로 즉시 Slack 알림을 보냈죠. SLA 모니터링으로 지연 감지를 자동화했습니다. 각 DAG에 sla=timedelta(hours=12) 같은 값을 설정해서, SLA Miss 발생 시 PagerDuty로 escalation되도록 했어요.\n\n" +
+      "Dynamic DAG 생성으로 유지보수 부담을 줄였습니다. 반복적인 ETL 패턴을 템플릿화하고, YAML 설정에서 DAG를 동적 생성했습니다. 예를 들어 7개 서비스(주문, 결제, 재고, 배송, 고객, 마케팅, 정산)의 로그를 각각 S3 → Athena → Glue로 처리하는 DAG가 있었는데, 처음엔 7개 Python 파일로 관리했어요. 근데 공통 로직 변경할 때마다 7개 파일을 다 고쳐야 했죠. DAG Factory 패턴을 도입해서 service_config.yaml에 서비스 정보만 정의하고, 단일 템플릿에서 7개 DAG를 동적 생성하도록 바꿨습니다. 이렇게 해서 200개 DAG를 10개 템플릿으로 관리하게 되었고, 코드 중복을 90% 제거했어요.\n\n" +
+      "Celery Worker 성능 튜닝도 중요했습니다. 처음엔 worker_concurrency=4로 설정했는데, CPU-bound Task가 많아서 GIL 때문에 병렬 처리 효과가 적었어요. prefork pool 방식으로 변경하고 concurrency를 8로 늘렸더니 throughput이 2배로 증가했습니다. 또한 Task 실행 지연 문제도 있었어요. 특정 Worker들이 Scheduler로부터 Task를 할당받는 시간이 8초나 지연되는 현상이 있었죠. Redis Sentinel 설정 최적화와 Worker node 증설(24 Core → 120 Core)로 지연을 1초 이내로 줄였습니다.\n\n" +
+      "모니터링과 알림 체계를 구축했습니다. Flower(Celery 모니터링 툴)로 Worker 상태와 Task Queue 상황을 실시간 추적했어요. Grafana 대시보드에서 DAG 성공률, 평균 실행시간, SLA Miss 횟수를 시각화했습니다. CloudWatch 알림으로 DB Connection Pool 고갈, Redis 메모리 임계값 초과 등의 이상 징후를 조기에 감지했죠.\n\n" +
+      "결과적으로 DAG 성공률을 92%에서 99.5%로 향상시켰고, SLA 달성률을 88%에서 99%로 높였으며, 평균 파이프라인 실행 시간을 45분에서 12분으로 73% 단축했습니다. 가장 중요한 성과는, 데이터 팀이 운영에 쓰는 시간이 주당 20시간에서 3시간으로 줄어서 실제 분석과 개선에 집중할 수 있게 되었다는 것입니다.",
+  },
+  {
+    id: 69,
+    category1: "Infrastructure",
+    category2: "Data Pipeline",
+    question: "스트림 처리 프레임워크 경험은 어떤가요?",
     answer:
       "스트림 처리에서 가장 어려운 것은 상태 관리와 정확히 한 번 처리 보장입니다.\n\n" +
       "Kafka Streams와 AWS Lambda를 조합한 하이브리드 아키텍처를 구축했습니다. " +
@@ -172,8 +186,8 @@ export const infraDataQuestions: InterviewQuestion[] = [
   {
     id: 65,
     category1: "Infrastructure",
-    category2: "Data Pipeline",
-    question: "How do you implement data quality monitoring in pipelines?",
+    category2: "Data Quality",
+    question: "파이프라인에서 데이터 품질 모니터링을 어떻게 구현하나요?",
     answer:
       "데이터 품질 모니터링에서 가장 중요한 것은 실시간 검증과 문제 데이터의 격리입니다.\n\n" +
       "Data Quality Dimensions을 정의하여 체계적으로 접근했습니다. " +
@@ -217,7 +231,7 @@ export const infraDataQuestions: InterviewQuestion[] = [
     category1: "Data Pipeline",
     category2: "Orchestration",
     question:
-      "일일 2천만~5천만 건의 메시지를 처리하는 Kafka 클러스터와 200개 이상의 Airflow DAG를 운영한 경험에 대해 설명해주세요. Celery Executor를 선택한 이유와 DAG 실패 시 자동 복구 전략, 데이터 파이프라인 SLA 보장 방법은?",
+      "200개 이상의 Airflow DAG와 일일 2천만~5천만 건의 메시지를 처리하는 Kafka 클러스터를 운영한 경험에 대해 설명해주세요. Celery Executor를 선택한 이유와 DAG 실패 시 자동 복구 전략, 데이터 파이프라인 SLA 보장 방법은?",
     answer:
       "대규모 데이터 파이프라인 운영에서 가장 중요한 것은 '예측 가능성'과 'Fault Tolerance'입니다.\n\n" +
       "당시 상황을 먼저 설명하겠습니다. TheShop의 데이터 파이프라인은 크게 세 가지 워크로드로 구성되어 있었습니다. 첫째, Kafka 기반 실시간 이벤트 스트림(주문, 장바구니, 조회 로그)이 하루 평균 2천만~5천만 건 유입되었고, 둘째, 이 데이터를 배치로 가공하는 200개 이상의 Airflow DAG가 매시간/매일 실행되었으며, 셋째, 비즈니스 팀이 요청하는 Ad-hoc 분석 쿼리가 수시로 발생했습니다. 이 세 가지를 안정적으로 처리하면서 SLA를 지키는 것이 핵심 과제였죠.\n\n" +
@@ -242,6 +256,46 @@ export const infraDataQuestions: InterviewQuestion[] = [
       "네 번째는 Parallel Execution이었습니다. 의존성이 없는 Task들은 최대한 병렬로 실행하도록 DAG를 설계했어요. Task Group을 활용해서 논리적으로 묶되, 물리적으로는 병렬 실행되도록 했습니다. 예를 들어 7개 서비스의 로그를 각각 처리하는 Task는 모두 병렬로 실행되었죠.\n\n" +
       "다섯 번째는 Capacity Planning이었습니다. 과거 3개월 DAG 실행 통계를 분석해서 피크 타임을 파악했어요. 매일 오전 8-10시, 매주 월요일 오전이 가장 바빴습니다. 이 시간대에는 Celery Worker를 10대까지 scale-out하고, 나머지 시간은 3대로 유지해서 비용을 40% 절감했죠.\n\n" +
       "결과적으로 DAG 성공률을 92%에서 99.5%로 향상시켰고, SLA 달성률을 88%에서 99%로 높였으며, 평균 파이프라인 실행 시간을 45분에서 12분으로 73% 단축했습니다. 가장 중요한 성과는, 데이터 팀이 운영에 쓰는 시간이 주당 20시간에서 3시간으로 줄어서 실제 분석과 개선에 집중할 수 있게 되었다는 것입니다.\n\n" +
-      "핵심 교훈은, 대규모 데이터 파이프라인은 '한 번에 완벽하게'가 아니라 '지속적인 모니터링과 개선'으로 안정화된다는 것입니다. 장애를 zero로 만들 수는 없지만, 장애 발생 시 자동 복구되고, 영향 범위를 최소화하며, 빠르게 대응할 수 있는 시스템을 만드는 것이 현실적인 목표였습니다.",
+      "핵심 교훈은, 대규模 데이터 파이프라인은 '한 번에 완벽하게'가 아니라 '지속적인 모니터링과 개선'으로 안정화된다는 것입니다. 장애를 zero로 만들 수는 없지만, 장애 발생 시 자동 복구되고, 영향 범위를 최소화하며, 빠르게 대응할 수 있는 시스템을 만드는 것이 현실적인 목표였습니다.",
+  },
+  {
+    id: 137,
+    category1: "Infrastructure",
+    category2: "Airflow Troubleshooting",
+    question:
+      "Airflow 분산 환경에서 OpenTelemetry 연동 시 발생한 'Failed to encode key file_path: Invalid type DagFileInfo' 에러를 어떻게 해결했나요?",
+    answer:
+      "이 문제는 단일 호스트 환경(local, dev)에서는 발생하지 않았는데, 프로덕션 분산 환경에서만 발생해서 디버깅이 까다로웠습니다.\n\n" +
+      "문제 상황을 먼저 설명하겠습니다. 프로덕션 환경은 6개 서버로 구성된 멀티 호스트 Airflow 클러스터였어요. Scheduler 2대, Worker 4대, WebServer, Triggerer 등이 분산되어 있었죠. OpenTelemetry로 분산 추적을 구현하려고 했는데, Dag-processor에서 계속 에러가 발생했습니다. 에러 메시지는 'Failed to encode key file_path: Invalid type <class airflow.dag_processing.manager.DagFileInfo>'였어요. 로컬이나 개발 서버(단일 호스트)에서는 정상 동작했는데, 프로덕션에서만 터지는 거예요.\n\n" +
+      "근본 원인을 분석했습니다. OpenTelemetry Exporter는 Span 속성을 OTLP 프로토콜로 직렬화할 때, 기본 Python 타입(str, int, float, bool, list, dict)만 지원합니다. 그런데 Airflow 2.x의 DagFileInfo는 커스텀 클래스였어요. 단일 호스트 환경에서는 Span이 같은 프로세스 내에서 처리되어 문제가 없었지만, 분산 환경에서는 네트워크를 통해 전송되면서 직렬화 오류가 발생한 거죠.\n\n" +
+      "해결 방법은 세 가지 단계로 진행했습니다.\n\n" +
+      "첫째, DagFileInfo를 직렬화 가능한 타입으로 변환하는 헬퍼 함수를 작성했습니다. lib/otel/traces/utils.py에 sanitize_attributes 함수를 구현했어요. DagFileInfo 객체를 만나면 str(obj)로 변환하고, PosixPath도 문자열로 변환했습니다. 재귀적으로 dict와 list를 순회하면서 모든 커스텀 객체를 기본 타입으로 변환하도록 했죠.\n\n" +
+      "둘째, Airflow의 DagFileProcessorManager instrumentation을 커스터마이징했습니다. OpenTelemetry의 instrument() 데코레이터를 사용하되, span_attributes_extractor 콜백에서 sanitize_attributes를 호출하도록 했어요. 이렇게 해서 Span이 생성되기 전에 모든 속성이 직렬화 가능한 상태로 변환되었습니다.\n\n" +
+      "셋째, 프로덕션 환경에서만 발생하는 문제였기 때문에, 환경별 설정 분리가 중요했습니다. config/prd/docker-compose.yaml에서 OTEL_EXPORTER_OTLP_ENDPOINT를 멀티 호스트 클러스터의 Collector로 설정하고, OTEL_SPAN_ATTRIBUTE_SANITIZATION=true 환경 변수를 추가했죠. 로컬/개발 환경에서는 이 설정이 필요 없으니 활성화하지 않았습니다.\n\n" +
+      "테스트 전략도 중요했습니다. 로컬에서는 재현이 안 되니, 개발 서버를 일시적으로 멀티 노드로 구성해서 테스트했어요. Docker Compose로 Scheduler와 Worker를 별도 컨테이너로 분리하고, 네트워크를 격리해서 분산 환경을 시뮬레이션했습니다. 이렇게 해서 프로덕션 배포 전에 문제를 검증할 수 있었죠.\n\n" +
+      "추가로 발견한 문제도 있었습니다. 특정 DAG들(analysis/goods_prediction/dag.py, etl/update_dag_run_in_mariadb.py 등 50개 이상)에서 에러가 집중되었어요. 이 DAG들은 공통적으로 커스텀 Operator를 사용하고 있었는데, Operator 내부에서 context를 Span 속성으로 직접 전달하고 있었습니다. context에는 DagFileInfo 외에도 여러 Airflow 내부 객체들이 포함되어 있었죠. 이 문제를 해결하려고 lib/otel/logger/core.py에서 context를 필터링하는 로직을 추가했습니다. task_id, dag_id, execution_date 같은 필수 정보만 추출하고, 나머지 복잡한 객체는 제외했어요.\n\n" +
+      "모니터링 개선도 했습니다. OpenTelemetry Collector에서 직렬화 에러를 감지하면 AWS SNS 알림을 보내도록 설정했어요. 또한 Grafana 대시보드에 'OTEL Encoding Errors' 패널을 추가해서, 어떤 DAG에서 에러가 발생하는지 실시간으로 추적했습니다. 에러 발생 시 자동으로 DagFileInfo를 문자열로 변환하되, 로그에는 원본 타입 정보를 남겨서 추후 디버깅에 활용할 수 있도록 했죠.\n\n" +
+      "결과적으로 프로덕션 환경에서 OTEL 에러를 100% 제거했고, 분산 추적이 정상적으로 동작하게 되었습니다. Span 속성 직렬화 오버헤드는 Task당 평균 5ms 이내로 성능에 거의 영향이 없었어요. 가장 중요한 교훈은, '로컬에서 되면 프로덕션에서도 된다'는 가정이 분산 시스템에서는 위험하다는 것이었습니다. 환경별 차이를 고려한 테스트 전략이 필수적이죠.",
+  },
+  {
+    id: 138,
+    category1: "Infrastructure",
+    category2: "Airflow Performance",
+    question:
+      "Airflow Worker의 Task 할당 지연 문제(8초)를 어떻게 해결했나요? Worker 증설과 동시성 튜닝 경험을 설명해주세요.",
+    answer:
+      "이 문제는 DAG 수가 20개에서 100개로 증가하면서 발생했습니다. 특정 Worker들이 Scheduler로부터 Task를 할당받는데 8초나 걸렸어요. 이 지연 때문에 분당 처리 가능한 Task 수가 병목되었고, 피크 타임에 Task들이 Queue에 쌓이면서 SLA Miss가 빈번했습니다.\n\n" +
+      "문제 진단을 위해 Celery Flower와 Prometheus 메트릭을 분석했습니다. Worker별로 Task 수신 시간을 추적했더니, 시간대별로 패턴이 보였어요. 매일 오전 8-10시, 특히 월요일 오전이 가장 심했습니다. 분당 최대 22개 Task가 실행되는데, 예정된 DAG는 100개가 넘었죠. 계산해보니 분당 110개 Task가 필요했어요. 기존 Worker 3대(각 8 CPU, 16GB)로는 처리량이 부족했습니다.\n\n" +
+      "근본 원인은 세 가지였습니다. 첫째, Worker 리소스 부족. 각 Task는 1 Core를 점유하는데, 전체 24 Core로는 동시에 24개 Task밖에 처리할 수 없었어요. 둘째, Celery Worker의 worker_concurrency 설정이 4로 제한되어 있었습니다. 셋째, Redis Broker의 connection pool이 부족해서 Worker들이 Task를 가져올 때 경합이 발생했죠.\n\n" +
+      "해결 방법은 단계별로 진행했습니다.\n\n" +
+      "첫 번째 단계는 Worker 증설과 스펙업이었습니다. Worker 3대를 4대로 증설하고, 기존 Worker는 8 CPU에서 32 CPU로 스케일업했어요. 신규 Worker는 48 CPU로 프로비저닝했습니다. 총 120 Core를 확보해서 이론적으로는 분당 120개 Task를 처리할 수 있게 되었죠. Scheduler와 Triggerer용으로 16 Core, Redis용으로 4 Core를 예약했으니, 실제 DAG 실행용으로는 100 Core가 남았습니다.\n\n" +
+      "두 번째 단계는 Celery Executor 최적화였습니다. worker_concurrency를 4에서 16으로 증가시켰어요. 각 Worker마다 16개 프로세스가 병렬로 Task를 처리하도록 했죠. Worker Pool은 prefork 방식을 유지했습니다. CPU-bound Task가 많아서 prefork가 효율적이었거든요. I/O-bound Task가 많았다면 eventlet pool을 고려했겠지만, 우리는 Athena 쿼리, Glue Job, ML 학습 같은 CPU/메모리 집약적 작업이 대부분이었습니다.\n\n" +
+      "세 번째 단계는 DAG 레벨 동시성 제어였습니다. dag_concurrency 파라미터를 조정했어요. 기존엔 DAG당 무제한 Task가 동시 실행될 수 있었는데, 이게 Worker를 과부하시켰습니다. dag_concurrency=10으로 설정해서, 한 DAG가 최대 10개 Task만 동시 실행하도록 제한했죠. 대신 여러 DAG가 병렬로 실행될 수 있어서 전체 throughput은 오히려 증가했습니다.\n\n" +
+      "네 번째 단계는 Redis Sentinel 최적화였습니다. Redis connection pool size를 50에서 200으로 증가시켰어요. Worker 4대 × worker_concurrency 16 = 64개 프로세스가 동시에 Redis에 연결하는데, pool이 부족하면 connection wait이 발생했거든요. 또한 Redis maxmemory를 2GB에서 4GB로 증가시키고, eviction policy를 allkeys-lru로 설정해서 메모리 부족 시 오래된 Task 결과를 자동으로 제거하도록 했습니다.\n\n" +
+      "다섯 번째 단계는 Task Priority 및 Pool 분리였습니다. Airflow의 Pool 기능으로 리소스를 용도별로 격리했어요. 'critical' pool(20 slots), 'etl' pool(40 slots), 'ml' pool(20 slots), 'reporting' pool(20 slots)로 나눴습니다. 결제 데이터 처리 같은 중요 DAG는 critical pool에 할당하고 priority_weight=10으로 설정해서, 항상 먼저 실행되도록 했죠. 덜 중요한 배치 작업은 reporting pool에 할당해서 리소스 경합을 줄였습니다.\n\n" +
+      "여섯 번째 단계는 DB Connection Pool 튜닝이었습니다. PostgreSQL AirflowDB의 max_connections를 40에서 100으로 증가시켰어요. Worker가 증가하면 DB 연결도 비례해서 증가하거든요. connection pool timeout과 retry 설정도 최적화해서, DB 연결 실패로 인한 Task 실패를 방지했습니다.\n\n" +
+      "모니터링 개선도 중요했습니다. Prometheus + Grafana로 실시간 대시보드를 구축했어요. Worker별 CPU/Memory 사용량, Task 처리량, Queue depth, Task 할당 지연시간을 모니터링했습니다. Task 할당 지연이 3초를 초과하면 Slack 알림을 보내도록 설정했죠. 또한 시간대별 부하 패턴을 분석해서, 피크 타임(오전 8-10시)에는 Worker를 scale-out하고 야간에는 scale-in하는 auto-scaling 전략을 수립했습니다.\n\n" +
+      "결과적으로 Task 할당 지연을 8초에서 1초 이내로 단축했고, 분당 처리 가능한 Task 수를 22개에서 110개로 5배 증가시켰습니다. DAG 성공률은 92%에서 99.5%로 향상되었고, SLA 달성률은 88%에서 99%로 개선되었어요. 가장 중요한 성과는, 피크 타임에도 안정적으로 모든 DAG가 정시에 실행되어, 비즈니스 팀이 신뢰할 수 있는 데이터 파이프라인이 구축되었다는 것입니다.\n\n" +
+      "핵심 교훈은, 단순히 서버 증설만으로는 부족하다는 것이었습니다. Worker 수, worker_concurrency, dag_concurrency, Redis pool, DB connections가 모두 조화롭게 튜닝되어야 진정한 성능 향상이 가능했습니다. 병목 지점을 정확히 진단하고, 전체 시스템의 균형을 맞추는 것이 핵심이었죠.",
   },
 ];

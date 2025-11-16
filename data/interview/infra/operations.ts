@@ -9,15 +9,10 @@ export const infraOperationsQuestions: InterviewQuestion[] = [
     id: 32,
     category1: "Infrastructure",
     category2: "Redis",
-    question: "What is your experience with Redis clustering and optimization?",
+    question: "Redis 클러스터링과 최적화 경험은 어떤가요?",
     answer:
-      "Redis 클러스터링에서 가장 어려운 것은 데이터 분산 전략과 failover 시 데이터 일관성 보장입니다.\n\n" +
-      "Redis Sentinel을 3노드로 구성하여 고가용성을 구현했습니다. " +
-      "Master-Slave 복제에서 quorum을 2로 설정하여 split-brain을 방지하고, " +
-      "automatic failover로 RTO 30초 이내를 달성했습니다. " +
-      "Sentinel 자체도 3개 인스턴스로 분산하여 single point of failure를 제거했습니다.\n\n" +
-      "Cache Hit/Miss Rate 최적화가 성능의 핵심이었습니다. " +
-      "초기 60% hit rate에서 시작하여 LRU 정책 튜닝과 TTL 최적화로 95%까지 향상시켰습니다.\n\n" +
+      "Redis 운영에서 가장 어려웠던 것은 '기술 지표'를 넘어 '비즈니스 지표'를 수집하는 거였어요. Redis Exporter나 OTEL로는 서버 수준 메트릭만 나오니까, 정작 필요한 건 API별 캐시 히트율인데 말이죠.\n\n" +
+      "문제 상황: ₩500B 이커머스에서 Redis를 세션 저장과 API 캐싱으로 사용했어요. Backend API 팀에서 DB 성능 개선을 위해 캐싱 전략을 추진하면서 '사일로별, 모듈별 Redis 캐싱 히트율을 보여달라'고 요청했어요. 예를 들어 '상품 목록 API의 캐싱 효과가 얼마나 되나?' 같은 비즈니스 질문에 답해야 했죠.\n\n" +
       "가장 고민했던 것은 비즈니스 컨텍스트가 포함된 캐싱 지표 수집이었습니다. " +
       "Backend API 팀에서 DB 쿼리 최적화와 캐싱 전략으로 성능 개선을 추진하면서 " +
       "사일로별, 모듈별 Redis 캐싱 히트율 지표를 요청했습니다. " +
@@ -58,16 +53,13 @@ export const infraOperationsQuestions: InterviewQuestion[] = [
       "99.9% 가용성을 달성했으며, 캐시 효율성으로 DB 부하를 80% 감소시켰습니다.",
   },
   {
-    id: 33,
+    id: 13,
     category1: "Infrastructure",
     category2: "Cost Optimization",
-    question: "How do you approach cloud cost optimization?",
+    question: "클라우드 비용 최적화를 어떻게 접근하나요?",
     answer:
-      "클라우드 비용 최적화에서 가장 중요한 것은 리소스 사용 패턴 분석과 right-sizing입니다.\n\n" +
-      "Cost Explorer와 AWS Trusted Advisor를 활용한 현황 분석부터 시작했습니다. " +
-      "서비스별, 팀별, 환경별로 비용을 태깅하여 책임 소재를 명확히 하고, " +
-      "unutilized EC2, oversized RDS, idle Load Balancer를 식별했습니다. " +
-      "월 5,000달러 중 30%가 불필요한 리소스였습니다.\n\n" +
+      "클라우드 비용 최적화에서 가장 큰 충격은 '이건 누가 써요?' 라는 질문에 대답하지 못한다는 것이었어요. 비용이 갑자기 5배 뛰었는데 어느 팀의 어떤 서비스인지 모르니 비난받기도 하고, 추적하기도 힘들었죠.\n\n" +
+      "문제 상황: 월 AWS 비용이 처음엔 1,000달러였는데, 6개월 후 5,000달러가 됐어요. 다들 '저희가 쓴 게 아니에요'라고만 하더라고요. Cost Explorer를 열어보니 EC2, S3, RDS가 분산되어 있는데 누가 어떤 목적으로 만들었는지 정보가 없었죠. 태그도 없고, 명명 규칙도 제각각이고.\n\n" +
       "Reserved Instance와 Savings Plans 전략을 수립했습니다. " +
       "과거 12개월 사용 패턴을 분석하여 안정적인 workload는 RI로 전환하고, " +
       "변동성이 큰 워크로드는 Compute Savings Plans을 적용했습니다. " +
@@ -100,16 +92,13 @@ export const infraOperationsQuestions: InterviewQuestion[] = [
       "비용 예측 정확도를 95%로 향상시켰습니다.",
   },
   {
-    id: 36,
+    id: 64,
     category1: "Infrastructure",
     category2: "Security",
-    question: "What is your approach to infrastructure security?",
+    question: "인프라 보안에 대한 접근 방식은 무엇인가요?",
     answer:
-      "인프라 보안에서 가장 중요한 것은 Defense in Depth 전략과 Zero Trust 원칙입니다.\n\n" +
-      "네트워크 보안을 계층화하여 구현했습니다. " +
-      "WAF로 L7 공격을 차단하고, Security Group으로 포트 단위 제어, " +
-      "NACL로 서브넷 레벨 필터링을 적용했습니다. " +
-      "VPC Flow Logs로 네트워크 트래픽을 모니터링하여 이상 패턴을 탐지했습니다.\n\n" +
+      "인프라 보안에서 가장 무서웠던 순간은 GitHub Private Repo에서 '.env 파일에 DB 패스워드가 하드코딩되어 있다'는 보고를 받았을 때였어요. 다행히 Private Repo였지만, '만약 누군가 토큰을 훔쳤다면?' 하는 상상만 해도 등가류가 숰었죠.\n\n" +
+      "문제 상황: 10년된 레거시 코드베이스에서 DB 패스워드, API 키, 제3자 서비스 토큰이 소스코드에 그대로 녹아있었어요. application.properties에 spring.datasource.password=prod1234! 이런 식으로요. '어차피 Private Repo인데 무슨 문제예요?'라는 반응도 있었죠.\n\n" +
       "Identity and Access Management를 최소 권한 원칙으로 설계했습니다. " +
       "각 서비스별로 필요한 최소 권한만 부여하고, " +
       "IAM Policy Simulator로 권한을 검증했습니다. " +
@@ -186,10 +175,10 @@ export const infraOperationsQuestions: InterviewQuestion[] = [
       "고객 영향을 최소화하는 seamless failover를 구현했습니다.",
   },
   {
-    id: 63,
+    id: 76,
     category1: "Infrastructure",
     category2: "Cost Optimization",
-    question: "What strategies do you use for infrastructure cost monitoring?",
+    question: "인프라 비용 모니터링에 어떤 전략을 사용하나요?",
     answer:
       "인프라 비용 모니터링에서 가장 중요한 것은 실시간 가시성과 예측적 알림입니다.\n\n" +
       "태깅 전략을 체계적으로 수립했습니다. " +
@@ -296,5 +285,33 @@ export const infraOperationsQuestions: InterviewQuestion[] = [
       "마지막으로 모니터링 개선이었습니다. APISIX의 Prometheus 플러그인으로 경로별, 메서드별, 상태코드별 메트릭을 수집하고 Grafana로 시각화했어요. P50, P90, P99 latency를 실시간으로 보면서 bottleneck을 찾고 개선했습니다. 예를 들어 특정 API의 P99가 1초를 넘으면 해당 backend 팀에 알림이 가도록 했죠.\n\n" +
       "결과적으로 평균 API 지연시간이 100ms에서 60ms로 40% 감소했고, P99 latency는 500ms에서 200ms로 대폭 개선되었습니다. 더 중요한 것은, 동적 설정 변경으로 배포 없이 라우팅을 수정할 수 있게 되어 운영 민첩성이 크게 향상되었다는 점입니다.\n\n" +
       "핵심 교훈은, API Gateway는 단순한 프록시가 아니라 성능과 안정성의 핵심 계층이라는 것입니다. 적절한 기술 선택과 세심한 튜닝으로 큰 개선을 만들 수 있습니다.",
+  },
+  {
+    id: 1001,
+    category1: "Infrastructure/Operations",
+    category2: "CI/CD",
+    question:
+      "Jenkins 기반 ECS 배포 파이프라인으로 배포 시간을 90% 단축했다고 하셨는데, CloudFormation 대신 Jenkins를 선택한 이유가 무엇인가요?",
+    answer:
+      "'AWS Native로 완전 자동화하자'는 목표로 CodePipeline을 주로 활용해  모놀리식 CloudFormation 스택으로 관리했죠.\n\n" +
+      "문제는 CodeBuild에서 생성한 **동적 이미지 태그**를 CloudFormation 템플릿에 주입하기엔 제한적이었어요" +
+      "Parameter Store, Lambda 를 고려했지만, CloudFormation은 Parameter 값 변경을 Change Set으로 인식하지 않는등 관리형 서비스 장점을 가져갈 수 가 없었어요.\n\n" +
+      "Drift 문제가 있었는데. 장애 대응 때 팀원이 콘솔에서 보안 그룹을 급하게 수정하면, CloudFormation 템플릿과 실제 리소스 상태가 달라지면서. 그 상태에서 ECS Task Definition만 업데이트하려 해도 'Drift detected' 에러로 배포가 완전히 막혔습니다.\n\n" +
+      "작은 프로젝트라 인프라 수정은 콘솔에서 빠르게 하는 게 현실적인데, CloudFormation은 그런 유연성을 허용하지 않았어요. 매번 템플릿을 동기화하는 것도 부담이었고요.\n\n" +
+      "결국 '모든 걸 IaC로 관리하겠다'는 이상주의를 버렸습니다. CloudFormation으로 프로비저닝된 인프라는 VPC 단위로 격리하고, **신규 앱 배포만 Jenkins로 분리**했어요.\n\n" +
+      "Jenkins 파이프라인에서 AWS CLI로 직접 제어하니 훨씬 간단해졌죠. Task Definition 만 신규로 배포한후  스크립트도 대폭 줄었습니다 또 줄인 포인트가 있는데.\n\n" +
+      "첫 번째는 이미지 빌드 시간 단축이었습니다. 빌드 캐시, Multi-stage build를 사용했고.\n\n" +
+      "두번째는 웹훅 트리거 활용입니다. 배포 자체는 민감하지만 병목은 주로 이미지빌드에 있습니다. 푸시 시점에 웹훅으로 빌드만 먼저 시작하고, 수동 승인으로 배포를 진행하도록 했어요.\n\n" +
+      "세 번째는 Health Check 튜닝이었습니다. 신규 테스크로 트래픽 이전전에 시간이 오래 소요되는 걸 확인했어요, Health Check 간격, Threshold를  낮추고 안정화 대기 시간을 줄였습니다.\n\n" +
+      "네 번째는 Mail 통합이었습니다. 배포 실패 시 어디서 멈췄는지 찾기 어려웠는데, AWS SNS로 유관자에게 알림을 보내 MTTI 자체를 줄였습니다.\n\n" +
+      "**결과와 트레이드오프**\n\n" +
+      "배포 시간이 2시간에서 12분으로 90% 단축되었고, Drift로 인한 배포 차단이 zero가 되었습니다. 롤백 시간도 30초로 줄었고요.\n\n" +
+      "물론 트레이드오프는 있었어요. CloudFormation의 선언적 관리를 포기했고, 인프라와 애플리케이션 배포가 분리되었죠. 하지만 작은 팀에서 빠른 배포가 더 중요했기 때문에 현실적인 선택이었다고 생각합니다.\n\n" +
+      "**CloudFormation/CodePipeline에 대한 회고**\n\n" +
+      "CodeBuild 자체는 좋았어요. 빌드 환경이 격리되고, 테스트도 가능하고, 이미지 생성기 자체로 로그도 깔끔했죠. 하지만 CodePipeline과 CloudFormation 조합은 개발자 경험이 좋지 않았습니다. 특히 동적 값 주입과 Drift 처리가 너무 경직되어 있었어요.\n\n" +
+      "Terraform이었으면 좀 더 유연했을 것 같긴 해요. `local-exec` provisioner로 동적 처리도 가능하고, State 관리도 더 명확하니까요. 하지만 당시엔 팀 역량과 러닝 커브를 고려해서 익숙한 Jenkins를 선택했습니다.\n\n" +
+      "**향후 계획**\n\n" +
+      "사실 IaC 쪽은 더 많은 경험을 해보고 싶어요. Terraform으로 전체 인프라를 다시 설계해보거나, GitOps 방식의 ArgoCD 같은 것도 도전해보고 싶습니다. 특히 멀티 클러스터 환경에서 IaC를 어떻게 관리하는지 궁금하거든요.\n\n" +
+      "다만 지금은 '작동하는 시스템'이 우선이었고, Jenkins가 그 목표를 달성했습니다. 완벽한 IaC보다 팀이 유지보수 가능한 복잡도가 더 중요했어요.",
   },
 ];

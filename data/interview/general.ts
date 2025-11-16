@@ -8,10 +8,10 @@ export const generalQuestions: InterviewQuestion[] = [
     category2: "Self Introduction",
     question: "간단히 자기소개를 해주세요.",
     answer:
-      "6년간 다양한 규모의 조직에서 인프라부터 애플리케이션까지 전 영역을 다루며, 확장 가능한 분산 시스템을 설계하고 운영해왔습니다. 스타트업 풀스택 개발자로 시작해 현재는 연매출 5,000억 원 규모의 엔터프라이즈 이커머스 플랫폼에서 플랫폼 리드 엔지니어로 일하고 있습니다.\n\n" +
-      "주요 성과로는 오류 감지 시간 99% 단축, 배포 주기 90% 단축, 인프라 비용 50% 절감을 이루었습니다. 일일 10만 명이 사용하는 서비스와 월 20TB 규모의 데이터레이크, 3TB의 분산 추적 데이터를 안정적으로 운영하며, 고가용성 환경에서 시스템의 효율성과 신뢰성을 높였습니다. LG전자, SK텔레콤 등 다양한 프로젝트에 참여하며 기획자, 디자이너, 개발자 간의 협업 구조를 깊이 이해했고, 이를 통해 단순히 기술을 구현하는 것을 넘어 비즈니스 목표를 실현하는 시스템을 설계하는 역량을 쌓았습니다.\n\n" +
-      "주요 기술 스택은 Kubernetes와 AWS를 기반으로 한 클라우드 네이티브 아키텍처입니다. 백엔드에서는 Django, Spring Boot, Gin으로 서비스와 API를 개발하고, Kafka와 Airflow를 활용해 안정적인 메시징 및 데이터 파이프라인을 구축했습니다. 프론트엔드는 React, Vue.js, Flutter로 개발하며 풀스택 경험을 쌓았습니다. 최근에는 OpenTelemetry 기반의 관측성 플랫폼을 구축해 오류 감지 시간을 대폭 단축했고, 여러 오픈소스 프로젝트에도 기여하고 있습니다. 보유 자격증: CKA, LFCS, AWS SysOps, DevOps Professional, Advanced Networking Specialty.\n\n" +
-      "현재는 대웅그룹 TheShop 이커머스 플랫폼의 SRE로 근무 중입니다. 일일 2천만~5천만 건의 메시지를 처리하는 Kafka 클러스터와 200개 이상의 Airflow DAG를 운영하며, 레거시 시스템의 마이크로서비스 전환을 주도했습니다. 이 과정에서 배포 시간을 90% 줄이고 인프라 비용을 절반으로 절감했습니다. 앞으로는 AI 기반 개발 도구를 적극 도입해 개발 생산성을 한층 더 끌어올리고, 함께 성장하는 기술 문화를 만들어가고자 합니다.",
+      "**6년간** 다양한 규모의 조직과 인프라부터 애플리케이션까지 전 영역을 다루며, 확장 가능한 분산 시스템을 설계하고 운영해왔습니다.  스타트업 풀스택 개발자로 시작해 현재는 연매출 5,000억원 규모의 이커머스 서비스의 플랫폼 지원 및 SRE 업무를 담당하고 있습니다.\n\n" +
+      "**주요 작업**으로는 모니터링, 배포, 데이터, 클라우드, DevEx 등 플랫폼 전반의 인프라 관련 업무들을 담당하고 있습니다. 일일 10만 명이 사용하는 서비스와 월 20TB 규모의 데이터레이크, 3TB의 분산 추적 데이터를 안정적으로 운영하며, 고가용성 환경에서 시스템의 효율성과 신뢰성을 높였습니다. LG전자, SK텔레콤 등 다양한 프로젝트에 참여하며 기획자, 디자이너, 개발자 간의 협업 구조를 깊이 이해했고, 이를 통해 단순히 기술을 구현하는 것을 넘어 비즈니스 목표를 실현하는 시스템을 설계하는 역량을 쌓았습니다.\n\n" +
+      "**주요 기술 스택**은 인프라 쪽에서 Linux, Kubernetes, AWS 클라우드 네이티브 아키텍처에 관심이 많습니다. 컨테이너 오케스트레이션과 클라우드 인프라에 대한 깊은 관심으로 CKA(Certified Kubernetes Administrator)와 LFCS(Linux Foundation Certified SysOps)를 취득했고, AWS 환경 최적화를 위해 SysOps Administrator, DevOps Professional, Advanced Networking Specialty까지 확보했습니다. 백엔드는 FastAPI, Spring Boot, Gin으로 서비스를 개발하고, Kafka와 Airflow를 활용해 안정적인 메시징 및 데이터 파이프라인을 구축했습니다. 프론트엔드는 React, Vue.js, Flutter로 개발하며 풀스택 경험을 쌓았습니다. GCP, AWS, OpenTelemetry, Grafana 등 여러 환경에서의 관측성 플랫폼 구축에 관심이 많고, 여러 오픈소스 프로젝트에도 기여하고 있습니다.\n\n" +
+      "**현재는 TheShop 이커머스 플랫폼**의 지원 및 SRE로 근무 중입니다. 일일 2천만~5천만 건의 메시지를 처리하는 Kafka 클러스터와 200개 이상의 Airflow DAG를 운영하며, 레거시 시스템의 마이크로서비스 전환을 주도했습니다. 이 과정에서 배포 시간을 90% 줄이고 인프라 비용을 절반으로 절감했습니다. 앞으로는 AI 기반 개발 도구를 적극 도입해 개발 생산성을 한층 더 끌어올리고, 함께 성장하는 기술 문화를 만들어가고자 합니다.",
   },
   {
     id: 3,
@@ -19,15 +19,22 @@ export const generalQuestions: InterviewQuestion[] = [
     category2: "Self Introduction",
     question: "Please introduce yourself briefly.",
     answer:
-      "Hello, I'm Seongpil Choi, a 6-year Platform Lead Engineer specializing in infrastructure and DevOps. I'm currently responsible for the infrastructure of an e-commerce platform with ₩500B annual revenue, and I focus on **proving Developer Experience (DevEx) with data**.\n\nMy biggest achievement is **reducing MTTI from 18 hours to 10 minutes (99% reduction)** by introducing OpenTelemetry. I also built a data platform that links 20TB of monthly observability data with business metrics, visualizing key indicators like retention and conversion rates.\n\nI hold certifications in Kubernetes (CKA), AWS (DevOps Pro), and Linux (LFCS), and operate Kafka clusters processing 20-50 million messages daily and over 200 Airflow DAGs.",
+      "안녕하세요, 최성필입니다. 인프라와 DevOps를 전문으로 하는 6년차 플랫폼 리드 엔지니어입니다. 현재 연매출 5,000억원 규모의 이커머스 플랫폼 인프라를 담당하고 있으며, **데이터로 개발자 경험(DevEx)을 입증하는 것**에 집중하고 있습니다.\n\n가장 큰 성과는 OpenTelemetry 도입으로 **MTTI를 18시간에서 10분으로 단축(99% 감소)**시킨 것입니다. 또한 월 20TB의 관측성 데이터와 비즈니스 메트릭을 연결하는 데이터 플랫폼을 구축하여 재방문율, 전환율 같은 핵심 지표들을 시각화했습니다.\n\nKubernetes(CKA), AWS(DevOps Pro), Linux(LFCS) 자격증을 보유하고 있으며, 일일 2천만~5천만 건의 메시지를 처리하는 Kafka 클러스터와 200개 이상의 Airflow DAG를 운영하고 있습니다.",
   },
   {
     id: 4,
     category1: "General",
     category2: "Career Change",
-    question: "Why did you decide to change jobs?",
+    question: "이직을 결심하게 된 계기는 무엇인가요?",
     answer:
-      "While I've achieved significant results at my current company, I want to expand my capabilities in larger-scale systems and global environments. Particularly, I'm interested in contributing to [company's specific technology/project] and experiencing higher-level technical challenges.",
+      "현재 회사에서 의미 있는 성과를 냈지만, 더 큰 규모의 시스템과 더 강한 팀 문화를 가진 환경에서 제 역량을 확장하고 싶습니다.\n\n" +
+      "가장 큰 이유는 기술적 도전과 성장입니다. 혼자 또는 소수 팀으로 일하면서 많이 배웠지만, 이제는 한계에 부딪혔어요. 더 큰 규모의 시스템을 다루는 전문가들과 협업하며 그들의 접근 방식을 배우고 싶다는 갈증이 생겼습니다.\n\n" +
+      "현재는 On-Premise Docker, AWS ECS, APISIX Gateway를 운영하고 있습니다. EKS 마이그레이션을 검토할 때 Istio Ambient Mode와 Cilium 같은 Service Mesh 기술들을 POC로 평가했지만, 결국 팀 역량, 기술 성숙도, 비즈니스 우선순위를 고려해 ECS를 선택했어요. 당시 회사에는 그게 맞는 결정이었지만, 저는 이런 기술들을 실제 프로덕션 환경에서 대규모로 운영해보고 싶다는 걸 깨달았습니다.\n\n" +
+      "제 자격증들—CKA, LFCS, 그리고 세 개의 AWS 자격증—은 제가 기본기를 이해하고 있다는 걸 증명합니다. 하지만 이론적 지식은 여기까지예요. 저는 수백만 사용자를 다루는 실제 프로덕션 시스템에서 mTLS, Zero Trust 네트워킹, 멀티 클러스터 관리를 직접 구현하고 운영하는 경험을 하고 싶습니다.\n\n" +
+      "OpenTelemetry 컨트리뷰터로서, 훨씬 더 큰 규모와 더 복잡한 분산 시스템을 위한 관측성 플랫폼을 구축하고 싶어요. 제 현재 월 20TB 데이터 레이크와 3TB 분산 추적도 상당하지만, 다음 단계의 규모에서 오는 도전을 해결하고 싶습니다.\n\n" +
+      "둘째는 영향력과 비즈니스 규모입니다. 현재는 인프라를 혼자 담당하고 있어요. 만족스럽긴 하지만, 제 영향력이 한 회사에 국한된다는 한계를 느낍니다. 수백만 명이 매일 의존하는 금융 서비스나 글로벌 플랫폼에서 일하고 싶어요. 제 일이 그 규모의 비즈니스에 직접 영향을 미치는 곳에서요.\n\n" +
+      "셋째는 팀과 문화입니다. 저는 여기서 유일한 인프라 전문가예요. 혼자 일하면서 엄청나게 많이 배웠지만, 함께 기술을 토론하고, 코드 리뷰를 주고받으며, 서로의 실패와 성공에서 배우는 팀 문화를 갈망합니다. 더 높은 수준의 전문가들과 함께 일하며 제 전문성을 깊이와 넓이 모두에서 확장하고 싶어요.\n\n" +
+      "스타트업 풀스택에서 엔터프라이즈 플랫폼 엔지니어링까지의 여정이 저를 잘 준비시켰습니다. 이제 다음 도전을 할 준비가 됐어요. 대규모 클라우드 네이티브 인프라를 운영하는 팀에 합류해서, 제 전문성을 기여하면서 동시에 기하급수적으로 성장하고 싶습니다.",
   },
   {
     id: 4.5,
@@ -35,23 +42,26 @@ export const generalQuestions: InterviewQuestion[] = [
     category2: "Career Change",
     question: "입사 동기가 무엇인가요? (이직을 결심하게 된 계기)",
     answer:
-      "현재 회사에서 의미 있는 성과를 냈지만, 더 큰 규모의 시스템과 글로벌 환경에서 제 역량을 확장하고 싶습니다.\n\n" +
-      "**첫째, 기술적 도전과 성장**\n\n" +
-      "제가 혼자 또는 소수 팀으로 모든 것을 주도하다 보니, 더 큰 규모의 시스템을 다루는 전문가들과 협업하며 배우고 싶다는 갈증이 생겼습니다." +
-      "특히 제가 관심 있는 영역은 두 가지입니다. 첫째는 Kubernetes와 Service Mesh 기반의 대규모 클라우드 네이티브 아키텍처입니다. 현재 On-Premise docker, AWS, APISIX Gateway로 운영하고 있지만, Istio/Cilium 같은 Service Mesh를 프로덕션에서 운영하며 mTLS, Zero Trust, 멀티 클러스터 관리를 경험하고 싶습니다. " +
-      "둘째는 금융권이나 대규모 서비스의 Observability입니다. 저는 OpenTelemetry 오픈소스에 기여하고 있는데, 더 큰 규모의 트래픽과 복잡한 분산 시스템에서 Observability 환경을 구성하고 싶습니다.\n\n" +
-      "**둘째, 영향력과 비즈니스 임팩트**\n\n" +
-      "현재 회사에서 인프라를 거의 혼자 책임지고 있습니다. 성취감도 크지만, 동시에 제 영향력이 한 회사에 국한된다는 한계를 느낍니다. 더 많은 사용자에게 영향을 미치는 서비스, 더 높은 가용성과 성능이 요구되는 환경에서 일하고 싶습니다. 예를 들어, 일일 수백만~수천만 사용자가 의존하는 금융 서비스나 글로벌 플랫폼에서 제 기술로 비즈니스 임팩트를 만들고 싶습니다.\n\n" +
-      "**셋째, 팀과 문화**\n\n" +
-      "현재 회사는 인프라 전문가가 저 혼자입니다. 혼자 많은 것을 배우고 성장했지만, 함께 기술을 토론하고, 코드 리뷰를 주고받으며, 서로의 실패와 성공에서 배우는 팀 문화를 접하고싶습니다. 더 높은 수준의 전문가들과 함께 일하며 제 전문성을 더 깊고 넓게 확장하고 싶습니다.",
+      "현재 회사에서 의미 있는 성과를 냈지만, 더 큰 규모의 시스템과 더 강한 팀 문화를 가진 환경에서 제 역량을 확장하고 싶습니다.\n\n" +
+      "가장 큰 이유는 기술적 도전과 성장입니다. 혼자 또는 소수 팀으로 일하면서 많이 배웠지만, 이제는 한계에 부딪혔어요. 더 큰 규모의 시스템을 다루는 전문가들과 협업하며 그들의 접근 방식을 배우고 싶다는 갈증이 생겼습니다.\n\n" +
+      "현재는 On-Premise Docker, AWS ECS, APISIX Gateway를 운영하고 있습니다. EKS 마이그레이션을 검토할 때 Istio Ambient Mode와 Cilium 같은 Service Mesh 기술들을 POC로 평가했지만, 결국 팀 역량, 기술 성숙도, 비즈니스 우선순위를 고려해 ECS를 선택했어요. 당시 회사에는 그게 맞는 결정이었지만, 저는 이런 기술들을 실제 프로덕션 환경에서 대규모로 운영해보고 싶다는 걸 깨달았습니다.\n\n" +
+      "제 자격증들—CKA, LFCS, 그리고 세 개의 AWS 자격증—은 제가 기본기를 이해하고 있다는 걸 증명합니다. 하지만 이론적 지식은 여기까지예요. 저는 수백만 사용자를 다루는 실제 프로덕션 시스템에서 mTLS, Zero Trust 네트워킹, 멀티 클러스터 관리를 직접 구현하고 운영하는 경험을 하고 싶습니다.\n\n" +
+      "OpenTelemetry 컨트리뷰터로서, 훨씬 더 큰 규모와 더 복잡한 분산 시스템을 위한 관측성 플랫폼을 구축하고 싶어요. 제 현재 월 20TB 데이터 레이크와 3TB 분산 추적도 상당하지만, 다음 단계의 규모에서 오는 도전을 해결하고 싶습니다.\n\n" +
+      "둘째는 영향력과 비즈니스 규모입니다. 현재는 인프라를 혼자 담당하고 있어요. 만족스럽긴 하지만, 제 영향력이 한 회사에 국한된다는 한계를 느낍니다. 수백만 명이 매일 의존하는 금융 서비스나 글로벌 플랫폼에서 일하고 싶어요. 제 일이 그 규모의 비즈니스에 직접 영향을 미치는 곳에서요.\n\n" +
+      "셋째는 팀과 문화입니다. 저는 여기서 유일한 인프라 전문가예요. 혼자 일하면서 엄청나게 많이 배웠지만, 함께 기술을 토론하고, 코드 리뷰를 주고받으며, 서로의 실패와 성공에서 배우는 팀 문화를 갈망합니다. 더 높은 수준의 전문가들과 함께 일하며 제 전문성을 깊이와 넓이 모두에서 확장하고 싶어요.\n\n" +
+      "스타트업 풀스택에서 엔터프라이즈 플랫폼 엔지니어링까지의 여정이 저를 잘 준비시켰습니다. 이제 다음 도전을 할 준비가 됐어요. 대규모 클라우드 네이티브 인프라를 운영하는 팀에 합류해서, 제 전문성을 기여하면서 동시에 기하급수적으로 성장하고 싶습니다.",
   },
   {
     id: 5,
     category1: "General",
     category2: "Company Interest",
-    question: "Why did you apply to our company?",
+    question: "우리 회사에 지원한 이유는 무엇인가요?",
     answer:
-      "1. **Technical Challenge**: Interest in [company's specific tech stack/project]\n2. **Scale**: Opportunity to work in [large-scale traffic/user count] environments\n3. **Vision**: Alignment with [company's mission/vision]\n4. **Growth**: Personal growth opportunities through [company's culture/programs]",
+      "지원 전에 회사를 철저히 조사했고, 세 가지가 저를 끌어당겼습니다.\n\n" +
+      "첫째, 기술 스택과 규모입니다. 귀사의 기술 블로그와 엔지니어링 문화를 보니 [Kubernetes/Istio/멀티 클러스터 같은 특정 기술]을 제가 경험하고 싶은 규모로 운영하고 계시더라고요. OpenTelemetry, APISIX Gateway, 클라우드 네이티브를 다룬 제 경험이 잘 맞지만, 귀사 시스템이 제공하는 다음 단계의 복잡성을 해결하고 싶습니다.\n\n" +
+      "둘째, 엔지니어링 문화입니다. [주간 기술 공유/오픈소스 기여/무책임 회고 같은 특정 관행]에 대해 읽어보니 지속적인 학습과 지식 공유를 중요하게 여기신다는 게 분명했어요. 그게 바로 제가 가장 잘 성장하는 환경입니다. 혼자 또는 소수 팀으로 일한 후, 이제 전문가들과 협업하며 집단 경험에서 배우고 싶어요.\n\n" +
+      "셋째, 비즈니스 영향력입니다. [회사의 제품/서비스]는 [수백만 사용자/중요한 금융 거래 등]에 영향을 미칩니다. 그 규모에서 요구되는 안정성과 성능이 흥미로운 기술적 도전을 만들어냅니다. 제 인프라 작업이 그 수준의 비즈니스 영향을 직접 가능하게 만들고 싶어요.\n\n" +
+      "솔직히 현재 역할에서 편하게 있을 수도 있었습니다. 하지만 더 성장하려면 더 큰 도전과 더 강한 팀이 필요한 시점이에요. 귀사는 둘 다 제공하시죠.",
   },
   // {
   //   id: 6,
@@ -73,9 +83,9 @@ export const generalQuestions: InterviewQuestion[] = [
     id: 8,
     category1: "General",
     category2: "Start Date",
-    question: "When can you start?",
+    question: "언제부터 입사 가능한가요?",
     answer:
-      "I prioritize **smooth handover with my current company**.\n- **Minimum Period**: About **1 month** after offer\n- **Negotiable**: Can adjust based on project situation\n- **Goal**: Start after completing stable handover and documentation of current systems",
+      "**현재 회사와의 원활한 인수인계**를 우선으로 합니다.\n- **최소 기간**: 제안서 받은 후 약 **1개월**\n- **협의 가능**: 프로젝트 상황에 따라 조정 가능\n- **목표**: 현재 시스템의 안정적인 인수인계와 문서화 완료 후 입사",
   },
 
   // Problem Solving
@@ -83,26 +93,36 @@ export const generalQuestions: InterviewQuestion[] = [
     id: 24,
     category1: "General",
     category2: "Problem Solving",
-    question:
-      "What was your most difficult technical problem and how did you solve it?",
+    question: "가장 어려웠던 기술적 문제는 무엇이고 어떻게 해결했나요?",
     answer:
-      "**(STAR Method)**\n\n**(Situation)** When joining idstrust, faced dual challenges:\n1. Legacy system (Oracle/Tomcat) modernization to Next.js/Spring\n2. Observability impossible for 100+ containers, failure detection took **18 hours**\n\n**(Task)** \n1. Design core architecture for new system and manage data migration\n2. Achieve complete observability and reduce failure detection time\n\n**(Action)**\n1. **Legacy Migration Lead**: Designed core modules, scaffold, and application architecture for Next.js/Spring\n2. **Airflow 5-server Cluster**: Built data migration pipeline handling statistical data, Data Lake, and near-realtime CDC\n3. **OpenTelemetry adoption**: Developed custom Exporter in Go, built Collectors on 12 servers\n4. **Data-driven persuasion**: Quantified costs and ROI to convince leadership\n\n**(Result)**\n- Successfully led legacy migration architecture design\n- Airflow cluster automated 200+ DAGs including data migration, CDC, and batch jobs\n- MTTI **reduced 99.5%** (18 hours → 10 minutes)\n- Data Lake enabling 10-year data retention (142x expansion)\n- OpenTelemetry open-source contributions",
+      "**(STAR 기법)\n\n**(상황)** idstrust 입사 당시 두 가지 도전 과제를 마주했습니다:\n1. 레거시 시스템(Oracle/Tomcat)을 Next.js/Spring으로 현대화\n2. 100개 이상의 컨테이너에 대한 관측성이 불가능해 장애 감지에 **18시간** 소요\n\n**(과제)** \n1. 새 시스템의 핵심 아키텍처 설계 및 데이터 마이그레이션 관리\n2. 완전한 관측성 달성 및 장애 감지 시간 단축\n\n**(실행)**\n1. **레거시 마이그레이션 리드**: Next.js/Spring 핵심 모듈, 스캐폴드, 애플리케이션 아키텍처 설계\n2. **Airflow 5서버 클러스터**: 통계 데이터, Data Lake, 준실시간 CDC 처리하는 데이터 마이그레이션 파이프라인 구축\n3. **OpenTelemetry 도입**: Go로 커스텀 Exporter 개발, 12대 서버에 Collector 구축\n4. **데이터 기반 설득**: 비용과 ROI를 정량화하여 리더십 설득\n\n**(결과)**\n- 레거시 마이그레이션 아키텍처 설계 성공적으로 주도\n- Airflow 클러스터로 데이터 마이그레이션, CDC, 배치 작업 포함 200개 이상 DAG 자동화\n- MTTI **99.5% 단축** (18시간 → 10분)\n- Data Lake로 10년치 데이터 보관 가능 (142배 확장)\n- OpenTelemetry 오픈소스 기여",
   },
   {
     id: 25,
     category1: "General",
     category2: "Data-Driven",
-    question: "Do you have experience with data-driven decision making?",
+    question: "데이터 기반 의사결정 경험이 있나요?",
     answer:
-      "Yes, I use data in all major decisions.\n\n**Case 1: Infrastructure Cost Optimization**\n- Analyzed S3 usage patterns with CloudWatch + EMF\n- Established data-driven Lifecycle policies\n- Result: 50% monthly cost reduction ($5K → $2.5K)\n\n**Case 2: OpenTelemetry Adoption**\n- Quantified 18-hour MTTI in actual engineering costs\n- Proved ROI with data\n- Result: Successfully convinced leadership\n\n**Case 3: Data Lake Construction**\n- Surveyed planning team's business metrics requirements\n- Measured and optimized Athena query performance with partitioning\n- Result: Visualized key metrics like retention and conversion rates",
+      "당연합니다. 저는 직감이나 트렌드로 인프라 결정을 내리지 않습니다. 모든 주요 결정은 데이터로 뒷받침됩니다.\n\n" +
+      "가장 영향력 있었던 사례는 리더십을 설득해 OpenTelemetry를 도입한 것입니다. 문제는 명확했습니다—프로덕션 이슈 감지와 해결에 18시간이 걸렸습니다—하지만 리더십은 구현 리스크와 비용을 우려했습니다.\n\n" +
+      "저는 단순히 '관측성 개선이 필요합니다'라고 말하지 않았습니다. 실제 비용을 계산했습니다: 18시간 × 엔지니어 평균 시급 × 월별 장애 건수. 그런 다음 MTTI를 30분 이하로 줄일 경우의 ROI를 추정했습니다. 수치는 설득력이 있었습니다—3개월이면 본전이고 그 이후로는 상당한 엔지니어링 시간을 절약할 수 있었습니다.\n\n" +
+      "또한 POC 데이터로 리스크 우려도 해소했습니다: 성능 오버헤드는 P99 기준 5ms 미만으로 허용 범위 내였습니다. 이런 데이터 기반 접근으로 승인을 받았고, 99% MTTI 감소(18시간 → 10분)를 달성했습니다.\n\n" +
+      "다른 사례는 S3 비용 최적화입니다. CloudWatch 지표를 분석해서 비효율적인 라이프사이클 정책을 발견했습니다. 실제 접근 패턴 기반의 데이터 주도 보존 규칙을 구현해서 운영에 영향 없이 월 비용을 50% 절감했습니다—$5K에서 $2.5K로.\n\n" +
+      "데이터 레이크 프로젝트에서는 기획팀과 마케팅팀에게 실제로 필요한 비즈니스 지표가 무엇인지 설문조사부터 시작했습니다. 처음부터 거대한 시스템을 구축하는 대신, 가장 많이 요청된 상위 10개 지표에 집중했습니다. 그런 다음 쿼리 성능을 측정하고 적절한 파티셔닝으로 최적화했습니다. 결과는 즉각적인 가치를 제공하는 가볍고 빠른 시스템이었습니다.\n\n" +
+      "제 철학은 간단합니다: 최적화 전에 측정하고, 리소스 요청 전에 데이터로 증명하고, 결과를 추적해서 결정을 검증합니다. 그렇게 신뢰를 얻고 안정적인 결과를 제공합니다.",
   },
   {
     id: 26,
     category1: "General",
     category2: "Failure",
-    question: "What was a failure experience and what did you learn?",
+    question: "실패 경험과 그로부터 배운 것은 무엇인가요?",
     answer:
-      "During Inoutbox startup, initially **obsessed with technical perfection**, delaying launch.\n\n**Lessons Learned:**\n1. **MVP First**: Fast validation over perfect product\n2. **Business Value Focus**: Technology is a means, not the goal\n3. **Priority Management**: Maximum effect with limited resources\n\nAfter this experience, changed approach to **Fast POC → Validation → Incremental Improvement**, achieving better results in subsequent projects.",
+      "제 가장 큰 실패는 Inoutbox 스타트업 시절이었어요. '완벽한' 기술 아키텍처를 구축하는 데 집착했습니다—마이크로서비스, 제대로 된 CI/CD, 포괄적인 테스팅, 모든 것을요. '아직 준비가 안됐다'며 계속 출시를 미뤘죠." +
+      "가혹한 현실은 훨씬 더 단순한 제품을 가진 경쟁자가 먼저 출시해서 우리 타겟 시장을 선점했을 때 찾아왔어요. 우리는 더 나은 기술을 가지고 있었지만, 그들은 사용자를 가지고 있었죠. 고통스러운 교훈을 배웠습니다: 사용자 없는 완벽한 기술은 무가치하다는 것을요" +
+      "뭐가 잘못됐을까요? 아직 존재하지도 않는 문제를 해결하려 했어요. 없는 규모를 위해 구축했고, 아무도 눈치채지 못할 성능을 최적화했습니다. 한편 실제 고객 문제는 해결되지 않았죠, 제가 인프라를 완벽하게 만드느라 너무 바빴거든요." +
+      "그 경험이 제 프로젝트 접근 방식을 근본적으로 바꿨어요. 이제는 MVP를 먼저 생각합니다—완벽한 제품보다 빠른 검증이요. 빠르게 작동하는 걸 사용자 앞에 내놓고, 실제 피드백을 기반으로 반복 개선하는 거죠. 기술은 비즈니스 문제를 해결하는 수단이지, 목표 자체가 아니에요." +
+      "이 교훈은 idstrust에서 저에게 큰 도움이 됐어요. 관측성 플랫폼을 구축할 때, 첫날부터 완벽한 시스템을 만들려 하지 않았습니다. 한 서비스에서 시작해서 일주일 내에 가치를 증명한 다음 확장했죠. 데이터 레이크가 필요했을 때는 포괄적인 분석 플랫폼이 아니라 가장 많이 요청된 상위 10개 메트릭에 먼저 집중했어요." +
+      "빠른 POC → 검증 → 점진적 개선. 그게 지금 제 접근 방식이고, 더 적은 리스크로 더 나은 결과를 가져다줍니다. 실패는 실용주의가 완벽주의를 매번 이긴다는 걸 가르쳐줬어요.",
   },
 
   // Collaboration & Communication
@@ -110,18 +130,23 @@ export const generalQuestions: InterviewQuestion[] = [
     id: 27,
     category1: "General",
     category2: "Cross Functional",
-    question: "What is your cross-functional team collaboration experience?",
+    question: "크로스 팀 협업 경험은 어떤가요?",
     answer:
-      '**Abacus - Frontend Project Leader:**\n- **Client (LG)**: Technical requirements coordination and weekly reports\n- **Internal Backend Team**: API spec negotiation and integration testing\n- **Frontend Team**: Technical guidance and code reviews\n- **Result**: Recognized as LG\'s sole technical partner, 300% revenue increase\n\n**idstrust - Data Platform Construction:**\n- **Planning Team**: Business metrics requirements interviews\n- **Marketing Team**: Acquisition, Conversion, Retention analysis environment\n- **Infrastructure Team**: S3, Glue, Athena architecture discussions\n- **Result**: Planning/Marketing teams can directly query and analyze data\n\n**Collaboration Philosophy:** "Transparency, ownership, shared success" - Clear goal setting and continuous communication',
+      "클라이언트, 기획, 마케팅, 백엔드, 프론트엔드 등 다양한 팀과 협업했고, 성공적인 협업을 위해서는 각 팀의 언어와 우선순위를 이해하는 것이 중요하다는 걸 배웠습니다.\n\n" +
+      "Abacus에서 LG 프로젝트의 프론트엔드 프로젝트 리더를 맡았을 때, 세 가지 관점을 조율해야 했습니다. LG 클라이언트의 비즈니스 요구사항, 백엔드 팀의 기술적 제약사항, 그리고 프론트엔드 팀의 구현 현실이었죠. 매주 기술 용어를 LG 이해관계자들에게 비즈니스 영향으로 번역하고, 양쪽 팀의 니즈를 고려해 백엔드와 API 스펙을 협상하며, 프론트엔드 팀을 기술적 도전 과제들로 안내했습니다.\n\n" +
+      "핵심은 선제적 커뮤니케이션이었습니다. 문제가 표면화될 때까지 기다리지 않고 갈등을 예측해서 조기에 해결했어요. 예를 들어, LG가 대규모 백엔드 변경이 필요한 기능을 요청하면, 먼저 백엔드와 협업해서 대안 접근법을 찾고, 명확한 트레이드오프와 함께 솔루션을 LG에 제시했습니다. 이런 방식으로 모든 측면에서 신뢰를 얻었고, LG의 유일한 기술 파트너가 되어 매출 300% 증가를 이끌었습니다.\n\n" +
+      "idstrust에서 데이터 플랫폼을 구축할 때는 다른 협업 기술이 필요했습니다. 기획팀과 마케팅팀은 재방문율, 전환 퍼널, 사용자 행동 같은 비즈니스 인사이트가 필요했지만, SQL이나 인프라가 아닌 비즈니스 메트릭으로 소통했어요.\n\n" +
+      "먼저 두 팀 모두와 인터뷰하면서 어떤 결정을 위해 데이터가 필요한지 물었습니다. 가정하는 대신 '어떤 질문에 답하려고 하나요? 좋은 결과는 어떤 모습일까요?'라고 질문했죠. 그 결과 실시간 대시보드나 복잡한 ML 모델이 아니라 특정 질문에 대한 간단하고 신뢰할 수 있는 답변이 필요하다는 걸 알게 됐습니다.\n\n" +
+      "그 다음 인프라 팀과 협업해서 S3, Glue, Athena를 사용한 솔루션을 설계했고, 비용, 성능, 유지보수성의 균형을 맞췄습니다. 결과는? 비기술 팀들이 엔지니어를 매번 괴롭히지 않고도 직접 데이터 쿼리를 할 수 있게 됐어요.\n\n" +
+      "제 협업 철학은 간단합니다. 투명성, 책임감, 그리고 공동 성공이죠. 모두가 이해하는 명확한 목표를 설정하고, 약속에 대한 책임을 지며, 선제적으로 소통하고, 승리를 함께 축하하는 겁니다. 다른 사람들의 성공을 도우면, 그들도 당신의 성공을 도와줍니다.",
   },
   {
     id: 28,
     category1: "General",
     category2: "Remote Work",
-    question:
-      "What is your remote work and asynchronous communication experience?",
+    question: "원격 근무와 비동기 커뮤니케이션 경험은 어떤가요?",
     answer:
-      "**Asynchronous Communication Tools:**\n- **Jira**: All work ticketed with detailed context\n- **Confluence**: Architecture design, decision documentation\n- **Slack**: Real-time collaboration, thread-based discussions\n- **GitHub**: Code reviews and technical discussions via PRs\n\n**Document-Centric Collaboration:**\n- Share **design docs + anticipated Q&A** before verbal explanations\n- Allow time for colleagues in different time zones to review and comment\n- Can read English technical documents without translation tools",
+      "**비동기 커뮤니케이션 도구들:**\n- **Jira**: 모든 작업을 상세한 컨텍스트와 함께 티켓으로 관리\n- **Confluence**: 아키텍처 설계, 의사결정 문서화\n- **Slack**: 실시간 협업, 스레드 기반 토론\n- **GitHub**: PR을 통한 코드 리뷰와 기술 토론\n\n**문서 중심 협업:**\n- 구두 설명 전에 **설계 문서 + 예상 Q&A**를 공유\n- 다른 시간대의 동료들이 검토하고 코멘트할 시간을 확보\n- 번역 도구 없이 영문 기술 문서 읽기 가능",
   },
   {
     id: 29,
@@ -137,9 +162,9 @@ export const generalQuestions: InterviewQuestion[] = [
     id: 29.5,
     category1: "General",
     category2: "Conflict Resolution",
-    question: "How do you resolve conflicts within a team?",
+    question: "팀 내 갈등을 어떻게 해결하나요?",
     answer:
-      '**Case: OpenTelemetry Adoption Opposition**\n\n**(Situation)** Some opposed: "Installing agents on running services is risky", "Urgent business features need development"\n\n**(Action)**\n1. **Data-driven persuasion**: Converted last month\'s incident response time to cost\n2. **Risk minimization plan**: Detailed canary deployment and rollback plan\n3. **Quick Win presentation**: Validate effectiveness by applying to specific service within 1 week\n\n**(Result)** Convinced leadership, completed OTel adoption, 5-minute MTTI reduction secured team resources\n\n**Lesson:** Focus on **data and logic** rather than emotions, and **understand and address others\' concerns**',
+      '**사례: OpenTelemetry 도입 반대**\n\n**(상황)** 일부에서 반대했습니다. "운영 중인 서비스에 에이전트 설치는 위험하다", "급한 비즈니스 기능 개발이 필요하다"\n\n**(실행)**\n1. **데이터 기반 설득**: 지난달 장애 대응 시간을 비용으로 환산\n2. **리스크 최소화 계획**: 상세한 카나리 배포와 롤백 계획 제시\n3. **빠른 성과 제시**: 1주일 내에 특정 서비스에 적용해 효과 검증\n\n**(결과)** 리더십 설득 성공, OTel 도입 완료, 5분 MTTI 단축으로 팀 리소스 확보\n\n**교훈:** 감정이 아닌 **데이터와 논리**에 집중하고, **상대방의 우려를 이해하고 해소**하는 것이 중요합니다',
   },
 
   // Leadership
@@ -147,17 +172,24 @@ export const generalQuestions: InterviewQuestion[] = [
     id: 30,
     category1: "General",
     category2: "Leadership",
-    question: "What is your leadership experience and style?",
+    question: "리더십 경험과 스타일은 어떤가요?",
     answer:
-      "**Leadership Philosophy:**\n- **Pioneer Role**: Complete POC quickly alone or with small team, then invite team members\n- **End-to-End Interest**: Take interest in all roles to be helpful\n- **Root Problem Solving**: Prioritize solving core issues over patches\n- **Data-Driven Coordination**: Persuade and coordinate with stakeholders using data\n\n**Specific Cases:**\n- **Abacus**: Coordinated LG client-internal team-development team as Frontend Project Leader\n- **idstrust**: Led DX improvement by building developer sandbox environment\n- **Inoutbox**: End-to-End ownership experience as solo founder\n\n**Mentoring Philosophy:**\n- Confirm working with official docs, thorough research, and references\n- Emphasize fundamentals most important in AI era",
+      "저는 솔선수범하고 다른 사람들이 따라올 수 있도록 길을 명확하게 만드는 방식으로 리드합니다.\n\n" +
+      "제 접근법은 먼저 개척하는 것입니다. 혼자 또는 소규모 팀과 빠른 POC를 만들고, 작동하는 걸 증명한 다음, 다른 사람들을 초대하죠. 이렇게 하면 불확실성과 두려움이 제거됩니다. 사람들은 추상적인 제안보다 구체적인 결과를 볼 때 더 쉽게 따라옵니다.\n\n" +
+      "예를 들어, OpenTelemetry 도입을 제안했을 때 위원회부터 시작하지 않았습니다. 한 서비스에 구현하고 99% MTTI 감소를 증명하는 메트릭을 수집한 다음 데이터를 제시했죠. 증거가 있으니 동의를 얻기가 훨씬 쉬웠습니다.\n\n" +
+      "또한 저는 end-to-end 관심을 믿습니다. 요구사항을 벽 너머로 던지지 않아요. 프론트엔드 팀과 일할 때는 그들의 상태 관리 과제를 이해하고, 백엔드 팀과는 데이터베이스 제약사항을 고려하며, 기획 팀과는 사용자 영향을 생각합니다. 이것이 저를 더 효과적인 파트너이자 문제 해결사로 만들어줍니다.\n\n" +
+      "제 리더십 스타일은 증상이 아닌 근본 문제를 해결하는 데 집중합니다. 팀이 느린 배포에 불평할 때, CI/CD 파이프라인만 최적화하지 않았어요. 배포가 느린 이유를 조사했고 진짜 문제는 시스템에 대한 신뢰 부족이라는 걸 발견했죠. 그래서 먼저 관측성을 구축했고, 그 결과 팀들이 더 자주 배포하는 게 편해졌습니다. 그게 근본 원인을 해결하는 거예요.\n\n" +
+      "멘토링할 때는 빠른 해결책보다 기본기를 강조합니다. AI 시대에는 누구나 코드를 생성할 수 있어요. 하지만 그 코드가 왜 작동하는지, 실패할 때 어떻게 디버깅하는지, 확장 가능한 시스템을 어떻게 설계하는지 이해하는 것—이런 기본기는 대체될 수 없습니다. 팀원들에게 공식 문서를 읽고, 철저히 조사하고, 강력한 기반을 쌓으라고 권장합니다.\n\n" +
+      "또한 권한이 아닌 데이터로 리드합니다. 이해관계자들을 조율할 때 명확한 메트릭과 트레이드오프를 제시해요. '이걸 달성할 수 있고, 비용은 이만큼이며, 일정은 이렇습니다.' 이런 투명성이 신뢰를 쌓고 의사결정을 정치적이 아닌 협력적으로 만듭니다.\n\n" +
+      "리더십은 모든 답을 갖는 것이 아닙니다. 장애물을 제거하고, 컨텍스트를 제공하며, 다른 사람들이 좋은 결정을 내릴 수 있도록 권한을 부여하는 거죠. 그게 제가 추구하는 바입니다.",
   },
   {
     id: 31,
     category1: "General",
     category2: "Disagreement",
-    question: "How do you handle disagreements with team members?",
+    question: "팀원들과의 의견 차이를 어떻게 처리하나요?",
     answer:
-      '1. **Listen**: Fully understand others\' opinions and concerns\n2. **Data-Based Discussion**: Discuss with objective metrics, not emotions\n3. **Experiment**: Try both approaches on small scale, then compare results\n4. **Document Decisions**: Record what decisions were made and why\n\n**Key:** Focus on "what\'s best for the business" rather than "who\'s right"',
+      '1. **경청**: 다른 사람들의 의견과 우려사항을 완전히 이해합니다\n2. **데이터 기반 토론**: 감정이 아닌 객관적인 메트릭으로 논의합니다\n3. **실험**: 두 접근법 모두 작은 규모로 시도한 다음 결과를 비교합니다\n4. **의사결정 문서화**: 어떤 결정을 내렸고 왜 그런 결정을 내렸는지 기록합니다\n\n**핵심:** "누가 옳은가"가 아니라 "비즈니스에 무엇이 최선인가"에 집중합니다',
   },
 
   // Additional General Questions
@@ -165,83 +197,93 @@ export const generalQuestions: InterviewQuestion[] = [
     id: 42,
     category1: "General",
     category2: "Self Introduction",
-    question: "What are your greatest strengths as an engineer?",
+    question: "엔지니어로서 가장 큰 강점은 무엇인가요?",
     answer:
-      "**1. Data-Driven Problem Solving:**\nI excel at quantifying problems and proving solutions with metrics. For example, I reduced MTTI from 18 hours to 10 minutes (99% reduction) by implementing OpenTelemetry, and convinced leadership using cost analysis.\n\n**2. End-to-End Platform Ownership:**\nFrom Inoutbox solo platform development to leading TheShop infrastructure operations, I take complete responsibility for projects from conception to production.\n\n**3. Cross-Functional Collaboration:**\nSuccessfully coordinated with LG clients, planning teams, marketing teams, and development teams across multiple companies, delivering measurable business results.\n\n**4. Continuous Learning:**\nCKA, AWS DevOps Pro, LFCS certifications demonstrate my commitment to deep technical expertise. Contributing to OpenTelemetry open-source project validates practical application.",
+      "제 가장 큰 강점은 데이터 기반 실행과 함께하는 end-to-end 책임감입니다.\n\n" +
+      "좁게 전문화된 엔지니어들과 달리, 저는 인프라부터 프론트엔드까지 풀스택을 구축했습니다. Inoutbox에서는 단독 창업자로서 모든 것을 담당했어요. Flutter 모바일 앱, Python 백엔드, AWS 인프라, CI/CD, 모니터링까지요. 그 경험으로 모든 조각들이 어떻게 맞물리는지, 병목 지점이 실제로 어디서 발생하는지 배웠습니다.\n\n" +
+      "이런 폭넓은 이해가 더 나은 의사결정을 가능하게 합니다. idstrust에서 인프라를 최적화할 때 Kubernetes 설정만 튜닝한 게 아니라, 프론트엔드 렌더링 패턴이 캐시 히트율에 어떻게 영향을 미치는지, 백엔드 쿼리 패턴이 데이터베이스 부하에 어떻게 영향을 주는지, 그리고 이 모든 것이 전환율 같은 비즈니스 메트릭에 어떻게 영향을 미치는지 이해했습니다.\n\n" +
+      "하지만 깊이 없는 폭은 얕습니다. 저는 깊은 전문성에도 많이 투자했어요. CKA, LFCS, 세 개의 AWS 자격증, OpenTelemetry 기여 등이요. 시스템 아키텍처를 설계할 수도 있고 네트워크 정책을 최적화하거나 분산 추적 이슈를 디버깅할 수도 있습니다.\n\n" +
+      "저를 진짜 차별화하는 것은 모든 것을 데이터로 증명한다는 점입니다. MTTI를 18시간에서 10분으로 줄였을 때 단순히 주장만 한 게 아니라 측정하고, 문서화하고, 그 데이터로 추가 투자를 정당화했습니다. 인프라 비용을 50% 절감했다고 말할 때는 CloudWatch 메트릭과 비용 분석을 보여드릴 수 있어요.\n\n" +
+      "또한 빠른 학습에도 뛰어납니다. 프로덕션 배포를 위해 2주 만에 SSE 프로토콜을 습득했고, Kubernetes 지식이 전무한 상태에서 프로덕션 시스템을 동시에 운영하면서 몇 달 만에 CKA 자격증까지 취득했습니다. 모르는 것을 만나면 공식 문서를 깊이 파고들고, 직접 POC를 만들며, 실습으로 배웁니다.\n\n" +
+      "마지막으로, 저는 비즈니스 영향에 끊임없이 집중합니다. 기술은 목표가 아니라 비즈니스 결과가 목표예요. 제 인프라 작업은 5,000억원의 매출을 지원했고, 비용을 절감했으며, 배포를 가속화하고, 개발자 생산성을 향상시켰습니다. 이건 허영 지표가 아니라 실제 비즈니스 가치입니다.\n\n" +
+      "정리하자면 제 강점은? End-to-end 책임감, 데이터 기반 실행, 깊은 기술 전문성, 빠른 학습, 그리고 비즈니스 영향에 대한 확고한 집중입니다. 이런 조합이 일관되게 결과를 제공할 수 있게 해줍니다.",
   },
   {
     id: 43,
     category1: "General",
     category2: "Self Introduction",
-    question: "What are your biggest weaknesses?",
+    question: "가장 큰 약점은 무엇인가요?",
     answer:
-      "**1. Perfectionism (Managed):**\nEarly in my career at Inoutbox, I delayed launches pursuing technical perfection. I've learned to balance quality with delivery speed through MVP approach and iterative improvement.\n\n**2. Impatience with Inefficiency:**\nWhen I see inefficient processes, I want to fix them immediately. I'm learning to prioritize improvements based on ROI and team capacity rather than tackling everything at once.\n\n**3. Over-Engineering Tendency:**\nI sometimes design solutions for scale beyond immediate needs. I now actively practice YAGNI (You Aren't Gonna Need It) principle and focus on solving today's problems first.\n\n**How I Address These:**\n- Set clear timelines and MVP scopes before starting projects\n- Use data to justify optimization efforts\n- Regular code reviews and architecture discussions with team\n- Focus on incremental improvements rather than big rewrites",
+      "제가 적극적으로 관리하고 있는 세 가지 약점에 대해 솔직히 말씀드리겠습니다.\n\n" +
+      "첫째, 완벽주의입니다. Inoutbox 초기에 '완벽한' 아키텍처를 추구하느라 출시를 몇 달 지연시켰어요. 우리가 제품을 내놓을 즈음 경쟁자가 이미 시장 점유율을 확보했죠. 그 실패로 뼈저리게 배웠습니다. 완벽은 완성의 적이라는 걸요. 이제는 의식적으로 MVP를 출시하고, 빠르게 가치를 증명한 다음 반복 개선합니다. 하지만 여전히 가끔 과도하게 엔지니어링하는 제 모습을 발견해요. 계속되는 싸움이죠.\n\n" +
+      "둘째, 비효율성에 대한 조급함입니다. 시간을 낭비하는 프로세스를 보면 즉시 고치고 싶어져요. 좋게 들리지만, 지속 가능하지 않아요. 모든 걸 한번에 최적화할 수는 없으니까요. ROI와 팀 역량을 기반으로 우선순위를 정하는 법을 배웠습니다. 이제는 '이 비효율이 고치는 데 드는 시간보다 더 많은 비용을 발생시키나?'라고 물어요. 그러면 에너지를 가장 중요한 곳에 집중할 수 있습니다.\n\n" +
+      "셋째, 때때로 아직 필요 없는 규모를 위해 설계합니다. 대규모 시스템을 운영한 경험이 있다 보니 자연스럽게 성능과 확장성을 생각하게 돼요. 하지만 조기 최적화는 시간 낭비입니다. 이제는 YAGNI(You Aren't Gonna Need It)를 적극적으로 실천합니다. 오늘의 문제를 먼저 해결하고, 데이터가 필요하다고 보여줄 때만 내일의 규모를 위해 설계해요.\n\n" +
+      "어떻게 관리하냐고요? 프로젝트 시작 전에 명확한 MVP 범위를 설정합니다. 최적화 작업은 데이터로 정당화합니다. 메트릭이 없으면 작업도 없어요. 코드 리뷰와 아키텍처 논의를 통해 과도한 엔지니어링을 걸러내고, 대규모 재작성보다 점진적 개선에 집중합니다.\n\n" +
+      "이런 약점들은 품질과 효율성을 깊이 신경 쓰는 데서 나옵니다. 핵심은 그 에너지를 생산적으로 활용하는 것이지, 파괴적인 완벽주의가 되게 하지 않는 거예요. 매일 노력하는 균형입니다.",
   },
   {
     id: 51,
     category1: "General",
     category2: "Problem Solving",
-    question:
-      "Tell me about a time you had to learn something completely new quickly.",
+    question: "완전히 새로운 것을 빠르게 학습해야 했던 경험을 말씀해주세요.",
     answer:
-      "**Situation: LG IXI Studio - SSE (Server-Sent Events)**\n\nJoined project with tight deadline requiring real-time AI response streaming. Had never implemented SSE protocol before.\n\n**Challenge:**\n- 2 weeks to deliver working POC\n- Complex integration with AI models\n- Frontend and backend both needed SSE\n- Quality standards couldn't be compromised\n\n**Learning Approach:**\n1. **Official Documentation First** (1 day):\n   - MDN Web Docs for SSE specification\n   - Backend framework (Node.js) SSE libraries\n   - Vue.js SSE client implementations\n\n2. **Hands-on Experimentation** (2 days):\n   - Built simple SSE prototype\n   - Tested connection handling, reconnection, error scenarios\n   - Identified gotchas and edge cases\n\n3. **Reference Implementation Study** (1 day):\n   - Analyzed open-source projects using SSE\n   - Studied production patterns and best practices\n\n4. **Implementation** (1 week):\n   - Applied learnings to actual project\n   - Iterative testing and refinement\n   - Documentation for team\n\n**Result:**\n- Delivered on time with working SSE implementation\n- Achieved stable real-time streaming\n- Expanded technical spectrum with new protocol expertise\n- Shared knowledge with team through tech session\n\n**Key Lesson:**\n**Official docs + Hands-on practice + Reference code** = Fastest path to production-ready knowledge",
+      "**상황: LG IXI Studio - SSE (Server-Sent Events)**\n\n실시간 AI 응답 스트리밍이 필요한 타이트한 마감일의 프로젝트에 합류했습니다. SSE 프로토콜을 구현해본 적이 없었어요.\n\n**도전 과제:**\n- 작동하는 POC를 2주 안에 전달\n- AI 모델과의 복잡한 통합\n- 프론트엔드와 백엔드 모두 SSE 필요\n- 품질 기준은 타협할 수 없음\n\n**학습 접근법:**\n1. **공식 문서 우선** (1일):\n   - SSE 명세를 위한 MDN Web Docs\n   - 백엔드 프레임워크(Node.js) SSE 라이브러리\n   - Vue.js SSE 클라이언트 구현\n\n2. **실습 실험** (2일):\n   - 간단한 SSE 프로토타입 구축\n   - 연결 처리, 재연결, 에러 시나리오 테스트\n   - 주의사항과 엣지 케이스 파악\n\n3. **참조 구현 연구** (1일):\n   - SSE를 사용하는 오픈소스 프로젝트 분석\n   - 프로덕션 패턴과 모범 사례 연구\n\n4. **실제 구현** (1주):\n   - 학습 내용을 실제 프로젝트에 적용\n   - 반복적인 테스트와 개선\n   - 팀을 위한 문서화\n\n**결과:**\n- 작동하는 SSE 구현으로 제시간에 전달\n- 안정적인 실시간 스트리밍 달성\n- 새로운 프로토콜 전문성으로 기술 스펙트럼 확장\n- 기술 세션을 통해 팀과 지식 공유\n\n**핵심 교훈:**\n**공식 문서 + 실습 + 참조 코드** = 프로덕션 준비 지식으로 가는 가장 빠른 길",
   },
   {
     id: 52,
     category1: "General",
     category2: "Problem Solving",
-    question: "How do you approach debugging a complex production issue?",
+    question: "복잡한 프로덕션 이슈를 디버깅할 때 어떻게 접근하나요?",
     answer:
-      "**Systematic Debugging Process:**\n\n**1. Gather Information (10 minutes):**\n- When did it start? (Correlation with deployments)\n- What's the impact? (Affected users, services)\n- What changed recently? (Code, config, infrastructure)\n- Check monitoring: logs, metrics, traces\n\n**2. Form Hypothesis (5 minutes):**\n- List possible causes based on symptoms\n- Prioritize by probability and impact\n- Consider recent changes first\n\n**3. Test Hypothesis (Iterative):**\n- Start with least invasive checks\n- Use distributed tracing to follow request path\n- Check external dependencies (DB, cache, APIs)\n- Reproduce in non-production if possible\n\n**4. Implement Fix:**\n- Quick mitigation first (rollback, circuit breaker)\n- Proper fix with testing afterward\n- Monitor closely after deployment\n\n**5. Post-Mortem:**\n- Document timeline and root cause\n- Identify prevention measures\n- Update runbooks and alerts\n\n**Real Example - TheShop:**\nIntermittent 500 errors on checkout:\n1. **Traced** with OpenTelemetry: Timeout in payment service\n2. **Found** DB connection pool exhaustion\n3. **Mitigated** Increased pool size temporarily\n4. **Root Cause** N+1 query in new feature\n5. **Fixed** Optimized query, added monitoring\n6. **Prevented** Added query performance testing to CI/CD",
+      "**체계적인 디버깅 프로세스:**\n\n**1. 정보 수집 (10분):**\n- 언제 시작됐나? (배포와의 상관관계)\n- 영향은 무엇인가? (영향받은 사용자, 서비스)\n- 최근 무엇이 변경됐나? (코드, 설정, 인프라)\n- 모니터링 확인: 로그, 메트릭, 트레이스\n\n**2. 가설 수립 (5분):**\n- 증상을 기반으로 가능한 원인 나열\n- 확률과 영향도로 우선순위 지정\n- 최근 변경사항을 먼저 고려\n\n**3. 가설 검증 (반복적):**\n- 가장 침습적이지 않은 확인부터 시작\n- 분산 추적을 사용해 요청 경로 추적\n- 외부 의존성 확인 (DB, 캐시, API)\n- 가능하면 비프로덕션에서 재현\n\n**4. 수정 구현:**\n- 빠른 완화 조치 먼저 (롤백, 서킷 브레이커)\n- 이후 테스트와 함께 적절한 수정\n- 배포 후 면밀히 모니터링\n\n**5. 사후 분석:**\n- 타임라인과 근본 원인 문서화\n- 예방 조치 식별\n- 런북과 알림 업데이트\n\n**실제 사례 - TheShop:**\n결제 시 간헐적 500 에러:\n1. **추적** OpenTelemetry로: 결제 서비스 타임아웃\n2. **발견** DB 커넥션 풀 고갈\n3. **완화** 임시로 풀 크기 증가\n4. **근본 원인** 새 기능의 N+1 쿼리\n5. **수정** 쿼리 최적화, 모니터링 추가\n6. **예방** CI/CD에 쿼리 성능 테스트 추가",
   },
   {
     id: 77,
     category1: "General",
     category2: "Communication",
-    question:
-      "How do you explain technical concepts to non-technical stakeholders?",
+    question: "비기술 이해관계자에게 기술 개념을 어떻게 설명하나요?",
     answer:
-      '**Communication Strategy:**\n\n**1. Start with Business Impact:**\n❌ "We need to implement distributed tracing with OpenTelemetry"\n✅ "We can reduce bug fix time from 18 hours to 10 minutes, saving 8 engineering hours per incident"\n\n**2. Use Analogies:**\n- **Distributed Tracing**: Like GPS tracking for a package, we can see exactly where requests go wrong\n- **Caching**: Like keeping frequently used documents on your desk instead of filing cabinet\n- **Load Balancing**: Like multiple checkout lanes at a store instead of one long line\n\n**3. Visual Aids:**\n- Architecture diagrams with clear flows\n- Before/after metrics comparisons\n- Cost analysis charts\n- Timeline visualizations\n\n**4. Focus on Outcomes, Not Technology:**\n- "Faster feature delivery" not "CI/CD pipeline"\n- "99.9% uptime" not "Kubernetes HA cluster"\n- "50% cost reduction" not "EC2 right-sizing"\n\n**5. Anticipate Questions:**\n- Prepare cost/benefit analysis\n- Have risk mitigation plan\n- Show similar success cases\n- Provide realistic timeline\n\n**Real Example - Data Lake Presentation:**\nTo planning team: "Currently we can only see last 7 days of data. With data lake, you\'ll have 10 years of history to analyze trends, seasonality, and customer behavior for better business decisions. Cost: $2K/month. Value: Better forecasting and strategy."',
+      '**커뮤니케이션 전략:**\n\n**1. 비즈니스 영향으로 시작:**\n❌ "OpenTelemetry로 분산 추적을 구현해야 합니다"\n✅ "버그 수정 시간을 18시간에서 10분으로 줄여서 장애당 엔지니어링 시간을 8시간 절약할 수 있습니다"\n\n**2. 비유 사용:**\n- **분산 추적**: 택배 GPS 추적처럼, 요청이 어디서 잘못되는지 정확히 볼 수 있습니다\n- **캐싱**: 자주 쓰는 문서를 서랍장이 아니라 책상에 두는 것과 같습니다\n- **로드 밸런싱**: 마트에서 긴 줄 하나보다 여러 계산대를 운영하는 것과 같아요\n\n**3. 시각 자료:**\n- 명확한 흐름을 보여주는 아키텍처 다이어그램\n- 변경 전/후 메트릭 비교\n- 비용 분석 차트\n- 타임라인 시각화\n\n**4. 기술이 아닌 결과에 집중:**\n- "CI/CD 파이프라인"이 아니라 "더 빠른 기능 제공"\n- "Kubernetes HA 클러스터"가 아니라 "99.9% 가동 시간"\n- "EC2 라이트사이징"이 아니라 "50% 비용 절감"\n\n**5. 질문 예상:**\n- 비용/편익 분석 준비\n- 리스크 완화 계획 보유\n- 유사한 성공 사례 제시\n- 현실적인 일정 제공\n\n**실제 사례 - 데이터 레이크 프레젠테이션:**\n기획팀에게: "현재는 최근 7일 데이터만 볼 수 있습니다. 데이터 레이크로 10년치 히스토리를 분석해서 트렌드, 계절성, 고객 행동을 파악하고 더 나은 비즈니스 결정을 내릴 수 있습니다. 비용: 월 $2K. 가치: 더 나은 예측과 전략."',
   },
   {
     id: 78,
     category1: "General",
     category2: "Communication",
-    question:
-      "Describe a situation where you had to give difficult feedback to a colleague.",
+    question: "동료에게 어려운 피드백을 해야 했던 상황을 설명해주세요.",
     answer:
-      '**Situation:**\nJunior engineer repeatedly submitting PRs without proper testing, causing production bugs and requiring multiple review cycles.\n\n**Approach:**\n\n**1. Prepared Specific Examples:**\n- Collected 3-4 recent PRs with issues\n- Noted impact: rollbacks, customer complaints, wasted review time\n- Gathered metrics: average PR revision count, bug rate\n\n**2. Private 1-on-1 Conversation:**\n- Started with positive: acknowledged hard work and quick delivery\n- Presented data objectively, not emotionally\n- Focused on behavior, not personality\n- Asked open-ended question: "What\'s preventing thorough testing?"\n\n**3. Understood Root Cause:**\n- Discovered: Felt pressure to deliver fast\n- Lacked understanding of testing best practices\n- Unsure how to write effective tests\n\n**4. Collaborative Solution:**\n- Set clear expectation: All PRs need tests and local verification\n- Offered help: Paired on writing first few test cases\n- Shared resources: Testing guides, examples from codebase\n- Established checklist for PR self-review\n\n**5. Follow-up:**\n- Weekly check-ins for first month\n- Celebrated improvements publicly\n- Adjusted expectations based on progress\n\n**Result:**\n- PR quality improved significantly\n- Bug rate decreased 70% within 2 months\n- Engineer gained confidence in testing\n- Relationship strengthened through honest communication\n\n**Key Lesson:**\n**Data + Empathy + Support** = Effective feedback that drives improvement',
+      '**상황:**\n주니어 엔지니어가 적절한 테스트 없이 PR을 반복적으로 제출해서 프로덕션 버그를 발생시키고 여러 차례 리뷰 사이클이 필요했습니다.\n\n**접근 방법:**\n\n**1. 구체적인 사례 준비:**\n- 문제가 있는 최근 PR 3-4개 수집\n- 영향 기록: 롤백, 고객 불만, 낭비된 리뷰 시간\n- 메트릭 수집: 평균 PR 수정 횟수, 버그 발생률\n\n**2. 비공개 1:1 대화:**\n- 긍정적으로 시작: 열심히 일하고 빠르게 전달하는 점 인정\n- 감정적이지 않게 객관적으로 데이터 제시\n- 성격이 아닌 행동에 집중\n- 개방형 질문: "철저한 테스트를 방해하는 것이 무엇인가요?"\n\n**3. 근본 원인 이해:**\n- 발견: 빠르게 전달해야 한다는 압박감을 느낌\n- 테스팅 모범 사례에 대한 이해 부족\n- 효과적인 테스트를 작성하는 방법을 잘 모름\n\n**4. 협력적 해결책:**\n- 명확한 기대치 설정: 모든 PR에 테스트와 로컬 검증 필요\n- 도움 제공: 처음 몇 개 테스트 케이스 작성을 페어링\n- 리소스 공유: 테스팅 가이드, 코드베이스의 예제\n- PR 자체 리뷰를 위한 체크리스트 수립\n\n**5. 후속 조치:**\n- 첫 달 동안 주간 체크인\n- 개선 사항을 공개적으로 축하\n- 진척도에 따라 기대치 조정\n\n**결과:**\n- PR 품질이 크게 향상됨\n- 2개월 내에 버그율 70% 감소\n- 엔지니어가 테스팅에 자신감 획득\n- 솔직한 소통을 통해 관계 강화\n\n**핵심 교훈:**\n**데이터 + 공감 + 지원** = 개선을 이끄는 효과적인 피드백',
   },
   {
     id: 79,
     category1: "General",
     category2: "Learning",
-    question: "What technical book or resource has influenced you the most?",
+    question: "가장 영향을 받은 기술 서적이나 리소스는 무엇인가요?",
     answer:
-      '**Most Influential Resources:**\n\n**1. "Designing Data-Intensive Applications" by Martin Kleppmann:**\n- Changed how I think about distributed systems\n- Deepened understanding of trade-offs in system design\n- Applied concepts in Kafka, data lake, and cache architectures\n- Go-to reference for distributed system decisions\n\n**2. "Site Reliability Engineering" by Google:**\n- Shaped my SRE philosophy and practices\n- SLI/SLO concepts applied to TheShop operations\n- Error budgets influence deployment strategies\n- On-call best practices implementation\n\n**3. Kubernetes Official Documentation:**\n- Foundation for CKA certification preparation\n- Continuously reference for production operations\n- Taught me value of high-quality documentation\n\n**4. AWS Well-Architected Framework:**\n- Guides cloud architecture decisions\n- Influenced cost optimization strategies\n- Shaped security and reliability practices\n\n**5. OpenTelemetry Documentation + Community:**\n- Learning observability best practices\n- Active participation shaped my understanding\n- Contributing back deepens knowledge\n\n**Learning Philosophy:**\n- **Official docs first** for authoritative knowledge\n- **Books for fundamentals** that don\'t change\n- **Blogs/talks for patterns** and real-world application\n- **Open source code** for implementation details\n- **Hands-on practice** to solidify understanding',
+      '**가장 영향을 받은 리소스들:**\n\n**1. Martin Kleppmann의 "Designing Data-Intensive Applications":**\n- 분산 시스템에 대한 제 사고방식을 바꿔놓았습니다\n- 시스템 설계에서의 트레이드오프에 대한 이해를 깊게 했어요\n- Kafka, 데이터 레이크, 캐시 아키텍처에 개념을 적용했습니다\n- 분산 시스템 결정을 위한 주요 참고 자료\n\n**2. Google의 "Site Reliability Engineering":**\n- 제 SRE 철학과 실천 방식을 형성했습니다\n- SLI/SLO 개념을 TheShop 운영에 적용\n- 에러 버짓이 배포 전략에 영향을 줌\n- 온콜 모범 사례 구현\n\n**3. Kubernetes 공식 문서:**\n- CKA 자격증 준비의 기초\n- 프로덕션 운영을 위해 지속적으로 참조\n- 고품질 문서의 가치를 가르쳐줌\n\n**4. AWS Well-Architected Framework:**\n- 클라우드 아키텍처 결정을 안내\n- 비용 최적화 전략에 영향\n- 보안과 안정성 실천 방식을 형성\n\n**5. OpenTelemetry 문서 + 커뮤니티:**\n- 관측성 모범 사례 학습\n- 적극적인 참여가 이해를 형성\n- 기여를 통해 지식이 깊어짐\n\n**학습 철학:**\n- **공식 문서 우선** - 권위 있는 지식을 위해\n- **기본서는 책으로** - 변하지 않는 기초를 위해\n- **블로그/발표는 패턴과** 실제 적용을 위해\n- **오픈소스 코드는** 구현 세부사항을 위해\n- **실습은** 이해를 굳히기 위해',
   },
   {
     id: 80,
     category1: "General",
     category2: "Career Goals",
-    question: "Where do you see yourself in 10 years?",
+    question: "10년 후 자신의 모습을 어떻게 그리고 있나요?",
     answer:
-      "**10-Year Vision:**\n\n**Technical Path (Primary):**\n- **Staff/Principal Engineer** or **Distinguished Engineer** role\n- Recognized expert in **platform engineering and observability**\n- Regular speaker at major conferences (KubeCon, AWS re:Invent)\n- Significant open-source contributions with maintainer roles\n- Published technical articles reaching thousands of engineers\n\n**Impact I Want to Make:**\n1. **Industry Influence:**\n   - Shape best practices in cloud-native observability\n   - Contribute to standards and specifications\n   - Mentor next generation of platform engineers\n\n2. **Technical Excellence:**\n   - Architect systems handling millions of users\n   - Solve previously unsolved infrastructure challenges\n   - Pioneer new approaches to developer experience\n\n3. **Knowledge Sharing:**\n   - Write technical book on platform engineering\n   - Create educational content (blog, videos, courses)\n   - Build tools that benefit wider community\n\n**Alternative Paths (Open):**\n- **Technical Leadership**: VP of Engineering or CTO if right opportunity\n- **Consulting**: Independent consultant for high-growth companies\n- **Entrepreneurship**: Technical co-founder of infrastructure startup\n\n**Non-Negotiables:**\n- Stay hands-on technical (writing code, solving problems)\n- Work on meaningful problems at scale\n- Continuous learning and growth\n- Healthy work-life balance\n\n**What I'm Building Toward:**\nReputation as go-to expert when companies need to scale infrastructure from thousands to millions of users.",
+      "**10년 비전:**\n\n**기술 경로 (주요):**\n- **Staff/Principal Engineer** 또는 **Distinguished Engineer** 역할\n- **플랫폼 엔지니어링과 관측성** 분야의 인정받는 전문가\n- 주요 컨퍼런스(KubeCon, AWS re:Invent)의 정기 연사\n- 메인테이너 역할의 중요한 오픈소스 기여\n- 수천 명의 엔지니어에게 도달하는 기술 아티클 발행\n\n**만들고 싶은 영향:**\n1. **업계 영향력:**\n   - 클라우드 네이티브 관측성의 모범 사례 형성\n   - 표준과 명세에 기여\n   - 차세대 플랫폼 엔지니어 멘토링\n\n2. **기술적 우수성:**\n   - 수백만 사용자를 처리하는 시스템 아키텍팅\n   - 이전에 해결되지 않은 인프라 과제 해결\n   - 개발자 경험에 대한 새로운 접근법 개척\n\n3. **지식 공유:**\n   - 플랫폼 엔지니어링에 관한 기술서 집필\n   - 교육 콘텐츠 제작 (블로그, 비디오, 강의)\n   - 더 넓은 커뮤니티에 이익이 되는 도구 구축\n\n**대안 경로 (열려있음):**\n- **기술 리더십**: 적절한 기회가 있다면 VP of Engineering 또는 CTO\n- **컨설팅**: 고성장 기업을 위한 독립 컨설턴트\n- **창업**: 인프라 스타트업의 기술 공동 창업자\n\n**양보할 수 없는 것들:**\n- 기술적 실무 유지 (코드 작성, 문제 해결)\n- 규모 있는 의미 있는 문제 해결\n- 지속적인 학습과 성장\n- 건강한 워라밸\n\n**구축하고 있는 것:**\n기업이 인프라를 수천 명에서 수백만 사용자로 확장해야 할 때 찾는 전문가로서의 명성입니다.",
   },
   {
     id: 81,
     category1: "General",
     category2: "Self Introduction",
-    question: "What makes you different from other candidates?",
+    question: "다른 지원자와 비교해 당신을 차별화하는 것은 무엇인가요?",
     answer:
-      "**Unique Combination:**\n\n**1. Breadth AND Depth:**\nMost engineers specialize in one area. I have:\n- **Infrastructure**: Kubernetes, AWS, monitoring, data pipelines\n- **Backend**: Go, Python, Django, Spring Boot\n- **Frontend**: React, Vue, Flutter\n- **Data**: Data lakes, analytics, observability\n\nThis enables **end-to-end platform ownership** and **cross-functional collaboration**.\n\n**2. Startup to Enterprise Experience:**\n- Solo platform development at Inoutbox (0→1)\n- Small team at Intellisys/Abacus (1→10)\n- Enterprise scale at idstrust (₩500B revenue, 100K users)\n\nI understand challenges at every stage and can operate in any environment.\n\n**3. Data-Driven Everything:**\nEvery major decision backed by metrics:\n- 99% MTTI reduction (18h → 10min)\n- 50% cost savings ($5K → $2.5K/month)\n- 90% deployment speedup (2h → 12min)\n- 142x log retention (7 days → 10 years)\n\n**4. Proven Leadership Without Title:**\n- Led OpenTelemetry adoption despite initial resistance\n- Project leader for LG client engagements\n- Built systems now used by 100K+ daily users\n\n**5. Rapid Skill Acquisition:**\n- CKA, AWS DevOps Pro, LFCS in 6 months\n- Learned SSE protocol in 2 weeks for production\n- Contributing to OpenTelemetry within months of adoption\n\n**6. Business Impact Focus:**\nNot just building technology—driving business outcomes:\n- Infrastructure supporting ₩500B revenue\n- Enabling faster feature delivery\n- Reducing operational costs\n- Improving developer productivity\n\n**Bottom Line:**\nI bring **technical depth, business acumen, and proven execution** at scale.",
+      "**독특한 조합:**\n\n**1. 폭과 깊이:**\n대부분의 엔지니어는 한 분야를 전문으로 합니다. 저는:\n- **인프라**: Kubernetes, AWS, 모니터링, 데이터 파이프라인\n- **백엔드**: Go, Python, Django, Spring Boot\n- **프론트엔드**: React, Vue, Flutter\n- **데이터**: 데이터 레이크, 분석, 관측성\n\n이것이 **end-to-end 플랫폼 책임**과 **크로스 기능 협업**을 가능하게 합니다.\n\n**2. 스타트업부터 엔터프라이즈 경험:**\n- Inoutbox에서 단독 플랫폼 개발 (0→1)\n- Intellisys/Abacus에서 소규모 팀 (1→10)\n- idstrust에서 엔터프라이즈 규모 (5,000억원 매출, 10만 사용자)\n\n모든 단계에서의 도전을 이해하고 어떤 환경에서도 일할 수 있습니다.\n\n**3. 모든 것이 데이터 기반:**\n모든 주요 결정은 메트릭으로 뒷받침됩니다:\n- 99% MTTI 감소 (18시간 → 10분)\n- 50% 비용 절감 ($5K → $2.5K/월)\n- 90% 배포 속도 향상 (2시간 → 12분)\n- 142배 로그 보관 (7일 → 10년)\n\n**4. 직함 없는 검증된 리더십:**\n- 초기 저항에도 불구하고 OpenTelemetry 도입 주도\n- LG 클라이언트 프로젝트의 프로젝트 리더\n- 일 10만 명 이상이 사용하는 시스템 구축\n\n**5. 빠른 기술 습득:**\n- 6개월 만에 CKA, AWS DevOps Pro, LFCS\n- 프로덕션을 위해 2주 만에 SSE 프로토콜 학습\n- 도입 후 몇 달 만에 OpenTelemetry 기여\n\n**6. 비즈니스 영향 집중:**\n단순히 기술을 구축하는 것이 아니라 비즈니스 결과를 이끌어냅니다:\n- 5,000억원 매출을 지원하는 인프라\n- 더 빠른 기능 제공 가능\n- 운영 비용 절감\n- 개발자 생산성 향상\n\n**핵심:**\n저는 **기술적 깊이, 비즈니스 통찰력, 그리고 검증된 실행력**을 규모 있게 제공합니다.",
   },
   {
     id: 82,
     category1: "General",
     category2: "Technology Perspective",
-    question: "What are your thoughts on AI's impact on software engineering?",
+    question:
+      "소프트웨어 엔지니어링에 대한 AI의 영향에 대해 어떻게 생각하나요?",
     answer:
-      "**I'm somewhat skeptical about claims that AI will completely replace software engineers.**\n\n**AI as a Tool, Not a Replacement:**\n\nWhile AI will certainly reduce the workforce needed in some areas and lower barriers to acquiring deep knowledge, **AI remains fundamentally a tool**. As long as the essence of tools doesn't change, AI is just a sophisticated, highly-dependent tool we leverage.\n\n**The Value of Human Expertise:**\n\nAll our research, exploration, curiosity—\nThe certifications we earn, experiences we gain, knowledge we accumulate, and AI technologies we master—\n**Everything exists for 'that critical moment.'**\n\n**The ASAP Moment:**\n\nThat pivotal moment when we must solve problems under tight constraints and limited time—\nWhen our accumulated knowledge, experience, AI support, and team synergy align perfectly—\n**That's when we can achieve near 100% success.**\n\n**Practical Examples from My Experience:**\n\n1. **Production Incidents:** When systems are down, you need instant pattern recognition, not AI-generated possibilities\n2. **Architecture Decisions:** Understanding trade-offs requires years of operational experience\n3. **Team Leadership:** AI can't replace the human judgment needed for technical leadership\n\n**My Approach to AI Era:**\n\n- **Embrace AI as a Force Multiplier:** Use AI for code generation, documentation, initial research\n- **Focus on Higher-Level Skills:** System thinking, architecture design, problem decomposition\n- **Deepen Domain Expertise:** Specialize in areas where human judgment remains critical\n- **Continuous Adaptation:** My thoughts could change—I'm always preparing and adapting to new realities\n\n**Why Engineers Will Remain Essential:**\n\n- **Context Understanding:** Business requirements, system constraints, team dynamics\n- **Creative Problem Solving:** Novel solutions for unique challenges\n- **Risk Assessment:** Understanding the implications of technical decisions\n- **Synthesis:** Combining multiple technologies and requirements into coherent solutions\n\n**Bottom Line:**\n**I stay prepared, continuously learning, and ready to adapt—because the fundamentals of engineering problem-solving transcend any single tool or technology.**",
+      "**AI가 소프트웨어 엔지니어를 완전히 대체할 것이라는 주장에 대해 다소 회의적입니다.**\n\n**도구로서의 AI, 대체자가 아닌:**\n\nAI가 일부 영역에서 필요한 인력을 줄이고 깊은 지식 습득의 장벽을 낮출 것은 분명하지만, **AI는 근본적으로 도구입니다**. 도구의 본질이 변하지 않는 한, AI는 우리가 활용하는 정교하고 의존도 높은 도구일 뿐입니다.\n\n**인간 전문성의 가치:**\n\n우리의 모든 연구, 탐구, 호기심—\n우리가 획득하는 자격증, 쌓는 경험, 축적하는 지식, 그리고 마스터하는 AI 기술—\n**모든 것은 '그 결정적 순간'을 위해 존재합니다.**\n\n**ASAP 순간:**\n\n빡빡한 제약과 제한된 시간 속에서 문제를 해결해야 하는 중요한 순간—\n축적된 지식, 경험, AI 지원, 그리고 팀 시너지가 완벽하게 정렬될 때—\n**바로 그때 우리는 거의 100% 성공을 달성할 수 있습니다.**\n\n**제 경험의 실제 예시:**\n\n1. **프로덕션 장애:** 시스템이 다운되었을 때는 AI가 생성한 가능성이 아니라 즉각적인 패턴 인식이 필요합니다\n2. **아키텍처 결정:** 트레이드오프 이해는 수년간의 운영 경험이 필요해요\n3. **팀 리더십:** AI는 기술 리더십에 필요한 인간의 판단을 대체할 수 없습니다\n\n**AI 시대에 대한 제 접근법:**\n\n- **AI를 힘의 배수로 수용:** 코드 생성, 문서화, 초기 연구에 AI 활용\n- **상위 레벨 스킬에 집중:** 시스템 사고, 아키텍처 설계, 문제 분해\n- **도메인 전문성 심화:** 인간 판단이 여전히 중요한 영역에 전문화\n- **지속적 적응:** 제 생각은 바뀔 수 있어요—항상 새로운 현실에 준비하고 적응합니다\n\n**엔지니어가 여전히 필수적인 이유:**\n\n- **컨텍스트 이해:** 비즈니스 요구사항, 시스템 제약, 팀 역학\n- **창의적 문제 해결:** 독특한 도전 과제를 위한 새로운 솔루션\n- **리스크 평가:** 기술적 결정의 함의 이해\n- **종합:** 여러 기술과 요구사항을 일관된 솔루션으로 결합\n\n**핵심:**\n**저는 준비되어 있고, 지속적으로 학습하며, 적응할 준비가 되어 있습니다—왜냐하면 엔지니어링 문제 해결의 기본은 어떤 단일 도구나 기술도 초월하기 때문입니다.**",
   },
 ];

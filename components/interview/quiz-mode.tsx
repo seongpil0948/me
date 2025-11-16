@@ -172,6 +172,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
           </span>
         </div>
         <Progress
+          aria-label={`${dict.interview.quiz.progress}: ${currentIndex + 1} / ${shuffledQuestions.length}`}
           className="max-w-full"
           color="primary"
           value={progress.currentProgress}

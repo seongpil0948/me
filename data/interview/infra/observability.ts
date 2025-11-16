@@ -2,20 +2,17 @@ import type { InterviewQuestion } from "@/types/portfolio";
 
 /**
  * Observability & Monitoring 질문들
- * ID: 11, 59, 60, 62, 66, 67, 68
+ * ID: 11, 70, 71, 62, 72, 73, 74
  */
 export const infraObservabilityQuestions: InterviewQuestion[] = [
   {
     id: 11,
     category1: "Infrastructure",
     category2: "Monitoring",
-    question: "What is your observability/monitoring experience?",
+    question: "Observability/Monitoring 경험에 대해 설명해주세요.",
     answer:
-      "Observability에서 가장 어려운 것은 신호와 노이즈를 구분하는 것입니다.\n\n" +
-      "Legacy Scouter APM의 한계를 겪었습니다. Java만 지원하여 React, Vue, Go 서비스가 사각지대였고, " +
-      "수동 로그 분석으로 15개 서버 로그를 tail -f로 추적해야 했습니다. " +
-      "18시간 장애 추적에서 어느 서비스에서 시작된 문제인지 파악하기 어려웠고, " +
-      "비즈니스 컨텍스트가 부족해 기술적 에러만 표시되었습니다.\n\n" +
+      "Observability에서 가장 어려웠던 것은 장애가 발생했을 때 '어디서 시작된 문제인지' 찾는 것이었어요. 로그 18시간 뒤지는 경험은 정말... 이건 엔지니어링이 아니라 운에 맡기는 거더라고요.\n\n" +
+      "문제 상황: ₩500B 규모 이커머스 플랫폼에 Legacy Scouter APM만 있었어요. Java만 지원해서 React, Vue.js, Go 서비스는 완전히 사각지대였죠. 결제 완료율이 갑자기 95%에서 87%로 떨어졌는데, 어느 서비스에서 문제가 시작되었는지 알 수가 없었어요. 15개 서버에 tail -f로 로그를 열어두고, Ctrl+F로 에러 찾고... 18시간 동안 로그만 봤습니다.\n\n" +
       "OpenTelemetry 아키텍처를 설계하여 12개 서버에 Collector를 배포했습니다. " +
       "OTLP 프로토콜로 traces, metrics, logs를 수집하고, batch processor로 1000개씩 묶어 처리했습니다. " +
       "memory_limiter로 서버당 10GB 제한을 두고, resource processor로 production 네임스페이스를 태그했습니다.\n\n" +
@@ -41,10 +38,10 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "기술적 메트릭과 비즈니스 컨텍스트의 결합이 진짜 통찰력을 제공합니다.",
   },
   {
-    id: 59,
+    id: 70,
     category1: "Infrastructure",
     category2: "Monitoring",
-    question: "How do you approach monitoring strategy for microservices?",
+    question: "마이크로서비스 환경에서의 모니터링 전략은 어떻게 접근하나요?",
     answer:
       "마이크로서비스 모니터링 전략에서 가장 중요한 것은 서비스 간 의존성 추적과 장애 전파 경로 파악입니다.\n\n" +
       "20개 마이크로서비스 환경에서 각 서비스가 독립적으로 메트릭을 생성하다 보니 전체 시스템 상태 파악이 어려웠습니다. " +
@@ -67,10 +64,10 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "결과적으로 서비스별 가용성을 99.95%로 향상시키고, 평균 장애 복구시간을 4시간에서 15분으로 단축했습니다.",
   },
   {
-    id: 60,
+    id: 71,
     category1: "Infrastructure",
     category2: "Distributed Tracing",
-    question: "What challenges did you face implementing distributed tracing?",
+    question: "분산 트레이싱 구현에서 어떤 어려움을 겪었나요?",
     answer:
       "분산 트레이싱 구현에서 가장 큰 도전은 Context Propagation의 일관성과 성능 오버헤드의 균형이었습니다.\n\n" +
       "처음에는 각 언어별로 다른 tracing 라이브러리를 사용했는데, Java는 Jaeger, Go는 Zipkin, JavaScript는 자체 구현으로 " +
@@ -103,8 +100,7 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
     id: 62,
     category1: "Infrastructure",
     category2: "Time-Series Database",
-    question:
-      "What is your experience with time-series databases like InfluxDB?",
+    question: "InfluxDB 같은 시계열 데이터베이스 경험에 대해 설명해주세요.",
     answer:
       "InfluxDB 운영에서 가장 중요한 것은 데이터 보존 정책과 쿼리 성능 최적화입니다.\n\n" +
       "고속 메트릭 수집을 위해 InfluxDB를 선택했습니다. 초당 400개 이벤트를 처리하는 환경에서 " +
@@ -135,10 +131,10 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "peak load 시에도 안정적인 성능을 유지했습니다.",
   },
   {
-    id: 66,
+    id: 72,
     category1: "Infrastructure",
     category2: "Observability",
-    question: "How do you implement effective alerting strategies?",
+    question: "효과적인 알림 전략을 어떻게 구현하나요?",
     answer:
       "효과적인 알림 전략의 핵심은 Alert Fatigue 방지와 Actionable Alert 설계입니다.\n\n" +
       "처음에는 모든 임계값 초과에 대해 알림을 설정했더니 하루 500개 이상의 알림이 발생했습니다. " +
@@ -172,10 +168,10 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "월별 Alert Review 회의에서 팀과 함께 알림 효과성을 평가했습니다.",
   },
   {
-    id: 67,
+    id: 73,
     category1: "Infrastructure",
     category2: "Time-Series Database",
-    question: "How do you optimize time-series data retention and storage?",
+    question: "시계열 데이터 보존 및 스토리지를 어떻게 최적화하나요?",
     answer:
       "시계열 데이터 보존과 스토리지 최적화에서 가장 중요한 것은 데이터 생명주기 관리와 압축 전략입니다.\n\n" +
       "데이터 계층화 전략을 구축했습니다. Hot 데이터는 SSD에 7일간 보관하여 실시간 쿼리 성능을 보장하고, " +
@@ -209,10 +205,10 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "데이터 보존 기간을 7일에서 1년으로 확장했습니다.",
   },
   {
-    id: 68,
+    id: 74,
     category1: "Infrastructure",
     category2: "Observability",
-    question: "What's your approach to implementing SRE practices?",
+    question: "SRE 실천 방법에 대해 어떻게 접근하나요?",
     answer:
       "SRE 실천에서 가장 중요한 것은 SLI/SLO 기반의 데이터 주도 의사결정과 Error Budget 관리입니다.\n\n" +
       "Service Level Indicator를 정의하는 것부터 시작했습니다. " +

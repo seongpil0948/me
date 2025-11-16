@@ -39,13 +39,13 @@ export const infraCoreQuestions: InterviewQuestion[] = [
   {
     id: 10,
     category1: "Infrastructure",
-    category2: "AWS",
-    question: "Please explain your AWS experience and certifications.",
+    category2: "Kubernetes",
+    question: "Kubernetes 운영에서 가장 어려웠던 점과 해결 방법은 무엇인가요?",
     answer:
       "Kubernetes 운영에서 가장 어려운 것은 네트워크 디버깅과 리소스 경합입니다.\n\n" +
       "EKS 클러스터 운영 경험 100개 이상의 Pod를 관리하면서 겪은 주요 도전들을 공유하겠습니다. " +
       "네트워크 문제 해결에서 Pod 간 통신 장애 시 가장 효과적인 디버깅 순서를 확립했습니다. " +
-      "kubectl exec로 Pod-to-Pod 연결성을 확인하고, DNS 해상도 문제를 검증하며, CNI 네트워크 상태를 점검합니다.\n\n" +
+      "kubectl exec로 Pod-to-Pod 연결성을 확인하고, DNS Resolution 문제를 검증하며, CNI 네트워크 상태를 점검합니다.\n\n" +
       "실제 장애 사례로 Pod Network 파편화 문제가 있었습니다. 특정 Node의 Pod들이 간헐적 connection timeout을 보였는데, " +
       "원인은 AWS ENI 한계였습니다. t3.medium의 경우 6개 ENI에 각각 6개 IP로 최대 36개 Pod만 지원 가능한데 이를 초과했던 것입니다. " +
       "Node 인스턴스 타입을 t3.large로 변경하고 Pod 밀도를 조정하여 해결했습니다.\n\n" +
@@ -66,49 +66,65 @@ export const infraCoreQuestions: InterviewQuestion[] = [
     id: 130,
     category1: "Infrastructure",
     category2: "AWS",
-    question: "Please explain your AWS experience and certifications.",
+    question: "AWS 경험과 자격증에 대해 설명해주세요.",
     answer:
-      "AWS 아키텍처 설계에서 가장 중요한 것은 장애 도메인 분리와 비용 최적화의 균형입니다.\n\n" +
-      "Multi-AZ 고가용성 아키텍처를 구성했습니다. AZ-1a에 ECS Fargate Primary, AZ-1b에 Secondary, AZ-1c에 Standby를 배치하고, " +
-      "RDS는 Primary와 Replica로, Redis는 3개 Node Sentinel 구성으로 설계했습니다.\n\n" +
-      "ECS Fargate vs EKS 선택에서 가장 고민했던 것은 관리 복잡도 vs 제어 권한이었습니다. " +
-      "ECS Fargate를 선택한 이유는 서버리스 컨테이너로 패치 관리가 불필요하고 초 단위 과금이 가능했기 때문입니다. " +
-      "단점은 Kubernetes 생태계 제약과 디버깅 어려움이었습니다.\n\n" +
-      "Site-to-Site VPN 1.25Gbps를 구현하여 온프레미스와 AWS 간 하이브리드 아키텍처를 구축했습니다. " +
-      "BGP 라우팅 대신 정적 라우팅을 선택한 이유는 온프레미스 네트워크팀의 BGP 운영 경험 부족과 " +
-      "라우팅 테이블 예측 가능성 필요 때문이었습니다. 결과적으로 평균 처리량 800Mbps, 지연시간 P95 기준 15ms를 달성했습니다.\n\n" +
-      "S3 Lifecycle 비용 최적화 전략으로 30일 후 Standard IA, 90일 후 Glacier, 7년 후 Deep Archive로 이동하는 정책을 수립했습니다. " +
-      "월 스토리지 비용을 5,000달러에서 2,500달러로 50% 절감했습니다.\n\n" +
-      "Athena + Glue Data Lake 아키텍처에서 파티션 프로젝션으로 성능을 최적화했습니다. " +
-      "10TB 스캔을 100GB 스캔으로 99% 축소하고 쿼리 시간을 5분에서 10초로 단축했습니다. " +
-      "CloudFormation Infrastructure as Code로 템플릿 모듈화 전략을 적용하여 " +
-      "수동 콘솔 작업 2시간을 자동화 12분으로 90% 시간 단축했습니다.\n\n" +
-      "AWS 인증 취득 과정에서 DevOps Professional 핵심 통찰로 CodePipeline보다 GitHub Actions + AWS CLI가 유연하고, " +
-      "SysOps Administrator 운영 경험으로 Systems Manager 패치 관리와 CloudTrail + GuardDuty 보안 모니터링을 구축했습니다. " +
-      "현재 운영 중인 AWS 아키텍처는 가용성 99.99%, 월 2,500달러 비용 효율성, Auto Scaling으로 트래픽 10배 증가 대응이 가능합니다.\n\n" +
-      "핵심 교훈은 AWS는 도구가 아니라 플랫폼이라는 것입니다. " +
-      "각 서비스의 한계와 연동 방식을 이해해야 안정적인 운영이 가능합니다.",
+      "AWS 아키텍처 설계에서 가장 어려웠던 것은 EKS vs ECS 선택이었어요. 기술적으론 EKS가 더 나았지만, 팀 상황을 고려하니 ECS가 현실적이었죠.\n\n" +
+      "문제 상황: ₩500B 이커머스 플랫폼을 컨테이너 환경으로 마이그레이션해야 했어요. 당시 DevOps 2-3명이 전체 인프라를 담당하고 있었고, Kubernetes 경험은 제한적이었죠.\n\n" +
+      "EKS vs ECS 고민 과정:\n\n" +
+      "처음엔 EKS가 확실히 매력적이었어요. Istio로 Service Mesh 구성할 수 있고, Kubernetes 표준 생태계를 쓸 수 있고, Ambient Mode로 리소스 효율성도 높일 수 있잖아요. CKA 자격증도 있었고요.\n\n" +
+      "하지만 현실적인 장벽들이 많았어요:\n\n" +
+      "첫째, 팀 숙련도. Kubernetes 자체는 어느 정도 알지만, 프로덕션 운영은 다르더라고요. Istio 운영 숙련도 쌓는 데만 최소 6개월은 필요했어요. 그 시간이 우리에겐 없었죠. 레거시 마이그레이션과 데이터 플랫폼 구축이 더 급했거든요.\n\n" +
+      "둘째, 기술 성숙도 리스크. Istio Ambient Mode가 Beta 단계였고, Gateway API와의 통합에 엣지 케이스가 많았어요. 레퍼런스도 거의 없었죠. '우리가 first mover가 되어야 하나?'라는 고민이 컸습니다.\n\n" +
+      "셋째, 운영 복잡도. EKS는 Control Plane만 관리형이고, Worker Node는 직접 관리해야 해요. 패치, 보안, 스케일링 모두 우리 몫이죠. 반면 ECS Fargate는 완전 서버리스라 패치 걱정이 없었어요.\n\n" +
+      "최종 선택: ECS Fargate\n\n" +
+      "결국 ECS Fargate를 선택했어요. 이유는:\n\n" +
+      "1. 관리 오버헤드 최소화: Worker Node 없이 컨테이너만 배포\n" +
+      "2. 비용 효율성: 초 단위 과금, 유휴 리소스 제로\n" +
+      "3. AWS 생태계 통합: S3, RDS, Glue, Athena와 이미 깊이 통합되어 있었어요\n" +
+      "4. 빠른 학습 곡선: 팀이 2주 만에 프로덕션 배포 가능했어요\n\n" +
+      "물론 단점도 명확했어요. Kubernetes 생태계의 풍부한 도구들을 못 쓰고, 디버깅이 어렵고, Sidecar 패턴 구현이 제한적이었죠.\n\n" +
+      "Multi-AZ 고가용성 설계:\n\n" +
+      "AZ-1a에 ECS Fargate Primary 클러스터, AZ-1b에 Secondary, AZ-1c에 Standby를 배치했어요. ALB가 Health Check로 자동 라우팅하고, RDS는 Multi-AZ로 구성했습니다. Redis는 3개 Node로 Sentinel 구성해서 자동 장애 조치가 가능했죠.\n\n" +
+      "실제 장애 경험에서 배운 것:\n\n" +
+      "한번은 AZ-1a에서 AWS 네트워크 장애가 발생했어요. 다행히 ALB가 자동으로 AZ-1b로 트래픽을 전환해서 서비스는 유지됐죠. 이때 Multi-AZ 설계의 진가를 느꼈습니다.\n\n" +
+      "S3 + Athena 데이터 레이크 비용 최적화:\n\n" +
+      "처음엔 모든 로그를 S3 Standard에 저장했는데, 월 5,000달러가 나왔어요. 'Lifecycle Policy를 써보자'고 해서 30일 후 Standard-IA, 90일 후 Glacier, 7년 후 Deep Archive로 자동 이동하게 했죠. 월 비용이 2,500달러로 50% 절감됐어요.\n\n" +
+      "Athena 쿼리 최적화도 중요했어요. 처음엔 Parquet 파일만 썼는데, 파티션 프로젝션을 추가하니까 10TB 스캔이 100GB로 줄었어요. 쿼리 시간도 5분에서 10초로 단축됐죠.\n\n" +
+      "AWS 인증 취득 과정에서 배운 점:\n\n" +
+      "DevOps Professional을 준비하면서 CodePipeline, CodeBuild를 공부했는데, 실무에서는 GitHub Actions + AWS CLI가 훨씬 유연하더라고요. 이론과 실무의 차이를 느꼈죠.\n\n" +
+      "Advanced Networking Specialty에서는 VPN, Direct Connect, Transit Gateway의 실전 활용법을 배웠어요. 특히 Site-to-Site VPN 설계할 때 큰 도움이 됐습니다.\n\n" +
+      "운영 성과:\n\n" +
+      "가용성 99.9%에서 99.95%로 개선, 월 인프라 비용 2,500달러 유지, Auto Scaling으로 트래픽 5배 증가에도 안정적 대응.\n\n" +
+      "핵심 교훈은, 최신 기술이 항상 정답은 아니라는 거예요. EKS가 기술적으로 더 나아도, 팀 상황과 비즈니스 우선순위를 고려하면 ECS가 더 현명한 선택일 수 있죠. 토스 입사 후에는 이미 Kubernetes가 표준화되어 있고 DevOps 팀이 성숙해 있으니, 그때는 EKS의 진가를 발휘할 수 있을 것 같습니다.",
   },
   {
     id: 14,
     category1: "Infrastructure",
     category2: "IaC",
-    question: "What is your Infrastructure as Code experience?",
+    question: "Infrastructure as Code 경험에 대해 설명해주세요.",
     answer:
-      "IaC의 가장 큰 함정은 상태 불일치와 의존성 순환입니다. 실제 운영에서 배운 교훈들을 공유하겠습니다.\n\n" +
-      "Terraform State 관리의 현실에서 State Drift 문제가 있었습니다. 수동으로 AWS 콘솔에서 수정한 리소스들이 " +
-      "terraform plan에서 차이 발생했고, 매주 금요일 상태 검증 자동화를 구축하여 drift 감지 시 Slack 알림을 보내도록 했습니다.\n\n" +
-      "Remote State Locking 전략으로 S3 backend + DynamoDB 테이블로 동시 수정을 방지했지만, " +
-      "10분 이상 실행 시 lock timeout이 발생하여 수동 해제가 필요했습니다. " +
-      "CI/CD에서 lock-timeout을 20분으로 설정하여 해결했습니다.\n\n" +
-      "모듈 설계 철학에서는 너무 많은 매개변수보다 컨벤션 기반 설계를 선택했습니다. " +
-      "environment와 service_name만 받아 내부적으로 naming convention을 적용하는 방식으로 단순화했습니다.\n\n" +
-      "Dependency Hell 해결이 가장 어려웠습니다. EKS 클러스터 → ALB Ingress Controller → Route53 → EKS의 " +
-      "순환 의존성으로 apply 실패가 발생했는데, 단계별 apply + data source 활용으로 참조를 분리하여 해결했습니다.\n\n" +
-      "GitOps와 통합하여 terraform plan을 JSON으로 변환하고 PR 코멘트에 변경사항 요약을 자동으로 추가했습니다. " +
-      "6개월 운영 후 Best Practices로 환경별 workspace 분리, validation 블록으로 잘못된 입력 방지, " +
-      "provider 버전 고정, terraform import로 기존 리소스의 점진적 IaC화를 확립했습니다.\n\n" +
-      "핵심 깨달음은 Terraform은 도구가 아니라 인프라 거버넌스 시스템이라는 것입니다. " +
-      "코드 리뷰, 승인 프로세스, 변경 이력 관리까지 포함해야 진정한 IaC의 가치를 얻을 수 있습니다.",
+      "IaC에서 가장 어려웠던 것은 State Drift와 의존성 순환이었어요. 클릭 몇 번이면 끝날 걸 코드로 하니까 오히려 복잡해 보였죠.\n\n" +
+      "문제 상황: Terraform 도입 초기에 '왜 굳이 이렇게까지 해야 하나?'는 질문을 많이 받았어요. AWS 콘솔에서 클릭 몇 번이면 VPC 만들어지는데, Terraform 코드 100줄 짜는게 효율적이냐는 거죠.\n\n" +
+      "그러다가 실제 장애를 겪었어요:\n\n" +
+      "어느 날 Security Group 규칙이 사라졌어요. 누가 콘솔에서 '잠깐 테스트하려고' 수정했다가 복구를 안 한 거죠. 문제는 어떤 규칙이 원래 있었는지 아무도 모른다는 거였어요. 백업도 없었고요. 그때부터 'IaC는 선택이 아니라 필수구나'를 깨달았습니다.\n\n" +
+      "Terraform State 관리의 현실:\n\n" +
+      "처음엔 로컬에 state 파일을 두었어요. 근데 팀원이 동시에 apply하다가 state 충돌이 나서 리소스가 꼬였죠. S3 backend + DynamoDB locking으로 바꿨는데, 이번엔 다른 문제가 생겼어요.\n\n" +
+      "10분 이상 terraform apply가 실행되면 lock timeout이 나서 수동으로 DynamoDB 테이블에 가서 lock을 지워야 했어요. CI/CD 파이프라인에서 특히 자주 발생했죠. lock-timeout을 20분으로 늘리고, 장시간 실행되는 작업은 별도 workspace로 분리했습니다.\n\n" +
+      "State Drift 감지 자동화:\n\n" +
+      "개발자들이 급하게 콘솔에서 수정하는 일이 계속 생기더라고요. terraform plan 하면 차이가 나는데, 아무도 안 봐요. 그래서 매주 금요일 자동으로 terraform plan을 돌려서 drift가 있으면 Slack으로 알림 보내게 했어요. '이거 콘솔에서 누가 수정했어요?'라고요.\n\n" +
+      "의존성 지옥 해결:\n\n" +
+      "가장 힘들었던 게 순환 의존성이었어요. ECS 클러스터를 만들려면 VPC가 필요하고, VPC를 만들려면 Subnet이 필요하고, Subnet을 만들려면... 이렇게 꼬리에 꼬리를 물더라고요. 한 번 apply에 모든 걸 만들려다가 실패하고, 단계별로 쪼개서 apply 했어요.\n\n" +
+      "모듈 설계 실수와 개선:\n\n" +
+      "처음엔 모든 걸 변수로 받으려고 했어요. vpc_cidr, subnet_cidrs, availability_zones, nat_gateway_count... 변수만 30개 넘어가니까 쓰는 사람도 헷갈리더라고요. \n\n" +
+      "컨벤션 기반으로 바꿨어요. environment와 service_name만 받고, 내부적으로 naming convention을 자동 적용하는 거죠. dev-api-vpc, prod-web-subnet-a 이런 식으로요. 훨씬 깔끔해졌습니다.\n\n" +
+      "GitOps 통합:\n\n" +
+      "terraform plan 결과를 PR 코멘트에 자동으로 추가했어요. 변경사항을 한눈에 볼 수 있으니까 코드 리뷰가 훨씬 쉬워졌죠. 실수로 프로덕션 리소스를 삭제하려는 PR이 올라오면 바로 눈에 띄었어요.\n\n" +
+      "6개월 운영 후 Best Practices:\n\n" +
+      "1. 환경별 workspace 분리: dev, staging, prod 각각 독립\n" +
+      "2. validation 블록으로 잘못된 입력 방지: CIDR 범위 검증, 네이밍 규칙 체크\n" +
+      "3. provider 버전 고정: AWS provider 업데이트로 갑자기 문법 바뀌는 일 방지\n" +
+      "4. terraform import로 기존 리소스 점진적 IaC화: 한꺼번에 안 하고 하나씩\n\n" +
+      "가장 큰 성과는 신뢰였어요. 이제 누구라도 terraform apply만 하면 동일한 인프라가 생성되니까, '내 로컬에서는 되는데요?'같은 말이 사라졌죠.\n\n" +
+      "핵심 교훈은, Terraform은 단순히 인프라를 코드로 만드는 도구가 아니라 인프라 거버넌스 시스템이라는 거예요. 코드 리뷰, 승인 프로세스, 변경 이력 관리까지 포함해야 진정한 가치를 얻을 수 있습니다.",
   },
 ];
