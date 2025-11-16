@@ -127,7 +127,6 @@ export const defensiveTacticsQuestions: InterviewQuestion[] = [
       "**B. AWS 인프라 최적화**\n" +
       "- 비용 절감 기회 발굴 (S3 Lifecycle 50% 절감 경험)\n" +
       "- VPC 네트워킹 설계 개선\n" +
-      "- CloudFormation/Terraform IaC 고도화\n\n" +
       "**C. CI/CD 자동화**\n" +
       "- 배포 파이프라인 최적화 (2시간 → 12분 경험)\n" +
       "- GitOps 워크플로우 개선\n" +

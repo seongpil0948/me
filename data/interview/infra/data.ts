@@ -87,41 +87,16 @@ export const infraDataQuestions: InterviewQuestion[] = [
     category2: "Data Pipeline",
     question: "데이터 파이프라인 장애 복구를 어떻게 처리하나요?",
     answer:
-      "데이터 파이프라인 장애 복구에서 가장 중요한 것은 빠른 감지와 자동 복구, 그리고 데이터 일관성 보장입니다.\n\n" +
-      "Circuit Breaker 패턴으로 장애 전파를 차단했습니다. " +
-      "downstream 서비스의 실패율이 50%를 초과하면 요청을 차단하고, " +
-      "half-open 상태에서 점진적으로 트래픽을 복구했습니다. " +
-      "이로써 cascade failure를 방지하고 시스템 전체의 안정성을 유지했습니다.\n\n" +
-      "Checkpointing과 상태 관리로 정확한 재시작을 구현했습니다. " +
-      "Kafka 오프셋, 처리된 파일 목록, 중간 결과를 Redis에 저장하여 " +
-      "장애 발생 시 마지막 성공 지점부터 재시작할 수 있도록 했습니다. " +
-      "exactly-once processing을 보장했습니다.\n\n" +
-      "Dead Letter Queue와 Poison Message 처리 전략을 구축했습니다. " +
-      "3회 재시도 후 실패한 메시지는 DLQ로 이동시키고, " +
-      "수동 검토 후 데이터 정제를 거쳐 재처리하는 워크플로우를 만들었습니다. " +
-      "하나의 잘못된 메시지로 인한 전체 파이프라인 중단을 방지했습니다.\n\n" +
-      "Exponential Backoff와 Jitter를 적용한 재시도 메커니즘을 구현했습니다. " +
-      "즉시 재시도 → 2초 → 4초 → 8초 → 16초 간격으로 증가시키고, " +
-      "여러 프로세서가 동시에 재시도하는 thundering herd를 방지하기 위해 " +
-      "랜덤 지연을 추가했습니다.\n\n" +
-      "데이터 무결성 검증을 자동화했습니다. " +
-      "각 배치 처리 후 row count, checksum, business rule validation을 수행하고, " +
-      "불일치 발견 시 자동으로 롤백하고 재처리를 시작했습니다. " +
-      "SLA를 위반하기 전에 proactive하게 문제를 해결했습니다.\n\n" +
-      "Multi-path 처리로 복원력을 강화했습니다. " +
-      "Primary path가 실패하면 simplified logic의 fallback path로 전환하여 " +
-      "기능은 제한적이지만 서비스 중단을 방지했습니다. " +
-      "degraded mode로 최소 기능은 유지했습니다.\n\n" +
-      "Real-time 모니터링과 알림으로 빠른 대응을 구현했습니다. " +
-      "pipeline lag, error rate, data freshness를 추적하고, " +
-      "임계값 초과 시 5분 내 담당자에게 알림을 보냈습니다. " +
-      "Runbook 자동화로 L1 대응을 무인화했습니다.\n\n" +
-      "Data Lineage 추적으로 영향 범위를 신속히 파악했습니다. " +
-      "어떤 upstream 데이터가 어떤 downstream 시스템에 영향을 주는지 매핑하여 " +
-      "장애 시 영향받는 대시보드와 알림을 선제적으로 비활성화했습니다.\n\n" +
-      "결과적으로 MTTR을 4시간에서 15분으로 단축하고, " +
-      "데이터 유실률을 0.1%에서 0.001%로 개선했으며, " +
-      "파이프라인 가용성을 99.5%에서 99.9%로 향상시켰습니다.",
+      "데이터 파이프라인 장애 복구에서 가장 중요한 것은 빠른 감지와 자동 복구입니다. AWS Step Functions, Athena, Glue, S3 기반 파이프라인에서 실제로 마주한 문제들과 해결 방법을 설명하겠습니다.\n\n" +
+      "AWS SNS 기반 에러 알림 시스템을 구축했습니다. Step Functions의 각 State에서 실패가 발생하면 즉시 SNS Topic으로 알림을 보냈어요. Lambda에서 Athena 쿼리 실패, Glue Job 실패, S3 권한 오류 등을 감지하면 Slack과 PagerDuty로 알림을 전송했습니다. 에러 메시지에는 실패한 Step, 에러 타입, 처리 중이던 데이터 경로, 재실행 가능 여부를 포함했죠. 이렇게 해서 장애 발생 후 5분 내 담당자가 인지할 수 있었어요.\n\n" +
+      "S3 쓰로틀링(429 에러)이 가장 빈번한 문제였습니다. 처음엔 Step Functions에서 15개 Athena 쿼리를 병렬로 실행했는데, 각 쿼리가 S3에 동시에 접근하면서 초당 3,500 PUT 요청 제한을 초과했어요. S3는 prefix당 3,500 TPS를 제공하는데, 모든 쿼리가 같은 output/ prefix에 쓰면서 병목이 발생한 거죠. 해결책은 두 가지였습니다. 첫째, 병렬 쿼리 수를 4개에서 2개로 줄였어요. 둘째, S3 output path를 쿼리 타입별로 분리했습니다. output/user-behavior/, output/commerce/, output/performance/ 이렇게 prefix를 나눠서 각각 독립적인 TPS를 확보했죠. 이렇게 해서 쓰로틀링 에러를 100% 제거했습니다.\n\n" +
+      "Athena 쿼리 타임아웃 문제도 있었습니다. 특정 쿼리가 5분 안에 완료되지 않으면 Lambda의 15분 타임아웃에 걸렸어요. 원인은 파티션 프루닝 없이 전체 테이블을 스캔해서였습니다. WHERE date >= '2024-01-01' 조건을 추가해서 스캔 범위를 90% 줄였고, 쿼리 실행 시간을 5분에서 1분으로 단축했죠. 또한 Athena 쿼리 결과를 S3 Glacier로 자동 전환(7일 후)해서 스토리지 비용도 40% 절감했습니다.\n\n" +
+      "Glue Job 실패 시 자동 재시도 전략을 구현했습니다. Glue에는 내장 재시도 기능이 있지만, 데이터 품질 오류로 실패한 경우 재시도해도 소용없어요. 그래서 에러 타입별로 재시도 전략을 차등 적용했습니다. transient error(네트워크 오류, AWS throttling)는 3회 자동 재시도하고, data quality error(스키마 불일치, null 값)는 즉시 실패시키고 SNS 알림을 보냈죠. Glue의 JobRun API로 에러 타입을 파싱해서 분기 처리했습니다.\n\n" +
+      "Step Functions의 Retry와 Catch 설정을 최적화했습니다. Athena 쿼리 실패 시 IntervalSeconds=10, MaxAttempts=3, BackoffRate=2.0으로 설정해서 exponential backoff를 적용했어요. S3 쓰로틀링 같은 일시적 오류는 10초 후 재시도, 20초 후 2차 재시도 이런 식으로 자동 복구했습니다. 하지만 SQL syntax error나 권한 오류는 재시도해도 의미가 없으니 Catch로 바로 SNS 알림을 보냈죠.\n\n" +
+      "데이터 재처리를 위한 Idempotent 설계가 중요했습니다. Athena CTAS 쿼리는 CREATE TABLE AS SELECT 대신 CREATE OR REPLACE를 사용해서, 재실행 시 기존 테이블을 덮어쓰도록 했어요. S3 파일도 고유한 경로(s3://bucket/year=2024/month=03/day=15/)로 파티셔닝해서, 날짜별로 재처리해도 충돌이 없도록 설계했습니다. 이렇게 해서 장애 복구 시 특정 날짜만 재실행할 수 있었죠.\n\n" +
+      "CloudWatch 알람으로 proactive 모니터링을 구축했습니다. Step Functions 실행 실패 횟수, Athena 스캔 데이터 용량(임계값 5TB 초과 시 알림), S3 GET/PUT 요청 급증, Glue Job DPU 사용률을 추적했어요. 비정상 패턴이 감지되면 자동으로 SNS 알림을 보내서, 장애가 발생하기 전에 선제 대응할 수 있었습니다.\n\n" +
+      "Data Lineage를 Step Functions의 실행 이력으로 추적했습니다. 각 State의 Input/Output을 S3에 JSON으로 저장해서, 어떤 원본 데이터가 어떤 테이블로 가공되었는지 추적 가능했어요. 장애 발생 시 영향받는 downstream 대시보드를 빠르게 파악하고, 비즈니스 팀에 사전 안내할 수 있었죠.\n\n" +
+      "결과적으로 MTTR을 4시간에서 15분으로 단축했고, S3 쓰로틀링 에러를 100% 제거했으며, 파이프라인 성공률을 92%에서 99.5%로 향상시켰습니다. 가장 중요한 성과는, SNS 알림으로 장애를 5분 내 인지하고 자동 재시도로 80% 이상의 문제가 인간 개입 없이 해결되었다는 것입니다.",
   },
   {
     id: 68,

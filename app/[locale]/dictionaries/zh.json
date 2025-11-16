@@ -103,7 +103,6 @@
         "构建Airflow 5服务器集群：通过统计数据、Data Lake、准实时CDC进行数据迁移 (200+ DAGs)",
         "行动1：设计和运营混合了AWS ECS Fargate无服务器容器环境和本地（CentOS/Ubuntu）Docker环境的混合基础设施",
         "通过APISIX网关和Nginx集中管理微服务流量，应用速率限制和断路器模式",
-        "使用CloudFormation（IaC）自动化基础设施配置，通过EC2优化和S3生命周期策略实现月运营成本50%削减",
         "行动2：识别和优化复杂应用堆栈的性能瓶颈：React/Next.js前端、Spring Boot/Node.js后端API服务器、Oracle DB",
         "通过引入OpenTelemetry升级遗留监控系统，通过分布式跟踪将新系统的错误检测时间从18小时缩短到10分钟以内，减少99%",
         "构建Apache Kafka和Redis Sentinel集群，稳定处理日均10亿条消息",

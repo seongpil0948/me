@@ -102,7 +102,6 @@
         "Apache Airflow 5노드 클러스터 구현으로 200+ DAG를 통한 ETL 워크플로우, 통계 집계, 데이터 레이크 동기화, 준실시간 CDC 관리",
         "AWS ECS Fargate 서버리스 컨테이너와 온프레미스 Docker 환경(CentOS/Ubuntu)을 통합한 하이브리드 클라우드 인프라 설계, 원활한 워크로드 분산 보장",
         "APISIX 및 Nginx 기반 중앙집중식 API 게이트웨이 구축, Rate Limiting, Circuit Breaker 패턴, Spring Cloud Eureka 동적 서비스 디스커버리 적용",
-        "AWS CloudFormation IaC 프로비저닝 자동화로 EC2 라이트사이징 및 S3 생명주기 정책을 통한 월간 운영 비용 50% 절감",
         "React/Next.js 프론트엔드, Spring Boot/Node.js 마이크로서비스, Oracle 데이터베이스 전체 스택 성능 최적화로 핵심 병목 지점 제거",
         "OpenTelemetry 관측성 플랫폼 배포로 분산 추적 및 메트릭 상관관계 분석을 통한 MTTD 99% 단축 (18시간 → 10분)",
         "Apache Kafka 및 Redis Sentinel 고가용성 클러스터 구축으로 일일 2천만~5천만 건 메시지를 99.9% 가동시간 SLA로 처리",

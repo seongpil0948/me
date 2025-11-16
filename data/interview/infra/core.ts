@@ -91,28 +91,25 @@ export const infraCoreQuestions: InterviewQuestion[] = [
     category2: "IaC",
     question: "Infrastructure as Code 경험에 대해 설명해주세요.",
     answer:
-      "IaC에서 가장 어려웠던 것은 State Drift와 의존성 순환이었어요. 클릭 몇 번이면 끝날 걸 코드로 하니까 오히려 복잡해 보였죠.\n\n" +
-      "문제 상황: Terraform 도입 초기에 '왜 굳이 이렇게까지 해야 하나?'는 질문을 많이 받았어요. AWS 콘솔에서 클릭 몇 번이면 VPC 만들어지는데, Terraform 코드 100줄 짜는게 효율적이냐는 거죠.\n\n" +
-      "그러다가 실제 장애를 겪었어요:\n\n" +
-      "어느 날 Security Group 규칙이 사라졌어요. 누가 콘솔에서 '잠깐 테스트하려고' 수정했다가 복구를 안 한 거죠. 문제는 어떤 규칙이 원래 있었는지 아무도 모른다는 거였어요. 백업도 없었고요. 그때부터 'IaC는 선택이 아니라 필수구나'를 깨달았습니다.\n\n" +
-      "Terraform State 관리의 현실:\n\n" +
-      "처음엔 로컬에 state 파일을 두었어요. 근데 팀원이 동시에 apply하다가 state 충돌이 나서 리소스가 꼬였죠. S3 backend + DynamoDB locking으로 바꿨는데, 이번엔 다른 문제가 생겼어요.\n\n" +
-      "10분 이상 terraform apply가 실행되면 lock timeout이 나서 수동으로 DynamoDB 테이블에 가서 lock을 지워야 했어요. CI/CD 파이프라인에서 특히 자주 발생했죠. lock-timeout을 20분으로 늘리고, 장시간 실행되는 작업은 별도 workspace로 분리했습니다.\n\n" +
-      "State Drift 감지 자동화:\n\n" +
-      "개발자들이 급하게 콘솔에서 수정하는 일이 계속 생기더라고요. terraform plan 하면 차이가 나는데, 아무도 안 봐요. 그래서 매주 금요일 자동으로 terraform plan을 돌려서 drift가 있으면 Slack으로 알림 보내게 했어요. '이거 콘솔에서 누가 수정했어요?'라고요.\n\n" +
-      "의존성 지옥 해결:\n\n" +
-      "가장 힘들었던 게 순환 의존성이었어요. ECS 클러스터를 만들려면 VPC가 필요하고, VPC를 만들려면 Subnet이 필요하고, Subnet을 만들려면... 이렇게 꼬리에 꼬리를 물더라고요. 한 번 apply에 모든 걸 만들려다가 실패하고, 단계별로 쪼개서 apply 했어요.\n\n" +
-      "모듈 설계 실수와 개선:\n\n" +
-      "처음엔 모든 걸 변수로 받으려고 했어요. vpc_cidr, subnet_cidrs, availability_zones, nat_gateway_count... 변수만 30개 넘어가니까 쓰는 사람도 헷갈리더라고요. \n\n" +
-      "컨벤션 기반으로 바꿨어요. environment와 service_name만 받고, 내부적으로 naming convention을 자동 적용하는 거죠. dev-api-vpc, prod-web-subnet-a 이런 식으로요. 훨씬 깔끔해졌습니다.\n\n" +
-      "GitOps 통합:\n\n" +
-      "terraform plan 결과를 PR 코멘트에 자동으로 추가했어요. 변경사항을 한눈에 볼 수 있으니까 코드 리뷰가 훨씬 쉬워졌죠. 실수로 프로덕션 리소스를 삭제하려는 PR이 올라오면 바로 눈에 띄었어요.\n\n" +
-      "6개월 운영 후 Best Practices:\n\n" +
-      "1. 환경별 workspace 분리: dev, staging, prod 각각 독립\n" +
-      "2. validation 블록으로 잘못된 입력 방지: CIDR 범위 검증, 네이밍 규칙 체크\n" +
-      "3. provider 버전 고정: AWS provider 업데이트로 갑자기 문법 바뀌는 일 방지\n" +
-      "4. terraform import로 기존 리소스 점진적 IaC화: 한꺼번에 안 하고 하나씩\n\n" +
-      "가장 큰 성과는 신뢰였어요. 이제 누구라도 terraform apply만 하면 동일한 인프라가 생성되니까, '내 로컬에서는 되는데요?'같은 말이 사라졌죠.\n\n" +
-      "핵심 교훈은, Terraform은 단순히 인프라를 코드로 만드는 도구가 아니라 인프라 거버넌스 시스템이라는 거예요. 코드 리뷰, 승인 프로세스, 변경 이력 관리까지 포함해야 진정한 가치를 얻을 수 있습니다.",
+      "'AWS Native로 완전 자동화하자'는 목표로 CodePipeline을 주로 활용해  모놀리식 CloudFormation 스택으로 관리했죠.\n\n" +
+      "문제는 CodeBuild에서 생성한 **동적 이미지 태그**를 CloudFormation 템플릿에 주입하기엔 제한적이었어요" +
+      "Parameter Store, Lambda 를 고려했지만, CloudFormation은 Parameter 값 변경을 Change Set으로 인식하지 않는등 관리형 서비스 장점을 가져갈 수 가 없었어요.\n\n" +
+      "Drift 문제가 있었는데. 장애 대응 때 팀원이 콘솔에서 보안 그룹을 급하게 수정하면, CloudFormation 템플릿과 실제 리소스 상태가 달라지면서. 그 상태에서 ECS Task Definition만 업데이트하려 해도 'Drift detected' 에러로 배포가 완전히 막혔습니다.\n\n" +
+      "작은 프로젝트라 인프라 수정은 콘솔에서 빠르게 하는 게 현실적인데, CloudFormation은 그런 유연성을 허용하지 않았어요. 매번 템플릿을 동기화하는 것도 부담이었고요.\n\n" +
+      "결국 '모든 걸 IaC로 관리하겠다'는 이상주의를 버렸습니다. CloudFormation으로 프로비저닝된 인프라는 VPC 단위로 격리하고, **신규 앱 배포만 Jenkins로 분리**했어요.\n\n" +
+      "Jenkins 파이프라인에서 AWS CLI로 직접 제어하니 훨씬 간단해졌죠. Task Definition 만 신규로 배포한후  스크립트도 대폭 줄었습니다 또 줄인 포인트가 있는데.\n\n" +
+      "첫 번째는 이미지 빌드 시간 단축이었습니다. 빌드 캐시, Multi-stage build를 사용했고.\n\n" +
+      "두번째는 웹훅 트리거 활용입니다. 배포 자체는 민감하지만 병목은 주로 이미지빌드에 있습니다. 푸시 시점에 웹훅으로 빌드만 먼저 시작하고, 수동 승인으로 배포를 진행하도록 했어요.\n\n" +
+      "세 번째는 Health Check 튜닝이었습니다. 신규 테스크로 트래픽 이전전에 시간이 오래 소요되는 걸 확인했어요, Health Check 간격, Threshold를  낮추고 안정화 대기 시간을 줄였습니다.\n\n" +
+      "네 번째는 Mail 통합이었습니다. 배포 실패 시 어디서 멈췄는지 찾기 어려웠는데, AWS SNS로 유관자에게 알림을 보내 MTTI 자체를 줄였습니다.\n\n" +
+      "**결과와 트레이드오프**\n\n" +
+      "배포 시간이 2시간에서 12분으로 90% 단축되었고, Drift로 인한 배포 차단이 zero가 되었습니다. 롤백 시간도 30초로 줄었고요.\n\n" +
+      "물론 트레이드오프는 있었어요. CloudFormation의 선언적 관리를 포기했고, 인프라와 애플리케이션 배포가 분리되었죠. 하지만 작은 팀에서 빠른 배포가 더 중요했기 때문에 현실적인 선택이었다고 생각합니다.\n\n" +
+      "**CloudFormation/CodePipeline에 대한 회고**\n\n" +
+      "CodeBuild 자체는 좋았어요. 빌드 환경이 격리되고, 테스트도 가능하고, 이미지 생성기 자체로 로그도 깔끔했죠. 하지만 CodePipeline과 CloudFormation 조합은 개발자 경험이 좋지 않았습니다. 특히 동적 값 주입과 Drift 처리가 너무 경직되어 있었어요.\n\n" +
+      "Terraform이었으면 좀 더 유연했을 것 같긴 해요. `local-exec` provisioner로 동적 처리도 가능하고, State 관리도 더 명확하니까요. 하지만 당시엔 팀 역량과 러닝 커브를 고려해서 익숙한 Jenkins를 선택했습니다.\n\n" +
+      "**향후 계획**\n\n" +
+      "사실 IaC 쪽은 더 많은 경험을 해보고 싶어요. Terraform으로 전체 인프라를 다시 설계해보거나, GitOps 방식의 ArgoCD 같은 것도 도전해보고 싶습니다. 특히 멀티 클러스터 환경에서 IaC를 어떻게 관리하는지 궁금하거든요.\n\n" +
+      "다만 지금은 '작동하는 시스템'이 우선이었고, Jenkins가 그 목표를 달성했습니다. 완벽한 IaC보다 팀이 유지보수 가능한 복잡도가 더 중요했어요.",
   },
 ];

@@ -297,7 +297,7 @@ throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
 
 **Location**: `data/interview/infra/`
 
-- **Core** (`core.ts`): Kubernetes, AWS, IaC (3 questions)
+- **Core** (`core.ts`): Kubernetes, AWS
 - **Observability** (`observability.ts`): Monitoring, Distributed Tracing, Time-Series DB, SRE (7 questions)
 - **Data & Messaging** (`data.ts`): Data Pipeline, Messaging, Stream Processing (5 questions)
 - **Operations** (`operations.ts`): Redis, Cost Optimization, Security, Disaster Recovery (5 questions)
@@ -448,7 +448,7 @@ import { tossIstioQuestions, tossGatewayQuestions } from "@/data/interview/toss"
 - **Cloud & Infrastructure**: AWS EKS, Kubernetes, Istio evaluation (Ambient Mode), APISIX Gateway production experience
 - **Observability**: OpenTelemetry contributor, Prometheus, Grafana, distributed tracing architecture
 - **Service Mesh**: Evaluated Istio Ambient Mode for EKS migration, expertise in mTLS and zero-trust networking
-- **DevOps**: CI/CD pipeline design, IaC (Terraform), GitOps workflows
+- **DevOps**: CI/CD pipeline design, GitOps workflows
 
 **Interview Preparation Context**: These experiences form the foundation for interview answers, particularly for DevOps/Platform/SRE positions requiring:
 
