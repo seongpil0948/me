@@ -23,7 +23,8 @@ export const tossCompanyQuestions: InterviewQuestion[] = [
       "이 과정에서 OpenTelemetry 오픈소스에 AWS SDK 및 컨테이너 환경 관련 이슈를 직접 기여하기도 했습니다.\n\n" +
       "현재 APISIX Gateway를 운영하며 동적 라우팅, Rate Limiting, RBAC 패턴을 프로덕션에 적용한 경험이 있습니다." +
       "'개발자의 배포/운영 관점에서 필요한 요구를 미리 파악하고 도와줄 수 있는' 역량은 제가 가장 중요하게 생각하는 DevOps의 본질입니다. 저는 개발자 샌드박스 환경을 직접 관리하며 VDI와 같이 개발자들이 서버에서 작업할 공간을 제공했으며, CI/CD 파이프라인을 Jenkins로 구성하며 배포 시간을 2시간에서(블루그린 배포가 수동(스위치 수동 다운ifdown lo:0) 이었음) 12분으로 90% 개선했습니다." +
-      "Cloud 네트워킹(Cross-AZ, Private Link, VPC Peering) 관련 네트워킹 분야에도 관심이 많고 Network 자격증을 , 쿠버네티스도, 리눅스 모니터링 모두 관심을 갖고 자격증도 취득했습니다. 이 능력들이 토스의 DevOps 팀에 큰 도움이 될 것이라 확신합니다.\n\n",
+      "Cloud 네트워킹(Cross-AZ, Private Link, VPC Peering) 관련 네트워킹 분야에도 관심이 많고 Network 자격증을 , 쿠버네티스도, 리눅스 모니터링 모두 관심을 갖고 자격증도 취득했습니다. 이 능력들이 토스의 DevOps 팀에 큰 도움이 될 것이라 확신합니다.\n\n" +
+      "**이 포지션에 지원한 이유**는 토스 JD를 보니 제가 경험한 대부분의 영역과 일치했기 때문입니다. SRE, 서버, 프론트엔드, 기획팀 등 전 분야의 팀원들과 소통하며 협업해온 경험이 있고, 모니터링 시스템 구축, 클라우드 인프라 최적화, 대용량 데이터 핸들링까지 실무에서 직접 다뤄왔습니다. 특히 토스의 관측성 플랫폼과 분산 시스템 운영 환경에서 제 경험을 100% 발휘하며 기여할 수 있을 것 같아 지원하게 되었습니다.",
   },
   {
     id: 202,
@@ -97,5 +98,42 @@ export const tossCompanyQuestions: InterviewQuestion[] = [
       "**추가로 궁금한 것들**\n\n" +
       "DevOps 위클리는 구체적으로 어떤 형식으로 진행되는지, 발표 자료를 준비하는지 자유 토론 형식인지 궁금하고, 경수님이 '운영해야 하는 쿠버네티스 클러스터가 계속 늘어난다'고 하셨는데 현재 몇 개 클러스터를 운영 중이고 어떤 도구로 중앙 집중식 관리를 하시는지도 알고 싶습니다. 또 재성님이 전자금융감독규정 스터디를 하셨다고 하셨는데, 구체적으로 어떤 규정이 DevOps 업무에 가장 큰 영향을 미치는지, 그리고 그것을 극복한 좋은 사례가 있는지도 궁금해요.\n\n" +
       "마지막으로, 제가 합류한다면 첫 3개월 동안 어떤 목표를 달성하기를 기대하시는지, 그리고 6개월 후에는 어떤 수준의 기여를 기대하시는지 알고 싶습니다. SLASH 같은 컨퍼런스에서 발표할 기회가 DevOps 팀원에게도 열려 있다면, 제가 OpenTelemetry나 Observability 주제로 발표해보고 싶습니다.",
+  },
+
+  // 실전 장애 대응 & 코드 레벨 경험
+  {
+    id: 206,
+    category1: "Infrastructure",
+    category2: "Incident Response",
+    question:
+      "실제 장애 상황에서 어떻게 대응했고, 결과적으로 어떤 개선을 이끌어냈는지 알려주세요.",
+    answer:
+      "최근 주문, 멤버 서비스에서 컨테이너가 간헐적으로 좀비 상태가 되는 현상이 발생했습니다.\n\n" +
+      "**문제 파악**\n\n" +
+      "컨테이너 로그를 확인해보니 프로세스가 OOM(Out of Memory)으로 종료되고 있었어요. 평소에 마운트시켜두었던 Heap dump를 분석하여 백엔드 팀원들과 공유했습니다.\n\n" +
+      "**근본 원인**\n\n" +
+      "분석 결과 두 가지 문제를 발견했어요. 첫째, Java Heap 메모리 중 템플릿 엑셀 기능에서 메모리 누수가 발생하고 있었습니다. 둘째, Java Heap 최대치가 컨테이너 limit보다 낮게 설정되어 있었죠.\n\n" +
+      "**해결 및 개선**\n\n" +
+      "백엔드 팀과 협업해서 메모리 누수를 수정하고, Heap 설정을 컨테이너 리소스에 맞게 조정했습니다. 이후 컨테이너 헬스체크뿐 아니라 힙메모리가 90% 이상 5분 이상 지속되면 백엔드 파트 및 플랫폼 지원 파트에 알림이 가도록 모니터링을 강화했어요.\n\n" +
+      "결과적으로 동일 유형의 OOM 장애는 사라졌고, 메모리 관련 이슈를 사전에 감지할 수 있는 체계가 구축됐습니다.",
+  },
+  {
+    id: 207,
+    category1: "Infrastructure",
+    category2: "Code Level Contribution",
+    question:
+      "오픈소스나 내부 인프라를 어떻게 수정하고 확장했는지 코드 레벨의 설명이 있다면 좋아요.",
+    answer:
+      "두 가지 OpenTelemetry 오픈소스 기여 사례를 말씀드리겠습니다.\n\n" +
+      "**사례 1: OpenTelemetry JavaScript - ECS Fargate Container ID 추출 버그 수정 (PR #2855)**\n\n" +
+      "AWS ECS Fargate가 cgroup 명명 규칙을 `/ecs/<taskId>/<taskId>-<containerId>` 형식으로 변경했는데, 기존 로직은 마지막 64자만 잘라내서 Container ID가 중간에 잘리는 문제가 있었어요. Datadog 같은 Observability 벤더들이 완전한 `taskId-containerId` 포맷을 요구하는데, 제대로 전달되지 않았죠.\n\n" +
+      "TypeScript로 새로운 `_extractContainerIdFromLine()` 메서드를 추가해서 Docker, containerd, CRI-O 등 다양한 컨테이너 런타임 포맷을 처리하도록 개선했습니다. 정규식 패턴 `[a-zA-Z0-9\\-_]+`로 유연하게 검증하고, 레거시 64자 로직도 fallback으로 유지해 하위 호환성을 보장했어요.\n\n" +
+      "3개월간 Maintainer 리뷰를 받으며 코드 개선을 반복했고, 최종적으로 2024년 9월에 머지됐습니다. 이후 관련 이슈 리포트가 사라졌어요.\n\n" +
+      "**사례 2: OpenTelemetry Collector - AWS SDK v2 마이그레이션 (PR #40123)**\n\n" +
+      "AWS SDK Go v1이 2025년 7월 31일에 지원 종료 예정이어서 `internal/aws/awsutil` 모듈을 v2로 마이그레이션하는 작업을 진행했습니다. 단순 버전 업그레이드가 아니라 partition, STS 관련 로직을 개선하고 기존 유닛 테스트를 모두 v2에 맞게 변환했어요.\n\n" +
+      "의존하는 awsxray exporter, awsemf exporter, awscontainerinsight receiver 등 여러 컴포넌트도 함께 업데이트했고, Go context 전파 방식을 개선해서 새로운 context를 정의하는 대신 기존 context를 전달하도록 수정했습니다.\n\n" +
+      "Maintainer에게 '정말 운이 좋았다'고 말씀드릴 정도로 세심한 코드 리뷰를 받았고, 2024년 6월에 머지됐습니다. 243줄 추가, 473줄 삭제로 코드 품질도 향상됐어요.\n\n" +
+      "**배운 점**\n\n" +
+      "오픈소스 기여는 문제를 명확히 정의하고 재현 가능한 테스트 케이스를 만들면 Maintainer들이 적극적으로 도와줍니다. 첫 기여였지만 커뮤니티의 도움 덕분에 성공할 수 있었어요.",
   },
 ];
