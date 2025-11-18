@@ -1,6 +1,6 @@
 "use client";
 
-import type { Dictionary } from "@/types/portfolio";
+import type { Dictionary } from "@/types/i18n";
 
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";

@@ -22,6 +22,7 @@
   },
   "profile": {
     "title": "Profile",
+    "name": "Seongpil Song",
     "contactInfo": "Contact Information",
     "phone": "Phone",
     "email": "Email",
@@ -313,7 +314,11 @@
     "militaryService": "Military Service",
     "resumeWebsite": "Resume Website",
     "skills": "Technical Skills",
+    "skillsTitle": "Technical Skills",
     "skillsAndCertifications": "Technical Skills & Certifications",
+    "period": "Period",
+    "position": "Position",
+    "techStack": "Tech Stack",
     "experience": "Work Experience",
     "projects": "Key Projects",
     "certifications": "Certifications",
@@ -328,6 +333,11 @@
     "logRetention": "Log Retention Expansion",
     "projectRevenue": "Revenue Increase",
     "dailyMessages": "Daily Messages"
+  },
+  "expOnlyTest": {
+    "title": "Career Description (Text Only)",
+    "copyInstructions": "Copy the content above and paste it into text-based forms.",
+    "lastUpdated": "Last Updated"
   },
   "interview": {
     "title": "Interview Q&A",

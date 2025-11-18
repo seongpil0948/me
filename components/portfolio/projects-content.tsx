@@ -1,10 +1,11 @@
 "use client";
 
+import type { Dictionary } from "@/types/i18n";
+
 import { useMemo, useState } from "react";
 
 import ProjectImageSwiper from "./project-image-swiper";
 
-import { Dictionary } from "@/types/portfolio";
 import { Locale } from "@/app/[locale]/dictionaries";
 import { projectImages } from "@/data/portfolio";
 

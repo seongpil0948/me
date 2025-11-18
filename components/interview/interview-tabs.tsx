@@ -1,6 +1,7 @@
 "use client";
 
-import type { Dictionary, InterviewQuestion } from "@/types/portfolio";
+import type { InterviewQuestion } from "@/types/portfolio";
+import type { Dictionary } from "@/types/i18n";
 
 import { Card, CardBody } from "@heroui/card";
 import { Tab, Tabs } from "@heroui/tabs";

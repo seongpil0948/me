@@ -1,7 +1,9 @@
+import type { Dictionary } from "@/types/i18n";
+
 import { Progress } from "@heroui/progress";
 import { Chip } from "@heroui/chip";
 
-import { Dictionary, Skill } from "@/types/portfolio";
+import { Skill } from "@/types/portfolio";
 
 interface SkillsContentProps {
   skills: Skill[];

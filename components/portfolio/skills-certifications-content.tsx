@@ -1,9 +1,11 @@
+import type { Dictionary } from "@/types/i18n";
+
 import { Card, CardBody } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 import { Image } from "@heroui/image";
 import { Divider } from "@heroui/divider";
 
-import { Certification, Dictionary, Skill } from "@/types/portfolio";
+import { Certification, Skill } from "@/types/portfolio";
 import { categorizeSkills, getSkillEmoji } from "@/lib/skill-utils";
 
 interface SkillsCertificationsContentProps {

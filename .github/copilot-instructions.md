@@ -101,7 +101,15 @@ import { personalInfo, summaryStats } from "@/data/personal";
 
 ### Type Definitions
 
-TypeScript types for portfolio data structures are in `types/portfolio.ts`. Dictionary type is comprehensive with nested structure for all i18n keys.
+TypeScript types for portfolio data structures are in `types/portfolio.ts`.
+
+**Dictionary Type (Auto-Inferred)**: Dictionary type is automatically inferred from JSON files following Next.js official i18n pattern. The type is defined in `types/i18n.ts` as:
+
+```typescript
+export type Dictionary = Awaited<ReturnType<typeof getDictionary>>;
+```
+
+This leverages TypeScript's JSON type inference, eliminating manual type maintenance.
 
 ## ESLint Rules (Enforced)
 

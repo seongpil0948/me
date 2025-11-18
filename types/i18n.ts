@@ -2,7 +2,13 @@
  * Type definitions for internationalization (i18n)
  */
 
-import type { Locale } from "@/app/[locale]/dictionaries";
+import type { getDictionary, Locale } from "@/app/[locale]/dictionaries";
+
+/**
+ * Dictionary type automatically inferred from JSON files
+ * This uses TypeScript's type inference to get the exact shape of dictionary objects
+ */
+export type Dictionary = Awaited<ReturnType<typeof getDictionary>>;
 
 /**
  * Locale-specific parameters for pages and layouts

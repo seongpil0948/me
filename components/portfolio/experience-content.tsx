@@ -1,5 +1,7 @@
+import type { Dictionary } from "@/types/i18n";
+
 import { Locale } from "@/app/[locale]/dictionaries";
-import { Dictionary, Experience } from "@/types/portfolio";
+import { Experience } from "@/types/portfolio";
 
 interface ExperienceContentProps {
   experiences: Experience[];

@@ -1,3 +1,5 @@
+import type { Dictionary } from "@/types/i18n";
+
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 
@@ -5,7 +7,6 @@ import { Locale } from "@/app/[locale]/dictionaries";
 import { GithubIcon } from "@/components/icons";
 import ResumePrintButton from "@/components/resume-print-button";
 import { commonStyles } from "@/constants/styles";
-import { Dictionary } from "@/types/portfolio";
 
 interface PortfolioActionButtonsProps {
   dict: Dictionary;

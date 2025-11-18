@@ -1,23 +1,11 @@
 import "server-only";
 
-import type { Dictionary } from "@/types/portfolio";
-
 const dictionaries = {
-  ko: () =>
-    import("./dictionaries/ko.json").then(
-      (module) => module.default as Dictionary,
-    ),
-  en: () =>
-    import("./dictionaries/en.json").then(
-      (module) => module.default as Dictionary,
-    ),
-  zh: () =>
-    import("./dictionaries/zh.json").then(
-      (module) => module.default as Dictionary,
-    ),
+  ko: () => import("./dictionaries/ko.json").then((module) => module.default),
+  en: () => import("./dictionaries/en.json").then((module) => module.default),
+  zh: () => import("./dictionaries/zh.json").then((module) => module.default),
 };
 
 export type Locale = keyof typeof dictionaries;
 
-export const getDictionary = async (locale: Locale): Promise<Dictionary> =>
-  dictionaries[locale]();
+export const getDictionary = async (locale: Locale) => dictionaries[locale]();

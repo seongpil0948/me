@@ -89,166 +89,6 @@ export interface SummaryStats {
   dailyMessages: string;
 }
 
-/**
- * Project details with localized content
- */
-export interface ProjectDetails {
-  title: string;
-  subtitle: string;
-  content: string[];
-}
-
-/**
- * Teamwork skills structure
- */
-export interface TeamworkSkills {
-  jiraConfluence: string;
-  gitTools: string;
-  mcpSeminar: string;
-  crossFunctional: string;
-}
-
-/**
- * Profile section of dictionary - contains both string fields and nested teamwork object
- */
-export interface ProfileDictionary extends Record<string, any> {
-  skills: string;
-  teamworkSkills: string;
-  teamwork: TeamworkSkills;
-}
-
-/**
- * Resume section of dictionary
- */
-export interface ResumeDictionary {
-  title: string;
-  summary: string;
-  contact: string;
-  education: string;
-  skills: string;
-  skillsTitle?: string;
-  experience: string;
-  projects: string;
-  certifications: string;
-  downloadPdf: string;
-  errorDetection: string;
-  costSavings: string;
-  deploymentSpeedup: string;
-  logRetention: string;
-  projectRevenue: string;
-  dailyMessages: string;
-  university: string;
-  highSchool: string;
-  military: string;
-  period?: string;
-  position?: string;
-  techStack?: string;
-  resumeWebsite: string;
-  skillsAndCertifications: string;
-}
-
-/**
- * Button labels
- */
-export interface ButtonLabels {
-  visitGithub: string;
-  visitPortfolio: string;
-  downloadResume: string;
-  viewTextResume: string;
-}
-
-/**
- * Hero section of dictionary
- */
-export interface HeroDictionary {
-  greeting: string;
-  title: string;
-  description: string;
-}
-
-/**
- * Projects section with all project details
- */
-export interface ProjectsDictionary {
-  monitoring: ProjectDetails;
-  dataLake: ProjectDetails;
-  theshop: ProjectDetails;
-  gateway: ProjectDetails;
-  airflow: ProjectDetails;
-  ixiStudio: ProjectDetails;
-  ixiAdmin: ProjectDetails;
-  drone: ProjectDetails;
-  robotPlatform: ProjectDetails;
-  inoutbox: ProjectDetails;
-  campi: ProjectDetails;
-  virtualTryOn: ProjectDetails;
-  intellisysWebsite: ProjectDetails;
-  [key: string]: ProjectDetails | string;
-}
-
-/**
- * Complete dictionary interface with all translations
- */
-export interface Dictionary {
-  nav: Record<string, string>;
-  hero: HeroDictionary;
-  common: Record<string, string>;
-  profile: ProfileDictionary;
-  experience: Record<string, any>;
-  certifications: Record<string, string>;
-  projects: ProjectsDictionary;
-  reviews: Record<string, any>;
-  buttons: ButtonLabels;
-  tabs: Record<string, string>;
-  companies: Record<string, string>;
-  dates: Record<string, string>;
-  achievements: Record<string, string>;
-  resume: ResumeDictionary;
-  expOnlyTest?: {
-    title: string;
-    copyInstructions: string;
-    lastUpdated: string;
-  };
-  interview: {
-    title: string;
-    practice: string;
-    tableView: string;
-    quiz: {
-      title: string;
-      showAnswer: string;
-      hideAnswer: string;
-      nextQuestion: string;
-      previousQuestion: string;
-      randomQuestion: string;
-      shuffle: string;
-      progress: string;
-      question: string;
-      answer: string;
-    };
-    stats: {
-      totalQuestions: string;
-      viewedQuestions: string;
-      remainingQuestions: string;
-      progress: string;
-    };
-    settings: {
-      title: string;
-      category: string;
-      allCategories: string;
-    };
-  };
-}
-
-export interface PortfolioData {
-  skills: Skill[];
-  certifications: Certification[];
-  experiences: Experience[];
-  portfolioLinks: PortfolioLink[];
-  openSourceContributions?: PortfolioLink[];
-  dict: Dictionary;
-  description: string;
-}
-
 export type Category1 =
   | "General"
   | "Infrastructure"
@@ -266,4 +106,18 @@ export interface InterviewQuestion {
   category2: string;
   question: string;
   answer: string;
+}
+
+/**
+ * Portfolio data structure combining all portfolio information with dictionary
+ * Note: Dictionary type is imported from @/types/i18n for better type inference
+ */
+export interface PortfolioData {
+  skills: Skill[];
+  certifications: Certification[];
+  experiences: Experience[];
+  portfolioLinks: PortfolioLink[];
+  openSourceContributions?: PortfolioLink[];
+  dict: any; // Use 'any' here to avoid circular dependency. Components should import Dictionary from @/types/i18n
+  description: string;
 }

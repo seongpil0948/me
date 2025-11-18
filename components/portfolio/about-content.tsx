@@ -1,6 +1,8 @@
+import type { Dictionary } from "@/types/i18n";
+
 import { Link } from "@heroui/link";
 
-import { Dictionary, PortfolioLink } from "@/types/portfolio";
+import { PortfolioLink } from "@/types/portfolio";
 import { personalInfo } from "@/data/personal";
 import { Locale } from "@/app/[locale]/dictionaries";
 

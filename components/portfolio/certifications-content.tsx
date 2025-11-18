@@ -1,8 +1,10 @@
+import type { Dictionary } from "@/types/i18n";
+
 import { Card, CardBody } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 import { Image } from "@heroui/image";
 
-import { Dictionary, Certification } from "@/types/portfolio";
+import { Certification } from "@/types/portfolio";
 
 interface CertificationsContentProps {
   certifications: Certification[];

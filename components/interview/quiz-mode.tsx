@@ -1,6 +1,7 @@
 "use client";
 
-import type { Dictionary, InterviewQuestion } from "@/types/portfolio";
+import type { InterviewQuestion } from "@/types/portfolio";
+import type { Dictionary } from "@/types/i18n";
 import type { QuizProgress } from "@/types/quiz";
 
 import { AnimatePresence, motion } from "framer-motion";
