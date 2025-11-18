@@ -91,25 +91,15 @@ export const infraCoreQuestions: InterviewQuestion[] = [
     category2: "IaC",
     question: "Infrastructure as Code 경험에 대해 설명해주세요.",
     answer:
-      "'AWS Native로 완전 자동화하자'는 목표로 CodePipeline을 주로 활용해  모놀리식 CloudFormation 스택으로 관리했죠.\n\n" +
-      "문제는 CodeBuild에서 생성한 **동적 이미지 태그**를 CloudFormation 템플릿에 주입하기엔 제한적이었어요" +
-      "Parameter Store, Lambda 를 고려했지만, CloudFormation은 Parameter 값 변경을 Change Set으로 인식하지 않는등 관리형 서비스 장점을 가져갈 수 가 없었어요.\n\n" +
-      "Drift 문제가 있었는데. 장애 대응 때 팀원이 콘솔에서 보안 그룹을 급하게 수정하면, CloudFormation 템플릿과 실제 리소스 상태가 달라지면서. 그 상태에서 ECS Task Definition만 업데이트하려 해도 'Drift detected' 에러로 배포가 완전히 막혔습니다.\n\n" +
-      "작은 프로젝트라 인프라 수정은 콘솔에서 빠르게 하는 게 현실적인데, CloudFormation은 그런 유연성을 허용하지 않았어요. 매번 템플릿을 동기화하는 것도 부담이었고요.\n\n" +
-      "결국 '모든 걸 IaC로 관리하겠다'는 이상주의를 버렸습니다. CloudFormation으로 프로비저닝된 인프라는 VPC 단위로 격리하고, **신규 앱 배포만 Jenkins로 분리**했어요.\n\n" +
-      "Jenkins 파이프라인에서 AWS CLI로 직접 제어하니 훨씬 간단해졌죠. Task Definition 만 신규로 배포한후  스크립트도 대폭 줄었습니다 또 줄인 포인트가 있는데.\n\n" +
-      "첫 번째는 이미지 빌드 시간 단축이었습니다. 빌드 캐시, Multi-stage build를 사용했고.\n\n" +
-      "두번째는 웹훅 트리거 활용입니다. 배포 자체는 민감하지만 병목은 주로 이미지빌드에 있습니다. 푸시 시점에 웹훅으로 빌드만 먼저 시작하고, 수동 승인으로 배포를 진행하도록 했어요.\n\n" +
-      "세 번째는 Health Check 튜닝이었습니다. 신규 테스크로 트래픽 이전전에 시간이 오래 소요되는 걸 확인했어요, Health Check 간격, Threshold를  낮추고 안정화 대기 시간을 줄였습니다.\n\n" +
-      "네 번째는 Mail 통합이었습니다. 배포 실패 시 어디서 멈췄는지 찾기 어려웠는데, AWS SNS로 유관자에게 알림을 보내 MTTI 자체를 줄였습니다.\n\n" +
-      "**결과와 트레이드오프**\n\n" +
-      "배포 시간이 2시간에서 12분으로 90% 단축되었고, Drift로 인한 배포 차단이 zero가 되었습니다. 롤백 시간도 30초로 줄었고요.\n\n" +
-      "물론 트레이드오프는 있었어요. CloudFormation의 선언적 관리를 포기했고, 인프라와 애플리케이션 배포가 분리되었죠. 하지만 작은 팀에서 빠른 배포가 더 중요했기 때문에 현실적인 선택이었다고 생각합니다.\n\n" +
-      "**CloudFormation/CodePipeline에 대한 회고**\n\n" +
-      "CodeBuild 자체는 좋았어요. 빌드 환경이 격리되고, 테스트도 가능하고, 이미지 생성기 자체로 로그도 깔끔했죠. 하지만 CodePipeline과 CloudFormation 조합은 개발자 경험이 좋지 않았습니다. 특히 동적 값 주입과 Drift 처리가 너무 경직되어 있었어요.\n\n" +
-      "Terraform이었으면 좀 더 유연했을 것 같긴 해요. `local-exec` provisioner로 동적 처리도 가능하고, State 관리도 더 명확하니까요. 하지만 당시엔 팀 역량과 러닝 커브를 고려해서 익숙한 Jenkins를 선택했습니다.\n\n" +
-      "**향후 계획**\n\n" +
-      "사실 IaC 쪽은 더 많은 경험을 해보고 싶어요. Terraform으로 전체 인프라를 다시 설계해보거나, GitOps 방식의 ArgoCD 같은 것도 도전해보고 싶습니다. 특히 멀티 클러스터 환경에서 IaC를 어떻게 관리하는지 궁금하거든요.\n\n" +
-      "다만 지금은 '작동하는 시스템'이 우선이었고, Jenkins가 그 목표를 달성했습니다. 완벽한 IaC보다 팀이 유지보수 가능한 복잡도가 더 중요했어요.",
+      "IaC는 Terraform으로 시작했어요. 사내에서 소규모 애플리케이션을 VPC 격리 환경으로 배포할 때 사용했습니다.\n\n" +
+      "당시 상황은 이랬어요. MSK(Managed Kafka)와 ECS 도입을 검토하면서, 매번 콘솔에서 VPC, 서브넷, 보안 그룹을 수동으로 만드는 게 너무 비효율적이었습니다. 실수도 많았고, 환경별로 설정이 달라서 관리가 어려웠죠.\n\n" +
+      "Terraform으로 VPC 모듈을 만들었어요. Public/Private 서브넷, NAT Gateway, Route Table을 코드로 정의하니까 환경 복제가 5분이면 됐습니다. Dev, Staging, Prod 환경을 동일하게 유지할 수 있었고요.\n\n" +
+      "MSK 클러스터도 Terraform으로 구성했습니다. Broker 수, 인스턴스 타입, 스토리지 크기를 변수로 만들어서 환경별로 다르게 설정했어요. 특히 보안 그룹 규칙을 코드로 관리하니까 'MSK에 누가 접근 가능한지' 한눈에 파악할 수 있었습니다.\n\n" +
+      "ECS도 Terraform으로 프로비저닝했어요. Task Definition, Service, ALB까지 전부 코드화했죠. 다만 컨테이너 이미지 태그 같은 동적 값은 Terraform 변수로 받아서 처리했습니다.\n\n" +
+      "AWS 자격증 준비하면서 CloudFormation도 자연스럽게 익혔어요. DevOps Professional 시험에서 CodePipeline, CodeBuild, CloudFormation 통합 문제가 많이 나왔거든요. 실제로 간단한 프로젝트에서 CloudFormation으로 인프라를 구성해봤는데, YAML 문법이 직관적이고 AWS 서비스와 통합이 잘 되더라고요.\n\n" +
+      "Terraform과 CloudFormation의 차이를 체감했습니다. Terraform은 멀티 클라우드에 강하고 모듈 재사용이 편했어요. CloudFormation은 AWS 네이티브라서 최신 서비스 지원이 빠르고, StackSets로 멀티 리전 배포가 쉬웠습니다.\n\n" +
+      "IaC의 가장 큰 장점은 재현 가능성이었어요. 인프라를 날려도 10분이면 복구할 수 있다는 자신감이 생겼죠. 또 코드 리뷰를 통해 인프라 변경을 검증할 수 있었고, Git으로 변경 이력을 추적할 수 있었습니다.\n\n" +
+      "다만 초기 학습 곡선이 있었어요. State 관리, Remote Backend 설정, 모듈 의존성 같은 개념이 처음엔 어려웠습니다. 하지만 한 번 익히고 나니 수동 작업으로 돌아갈 수 없더라고요.\n\n" +
+      "앞으로는 GitOps와 IaC를 결합해보고 싶어요. ArgoCD나 Flux로 Kubernetes 배포를 자동화하고, Terraform으로 클라우드 인프라를 관리하는 조합이 궁금합니다.",
   },
 ];

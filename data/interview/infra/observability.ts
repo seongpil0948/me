@@ -298,4 +298,64 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "결과적으로 일일 50만 traces, 월 3TB 데이터를 안정적으로 처리하고, 99.9% 데이터 수집 성공률을 달성했으며, 평균 end-to-end latency는 5초 이내(수집부터 시각화까지)로 유지했습니다.\n\n" +
       "핵심 교훈은, Observability 인프라도 관측이 필요하다는 것입니다. Collector 자체의 메트릭(처리량, drop rate, latency)을 Prometheus로 모니터링하고, 문제가 생기면 즉시 알림이 오도록 했습니다. 관측성을 제공하는 시스템이 blind spot이 되면 안 되니까요.",
   },
+  {
+    id: 136,
+    category1: "Infrastructure",
+    category2: "Synthetic Monitoring",
+    question:
+      "Synthetic Monitoring과 Self-Healing 시스템을 어떻게 구현했나요? 특히 자체 설치형 환경에서 Managed APM 유료 기능 없이 컨테이너와 HTTP 엔드포인트 가용성을 어떻게 모니터링하고 자동 복구했나요?",
+    answer:
+      "Synthetic Monitoring은 '사용자가 문제를 겪기 전에 우리가 먼저 발견한다'는 철학으로 시작했습니다. 특히 ₩500B 이커머스 환경에서 L4 장비가 80/443 포트만 체크하는 한계를 극복해야 했어요.\n\n" +
+      "당시 문제 상황을 먼저 설명하겠습니다. 협력업체가 관리하는 L4 Load Balancer는 단순히 Nginx 80 포트가 열려있으면 '서버 정상'으로 판단했어요. 하지만 실제로는 한 서버에 Frontend, Backend, Batch 컨테이너가 여러 개 돌고 있었고, Batch 컨테이너만 죽어도 주문 처리가 멈췄습니다. L4는 이걸 감지 못했죠. 게다가 컨테이너가 Restarting 루프에 빠져도, Nginx가 살아있으면 L4는 계속 트래픽을 보냈어요. 고객은 502 Bad Gateway를 보는데 모니터링은 '정상'이라고 했습니다.\n\n" +
+      "이 문제를 해결하기 위해 Monitoring Agent 프로젝트를 직접 개발했습니다. Go 언어로 두 가지 핵심 컴포넌트를 만들었어요.\n\n" +
+      "**첫 번째 컴포넌트: CRI Health Checker**\n\n" +
+      "서버 내 모든 컨테이너의 상태를 세밀하게 추적하는 에이전트입니다. Docker API를 직접 호출해서 컨테이너 이름 패턴, 이미지, Health 상태, CPU/Memory 사용량을 실시간으로 수집했어요.\n\n" +
+      "핵심은 '이미지 패턴 기반 감시'였습니다. 설정 파일에 `image_pattern: \"ecr.aws/.*/theshop-backend:.*\"` 같은 정규식을 정의하면, 해당 패턴에 맞는 모든 컨테이너를 자동으로 추적했죠. 서버마다 컨테이너 이름이 조금씩 달랐기 때문에 패턴 매칭이 필수였어요.\n\n" +
+      "컨테이너 상태를 4가지로 분류했습니다. Healthy, Starting, Restarting, Exited. L4가 못 보던 부분이 바로 이 Restarting 상태였어요. Docker healthcheck가 실패하면 컨테이너가 자동 재시작되는데, 이 과정이 10분씩 반복되어도 L4는 모르고 트래픽을 계속 보냈습니다. CRI Health Checker는 restart_count를 추적해서, 5분 내 3회 이상 재시작되면 알림을 보냈죠.\n\n" +
+      "자동 Remediation 정책도 구현했습니다. 설정 파일에 `auto_restart: true`, `max_restart_attempts: 3`, `restart_cooldown: 5m`를 정의하면, 컨테이너가 Unhealthy 상태로 5분 이상 지속될 때 자동으로 재시작을 시도했어요. 단, 무한 재시작 루프를 막기 위해 3회 시도 후에는 알림만 보내고 수동 개입을 기다렸습니다.\n\n" +
+      "리소스 사용량도 모니터링했어요. CPU 90% 이상 또는 Memory 85% 이상 사용하는 컨테이너를 찾아서 warn 레벨 로그를 남겼습니다. 이 데이터는 OpenTelemetry로 자동 전송되어 Grafana 대시보드에 실시간으로 표시되었죠.\n\n" +
+      "**두 번째 컴포넌트: HTTP Health Checker**\n\n" +
+      "중요한 HTTP 엔드포인트를 주기적으로 호출해서 가용성과 응답시간을 측정하는 Synthetic Monitoring 에이전트입니다.\n\n" +
+      "설정 예시를 보면 이해가 쉬워요. YAML 파일에 여러 엔드포인트를 정의했습니다.\n\n" +
+      "```yaml\n" +
+      "endpoints:\n" +
+      '  - name: "Product API"\n' +
+      '    url: "https://api.theshop.com/v1/products"\n' +
+      "    method: GET\n" +
+      "    interval: 30s\n" +
+      "    timeout: 5s\n" +
+      "    expected_status: 200\n" +
+      "    headers:\n" +
+      '      Authorization: "Bearer {env:API_TOKEN}"\n' +
+      '  - name: "Order Submit"\n' +
+      '    url: "https://api.theshop.com/v1/orders"\n' +
+      "    method: POST\n" +
+      '    body: \'{"product_id":"test","quantity":1}\'\n' +
+      "    interval: 1m\n" +
+      "    alert_threshold: 3\n" +
+      "```\n\n" +
+      "30초마다 Product API를 호출하고, 응답시간과 HTTP 상태 코드를 기록했어요. expected_status가 200이 아니거나 timeout을 초과하면 실패로 카운트됩니다. alert_threshold=3이므로 3회 연속 실패하면 알림이 발생했죠.\n\n" +
+      "Trace Context 전파도 구현했습니다. HTTP 요청마다 W3C Trace Context 헤더(traceparent)를 자동으로 생성해서 보냈어요. 덕분에 Synthetic test가 Backend까지 어떻게 전파되었는지, Distributed Tracing으로 전체 흐름을 볼 수 있었습니다. 예를 들어 Product API 호출이 느리다면, Trace를 따라가서 Database 쿼리가 병목인지, Redis 캐시 미스인지 바로 파악할 수 있었죠.\n\n" +
+      "**OpenTelemetry 통합 (핵심 차별화 요소)**\n\n" +
+      "이 프로젝트의 가장 큰 강점은 '모든 텔레메트리를 OpenTelemetry 표준으로 통합'한 것이었습니다.\n\n" +
+      "CRI Health Checker와 HTTP Health Checker 모두 OTLP gRPC로 데이터를 전송했어요. Metrics, Traces, Logs가 단일 파이프라인으로 수집되어 Grafana, Tempo, Loki에서 상관 분석이 가능했습니다.\n\n" +
+      "구체적으로, HTTP Health Checker가 Product API 실패를 감지하면 이런 흐름이 발생했어요. 첫째, Error Trace가 Tempo로 전송되고, 둘째, 실패 로그(status=500, url=..., error=...)가 Loki로 전송되며, 셋째, 메트릭(http_check_success=0, http_check_duration_ms=5000)이 Prometheus로 전송됩니다. Grafana에서 trace_id를 클릭하면 로그와 메트릭이 자동으로 연결되어 전체 컨텍스트를 한눈에 볼 수 있었죠.\n\n" +
+      "Resource Attributes로 환경/버전/태그를 자동 보강했습니다. 모든 span에 env=production, server=web-01, version=v1.2.3, team=platform 같은 메타데이터가 자동 주입되어, 나중에 '특정 서버만 문제인지', '전체 환경 문제인지' 필터링이 쉬웠어요.\n\n" +
+      "**Auto-Instrumentation 기능**\n\n" +
+      "Go 런타임 메트릭, Host 메트릭, HTTP 클라이언트 메트릭을 자동으로 수집했습니다. 에이전트 자체의 성능(고루틴 수, 메모리 사용량, GC 시간)도 모니터링되어, '모니터링 시스템이 장애 원인'인 경우도 탐지할 수 있었죠.\n\n" +
+      "특히 `app_ready`, `app_running`, `app_startup_duration` 같은 라이프사이클 메트릭으로 에이전트가 정상 동작 중인지 확인했습니다. 에이전트가 crash되면 app_running=0으로 변하고, 이걸 Prometheus AlertManager가 감지해서 알림을 보냈어요.\n\n" +
+      "**배포 및 운영**\n\n" +
+      "12개 프로덕션 서버에 Docker Compose로 배포했습니다. 각 서버의 `/var/run/docker.sock`을 마운트해서 컨테이너 상태를 감시하고, 중앙 OpenTelemetry Collector(10.101.91.145:4317)로 데이터를 전송했죠.\n\n" +
+      "ECR(Elastic Container Registry)에 이미지를 저장하고, SHA 태그로 버전 관리했습니다. 배포는 GitOps 스타일로, Git commit마다 CI가 이미지를 빌드하고 ECR에 푸시하면, 각 서버에서 `make run ENV=prod`로 최신 이미지를 pull해서 실행했어요.\n\n" +
+      "설정 파일은 `/opt/agent-configs/`에 중앙 관리했고, 환경별로 dev/staging/prod 설정을 분리했습니다. `.env.local`로 환경 변수(AWS_PROFILE, OTEL_ENDPOINT)를 주입해서 유연하게 운영했죠.\n\n" +
+      "**실제 장애 탐지 사례**\n\n" +
+      "새벽 3시에 Batch 컨테이너가 OOM Killed로 죽었어요. 기존 L4 헬스체크는 이걸 못 봤지만, CRI Health Checker가 즉시 감지해서 Slack 알림을 보냈습니다. 자동 재시작이 시도되었지만 계속 OOM이 발생했고, 3회 재시도 후 알림이 다시 왔어요. 로그를 보니 Memory Leak이 원인이었고, 즉시 패치를 배포해서 5분 만에 해결했습니다. 기존에는 아침에 출근해서야 발견했을 문제를 선제적으로 막은 거죠.\n\n" +
+      "**운영 성과**\n\n" +
+      "MTTD(Mean Time To Detection)를 18시간에서 5분으로 99.5% 단축했고, 컨테이너 자동 복구로 MTTR(Mean Time To Recovery)를 4시간에서 10분으로 단축했습니다. 월 인시던트 수가 15건에서 3건으로 감소했고, 대부분 자동 복구로 해결되었죠.\n\n" +
+      "비용 효율성도 탁월했어요. Datadog Synthetic Monitoring을 사용했다면 월 500달러가 들었을 텐데, Self-hosted 방식으로 EC2 비용만 월 40달러로 운영했습니다. 대신 개발과 유지보수 부담이 있었지만, 커스터마이징 자유도가 높아서 충분히 가치가 있었어요.\n\n" +
+      "**핵심 교훈**\n\n" +
+      "첫째, Synthetic Monitoring은 '사용자 관점의 가용성'을 측정합니다. L4가 '서버 살아있음'을 보는 것과, 우리가 '실제 API 요청이 성공함'을 보는 것은 완전히 다릅니다. 후자가 진짜 가용성이에요.\n\n" +
+      "둘째, Self-Healing은 간단한 케이스부터 시작해야 합니다. 컨테이너 재시작 같은 Safe Operation부터 자동화하고, 복잡한 복구는 수동 개입을 남겨둬야 해요. 자동화가 문제를 더 악화시키면 안 되니까요.\n\n" +
+      "셋째, Observability 표준(OpenTelemetry)을 지키면 나중에 도구를 바꾸기 쉽습니다. Jaeger에서 Tempo로, Prometheus에서 InfluxDB로 전환해도 에이전트 코드는 변경 없이 Collector 설정만 바꾸면 됐어요. 이게 표준의 힘입니다.",
+  },
 ];

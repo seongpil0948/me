@@ -12,25 +12,33 @@ export const infraNetworkingQuestions: InterviewQuestion[] = [
     question:
       "Describe your experience with network architecture and VPN setup.",
     answer:
-      "네트워크 아키텍처에서 가장 어려웠던 것은 온프레미스와 AWS 간 안정적인 연결을 보장하면서도 비용을 최적화하는 것이었어요.\n\n" +
-      "문제 상황: ₩500B 규모 이커머스 플랫폼을 AWS로 마이그레이션하면서 온프레미스 레거시 시스템과 실시간 데이터 동기화가 필수였어요. 기존에는 Public Internet으로 연결했는데, 보안팀에서 '고객 개인정보가 Public으로 전송되면 안 된다'고 강력히 반대했죠.\n\n" +
-      "고민했던 3가지 선택지:\n\n" +
-      "첫째, AWS Direct Connect: 가장 안정적이지만 월 500만원 이상 비용에 구축 기간 3개월. 당시 우리에겐 시간이 없었어요.\n\n" +
-      "둘째, Public VPN: 비용은 저렴하지만 Internet 품질에 의존. 트래픽 급증 시 지연 예측 불가.\n\n" +
-      "셋째, Site-to-Site VPN 1.25Gbps: Direct Connect 대비 1/10 비용, 2주 내 구축 가능. 다만 온프레미스 네트워크팀의 BGP 경험 부족이 걸림돌.\n\n" +
-      "최종 선택과 이유:\n\n" +
-      "Site-to-Site VPN을 선택했어요. BGP 라우팅 대신 정적 라우팅을 적용했는데, 이유는 온프레미스 네트워크팀이 BGP 운영 경험이 없어서 장애 시 대응이 어려울 것 같았거든요. 정적 라우팅은 설정이 단순하고 라우팅 테이블이 명확해서 트러블슈팅도 쉬웠죠.\n\n" +
-      "실제 구현 과정에서 마주친 문제들:\n\n" +
-      "처음엔 1개 VPN 터널만 구성했는데, 온프레미스 라우터 장애로 새벽 2시에 전체 서비스가 중단됐어요. 그때 '아, 이건 SPOF였구나'를 깨달았죠. 즉시 이중화를 추가했어요. Primary와 Secondary VPN 터널을 각각 다른 AWS Availability Zone에 연결하고, 온프레미스 측도 2대의 라우터로 이중화했습니다.\n\n" +
-      "처리량 테스트에서도 문제가 있었어요. 스펙상 1.25Gbps지만 실제로는 평균 800Mbps만 나왔죠. 원인은 VPN 암호화 오버헤드와 패킷 단편화였어요. MTU를 1500에서 1400으로 낮추고, TCP Window Scaling을 조정하니 안정적으로 900Mbps 이상 나왔습니다.\n\n" +
-      "Multi-AZ 네트워크 설계로 가용성을 높였어요:\n\n" +
-      "AZ-1a에 Primary ECS 클러스터, AZ-1b에 Secondary, AZ-1c에 Standby를 배치했어요. 각 AZ마다 독립적인 NAT Gateway와 Internet Gateway를 두어서 단일 AZ 장애가 다른 AZ에 영향을 주지 않도록 했습니다. 실제로 AZ-1a에서 AWS 측 네트워크 장애가 발생했을 때도 트래픽이 자동으로 AZ-1b로 전환되어 서비스가 유지됐어요.\n\n" +
-      "보안 설계에서 배운 점:\n\n" +
-      "Security Group과 NACL을 계층화했어요. 처음엔 Security Group만 썼는데, 서브넷 레벨에서 한번 더 필터링하는 게 심층 방어에 유리하더라고요. NACL로 알려진 공격 IP 대역을 차단하고, Security Group으로 애플리케이션별 세밀한 제어를 했습니다. Deny-by-default 원칙으로 필요한 포트만 선택적으로 열었어요.\n\n" +
-      "VPC Flow Logs로 이상 트래픽을 모니터링했어요. Athena 쿼리로 Top Talkers를 분석하니까, 특정 IP에서 초당 10만 건 이상 요청이 들어오는 게 보였어요. GuardDuty와 연동해서 자동으로 차단하는 Lambda를 만들었죠.\n\n" +
-      "결과적으로:\n\n" +
-      "네트워크 가용성 99.9%에서 99.95%로 개선했고, VPN 평균 지연시간 P95 기준 15ms를 유지했어요. 가장 큰 성과는 보안 인시던트 제로를 달성한 거였죠.\n\n" +
-      "핵심 교훈은, 최신 기술(BGP, Direct Connect)이 항상 정답은 아니라는 겁니다. 팀 상황과 비용, 시간을 고려한 현실적인 선택이 더 중요하더라고요.",
+      "하이브리드 네트워킹이 제가 토스에 지원한 가장 큰 이유 중 하나예요. 지난 1년간 Direct Connect, IPsec VPN, Transit Gateway를 집중적으로 공부하며 CDC(Cloud Data Center) 하이브리드 네트워킹 설계에 깊은 관심을 가져왔습니다.\n\n" +
+      "실무에서는 ₩500B 규모 이커머스 플랫폼의 온프레미스-AWS 하이브리드 환경을 직접 구축했어요. 이론으로만 배운 것과 실제 운영의 차이를 뼈저리게 느꼈죠.\n\n" +
+      "**당시 문제 상황**\n\n" +
+      "레거시 시스템은 온프레미스에, 신규 서비스는 AWS에 있었는데 실시간 데이터 동기화가 필수였어요. 기존 Public Internet 연결은 보안팀이 강력히 반대했고, '고객 개인정보가 Public으로 전송되면 안 된다'는 게 이유였죠.\n\n" +
+      "**3가지 설계안 검토**\n\n" +
+      "첫째, **AWS Direct Connect 10Gbps**: 가장 안정적이지만 월 500만원 이상, 구축 3개월 소요. 당시 우리에겐 시간이 없었어요.\n\n" +
+      "둘째, **Public VPN over Internet**: 비용은 저렴하지만 품질 예측 불가. 트래픽 급증 시 지연 문제.\n\n" +
+      "셋째, **Site-to-Site IPsec VPN 1.25Gbps**: Direct Connect 대비 1/10 비용, 2주 내 구축 가능. 온프레미스 네트워크팀의 BGP 경험 부족이 걸림돌.\n\n" +
+      "**최종 선택: IPsec VPN + 정적 라우팅**\n\n" +
+      "Site-to-Site VPN을 선택했어요. BGP 대신 정적 라우팅을 적용한 이유는 온프레미스 팀이 BGP 운영 경험이 없어서 장애 시 대응이 어려울 것 같았거든요. AWS re:Invent NET318 세션에서 배운 'Longest Prefix Match' 원칙으로 라우팅 테이블을 설계했습니다.\n\n" +
+      "**실전에서 마주한 문제와 해결**\n\n" +
+      "1. **SPOF 문제**: 처음엔 1개 VPN 터널만 구성했는데, 온프레미스 라우터 장애로 새벽 2시에 전체 서비스 중단. Primary/Secondary VPN 터널을 각각 다른 AZ에 연결하고, 온프레미스도 2대 라우터로 이중화했어요.\n\n" +
+      "2. **처리량 문제**: 스펙상 1.25Gbps인데 실제로는 800Mbps만 나왔죠. 원인은 VPN 암호화 오버헤드와 패킷 단편화. MTU를 1500 → 1400으로 낮추고 TCP Window Scaling 조정하니 900Mbps 이상으로 개선됐습니다.\n\n" +
+      "3. **라우팅 우선순위 제어**: AWS re:Invent에서 배운 대로, Static Routes가 Propagated Routes보다 우선순위가 높다는 점을 활용했어요. 특정 트래픽은 VPN으로, 나머지는 NAT Gateway로 라우팅하도록 설계했죠.\n\n" +
+      "**Zonal 트래픽 설계 (AWS re:Invent NET318 핵심)**\n\n" +
+      "'Keep your traffic zonal'이라는 원칙을 적용했어요. AZ 간 통신은 비용($)이 발생하고 latency가 증가하니까, 각 AZ에 독립적인 NAT Gateway와 Internet Gateway를 배치했습니다. AZ-1a 장애 시에도 트래픽이 자동으로 AZ-1b로 전환되어 서비스가 유지됐어요.\n\n" +
+      "**Transit Gateway 도입 검토 (미래 계획)**\n\n" +
+      "현재는 VPN 2개로 운영 중이지만, 계열사가 늘어나면 Transit Gateway가 필수라고 봐요. 각 VPC를 일일이 피어링하는 것보다 중앙 허브로 관리하는 게 훨씬 효율적이거든요. 특히 토스처럼 계열사별 격리가 중요한 환경에서는 Transit Gateway의 Route Table 분리 기능이 핵심일 것 같습니다.\n\n" +
+      "**BGP와 트래픽 엔지니어링 (학습 중)**\n\n" +
+      "1년간 집중 공부한 내용 중 가장 흥미로웠던 건 BGP 속성이에요. Local Preference (AWS → 온프레미스), AS Path Prepending (온프레미스 → AWS)으로 트래픽 경로를 제어하는 방법을 배웠습니다. 아직 실무에서 BGP를 직접 운영해보진 못했지만, Direct Connect 환경에서 꼭 적용해보고 싶어요.\n\n" +
+      "**보안 설계**\n\n" +
+      "Security Group과 NACL을 계층화했어요. NACL로 알려진 공격 IP 대역 차단, Security Group으로 애플리케이션별 세밀한 제어. VPC Flow Logs + Athena로 Top Talkers를 분석하니 특정 IP에서 초당 10만 건 요청이 보였고, GuardDuty 연동 Lambda로 자동 차단했죠.\n\n" +
+      "**운영 성과**\n\n" +
+      "네트워크 가용성 99.9% → 99.95% 개선, VPN 평균 지연시간 P95 기준 15ms 유지, 보안 인시던트 zero.\n\n" +
+      "**왜 토스인가?**\n\n" +
+      "토스는 계열사가 많고, 온프레미스-클라우드 하이브리드 환경이 필수일 것 같아요. 제가 1년간 공부한 Direct Connect, Transit Gateway, Cloud WAN 같은 기술들을 실전에서 대규모로 운영해보고 싶습니다. 특히 BGP 기반 트래픽 엔지니어링과 멀티 리전 라우팅 설계는 토스에서만 경험할 수 있는 도전 과제라고 생각해요.\n\n" +
+      "이론적 준비는 끝났습니다. 이제 실전에서 직접 문제를 해결하며 성장하고 싶어요.",
   },
   {
     id: 67,
