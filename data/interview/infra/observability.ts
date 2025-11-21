@@ -358,4 +358,170 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "둘째, Self-Healing은 간단한 케이스부터 시작해야 합니다. 컨테이너 재시작 같은 Safe Operation부터 자동화하고, 복잡한 복구는 수동 개입을 남겨둬야 해요. 자동화가 문제를 더 악화시키면 안 되니까요.\n\n" +
       "셋째, Observability 표준(OpenTelemetry)을 지키면 나중에 도구를 바꾸기 쉽습니다. Jaeger에서 Tempo로, Prometheus에서 InfluxDB로 전환해도 에이전트 코드는 변경 없이 Collector 설정만 바꾸면 됐어요. 이게 표준의 힘입니다.",
   },
+  {
+    id: 137,
+    category1: "Infrastructure",
+    category2: "High Availability",
+    question:
+      "OpenTelemetry Collector의 고가용성(HA)을 AWS 환경에서 어떻게 구현했나요? ADOT + NLB + ECS 아키텍처를 선택한 이유와 구체적인 구성을 설명해주세요.",
+    answer:
+      "OTEL Collector의 고가용성은 '관측성 시스템이 먼저 죽으면 장애 대응이 불가능하다'는 절박함에서 시작했습니다.\n\n" +
+      "고가용성 설계에서 가장 중요한 원칙은 Single Point of Failure 제거와 데이터 손실 방지였습니다. Collector가 다운되면 모든 텔레메트리가 유실되고, 장애 상황에서 blind spot이 생기는 거죠. 특히 ₩500B 규모 이커머스 환경에서는 초당 수백 건의 trace와 수천 개의 metric이 발생했기 때문에 Collector 장애가 곧 비즈니스 임팩트로 연결되었습니다.\n\n" +
+      "AWS 환경에서는 Managed 서비스의 안정성과 Auto Scaling 능력을 최대한 활용했습니다.\n\n" +
+      "첫째, AWS Distro for OpenTelemetry(ADOT) Collector를 선택한 이유는 AWS 네이티브 통합과 검증된 안정성 때문이었습니다. 오픈소스 OTEL Collector에 AWS X-Ray, CloudWatch, Kinesis 수신기와 내보내기가 사전 통합되어 있어서 설정이 간편했죠. 또한 AWS에서 직접 보안 패치와 버전 관리를 해주니 운영 부담이 줄었습니다.\n\n" +
+      "둘째, ECS Fargate로 Collector를 배포했습니다. 서버리스 환경이라 인프라 관리 부담이 없고, Task Definition으로 리소스 제한(CPU 2vCPU, Memory 4GB)과 Health Check를 명확히 정의할 수 있었어요. 특히 중요한 건 ECS Service Auto Scaling이었습니다. CloudWatch 메트릭(CPU 사용률 70% 이상 또는 메모리 85% 이상)에 기반해서 Collector 인스턴스를 자동으로 스케일 아웃했죠. 평소에는 3개 Task가 돌다가, 트래픽 스파이크 시 10개까지 증가하도록 설정했습니다.\n\n" +
+      "셋째, Network Load Balancer를 앞단에 배치했습니다. NLB는 Layer 4에서 동작하기 때문에 OTLP gRPC 트래픽을 효율적으로 분산할 수 있었어요. ALB는 HTTP/2를 지원하지만 gRPC의 long-lived connection을 제대로 다루지 못했거든요. NLB 설정의 핵심은 Connection Draining과 Health Check였습니다.\n\n" +
+      "Connection Draining을 300초로 설정해서 Collector Task가 종료될 때 기존 연결이 안전하게 끊길 시간을 확보했습니다. 이렇게 안 하면 rolling deployment 중에 데이터가 손실될 수 있어요.\n\n" +
+      "Health Check는 단순히 TCP 연결이 아니라 OTLP Health Check Endpoint(13133포트)를 호출하도록 설정했습니다. Collector가 메모리 부족이나 백엔드 연결 끊김으로 비정상 상태가 되면 health endpoint가 503을 반환하고, NLB가 자동으로 해당 Task를 제외했죠. Health check interval 10초, unhealthy threshold 2회로 설정해서 장애 감지를 빠르게 했습니다.\n\n" +
+      "넷째, Multi-AZ 배포로 가용 영역 장애에 대비했습니다. ECS Service를 3개 AZ(us-east-1a, 1b, 1c)에 분산 배치하고, NLB도 Cross-Zone Load Balancing을 활성화했어요. 하나의 AZ가 완전히 다운되어도 나머지 2개 AZ에서 트래픽을 처리할 수 있었습니다.\n\n" +
+      "다섯째, Retry와 Queue 설정으로 일시적 장애를 흡수했습니다. 애플리케이션 SDK에서 Collector로 데이터를 보낼 때, gRPC의 Retry Policy를 설정했어요. 최대 3회 재시도, exponential backoff 1초→2초→4초로 설정해서 Collector가 일시적으로 응답하지 않아도 데이터 손실을 방지했습니다. 또한 SDK의 Batch Processor에서 sending_queue_size=5000으로 설정해서 네트워크 지연 시 메모리 버퍼에 임시 저장했죠.\n\n" +
+      "여섯째, 모니터링과 알림을 Collector 자체에 구축했습니다. Collector가 내보내는 자체 메트릭(otelcol_processor_batch_batch_send_size, otelcol_exporter_send_failed_metric_points)을 CloudWatch로 수집하고, 실패율이 5% 이상이면 즉시 알림을 보냈어요. 또한 ECS Task 상태(Running, Stopped, Pending)를 CloudWatch Events로 추적해서 비정상 종료 시 자동으로 재시작하도록 했습니다.\n\n" +
+      "결과적으로 AWS 환경에서는 99.95% 가용성을 달성했습니다. 월 1회 rolling deployment로 버전 업그레이드를 해도 downtime 없이 진행되었고, AZ 장애 시뮬레이션(Chaos Engineering)에서도 자동 복구가 검증되었죠.\n\n" +
+      "핵심 교훈은, AWS Managed 서비스를 활용하면 운영 부담을 크게 줄이면서도 엔터프라이즈급 가용성을 달성할 수 있다는 것입니다. Auto Scaling과 Multi-AZ 배포는 수동으로 구현하기 어려운 복원력을 제공했고, CloudWatch 통합으로 메타 모니터링까지 자동화할 수 있었습니다. 비용은 월 300달러 정도였지만, 엔지니어 시간 절약과 안정성을 고려하면 충분히 가치가 있었어요.",
+  },
+  {
+    id: 138,
+    category1: "Infrastructure",
+    category2: "API Gateway",
+    question:
+      "OnPremise 환경에서 APISIX Gateway를 활용한 OTEL Collector 고가용성 아키텍처를 어떻게 설계했나요? Health Check, Circuit Breaker, Failover 전략을 구체적으로 설명해주세요.",
+    answer:
+      "OnPremise 환경에서 OTEL Collector의 고가용성은 APISIX API Gateway를 도입하여 구현했습니다. AWS처럼 Managed 서비스가 없었기 때문에, 오픈소스 기반의 자체 구축 아키텍처를 설계해야 했어요.\n\n" +
+      "**APISIX 선택 이유**\n\n" +
+      "첫째, APISIX를 선택한 이유는 동적 라우팅과 Health Check 기능이 강력했기 때문입니다. NGINX는 설정 변경 시 reload가 필요하고, HAProxy는 gRPC 지원이 제한적이었어요. APISIX는 REST API로 무중단 설정 업데이트가 가능하고, Lua 스크립트로 복잡한 라우팅 로직을 구현할 수 있었죠. 또한 OpenResty 기반이라 gRPC Upstream을 네이티브로 지원했습니다.\n\n" +
+      "둘째, Upstream 노드 구성으로 3대의 Collector 인스턴스를 등록했습니다. 각 Collector는 Docker Compose로 독립적인 서버(10.101.91.145, 10.101.91.146, 10.101.91.147)에 배포되었고, APISIX Route에 다음과 같이 정의했습니다.\n\n" +
+      "```json\n" +
+      "{\n" +
+      '  "uri": "/v1/*",\n' +
+      '  "upstream": {\n' +
+      '    "type": "roundrobin",\n' +
+      '    "nodes": {\n' +
+      '      "10.101.91.145:4317": 1,\n' +
+      '      "10.101.91.146:4317": 1,\n' +
+      '      "10.101.91.147:4317": 1\n' +
+      "    },\n" +
+      '    "retries": 2,\n' +
+      '    "timeout": {\n' +
+      '      "connect": 5,\n' +
+      '      "send": 10,\n' +
+      '      "read": 10\n' +
+      "    },\n" +
+      '    "checks": {\n' +
+      '      "active": {\n' +
+      '        "type": "http",\n' +
+      '        "timeout": 5,\n' +
+      '        "http_path": "/health",\n' +
+      '        "healthy": {\n' +
+      '          "interval": 10,\n' +
+      '          "successes": 2\n' +
+      "        },\n" +
+      '        "unhealthy": {\n' +
+      '          "interval": 5,\n' +
+      '          "http_failures": 3\n' +
+      "        }\n" +
+      "      },\n" +
+      '      "passive": {\n' +
+      '        "healthy": {\n' +
+      '          "http_statuses": [200, 201],\n' +
+      '          "successes": 3\n' +
+      "        },\n" +
+      '        "unhealthy": {\n' +
+      '          "http_statuses": [500, 502, 503],\n' +
+      '          "http_failures": 3\n' +
+      "        }\n" +
+      "      }\n" +
+      "    }\n" +
+      "  }\n" +
+      "}\n" +
+      "```\n\n" +
+      "roundrobin 알고리즘으로 트래픽을 균등 분산했고, retries=2로 실패 시 다른 노드로 자동 재시도하도록 설정했습니다. 중요한 건 Active Health Check와 Passive Health Check의 조합이었어요.\n\n" +
+      "Active Health Check는 10초마다 각 Collector의 13133포트 /health 엔드포인트를 호출합니다. 3회 연속 실패하면 해당 노드를 unhealthy로 마킹하고 트래픽을 자동으로 제외했죠. 반대로 2회 연속 성공하면 다시 healthy 상태로 복구되어 트래픽을 받기 시작합니다.\n\n" +
+      "셋째, Passive Health Check로 실시간 장애를 더 빠르게 감지했습니다. Active Check는 주기적으로 확인하는 거라 최대 10초 간격의 지연이 있을 수 있어요. Passive Check는 실제 트래픽의 응답을 보고 즉시 판단합니다. 500/502/503 에러가 3회 연속 발생하면 즉시 해당 노드를 제외했죠. 이 방식이 평균 5초 더 빠르게 장애를 감지했습니다.\n\n" +
+      "넷째, Circuit Breaker 패턴을 api-breaker 플러그인으로 추가했습니다. Upstream 전체가 불안정할 때를 대비한 보호장치였어요. 설정은 이랬습니다. 500/503 에러가 3회 발생하면 Circuit을 OPEN 상태로 전환하고, 502 에러를 클라이언트에게 반환했습니다. Circuit이 열리면 2초 → 4초 → 8초 간격으로 재시도하며, 최대 300초까지 대기했죠. 1회 성공 응답(200)이 오면 Circuit을 다시 CLOSED로 전환했습니다.\n\n" +
+      "다섯째, Weighted Round Robin으로 서버 성능 차이를 반영했습니다. 3대 Collector의 하드웨어 스펙이 달랐어요. 145번 서버는 16 Core 32GB RAM이었지만, 146번은 8 Core 16GB였습니다. Weight를 2:1:1로 설정해서 성능 좋은 서버로 더 많은 트래픽을 보냈죠. 이로써 리소스 활용률이 균등해졌습니다.\n\n" +
+      "여섯째, Failover 시나리오를 자동화했습니다. Collector 1번이 완전히 다운되면 APISIX가 자동으로 2번과 3번으로만 트래픽을 보냈어요. 2대로도 처리 가능하도록 각 Collector의 용량을 150% 오버프로비저닝했습니다. 평소에는 3대가 각각 50% 부하로 돌다가, 1대 장애 시 2대가 75% 부하로 처리하는 구조였죠.\n\n" +
+      "일곱째, etcd 클러스터로 APISIX 설정을 고가용성으로 관리했습니다. APISIX의 라우팅 설정은 etcd에 저장되고, 3개 노드로 HA 구성했어요. APISIX 인스턴스 자체도 2대를 띄우고 앞단에 Keepalived + VRRP로 가상 IP를 관리했습니다. APISIX 1번이 죽으면 VIP가 자동으로 2번으로 이동했죠.\n\n" +
+      "여덟째, Connection Pooling과 Keep-Alive로 성능을 최적화했습니다. APISIX에서 Collector로의 gRPC 연결을 재사용하도록 설정해서 매번 TLS Handshake를 하는 오버헤드를 줄였어요. Connection pool size=100, max idle time=60s로 설정했습니다.\n\n" +
+      "아홉째, Observability를 Collector 자체에 구축했습니다. APISIX의 prometheus 플러그인으로 메트릭(upstream_status, request_latency, error_rate)을 수집하고, Grafana 대시보드로 실시간 모니터링했어요. 특정 Collector로의 트래픽이 0이 되면 즉시 알림이 발생했죠.\n\n" +
+      "**실제 장애 복구 사례**\n\n" +
+      "Collector 145번 서버가 하드웨어 장애로 완전히 다운되었을 때, APISIX의 Active Health Check가 30초 내 감지하고 146, 147번으로만 트래픽을 보냈습니다. 145번 복구까지 2시간이 걸렸지만, 서비스는 정상 동작했죠. Passive Health Check 덕분에 실제로는 15초 만에 장애를 감지했고, 사용자에게는 단 1건의 에러만 노출되었습니다.\n\n" +
+      "**운영 성과 및 비용**\n\n" +
+      "OnPremise APISIX 구성의 가장 큰 장점은 비용이었습니다. 기존 서버 3대와 APISIX 2대를 활용해서 추가 인프라 비용이 거의 없었어요. AWS NLB + Fargate가 월 300달러인 것에 비해, 전기세 포함 월 50달러 정도였죠.\n\n" +
+      "단점은 운영 부담이었습니다. 서버 장애 시 수동 복구가 필요하고, 용량 계획을 직접 해야 했어요. 하지만 APISIX의 동적 설정 기능 덕분에 대부분의 운영 작업은 무중단으로 진행할 수 있었습니다.\n\n" +
+      "**핵심 교훈**\n\n" +
+      "첫째, Active + Passive Health Check의 조합이 필수입니다. Active만으로는 주기 사이 장애를 놓치고, Passive만으로는 unhealthy 노드 복구를 감지할 수 없어요.\n\n" +
+      "둘째, Circuit Breaker는 Upstream 전체 보호에 중요합니다. 개별 노드 장애는 Health Check로 처리하지만, 전체 Upstream 불안정은 Circuit Breaker로 막아야 캐스케이딩 장애를 방지할 수 있습니다.\n\n" +
+      "셋째, Weighted Round Robin으로 서버 스펙 차이를 반영하면 리소스 활용률이 균등해집니다. 모든 서버가 동일 스펙이 아니라면 weight 조정이 필수예요.\n\n" +
+      "넷째, Chaos Engineering으로 장애 시나리오를 사전에 테스트해야 합니다. 서버를 강제로 죽이고, 네트워크를 끊어보고, 실제로 Failover가 동작하는지 검증했어요. 이 과정에서 설정 오류를 많이 발견했습니다.",
+  },
+  {
+    id: 139,
+    category1: "Infrastructure",
+    category2: "Distributed System",
+    question:
+      "APISIX의 설정 저장소로 etcd 클러스터를 구성했나요? etcd의 고가용성과 데이터 일관성을 어떻게 보장했는지 설명해주세요.",
+    answer:
+      "APISIX의 고가용성을 위해서는 설정 저장소인 etcd 자체도 HA로 구성해야 했습니다. APISIX는 모든 라우팅 설정, Upstream 정보, 플러그인 구성을 etcd에 저장하기 때문에, etcd가 SPOF가 되면 APISIX 전체가 마비되는 거죠.\n\n" +
+      "**etcd 클러스터 구성**\n\n" +
+      "3노드 etcd 클러스터를 Static 방식으로 구축했습니다. 각 노드는 독립적인 서버(10.101.91.145, 146, 147)에 배포되었고, 초기 클러스터 멤버를 명시적으로 정의했어요.\n\n" +
+      "```bash\n" +
+      "# Node 1 (10.101.91.145)\n" +
+      "etcd --name etcd-1 \\\n" +
+      "  --initial-advertise-peer-urls http://10.101.91.145:2380 \\\n" +
+      "  --listen-peer-urls http://10.101.91.145:2380 \\\n" +
+      "  --listen-client-urls http://10.101.91.145:2379,http://127.0.0.1:2379 \\\n" +
+      "  --advertise-client-urls http://10.101.91.145:2379 \\\n" +
+      "  --initial-cluster-token etcd-apisix-cluster \\\n" +
+      "  --initial-cluster etcd-1=http://10.101.91.145:2380,etcd-2=http://10.101.91.146:2380,etcd-3=http://10.101.91.147:2380 \\\n" +
+      "  --initial-cluster-state new\n\n" +
+      "# Node 2, 3도 동일한 initial-cluster 설정으로 시작\n" +
+      "```\n\n" +
+      "initial-cluster-token을 'etcd-apisix-cluster'로 고유하게 설정해서 다른 etcd 클러스터와 혼동을 방지했습니다. 이 토큰이 다르면 같은 네트워크에 여러 etcd 클러스터가 있어도 서로 격리되어요.\n\n" +
+      "**Raft Consensus와 Quorum**\n\n" +
+      "etcd는 Raft 알고리즘으로 분산 합의를 달성합니다. 3노드 클러스터에서는 과반수인 2개 노드가 살아있어야 쓰기가 가능해요. 1개 노드 장애는 문제없지만, 2개 노드가 죽으면 클러스터가 read-only 모드로 전환됩니다.\n\n" +
+      "Quorum 계산식은 `(N/2) + 1`입니다. 3노드면 2개, 5노드면 3개가 필요하죠. 그래서 etcd는 항상 홀수 개 노드로 구성해야 합니다. 짝수 개는 장애 허용 능력이 늘지 않으면서 오버헤드만 증가해요.\n\n" +
+      "**Leader Election과 Auto-Failover**\n\n" +
+      "etcd 클러스터는 항상 1개의 Leader를 선출하고, 나머지는 Follower가 됩니다. 모든 쓰기는 Leader를 거쳐야 하고, Follower는 읽기만 처리해요.\n\n" +
+      "Leader가 죽으면 자동으로 재선출이 시작됩니다. Election timeout(기본 1초)이 지나면 Follower들이 투표를 시작하고, 과반수 득표한 노드가 새 Leader가 되죠. 보통 1-2초 내에 재선출이 완료되어 downtime이 최소화됩니다.\n\n" +
+      "실제로 145번 노드(Leader)가 다운되었을 때, 146번이 1.2초 만에 새 Leader로 선출되었고, APISIX는 자동으로 새 Leader와 통신했어요. etcd client library가 endpoint list를 관리하면서 자동 failover를 처리했습니다.\n\n" +
+      "**데이터 일관성 보장**\n\n" +
+      "etcd는 Strong Consistency를 보장합니다. Raft 알고리즘 덕분에 모든 노드가 동일한 순서로 동일한 데이터를 가져요. CAP theorem에서 CP(Consistency + Partition tolerance)를 선택한 거죠.\n\n" +
+      "쓰기 프로세스는 이렇습니다. 첫째, Client가 Leader에게 쓰기 요청을 보냅니다. 둘째, Leader가 로그를 Follower들에게 복제합니다. 셋째, 과반수 노드가 로그를 저장하면 commit됩니다. 넷째, Leader가 Client에게 성공 응답을 보냅니다. 다섯째, 비동기로 나머지 Follower들도 commit합니다.\n\n" +
+      "이 과정에서 Network Partition이 발생하면, 과반수를 유지한 쪽만 쓰기가 가능하고 소수 쪽은 read-only가 됩니다. Split-brain 문제가 원천적으로 방지되는 거죠.\n\n" +
+      "**APISIX와 etcd 통합**\n\n" +
+      "APISIX는 etcd의 Watch API를 사용해서 설정 변경을 실시간으로 감지합니다. 관리자가 Admin API로 Route를 추가하면, etcd에 저장되고, 모든 APISIX 인스턴스가 Watch를 통해 즉시 업데이트를 받아요.\n\n" +
+      "APISIX 설정 파일(config.yaml)에 etcd endpoints를 배열로 정의했습니다.\n\n" +
+      "```yaml\n" +
+      "etcd:\n" +
+      "  host:\n" +
+      '    - "http://10.101.91.145:2379"\n' +
+      '    - "http://10.101.91.146:2379"\n' +
+      '    - "http://10.101.91.147:2379"\n' +
+      '  prefix: "/apisix"\n' +
+      "  timeout: 30\n" +
+      "```\n\n" +
+      "APISIX client가 3개 endpoint를 모두 알고 있어서, 하나가 죽어도 자동으로 다른 노드로 연결을 시도합니다. Health check를 5초마다 수행해서 죽은 노드는 제외하고, 복구되면 다시 포함했어요.\n\n" +
+      "**Snapshot과 백업**\n\n" +
+      "etcd 데이터 손실을 막기 위해 자동 백업을 구축했습니다. etcdctl snapshot save로 매일 밤 2시에 스냅샷을 생성하고, S3에 업로드했어요.\n\n" +
+      "```bash\n" +
+      "# Daily backup cron job\n" +
+      "0 2 * * * etcdctl --endpoints=http://10.101.91.145:2379 \\\n" +
+      "  snapshot save /backup/etcd-$(date +\\%Y\\%m\\%d).db && \\\n" +
+      "  aws s3 cp /backup/etcd-$(date +\\%Y\\%m\\%d).db s3://backups/etcd/\n" +
+      "```\n\n" +
+      "7일 이상 된 백업은 자동 삭제하여 스토리지 비용을 절감했습니다. Disaster recovery test를 월 1회 실시해서 백업에서 복구하는 절차를 검증했죠.\n\n" +
+      "**성능 최적화**\n\n" +
+      "etcd는 디스크 I/O에 민감합니다. SSD를 사용하고, data directory를 별도 볼륨에 마운트했어요. 또한 --quota-backend-bytes=8GB로 데이터 크기를 제한해서 메모리 사용을 제어했습니다.\n\n" +
+      "Auto-compaction을 활성화해서 오래된 revision을 자동으로 삭제했어요. --auto-compaction-retention=1h 설정으로 1시간 이전 데이터는 압축했습니다. APISIX 설정은 자주 변경되지 않기 때문에 1시간이면 충분했죠.\n\n" +
+      "Defragmentation을 주기적으로 수행해서 디스크 공간을 회수했습니다. etcdctl defrag를 매주 일요일 새벽에 실행해서 내부 단편화를 제거했어요.\n\n" +
+      "**모니터링**\n\n" +
+      "etcd의 Prometheus metrics를 수집해서 Grafana로 모니터링했습니다. 핵심 지표는 이랬어요. etcd_server_is_leader로 현재 Leader를 추적하고, etcd_server_has_leader로 Leader 부재를 감지했습니다. etcd_mvcc_db_total_size_in_bytes로 데이터 크기를 모니터링하고, 7GB 초과 시 알림을 보냈어요. etcd_disk_backend_commit_duration_seconds로 디스크 I/O 지연을 추적하고, 100ms 초과 시 경고했습니다.\n\n" +
+      "**실제 장애 사례**\n\n" +
+      "145번 노드의 디스크가 꽉 차서 etcd가 read-only 모드로 전환되었어요. quota-backend-bytes에 도달했기 때문이었죠. 즉시 defrag와 compaction을 수행해서 공간을 확보하고, quota를 12GB로 증가시켰습니다. 이 과정에서 APISIX는 정상 동작했어요. 읽기는 가능했고, 쓰기만 일시적으로 실패했기 때문에 라우팅에는 영향이 없었습니다.\n\n" +
+      "**핵심 교훈**\n\n" +
+      "첫째, etcd는 단순해 보여도 프로덕션에서는 세심한 관리가 필요합니다. 디스크 I/O, 데이터 크기, Compaction을 모두 신경 써야 안정적이에요.\n\n" +
+      "둘째, 3노드 클러스터면 대부분의 경우 충분합니다. 5노드는 더 높은 가용성이 필요할 때만 고려하세요. 노드가 많을수록 합의 비용이 증가합니다.\n\n" +
+      "셋째, etcd와 APISIX는 같은 서버에 두지 마세요. 리소스 경쟁이 발생하고, 서버 장애 시 둘 다 죽습니다. 우리는 별도 서버에 배치해서 독립성을 보장했어요.\n\n" +
+      "넷째, Backup은 필수이지만, 복구 테스트가 더 중요합니다. 백업만 해두고 복구를 안 해봤다면, 실제 장애 시 복구 못 할 수 있어요. 주기적인 DR 테스트가 핵심입니다.",
+  },
 ];

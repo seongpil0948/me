@@ -1,10 +1,6 @@
 import type { Locale } from "../dictionaries";
 import type { Metadata } from "next";
 
-import { Button } from "@heroui/button";
-import { Card } from "@heroui/card";
-import Link from "next/link";
-
 import { getDictionary } from "../dictionaries";
 
 import { InterviewTabs } from "@/components/interview/interview-tabs";
@@ -39,26 +35,6 @@ export default async function InterviewPage({
           </p>
         </header>
 
-        {/* Company-Specific Interview Links */}
-        <Card className="mb-6 bg-linear-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20">
-          <div className="flex items-center justify-between p-4">
-            <div>
-              <h2 className="font-semibold text-lg">
-                🎯 Company-Specific Interview Prep
-              </h2>
-              <p className="text-default-500 text-sm">
-                Tailored interview questions for specific companies
-              </p>
-            </div>
-            <Link href={`/${locale}/interview/toss`}>
-              <Button color="primary" variant="flat">
-                토스 DevOps Engineer 🇰🇷
-              </Button>
-            </Link>
-          </div>
-        </Card>
-
-        {/* Tabs for Table and Quiz Modes */}
         <InterviewTabs dict={dict} questions={interviewQuestions} />
       </div>
     </div>

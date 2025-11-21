@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { interviewQuestions, tossInterviewQuestions } from "@/data/interview";
+import { interviewQuestions } from "@/data/interview";
 
 describe("interview data", () => {
   describe("general interview questions", () => {
@@ -64,70 +64,9 @@ describe("interview data", () => {
     });
   });
 
-  describe("toss-specific interview questions", () => {
-    it("should have Toss questions", () => {
-      expect(tossInterviewQuestions.length).toBeGreaterThan(0);
-    });
-
-    it("should have valid question structure", () => {
-      tossInterviewQuestions.forEach((q) => {
-        expect(q).toHaveProperty("id");
-        expect(q).toHaveProperty("category1");
-        expect(q).toHaveProperty("category2");
-        expect(q).toHaveProperty("question");
-        expect(q).toHaveProperty("answer");
-      });
-    });
-
-    it("should have Toss-specific IDs (101+)", () => {
-      const tossIds = tossInterviewQuestions.map((q) => q.id);
-
-      tossIds.forEach((id) => {
-        expect(id).toBeGreaterThanOrEqual(101);
-      });
-    });
-
-    it("should have unique IDs", () => {
-      const ids = tossInterviewQuestions.map((q) => q.id);
-      const uniqueIds = new Set(ids);
-
-      expect(uniqueIds.size).toBe(ids.length);
-    });
-
-    it("should have Korean language questions", () => {
-      // Check that at least some questions contain Korean characters
-      const hasKorean = tossInterviewQuestions.some((q) =>
-        /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(q.question),
-      );
-
-      expect(hasKorean).toBe(true);
-    });
-
-    it("should have technical and company categories", () => {
-      const categories = new Set(
-        tossInterviewQuestions.map((q) => q.category2),
-      );
-
-      expect(categories.size).toBeGreaterThan(1);
-    });
-  });
-
   describe("all questions combined", () => {
-    it("should not have overlapping IDs between general and Toss questions", () => {
-      const generalIds = new Set(interviewQuestions.map((q) => q.id));
-      const tossIds = new Set(tossInterviewQuestions.map((q) => q.id));
-      const intersection = new Set(
-        Array.from(generalIds).filter((id) => tossIds.has(id)),
-      );
-
-      expect(intersection.size).toBe(0);
-    });
-
     it("should have sufficient total questions", () => {
-      const totalQuestions =
-        interviewQuestions.length + tossInterviewQuestions.length;
-
-      expect(totalQuestions).toBeGreaterThan(50);
+      expect(interviewQuestions.length).toBeGreaterThan(50);
     });
   });
 });
