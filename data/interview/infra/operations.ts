@@ -291,7 +291,7 @@ export const infraOperationsQuestions: InterviewQuestion[] = [
     category1: "Infrastructure/Operations",
     category2: "CI/CD",
     question:
-      "Jenkins 기반 ECS 배포 파이프라인으로 배포 시간을 90% 단축했다고 하셨는데, CloudFormation 대신 Jenkins를 선택한 이유가 무엇인가요?",
+      "Jenkins 기반 ECS 배포 파이프라인을 구축하셨는데, CloudFormation 대신 Jenkins를 선택한 이유가 무엇인가요?",
     answer:
       "'AWS Native로 완전 자동화하자'는 목표로 CodePipeline을 주로 활용해  모놀리식 CloudFormation 스택으로 관리했죠.\n\n" +
       "문제는 CodeBuild에서 생성한 **동적 이미지 태그**를 CloudFormation 템플릿에 주입하기엔 제한적이었어요" +
@@ -305,7 +305,7 @@ export const infraOperationsQuestions: InterviewQuestion[] = [
       "세 번째는 Health Check 튜닝이었습니다. 신규 테스크로 트래픽 이전전에 시간이 오래 소요되는 걸 확인했어요, Health Check 간격, Threshold를  낮추고 안정화 대기 시간을 줄였습니다.\n\n" +
       "네 번째는 Mail 통합이었습니다. 배포 실패 시 어디서 멈췄는지 찾기 어려웠는데, AWS SNS로 유관자에게 알림을 보내 MTTI 자체를 줄였습니다.\n\n" +
       "**결과와 트레이드오프**\n\n" +
-      "배포 시간이 2시간에서 12분으로 90% 단축되었고, Drift로 인한 배포 차단이 zero가 되었습니다. 롤백 시간도 30초로 줄었고요.\n\n" +
+      "Drift로 인한 배포 차단이 zero가 되었습니다. 롤백 시간도 30초로 줄었고요.\n\n" +
       "물론 트레이드오프는 있었어요. CloudFormation의 선언적 관리를 포기했고, 인프라와 애플리케이션 배포가 분리되었죠. 하지만 작은 팀에서 빠른 배포가 더 중요했기 때문에 현실적인 선택이었다고 생각합니다.\n\n" +
       "**CloudFormation/CodePipeline에 대한 회고**\n\n" +
       "CodeBuild 자체는 좋았어요. 빌드 환경이 격리되고, 테스트도 가능하고, 이미지 생성기 자체로 로그도 깔끔했죠. 하지만 CodePipeline과 CloudFormation 조합은 개발자 경험이 좋지 않았습니다. 특히 동적 값 주입과 Drift 처리가 너무 경직되어 있었어요.\n\n" +

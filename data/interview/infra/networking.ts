@@ -12,8 +12,8 @@ export const infraNetworkingQuestions: InterviewQuestion[] = [
     question:
       "Describe your experience with network architecture and VPN setup.",
     answer:
-      "하이브리드 네트워킹이 제가 토스에 지원한 가장 큰 이유 중 하나예요. 지난 1년간 Direct Connect, IPsec VPN, Transit Gateway를 집중적으로 공부하며 CDC(Cloud Data Center) 하이브리드 네트워킹 설계에 깊은 관심을 가져왔습니다.\n\n" +
-      "실무에서는 ₩500B 규모 이커머스 플랫폼의 온프레미스-AWS 하이브리드 환경을 직접 구축했어요. 이론으로만 배운 것과 실제 운영의 차이를 뼈저리게 느꼈죠.\n\n" +
+      "하이브리드 네트워킹이 제가 토스에 지원한 가장 큰 이유 중 하나예요. 하이브리드 네트워킹 환경에 관심이 있어, 지난 1년간 Direct Connect, IPsec VPN, Transit Gateway를 집중적으로 학습하며 실무 적용을 준비해왔습니다.\n\n" +
+      "현재 회사의 온프레미스-AWS 환경을 관찰하면서 하이브리드 네트워킹의 실제 운영 특성을 이해하게 되었고, 네트워크팀과 협업하며 실무 경험을 쌓았습니다.\n\n" +
       "**당시 문제 상황**\n\n" +
       "레거시 시스템은 온프레미스에, 신규 서비스는 AWS에 있었는데 실시간 데이터 동기화가 필수였어요. 기존 Public Internet 연결은 보안팀이 강력히 반대했고, '고객 개인정보가 Public으로 전송되면 안 된다'는 게 이유였죠.\n\n" +
       "**3가지 설계안 검토**\n\n" +

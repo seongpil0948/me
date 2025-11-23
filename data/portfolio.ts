@@ -93,7 +93,7 @@ export const experiences: Experience[] = [
         "Apache Kafka 3노드 고가용성 클러스터를 구축하여 일일 2천만~5천만 건 메시지를 99.9% 가동시간 SLA로 안정적 처리",
         "Apache Airflow 5서버 클러스터로 200+ DAG 기반 배치 작업 워크플로우 자동화 구현",
         "Redis Sentinel Master-Replica 고가용성 캐싱 시스템 구축",
-        "CloudFormation IaC 기반 CI/CD 파이프라인 최적화로 배포 시간 90% 단축 (2시간 → 12분)",
+        "CloudFormation IaC 기반 CI/CD 파이프라인 자동화",
         "AWS Glue + Athena 데이터 레이크 아키텍처를 통해 로그 보존 기간 142배 확장 (7일 → 10년)",
         "Grafana 비즈니스 인텔리전스 대시보드 개발로 고객 리텐션율, 구매 전환율 등 핵심 KPI 시각화",
         "Dual-Write 전략과 단계적 배포를 활용한 무중단 Redis v5 → v7 LTS 마이그레이션 실행",
@@ -302,7 +302,7 @@ export const experiences: Experience[] = [
     },
     achievements: {
       ko: [
-        "Argo Workflows + Helm 기반 애플리케이션 배포 자동화로 배포 시간 60% 단축",
+        "Argo Workflows + Helm 기반 애플리케이션 배포 자동화",
         "RabbitMQ + Dramatiq 비동기 처리로 40개 쇼핑몽 데이터 수집 완전 자동화",
         "n2 알고리즘 (ANN) 기반 상품 추천 시스템으로 CTR 15% 향상",
         "카페24 앱스토어용 Personal AI Stylist, Catalog Management 적용",
@@ -314,7 +314,7 @@ export const experiences: Experience[] = [
         "Django ORM, PostgreSQL 데이터베이스 관리",
       ],
       en: [
-        "Argo Workflows + Helm based application deployment automation reduced deployment time by 60%",
+        "Argo Workflows + Helm based application deployment automation",
         "RabbitMQ + Dramatiq async processing fully automated data collection from 40 shopping malls",
         "n2 algorithm (ANN) based product recommendation system improved CTR by 15%",
         "Applied Personal AI Stylist, Catalog Management for Cafe24 App Store",
@@ -326,7 +326,7 @@ export const experiences: Experience[] = [
         "Django ORM, PostgreSQL database management",
       ],
       zh: [
-        "基于Argo Workflows + Helm的应用部署自动化将部署时间缩短60%",
+        "基于Argo Workflows + Helm的应用部署自动化",
         "RabbitMQ + Dramatiq异步处理完全自动化从40个购物网站收集数据",
         "基于n2算法(ANN)的商品推荐系统将CTR提高15%",
         "为Cafe24应用商店应用Personal AI Stylist、Catalog Management",

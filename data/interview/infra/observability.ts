@@ -351,7 +351,7 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "**실제 장애 탐지 사례**\n\n" +
       "새벽 3시에 Batch 컨테이너가 OOM Killed로 죽었어요. 기존 L4 헬스체크는 이걸 못 봤지만, CRI Health Checker가 즉시 감지해서 Slack 알림을 보냈습니다. 자동 재시작이 시도되었지만 계속 OOM이 발생했고, 3회 재시도 후 알림이 다시 왔어요. 로그를 보니 Memory Leak이 원인이었고, 즉시 패치를 배포해서 5분 만에 해결했습니다. 기존에는 아침에 출근해서야 발견했을 문제를 선제적으로 막은 거죠.\n\n" +
       "**운영 성과**\n\n" +
-      "MTTD(Mean Time To Detection)를 18시간에서 5분으로 99.5% 단축했고, 컨테이너 자동 복구로 MTTR(Mean Time To Recovery)를 4시간에서 10분으로 단축했습니다. 월 인시던트 수가 15건에서 3건으로 감소했고, 대부분 자동 복구로 해결되었죠.\n\n" +
+      "MTTD(Mean Time To Detection)를 18시간에서 10뵔으로 99% 단축했고, 컨테이너 자동 복구로 MTTR(Mean Time To Recovery)를 4시간에서 10뵔으로 단축했습니다. 월 인시던트 수가 15건에서 3건으로 감소했고, 대부분 자동 복구로 해결되었죠.\n\n" +
       "비용 효율성도 탁월했어요. Datadog Synthetic Monitoring을 사용했다면 월 500달러가 들었을 텐데, Self-hosted 방식으로 EC2 비용만 월 40달러로 운영했습니다. 대신 개발과 유지보수 부담이 있었지만, 커스터마이징 자유도가 높아서 충분히 가치가 있었어요.\n\n" +
       "**핵심 교훈**\n\n" +
       "첫째, Synthetic Monitoring은 '사용자 관점의 가용성'을 측정합니다. L4가 '서버 살아있음'을 보는 것과, 우리가 '실제 API 요청이 성공함'을 보는 것은 완전히 다릅니다. 후자가 진짜 가용성이에요.\n\n" +

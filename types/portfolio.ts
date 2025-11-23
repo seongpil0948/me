@@ -83,7 +83,6 @@ export interface PersonalInfo {
 export interface SummaryStats {
   errorDetectionReduction: number;
   costSavings: number;
-  deploymentSpeedup: number;
   logRetentionExpansion: string;
   projectRevenue: number;
   dailyMessages: string;

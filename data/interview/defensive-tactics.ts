@@ -17,7 +17,7 @@ export const defensiveTacticsQuestions: InterviewQuestion[] = [
     answer:
       "네, 맞습니다. EKS 프로덕션 운영 경험은 없습니다. 하지만 이것이 제가 지원한 중요한 이유이기도 합니다. 세 가지 관점에서 말씀드리겠습니다.\n\n" +
       "**1. 전이 가능한 기반 역량**\n\n" +
-      "먼저 EKS는 매니지드 Kubernetes이므로, 제 3년간의 Kubernetes 실전 경험이 직접 전이됩니다. 현재 100개 이상의 컨테이너를 프로덕션에서 운영하며 CNI, CRI, CSI 같은 핵심 컴포넌트를 직접 다뤄왔습니다. 특히 LG 파트너사 업무 당시, 배포 환경 시뮬레이션을 위해 사내 3개 서버로 kubeadm 기반 클러스터를 직접 구성했습니다. 1개 Control Plane과 2개 Worker Node로 HA 구성을 경험하면서 CNI 플러그인 선택(Calico vs Flannel), CRI 런타임 설정(containerd), CSI 스토리지 프로비저닝까지 직접 구축하며 Kubernetes의 내부 동작 원리를 깊이 이해하게 되었습니다. EKS는 컨트롤 플레인을 AWS가 관리해주는 것이므로, 실제 애플리케이션 배포와 운영 측면에서는 제 경험이 100% 활용 가능합니다.\n\n" +
+      "먼저 EKS는 매니지드 Kubernetes이므로, 제 Kubernetes 실습 및 POC 경험이 직접 전이됩니다. 현재 프로덕션에서는 AWS ECS Fargate 기반 컨테이너 환경을 운영 중이며, 병렬적으로 on-premises에서 kubeadm으로 3-node 클러스터를 구축하여 POC를 진행했습니다. 1개 Control Plane과 2개 Worker Node로 HA 구성을 경험하면서 CNI 플러그인 선택(Calico vs Flannel), CRI 런타임 설정(containerd), CSI 스토리지 프로비저닝까지 직접 구축하며 Kubernetes의 내부 동작 원리를 깊이 이해하게 되었습니다. EKS는 컨트롤 플레인을 AWS가 관리해주는 것이므로, 실제 애플리케이션 배포와 운영 측면에서는 제 경험이 직접 활용 가능합니다.\n\n" +
       "더불어 CKA 자격증을 1개월 만에 취득하면서 Kubernetes의 네트워킹, 스케줄링, 스토리지, 보안 전반을 체계적으로 학습했고, AWS Advanced Networking Specialty로 VPC 설계, Transit Gateway, PrivateLink 같은 AWS 네트워킹도 검증받았습니다. 대규모 컨테이너 환경의 본질은 **'스케일링 전략, 리소스 관리, 네트워크 정책'**인데, 이 세 가지는 모두 제 전문 영역입니다.\n\n" +
       "**2. 기술 선택의 맥락과 학습**\n\n" +
       "EKS를 프로덕션에 적용하지 않은 것은 무경험이 아니라 **합리적 기술 선택의 결과**였습니다. 작년 컨테이너 기반 인프라를 클라우드로 전환하는 프로젝트를 진행하면서, EKS와 Istio Ambient Mode, Gateway API를 직접 평가했습니다. 로컬 환경에 EKS 클러스터를 구성하고 Istio를 설치해 mTLS 통신과 트래픽 정책을 테스트했으며, AWS Load Balancer Controller와 ExternalDNS 통합까지 실습했습니다.\n\n" +
@@ -70,7 +70,7 @@ export const defensiveTacticsQuestions: InterviewQuestion[] = [
       "- 더 직관적인 Service Mesh 대시보드 설계\n" +
       "- MTTI 추가 감소 방안 제안 (현재 18시간 → 10분 경험 보유)\n\n" +
       "**B. CI/CD 파이프라인 개선**\n" +
-      "- GitOps(ArgoCD) 파이프라인 최적화 (배포 시간 2시간 → 12분 경험)\n" +
+      "- GitOps(ArgoCD) 파이프라인 최적화 경험\n" +
       "- Istio 설정 배포 자동화\n" +
       "- Canary 배포 자동화 고도화\n\n" +
       "**C. AWS 인프라 최적화**\n" +
@@ -166,7 +166,7 @@ export const defensiveTacticsQuestions: InterviewQuestion[] = [
       "- Producer Idempotence, Consumer Group Rebalancing 최적화\n" +
       "- Partition 전략: 초당 50,000 메시지 처리 검증\n\n" +
       "**D. CI/CD 자동화**\n" +
-      "- CloudFormation으로 배포 시간 2시간 → 12분 (90% 개선)\n" +
+      "- CloudFormation IaC 기반 인프라 자동화 경험\n" +
       "- Terraform으로 개발자 샌드박스 자동화 (80% 시간 단축)\n" +
       "- 이 파이프라인은 **100개+ 서비스에 적용 가능**\n\n" +
       "**2. 핵심은 규모가 아닌 문제 해결 능력**\n\n" +

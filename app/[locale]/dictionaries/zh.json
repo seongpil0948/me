@@ -331,13 +331,25 @@
     "downloadPdf": "下载PDF",
     "errorDetection": "错误检测时间减少",
     "costSavings": "成本节省",
-    "deploymentSpeedup": "部署时间减少",
+
     "logRetention": "日志保留扩展",
     "projectRevenue": "收入增长",
     "dailyMessages": "每日消息处理量",
     "period": "期间",
     "position": "职位",
-    "techStack": "技术栈"
+    "techStack": "技术栈",
+    "englishName": "英文名",
+    "coreCompetencies": "核心能力",
+    "compensation": "薪资信息",
+    "currentSalary": "当前薪资",
+    "targetSalary": "期望薪资",
+    "bonus": "奖金",
+    "benefits": "福利",
+    "careerMotivation": "职业动机",
+    "availability": "可入职信息",
+    "noticeEndDate": "可入职日期",
+    "interviewPreference": "面试偏好",
+    "otherPositions": "其他职位"
   },
   "expOnlyTest": {
     "title": "职业经历描述（纯文本）",

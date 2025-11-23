@@ -130,7 +130,7 @@
         "Automated complex data workflows including batch ETL processing, change data capture (CDC) synchronization, and statistical aggregation across 200+ directed acyclic graphs (DAGs)",
         "Implemented distributed task execution using PostgreSQL-backed metadata storage and Redis-based message queueing with Celery Executor for parallel processing",
         "Optimized pipeline performance handling 20TB monthly data volume through dynamic task parallelization and resource allocation strategies",
-        "Developed comprehensive monitoring solution with real-time Grafana dashboards, PagerDuty alerting, and SLA tracking for pipeline health",
+        "Developed comprehensive monitoring solution with real-time Grafana dashboards, Slack alerting, and SLA tracking for pipeline health",
         "Reduced data warehouse refresh cycles by 60% through automated incremental ETL processes, enabling near-realtime analytics"
       ]
     },
@@ -329,10 +329,22 @@
     "downloadPdf": "Download PDF",
     "errorDetection": "Error Detection Reduction",
     "costSavings": "Cost Savings",
-    "deploymentSpeedup": "Deployment Speedup",
+
     "logRetention": "Log Retention Expansion",
     "projectRevenue": "Revenue Increase",
-    "dailyMessages": "Daily Messages"
+    "dailyMessages": "Daily Messages",
+    "englishName": "English Name",
+    "coreCompetencies": "Core Competencies",
+    "compensation": "Compensation",
+    "currentSalary": "Current Salary",
+    "targetSalary": "Target Salary",
+    "bonus": "Bonus",
+    "benefits": "Benefits",
+    "careerMotivation": "Career Motivation",
+    "availability": "Availability",
+    "noticeEndDate": "Available From",
+    "interviewPreference": "Interview Preference",
+    "otherPositions": "Other Positions"
   },
   "expOnlyTest": {
     "title": "Career Description (Text Only)",

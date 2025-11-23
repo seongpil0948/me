@@ -45,11 +45,9 @@ describe("personal data", () => {
     it("should have numeric performance metrics", () => {
       expect(typeof summaryStats.errorDetectionReduction).toBe("number");
       expect(typeof summaryStats.costSavings).toBe("number");
-      expect(typeof summaryStats.deploymentSpeedup).toBe("number");
       expect(typeof summaryStats.projectRevenue).toBe("number");
       expect(summaryStats.errorDetectionReduction).toBeGreaterThan(0);
       expect(summaryStats.costSavings).toBeGreaterThan(0);
-      expect(summaryStats.deploymentSpeedup).toBeGreaterThan(0);
     });
 
     it("should have string metrics", () => {

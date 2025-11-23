@@ -31,7 +31,7 @@ export const infraCoreQuestions: InterviewQuestion[] = [
     question: "Kubernetes 운영에서 가장 어려웠던 점과 해결 방법은 무엇인가요?",
     answer:
       "Kubernetes 운영에서 가장 어려운 것은 네트워크 디버깅과 리소스 경합입니다.\n\n" +
-      "EKS 클러스터 운영 경험 100개 이상의 Pod를 관리하면서 겪은 주요 도전들을 공유하겠습니다. " +
+      "on-premises 환경에서 kubeadm으로 3-node 클러스터를 구축하고 POC를 진행하면서, 그리고 EKS 마이그레이션을 위한 아키텍처 설계를 하면서 겪은 주요 도전들을 공유하겠습니다. " +
       "네트워크 문제 해결에서 Pod 간 통신 장애 시 가장 효과적인 디버깅 순서를 확립했습니다. " +
       "kubectl exec로 Pod-to-Pod 연결성을 확인하고, DNS Resolution 문제를 검증하며, CNI 네트워크 상태를 점검합니다.\n\n" +
       "실제 장애 사례로 Pod Network 파편화 문제가 있었습니다. 특정 Node의 Pod들이 간헐적 connection timeout을 보였는데, " +
