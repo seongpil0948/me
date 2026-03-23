@@ -3,11 +3,18 @@
 import type { InterviewQuestion } from "@/types/portfolio";
 import type { Dictionary } from "@/types/i18n";
 
-import { Card, CardBody } from "@heroui/card";
-import { Tab, Tabs } from "@heroui/tabs";
+import dynamic from "next/dynamic";
+import { Card, Tabs } from "@heroui/react";
 
-import { QATable } from "./qa-table";
-import { QuizMode } from "./quiz-mode";
+const QATable = dynamic(() => import("./qa-table").then((m) => m.QATable), {
+  ssr: false,
+  loading: () => <div className="p-8 text-center text-muted">Loading...</div>,
+});
+
+const QuizMode = dynamic(() => import("./quiz-mode").then((m) => m.QuizMode), {
+  ssr: false,
+  loading: () => <div className="p-8 text-center text-muted">Loading...</div>,
+});
 
 interface InterviewTabsProps {
   dict: Dictionary;
@@ -16,22 +23,35 @@ interface InterviewTabsProps {
 
 export function InterviewTabs({ dict, questions }: InterviewTabsProps) {
   return (
-    <Tabs aria-label="Interview modes" size="lg" variant="underlined">
-      <Tab key="table" title={`📋 ${dict.interview.tableView}`}>
-        <Card>
-          <CardBody>
-            <QATable questions={questions} />
-          </CardBody>
-        </Card>
-      </Tab>
+    <Tabs defaultSelectedKey="table" variant="secondary">
+      <Tabs.ListContainer>
+        <Tabs.List aria-label="Interview modes">
+          <Tabs.Tab id="table">
+            {`📋 ${dict.interview.tableView}`}
+            <Tabs.Indicator />
+          </Tabs.Tab>
+          <Tabs.Tab id="quiz">
+            {`🎯 ${dict.interview.practice}`}
+            <Tabs.Indicator />
+          </Tabs.Tab>
+        </Tabs.List>
+      </Tabs.ListContainer>
 
-      <Tab key="quiz" title={`🎯 ${dict.interview.practice}`}>
+      <Tabs.Panel id="table">
+        <Card>
+          <Card.Content>
+            <QATable questions={questions} />
+          </Card.Content>
+        </Card>
+      </Tabs.Panel>
+
+      <Tabs.Panel id="quiz">
         <QuizMode
           dict={dict}
           questions={questions}
           title={dict.interview.quiz.title}
         />
-      </Tab>
+      </Tabs.Panel>
     </Tabs>
   );
 }

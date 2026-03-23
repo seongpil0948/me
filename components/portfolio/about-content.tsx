@@ -1,6 +1,6 @@
 import type { Dictionary } from "@/types/i18n";
 
-import { Link } from "@heroui/link";
+import { Link } from "@heroui/react";
 
 import { PortfolioLink } from "@/types/portfolio";
 import { personalInfo } from "@/data/personal";
@@ -36,9 +36,10 @@ export default function AboutContent({
           <p>📱 {personalInfo.contact.phone}</p>
           <p>📧 {personalInfo.contact.email}</p>
           <Link
-            isExternal
             href="https://idstrust.com"
+            rel="noreferrer"
             style={{ color: "var(--color-primary)" }}
+            target="_blank"
           >
             🌐 {dict.companies.daewoong} → {dict.companies.idstrust}
           </Link>
@@ -76,10 +77,11 @@ export default function AboutContent({
             .map((link, idx) => (
               <Link
                 key={idx}
-                isExternal
                 className="block hover:translate-x-1 transition-transform"
                 href={link.url}
+                rel="noreferrer"
                 style={{ color: "var(--color-primary)" }}
+                target="_blank"
               >
                 {link.name} →
               </Link>
@@ -98,10 +100,11 @@ export default function AboutContent({
               {openSourceContributions.map((contribution, idx) => (
                 <Link
                   key={idx}
-                  isExternal
                   className="block text-sm hover:translate-x-1 transition-transform"
                   href={contribution.url}
+                  rel="noreferrer"
                   style={{ color: "var(--color-text-secondary)" }}
+                  target="_blank"
                 >
                   🔗 {contribution.name}
                 </Link>

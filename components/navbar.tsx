@@ -1,11 +1,6 @@
-import {
-  Navbar as HeroUINavbar,
-  NavbarContent,
-  NavbarMenuToggle,
-  NavbarBrand,
-  NavbarItem,
-} from "@heroui/navbar";
-import { Link } from "@heroui/link";
+"use client";
+
+import { Drawer, Link } from "@heroui/react";
 import NextLink from "next/link";
 
 import { siteConfig } from "@/config/site";
@@ -15,39 +10,100 @@ import LanguageSwitcher from "@/components/language-switcher";
 
 export const Navbar = () => {
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
-            <p className="font-bold text-inherit">Sp Choi</p>
-          </NextLink>
-        </NavbarBrand>
-      </NavbarContent>
+    <nav className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+      <div className="flex h-14 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Brand */}
+        <NextLink className="flex items-center gap-2 font-bold text-lg" href="/">
+          Sp Choi
+        </NextLink>
 
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
-        <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal aria-label="Discord" href={siteConfig.links.discord}>
-            <DiscordIcon className="text-default-500" />
+        {/* Desktop Navigation */}
+        <div className="hidden sm:flex items-center gap-4">
+          <Link
+            aria-label="Discord"
+            className="text-default-500 hover:text-default-700"
+            href={siteConfig.links.discord}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <DiscordIcon />
           </Link>
-          <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-            <GithubIcon className="text-default-500" />
+          <Link
+            aria-label="Github"
+            className="text-default-500 hover:text-default-700"
+            href={siteConfig.links.github}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <GithubIcon />
           </Link>
           <ThemeSwitch />
           <LanguageSwitcher />
-        </NavbarItem>
-      </NavbarContent>
+        </div>
 
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link>
-        <ThemeSwitch />
-        <LanguageSwitcher />
-        <NavbarMenuToggle />
-      </NavbarContent>
-    </HeroUINavbar>
+        {/* Mobile Navigation */}
+        <div className="sm:hidden flex items-center gap-3">
+          <Link
+            aria-label="Github"
+            className="text-default-500"
+            href={siteConfig.links.github}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <GithubIcon />
+          </Link>
+          <ThemeSwitch />
+          <LanguageSwitcher />
+          <Drawer>
+            <Drawer.Trigger
+              aria-label="Menu"
+              className="button button--md button--ghost button--icon-only"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M4 6h16M4 12h16M4 18h16"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                />
+              </svg>
+            </Drawer.Trigger>
+            <Drawer.Backdrop>
+              <Drawer.Content className="w-72" placement="right">
+                <Drawer.Dialog>
+                  <Drawer.CloseTrigger />
+                  <Drawer.Header className="px-4">Navigation</Drawer.Header>
+                  <Drawer.Body className="px-4">
+                    <div className="flex flex-col gap-4">
+                      <Link
+                        aria-label="Discord"
+                        href={siteConfig.links.discord}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <DiscordIcon /> Discord
+                      </Link>
+                      <Link
+                        aria-label="Github"
+                        href={siteConfig.links.github}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <GithubIcon /> Github
+                      </Link>
+                    </div>
+                  </Drawer.Body>
+                </Drawer.Dialog>
+              </Drawer.Content>
+            </Drawer.Backdrop>
+          </Drawer>
+        </div>
+      </div>
+    </nav>
   );
 };

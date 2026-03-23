@@ -1,6 +1,6 @@
 import nextPlugin from "@next/eslint-plugin-next";
 import prettierConfig from "eslint-config-prettier";
-import importPlugin from "eslint-plugin-import";
+import importPlugin from "eslint-plugin-import-x";
 import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
 import prettierPlugin from "eslint-plugin-prettier";
 import reactPlugin from "eslint-plugin-react";
@@ -56,14 +56,14 @@ const eslintConfig = [
       "react-hooks": reactHooksPlugin,
       "@typescript-eslint": tsPlugin,
       "unused-imports": unusedImportsPlugin,
-      import: importPlugin,
+      "import-x": importPlugin,
       "jsx-a11y": jsxA11yPlugin,
       "@next/next": nextPlugin,
       prettier: prettierPlugin,
     },
     settings: {
       react: {
-        version: "detect",
+        version: "19",
       },
     },
     rules: {
@@ -107,7 +107,7 @@ const eslintConfig = [
       ],
 
       // Import rules
-      "import/order": [
+      "import-x/order": [
         "warn",
         {
           groups: [

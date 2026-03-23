@@ -27,6 +27,9 @@ describe("interview data", () => {
       const validCategories = [
         "General",
         "Infrastructure",
+        "Infrastructure/Operations",
+        "Observability",
+        "Data Pipeline",
         "Frontend",
         "Backend",
       ];

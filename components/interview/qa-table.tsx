@@ -1,33 +1,17 @@
 "use client";
 
 import type { Category1, InterviewQuestion } from "@/types/portfolio";
+import type { Key, Selection } from "@heroui/react";
 
 import React from "react";
-import { Button } from "@heroui/button";
-import { Chip } from "@heroui/chip";
 import {
+  Button,
+  Chip,
   Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@heroui/dropdown";
-import { Input } from "@heroui/input";
-import {
+  Input,
   Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@heroui/modal";
-import {
   Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-} from "@heroui/table";
+} from "@heroui/react";
 
 import { ChevronDownIcon, SearchIcon, StarIcon } from "./icons";
 
@@ -54,7 +38,7 @@ export function QATable({
   questions,
   title: _title = "Interview Q&A",
 }: InterviewQATableProps) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [isOpen, setIsOpen] = React.useState(false);
   const [selectedQuestion, setSelectedQuestion] =
     React.useState<InterviewQuestion | null>(null);
   const [filterValue, setFilterValue] = React.useState("");
@@ -66,13 +50,6 @@ export function QATable({
   );
   const [showFavoritesOnly, setShowFavoritesOnly] = React.useState(false);
   const [favorites, setFavorites] = React.useState<Set<number>>(new Set());
-  const [sortDescriptor, setSortDescriptor] = React.useState<{
-    column: string;
-    direction: "ascending" | "descending";
-  }>({
-    column: "id",
-    direction: "ascending",
-  });
 
   // Load favorites from localStorage on mount
   React.useEffect(() => {
@@ -94,14 +71,20 @@ export function QATable({
     localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(favorites)));
   }, [favorites]);
 
-  const toggleFavorite = React.useCallback((id: number) => {
+  const toggleFavorite = React.useCallback((id: string | number) => {
+    const normalizedId = Number(id);
+
+    if (Number.isNaN(normalizedId)) {
+      return;
+    }
+
     setFavorites((prev) => {
       const next = new Set(prev);
 
-      if (next.has(id)) {
-        next.delete(id);
+      if (next.has(normalizedId)) {
+        next.delete(normalizedId);
       } else {
-        next.add(id);
+        next.add(normalizedId);
       }
 
       return next;
@@ -182,14 +165,8 @@ export function QATable({
   ]);
 
   const sortedItems = React.useMemo(() => {
-    return [...filteredItems].sort((a, b) => {
-      const first = a[sortDescriptor.column as keyof InterviewQuestion];
-      const second = b[sortDescriptor.column as keyof InterviewQuestion];
-      const cmp = first < second ? -1 : first > second ? 1 : 0;
-
-      return sortDescriptor.direction === "descending" ? -cmp : cmp;
-    });
-  }, [sortDescriptor, filteredItems]);
+    return [...filteredItems].sort((a, b) => a.id - b.id);
+  }, [filteredItems]);
 
   const onSearchChange = React.useCallback((value?: string) => {
     if (value) {
@@ -202,17 +179,23 @@ export function QATable({
   const handleRowClick = React.useCallback(
     (question: InterviewQuestion) => {
       setSelectedQuestion(question);
-      onOpen();
+      setIsOpen(true);
     },
-    [onOpen],
+    [],
   );
 
-  const columns = [
-    { name: "★", uid: "favorite", sortable: false },
-    { name: "Question", uid: "question", sortable: true },
-    { name: "Category 1", uid: "category1", sortable: true },
-    { name: "Category 2", uid: "category2", sortable: true },
-  ];
+  const getCategoryColor = (category: Category1) => {
+    switch (category) {
+      case "Infrastructure":
+        return "accent" as const;
+      case "Frontend":
+        return "warning" as const;
+      case "Backend":
+        return "success" as const;
+      default:
+        return "default" as const;
+    }
+  };
 
   const renderCell = React.useCallback(
     (question: InterviewQuestion, columnKey: React.Key) => {
@@ -233,7 +216,7 @@ export function QATable({
                 }
               }}
             >
-              <Button isIconOnly size="sm" variant="light">
+              <Button isIconOnly size="sm" variant="ghost">
                 <StarIcon
                   filled={favorites.has(question.id)}
                   style={{
@@ -254,19 +237,7 @@ export function QATable({
           );
         case "category1":
           return (
-            <Chip
-              color={
-                question.category1 === "General"
-                  ? "default"
-                  : question.category1 === "Infrastructure"
-                    ? "primary"
-                    : question.category1 === "Frontend"
-                      ? "secondary"
-                      : "success"
-              }
-              size="sm"
-              variant="flat"
-            >
+            <Chip color={getCategoryColor(question.category1)} size="sm" variant="soft">
               {question.category1}
             </Chip>
           );
@@ -295,76 +266,96 @@ export function QATable({
             flexWrap: "wrap",
           }}
         >
-          <Input
-            isClearable
-            placeholder="Search by question..."
-            size="sm"
-            startContent={<SearchIcon style={{ color: "#9ca3af" }} />}
-            style={{ maxWidth: "400px" }}
-            value={filterValue}
-            variant="bordered"
-            onClear={() => setFilterValue("")}
-            onValueChange={onSearchChange}
-          />
+          <div style={{ maxWidth: "400px", position: "relative", display: "flex", alignItems: "center", flex: 1 }}>
+            <SearchIcon style={{ color: "#9ca3af", position: "absolute", left: "8px", pointerEvents: "none", zIndex: 1 }} />
+            <Input
+              placeholder="Search by question..."
+              style={{ paddingLeft: "32px", width: "100%" }}
+              value={filterValue}
+              variant="secondary"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.target.value)}
+            />
+            {filterValue && (
+              <button
+                aria-label="Clear search"
+                style={{ position: "absolute", right: "8px", background: "none", border: "none", cursor: "pointer", color: "#9ca3af", fontSize: "16px" }}
+                type="button"
+                onClick={() => setFilterValue("")}
+              >
+                ✕
+              </button>
+            )}
+          </div>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <Dropdown>
-              <DropdownTrigger>
-                <Button
-                  endContent={<ChevronDownIcon />}
-                  size="sm"
-                  style={{ minWidth: "120px" }}
-                  variant="flat"
-                >
-                  {category1Filter.size > 0
-                    ? `Category 1 (${category1Filter.size})`
-                    : "Category 1"}
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                closeOnSelect={false}
+              <Dropdown.Trigger
+                className="inline-flex items-center gap-2 rounded-md px-3 h-8 text-sm transition-colors"
+                style={{
+                  minWidth: "120px",
+                  border: "1px solid var(--color-border-primary)",
+                  backgroundColor: "var(--color-background-secondary)",
+                  color: "var(--color-text-primary)",
+                  cursor: "pointer",
+                }}
+              >
+                {category1Filter.size > 0
+                  ? `Category 1 (${category1Filter.size})`
+                  : "Category 1"}
+                <ChevronDownIcon />
+              </Dropdown.Trigger>
+              <Dropdown.Popover>
+                <Dropdown.Menu
                 selectedKeys={category1Filter}
                 selectionMode="multiple"
-                onSelectionChange={(keys) =>
-                  setCategory1Filter(keys as Set<string>)
-                }
-              >
-                {category1Options.map((cat) => (
-                  <DropdownItem key={cat.uid}>{cat.name}</DropdownItem>
-                ))}
-              </DropdownMenu>
+                  onSelectionChange={(keys: Selection) =>
+                    setCategory1Filter(new Set(Array.from(keys as Set<Key>).map(String)))
+                  }
+                >
+                  {category1Options.map((cat) => (
+                    <Dropdown.Item key={cat.uid} id={cat.uid} textValue={cat.name}>
+                      {cat.name}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown.Popover>
             </Dropdown>
 
             <Dropdown>
-              <DropdownTrigger>
-                <Button
-                  endContent={<ChevronDownIcon />}
-                  size="sm"
-                  style={{ minWidth: "150px" }}
-                  variant="flat"
-                >
-                  {category2Filter.size > 0
-                    ? `Category 2 (${category2Filter.size})`
-                    : "Category 2"}
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                closeOnSelect={false}
+              <Dropdown.Trigger
+                className="inline-flex items-center gap-2 rounded-md px-3 h-8 text-sm transition-colors"
+                style={{
+                  minWidth: "150px",
+                  border: "1px solid var(--color-border-primary)",
+                  backgroundColor: "var(--color-background-secondary)",
+                  color: "var(--color-text-primary)",
+                  cursor: "pointer",
+                }}
+              >
+                {category2Filter.size > 0
+                  ? `Category 2 (${category2Filter.size})`
+                  : "Category 2"}
+                <ChevronDownIcon />
+              </Dropdown.Trigger>
+              <Dropdown.Popover>
+                <Dropdown.Menu
                 selectedKeys={category2Filter}
                 selectionMode="multiple"
-                onSelectionChange={(keys) =>
-                  setCategory2Filter(keys as Set<string>)
-                }
-              >
-                {category2Options.map((cat) => (
-                  <DropdownItem key={cat.uid}>{cat.name}</DropdownItem>
-                ))}
-              </DropdownMenu>
+                  onSelectionChange={(keys: Selection) =>
+                    setCategory2Filter(new Set(Array.from(keys as Set<Key>).map(String)))
+                  }
+                >
+                  {category2Options.map((cat) => (
+                    <Dropdown.Item key={cat.uid} id={cat.uid} textValue={cat.name}>
+                      {cat.name}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown.Popover>
             </Dropdown>
 
             <Button
-              color={showFavoritesOnly ? "warning" : "default"}
               size="sm"
-              variant={showFavoritesOnly ? "solid" : "flat"}
+              variant={showFavoritesOnly ? "primary" : "secondary"}
               onPress={() => setShowFavoritesOnly(!showFavoritesOnly)}
             >
               <StarIcon
@@ -394,129 +385,73 @@ export function QATable({
 
   return (
     <>
-      <Table
-        isHeaderSticky
-        aria-label="Interview Q&A table with filters and favorites"
-        sortDescriptor={sortDescriptor}
-        topContent={topContent}
-        topContentPlacement="outside"
-        onSortChange={(descriptor) =>
-          setSortDescriptor({
-            column: String(descriptor.column),
-            direction: descriptor.direction as "ascending" | "descending",
-          })
-        }
-      >
-        <TableHeader columns={columns}>
-          {(column: { uid: string; sortable: boolean; name: string }) => (
-            <TableColumn
-              key={column.uid}
-              align={column.uid === "favorite" ? "center" : "start"}
-              allowsSorting={column.sortable}
-            >
-              {column.name}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody emptyContent="No questions found" items={sortedItems}>
-          {(item: InterviewQuestion) => (
-            <TableRow
-              key={item.id}
-              style={{ cursor: "pointer" }}
-              onClick={() => handleRowClick(item)}
-            >
-              {(columnKey) => (
-                <TableCell>{renderCell(item, String(columnKey))}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
+      {topContent}
+      <Table aria-label="Interview Q&A table with filters and favorites">
+        <Table.Header>
+          <Table.Column className="w-14">★</Table.Column>
+          <Table.Column>Question</Table.Column>
+          <Table.Column>Category 1</Table.Column>
+          <Table.Column>Category 2</Table.Column>
+        </Table.Header>
+        <Table.Body>
+          {sortedItems.map((item) => (
+            <Table.Row key={String(item.id)} className="cursor-pointer" onAction={() => handleRowClick(item)}>
+              <Table.Cell>{renderCell(item, "favorite")}</Table.Cell>
+              <Table.Cell>{renderCell(item, "question")}</Table.Cell>
+              <Table.Cell>{renderCell(item, "category1")}</Table.Cell>
+              <Table.Cell>{renderCell(item, "category2")}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
       </Table>
 
-      <Modal
-        isDismissable={false}
-        isOpen={isOpen}
-        scrollBehavior="inside"
-        size="3xl"
-        onOpenChange={onOpenChange}
-      >
-        <ModalContent>
-          {(onClose: () => void) => (
-            <>
-              <ModalHeader
-                style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-              >
-                <div
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "600",
-                    color: "#2c3e50",
-                  }}
-                >
+      <Modal.Root>
+        <Modal.Trigger><span className="hidden" /></Modal.Trigger>
+        <Modal.Backdrop isOpen={isOpen} onOpenChange={setIsOpen}>
+          <Modal.Container placement="center" scroll="inside" size="lg">
+            <Modal.Dialog className="mx-auto w-full max-w-4xl">
+              <Modal.CloseTrigger aria-label="Close question detail" />
+              <Modal.Header className="flex flex-col gap-3">
+                <div className="text-lg font-semibold text-slate-800">
                   {selectedQuestion?.question}
                 </div>
-                <div style={{ display: "flex", gap: "8px", marginTop: "8px" }}>
-                  <Chip
-                    color={
-                      selectedQuestion?.category1 === "General"
-                        ? "default"
-                        : selectedQuestion?.category1 === "Infrastructure"
-                          ? "primary"
-                          : selectedQuestion?.category1 === "Frontend"
-                            ? "secondary"
-                            : "success"
-                    }
-                    size="sm"
-                    variant="flat"
-                  >
-                    {selectedQuestion?.category1}
-                  </Chip>
-                  <Chip color="default" size="sm" variant="bordered">
-                    {selectedQuestion?.category2}
-                  </Chip>
+                <div className="flex gap-2">
+                  {selectedQuestion && (
+                    <Chip color={getCategoryColor(selectedQuestion.category1)} size="sm" variant="soft">
+                      {selectedQuestion.category1}
+                    </Chip>
+                  )}
+                  {selectedQuestion?.category2 && (
+                    <Chip color="default" size="sm" variant="secondary">
+                      {selectedQuestion.category2}
+                    </Chip>
+                  )}
                 </div>
-              </ModalHeader>
-              <ModalBody>
-                <MarkdownRenderer>
-                  {selectedQuestion?.answer ?? ""}
-                </MarkdownRenderer>
-              </ModalBody>
-              <ModalFooter>
+              </Modal.Header>
+              <Modal.Body>
+                <MarkdownRenderer>{selectedQuestion?.answer ?? ""}</MarkdownRenderer>
+              </Modal.Body>
+              <Modal.Footer>
                 <Button
-                  color="primary"
-                  variant="light"
+                  variant="ghost"
                   onPress={() => {
                     if (selectedQuestion) {
                       toggleFavorite(selectedQuestion.id);
                     }
                   }}
                 >
-                  <StarIcon
-                    filled={
-                      selectedQuestion
-                        ? favorites.has(selectedQuestion.id)
-                        : false
-                    }
-                    style={{
-                      marginRight: "4px",
-                      color:
-                        selectedQuestion && favorites.has(selectedQuestion.id)
-                          ? "#f59e0b"
-                          : "#d1d5db",
-                    }}
-                  />
                   {selectedQuestion && favorites.has(selectedQuestion.id)
                     ? "Remove from Favorites"
                     : "Add to Favorites"}
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button onPress={() => setIsOpen(false)}>
                   Close
                 </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+              </Modal.Footer>
+            </Modal.Dialog>
+          </Modal.Container>
+        </Modal.Backdrop>
+      </Modal.Root>
     </>
   );
 }

@@ -1,81 +1,91 @@
 "use client";
 
-import { FC } from "react";
-import { VisuallyHidden } from "@react-aria/visually-hidden";
-import { SwitchProps, useSwitch } from "@heroui/switch";
-import { useTheme } from "next-themes";
-import { useIsSSR } from "@react-aria/ssr";
+import { FC, useEffect, useState } from "react";
+import { Switch } from "@heroui/react";
 import clsx from "clsx";
 
 import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
 
-export interface ThemeSwitchProps {
-  className?: string;
-  classNames?: SwitchProps["classNames"];
+type Theme = "light" | "dark";
+
+const THEME_KEY = "theme";
+
+function applyTheme(theme: Theme) {
+  const root = document.documentElement;
+
+  root.classList.remove("light", "dark");
+  root.classList.add(theme);
+  root.setAttribute("data-theme", theme);
+  try {
+    localStorage.setItem(THEME_KEY, theme);
+  } catch {
+    // ignore
+  }
 }
 
-export const ThemeSwitch: FC<ThemeSwitchProps> = ({
-  className,
-  classNames,
-}) => {
-  const { theme, setTheme } = useTheme();
-  const isSSR = useIsSSR();
+export interface ThemeSwitchProps {
+  className?: string;
+}
 
-  const onChange = () => {
-    theme === "light" ? setTheme("dark") : setTheme("light");
+export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
+  const [theme, setTheme] = useState<Theme>("dark");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const stored = (() => {
+      try {
+        return localStorage.getItem(THEME_KEY);
+      } catch {
+        return null;
+      }
+    })();
+    const current =
+      stored === "light" || stored === "dark"
+        ? stored
+        : document.documentElement.classList.contains("light")
+          ? "light"
+          : "dark";
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setTheme(current);
+     
+    setMounted(true);
+  }, []);
+
+  const toggle = () => {
+    const next: Theme = theme === "light" ? "dark" : "light";
+
+    setTheme(next);
+    applyTheme(next);
   };
 
-  const {
-    Component,
-    slots,
-    isSelected,
-    getBaseProps,
-    getInputProps,
-    getWrapperProps,
-  } = useSwitch({
-    isSelected: theme === "light" || isSSR,
-    "aria-label": `Switch to ${theme === "light" || isSSR ? "dark" : "light"} mode`,
-    onChange,
-  });
+  if (!mounted) {
+    return (
+      <div
+        className={clsx(
+          "inline-flex items-center px-px w-[58px] h-6",
+          className,
+        )}
+      />
+    );
+  }
+
+  const isLight = theme === "light";
 
   return (
-    <Component
-      {...getBaseProps({
-        className: clsx(
-          "px-px transition-opacity hover:opacity-80 cursor-pointer",
-          className,
-          classNames?.base,
-        ),
-      })}
+    <button
+      aria-label={`Switch to ${isLight ? "dark" : "light"} mode`}
+      className={clsx(
+        "inline-flex items-center px-px transition-opacity hover:opacity-80",
+        className,
+      )}
+      type="button"
+      onClick={toggle}
     >
-      <VisuallyHidden>
-        <input {...getInputProps()} />
-      </VisuallyHidden>
-      <div
-        {...getWrapperProps()}
-        className={slots.wrapper({
-          class: clsx(
-            [
-              "w-auto h-auto",
-              "bg-transparent",
-              "rounded-lg",
-              "flex items-center justify-center",
-              "group-data-[selected=true]:bg-transparent",
-              "text-default-500!",
-              "pt-px",
-              "px-0",
-              "mx-0",
-            ],
-            classNames?.wrapper,
-          ),
-        })}
-      >
-        {!isSelected || isSSR ? (
-          <SunFilledIcon size={22} />
-        ) : (
-          <MoonFilledIcon size={22} />
-        )}
-      </div>
-    </Component>
+      <Switch isReadOnly isSelected={isLight} />
+      <span className="ml-2 text-muted">
+        {isLight ? <SunFilledIcon size={22} /> : <MoonFilledIcon size={22} />}
+      </span>
+    </button>
   );
 };

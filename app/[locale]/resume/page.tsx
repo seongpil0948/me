@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 
-import { Card, CardBody } from "@heroui/card";
-import { Chip } from "@heroui/chip";
-import { Image } from "@heroui/image";
+import { Card, Chip } from "@heroui/react";
+import Image from 'next/image';
 
 import { getDictionary, Locale } from "../dictionaries";
 
@@ -113,7 +112,7 @@ export default async function ResumePage({
                     </div>
                   </div>
                 </div>
-                <Image alt={nameByLocale} src="/me/face.jpg" width={150} />
+                <Image alt={nameByLocale} height={150} src="/me/face.jpg" width={150} />
               </div>
             </div>
           </div>
@@ -170,7 +169,7 @@ export default async function ResumePage({
             {dict.resume.summary}
           </h2>
           <Card>
-            <CardBody className="p-4">
+            <Card.Content className="p-4">
               <p className="text-[10pt] leading-relaxed text-gray-800 mb-2.5">
                 {dict.profile.aboutMeParagraph1}
               </p>
@@ -183,7 +182,7 @@ export default async function ResumePage({
               <p className="text-[10pt] leading-relaxed text-gray-800 m-0">
                 {dict.profile.aboutMeParagraph4}
               </p>
-            </CardBody>
+            </Card.Content>
           </Card>
         </section>
 
@@ -236,7 +235,7 @@ export default async function ResumePage({
                     className="text-[8pt] h-6 bg-green-600 text-white"
                     color="success"
                     size="sm"
-                    variant="flat"
+                    variant="soft"
                   >
                     {getSkillEmoji(skill.name)} {skill.name}
                   </Chip>
@@ -253,9 +252,9 @@ export default async function ResumePage({
                   <Chip
                     key={index}
                     className="text-[8pt] h-6 bg-blue-600 text-white"
-                    color="primary"
+                    color="accent"
                     size="sm"
-                    variant="flat"
+                    variant="soft"
                   >
                     {getSkillEmoji(skill.name)} {skill.name}
                   </Chip>
@@ -274,7 +273,7 @@ export default async function ResumePage({
                     className="text-[8pt] h-6 bg-gray-300 text-gray-900"
                     color="default"
                     size="sm"
-                    variant="flat"
+                    variant="soft"
                   >
                     {getSkillEmoji(skill.name)} {skill.name}
                   </Chip>
@@ -333,7 +332,7 @@ export default async function ResumePage({
           </h2>
           <div className="text-[10pt]">
             <Card className="mb-3.5 p-4">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[11pt] font-bold mb-2 text-gray-800">
                   {dict.projects.monitoring.title}
                 </h3>
@@ -354,11 +353,11 @@ export default async function ResumePage({
                     src="/projects/otel-grafana/Grafana - System Dashboard.png"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.dataLake.title}
                 </h3>
@@ -379,11 +378,11 @@ export default async function ResumePage({
                     src="/projects/business-grafana/Grafana NPS.png"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.theshop.title}
                 </h3>
@@ -404,11 +403,11 @@ export default async function ResumePage({
                     src="/projects/theshop/TheShop_Pharmacy.png"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.gateway.title}
                 </h3>
@@ -429,11 +428,11 @@ export default async function ResumePage({
                     src="/projects/APISIX-Dashboard.png"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.airflow.title}
                 </h3>
@@ -454,11 +453,11 @@ export default async function ResumePage({
                     src="/projects/Aiflow.png"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.ixiStudio.title}
                 </h3>
@@ -479,11 +478,11 @@ export default async function ResumePage({
                     src="/projects/ixi-studio/0.png"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.ixiAdmin.title}
                 </h3>
@@ -504,11 +503,11 @@ export default async function ResumePage({
                     src="/projects/ixi-admin/1.png"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.drone.title}
                 </h3>
@@ -529,11 +528,11 @@ export default async function ResumePage({
                     src="/projects/drone/3.png"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.robotPlatform.title}
                 </h3>
@@ -554,11 +553,11 @@ export default async function ResumePage({
                     src="/projects/robot-platform/1.png"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.inoutbox.title}
                 </h3>
@@ -579,11 +578,11 @@ export default async function ResumePage({
                     src="/projects/iobox/app-store.jpeg"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.campi.title}
                 </h3>
@@ -604,11 +603,11 @@ export default async function ResumePage({
                     src="/projects/campi/feed.jpg"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.virtualTryOn.title}
                 </h3>
@@ -629,11 +628,11 @@ export default async function ResumePage({
                     src="/projects/try-on.png"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.intellisysWebsite.title}
                 </h3>
@@ -654,7 +653,7 @@ export default async function ResumePage({
                     src="/projects/intellisys.png"
                   />
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
           </div>
         </section>
@@ -670,7 +669,7 @@ export default async function ResumePage({
           <div className="grid grid-cols-2 gap-3 text-[10pt]">
             {portfolioLinks.map((link, index) => (
               <Card key={index} className="p-3.5 transition-all duration-200">
-                <CardBody className="p-0">
+                <Card.Content className="p-0">
                   <div className="text-[10pt] font-semibold text-gray-800 mb-1.5">
                     {link.name}
                   </div>
@@ -680,7 +679,7 @@ export default async function ResumePage({
                   >
                     {link.url.replace(/^https?:\/\//, "")}
                   </a>
-                </CardBody>
+                </Card.Content>
               </Card>
             ))}
           </div>

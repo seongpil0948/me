@@ -1,9 +1,7 @@
 import type { Dictionary } from "@/types/i18n";
 
-import { Card, CardBody } from "@heroui/card";
-import { Chip } from "@heroui/chip";
-import { Image } from "@heroui/image";
-import { Divider } from "@heroui/divider";
+import { Card, Chip, Separator } from "@heroui/react";
+import Image from 'next/image';
 
 import { Certification, Skill } from "@/types/portfolio";
 import { categorizeSkills, getSkillEmoji } from "@/lib/skill-utils";
@@ -52,7 +50,7 @@ export default function SkillsCertificationsContent({
                 borderColor: "var(--color-border-primary)",
               }}
             >
-              <CardBody className="p-0">
+              <Card.Content className="p-0">
                 <div className="flex items-start gap-4 mb-4">
                   {cert.logo && (
                     <Image
@@ -97,19 +95,19 @@ export default function SkillsCertificationsContent({
                           ? "var(--color-success)"
                           : "var(--color-warning)",
                     }}
-                    variant="flat"
+                    variant="soft"
                   >
                     {cert.status === "certified"
                       ? dict.certifications.certified
                       : dict.certifications.inProgress}
                   </Chip>
                 </div>
-              </CardBody>
+              </Card.Content>
             </Card>
           ))}
         </div>
       </div>
-      <Divider className="my-6" />
+      <Separator className="my-6" />
       {/* Skills Section */}
       <div className="mb-16">
         <h2
@@ -131,7 +129,7 @@ export default function SkillsCertificationsContent({
                     className="text-white"
                     color="success"
                     size="md"
-                    variant="flat"
+                    variant="soft"
                   >
                     {getSkillEmoji(skill.name)} {skill.name}
                   </Chip>
@@ -148,9 +146,9 @@ export default function SkillsCertificationsContent({
                   <Chip
                     key={index}
                     className="text-white"
-                    color="primary"
+                    color="accent"
                     size="md"
-                    variant="flat"
+                    variant="soft"
                   >
                     {getSkillEmoji(skill.name)} {skill.name}
                   </Chip>
@@ -158,14 +156,14 @@ export default function SkillsCertificationsContent({
               </div>
             </div>
           )}
-          <Divider />
+          <Separator />
 
           {/* Competent Level Skills */}
           {competentSkills.length > 0 && (
             <div>
               <div className="flex flex-wrap gap-2">
                 {competentSkills.map((skill, index) => (
-                  <Chip key={index} color="default" size="md" variant="flat">
+                  <Chip key={index} color="default" size="md" variant="soft">
                     {getSkillEmoji(skill.name)} {skill.name}
                   </Chip>
                 ))}
@@ -196,7 +194,7 @@ export default function SkillsCertificationsContent({
                   borderColor: "var(--color-primary)",
                   color: "var(--color-primary)",
                 }}
-                variant="bordered"
+                variant="secondary"
               >
                 {skill}
               </Chip>

@@ -3,15 +3,20 @@
 import type { InterviewQuestion } from "@/types/portfolio";
 import type { Dictionary } from "@/types/i18n";
 import type { QuizProgress } from "@/types/quiz";
+import type { Key } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo } from "react";
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
-import { Chip } from "@heroui/chip";
-import { Divider } from "@heroui/divider";
-import { Progress } from "@heroui/progress";
-import { Select, SelectItem } from "@heroui/select";
+import {
+  Button,
+  Card,
+  Chip,
+  Label,
+  ListBox,
+  ProgressBar,
+  Select,
+  Separator,
+} from "@heroui/react";
 
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { useKeyboardNav } from "@/hooks/use-keyboard-nav";
@@ -120,14 +125,27 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
     [currentIndex, shuffledQuestions.length, viewedQuestionIds.size],
   );
 
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case "Infrastructure":
+        return "accent" as const;
+      case "Frontend":
+        return "warning" as const;
+      case "Backend":
+        return "success" as const;
+      default:
+        return "default" as const;
+    }
+  };
+
   if (!currentQuestion) {
     return (
       <Card>
-        <CardBody>
+        <Card.Content>
           <p className="text-center text-default-500">
             {dict.common.loading}...
           </p>
-        </CardBody>
+        </Card.Content>
       </Card>
     );
   }
@@ -141,22 +159,40 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
         </h2>
         <Select
           className="max-w-xs"
-          label={dict.interview.settings.category}
           placeholder={dict.interview.settings.allCategories}
-          selectedKeys={new Set([selectedCategory])}
-          onSelectionChange={(keys) => {
-            const selected = Array.from(keys)[0] as string;
-
-            setSelectedCategory(selected || "all");
+          value={selectedCategory}
+          variant="secondary"
+          onChange={(key: Key | null) => {
+            if (typeof key === "string") {
+              setSelectedCategory(key || "all");
+            }
           }}
         >
-          {categories.map((category) => (
-            <SelectItem key={category}>
-              {category === "all"
-                ? dict.interview.settings.allCategories
-                : category}
-            </SelectItem>
-          ))}
+          <Label>{dict.interview.settings.category}</Label>
+          <Select.Trigger>
+            <Select.Value />
+            <Select.Indicator />
+          </Select.Trigger>
+          <Select.Popover>
+            <ListBox>
+              {categories.map((category) => (
+                <ListBox.Item
+                  key={category}
+                  id={category}
+                  textValue={
+                    category === "all"
+                      ? dict.interview.settings.allCategories
+                      : category
+                  }
+                >
+                  {category === "all"
+                    ? dict.interview.settings.allCategories
+                    : category}
+                  <ListBox.ItemIndicator />
+                </ListBox.Item>
+              ))}
+            </ListBox>
+          </Select.Popover>
         </Select>
       </div>
 
@@ -172,10 +208,10 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
             {dict.common.language === "ko" ? "개" : ""}
           </span>
         </div>
-        <Progress
+        <ProgressBar
           aria-label={`${dict.interview.quiz.progress}: ${currentIndex + 1} / ${shuffledQuestions.length}`}
           className="max-w-full"
-          color="primary"
+          color="accent"
           value={progress.currentProgress}
         />
       </div>
@@ -184,29 +220,29 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
       <AnimatePresence mode="wait">
         <motion.div key={currentQuestion.id} {...QUIZ_ANIMATION.card}>
           <Card style={{ minHeight: `${QUIZ_DEFAULTS.MIN_CARD_HEIGHT}px` }}>
-            <CardHeader>
+            <Card.Header>
               <div className="flex w-full items-center justify-between">
                 <div className="flex gap-2">
                   {currentQuestion.category1 && (
-                    <Chip color="primary" size="sm" variant="flat">
+                    <Chip color={getCategoryColor(currentQuestion.category1)} size="sm" variant="soft">
                       {currentQuestion.category1}
                     </Chip>
                   )}
                   {currentQuestion.category2 && (
-                    <Chip color="secondary" size="sm" variant="flat">
+                    <Chip color="default" size="sm" variant="secondary">
                       {currentQuestion.category2}
                     </Chip>
                   )}
                 </div>
-                <Chip size="sm" variant="bordered">
+                <Chip size="sm" variant="secondary">
                   Q{currentQuestion.id}
                 </Chip>
               </div>
-            </CardHeader>
+            </Card.Header>
 
-            <Divider />
+            <Separator />
 
-            <CardBody className="py-8">
+            <Card.Content className="py-8">
               <div className="space-y-6">
                 {/* Question */}
                 <div>
@@ -221,10 +257,9 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
                 {/* Answer Toggle Button */}
                 <div className="flex justify-center">
                   <Button
-                    color={showAnswer ? "default" : "primary"}
                     size="lg"
-                    variant={showAnswer ? "bordered" : "solid"}
-                    onClick={toggleAnswer}
+                    variant={showAnswer ? "secondary" : "primary"}
+                    onPress={toggleAnswer}
                   >
                     {showAnswer
                       ? dict.interview.quiz.hideAnswer
@@ -236,7 +271,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
                 <AnimatePresence>
                   {showAnswer && (
                     <motion.div {...QUIZ_ANIMATION.answer}>
-                      <Divider className="my-4" />
+                      <Separator className="my-4" />
                       <h3 className="mb-2 text-xl font-semibold">
                         {dict.interview.quiz.answer}
                       </h3>
@@ -247,41 +282,39 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
                   )}
                 </AnimatePresence>
               </div>
-            </CardBody>
+            </Card.Content>
 
-            <Divider />
+            <Separator />
 
-            <CardFooter>
+            <Card.Footer>
               <div className="flex w-full items-center justify-between">
                 <Button
-                  color="default"
                   isDisabled={currentIndex === 0}
-                  variant="flat"
-                  onClick={handlePrevious}
+                  variant="secondary"
+                  onPress={handlePrevious}
                 >
                   ← {dict.interview.quiz.previousQuestion}
                 </Button>
 
                 <Button
-                  color="warning"
-                  variant="flat"
-                  onClick={handleRandomQuestion}
+                  variant="ghost"
+                  onPress={handleRandomQuestion}
                 >
                   🎲 {dict.interview.quiz.randomQuestion}
                 </Button>
 
-                <Button color="primary" variant="flat" onClick={handleNext}>
+                <Button variant="secondary" onPress={handleNext}>
                   {dict.interview.quiz.nextQuestion} →
                 </Button>
               </div>
-            </CardFooter>
+            </Card.Footer>
           </Card>
         </motion.div>
       </AnimatePresence>
 
       {/* Stats Card */}
       <Card>
-        <CardBody>
+        <Card.Content>
           <div className="flex justify-around text-center">
             <div>
               <p className="text-2xl font-bold text-primary">
@@ -308,12 +341,12 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
               </p>
             </div>
           </div>
-        </CardBody>
+        </Card.Content>
       </Card>
 
       {/* Keyboard Shortcuts Hint */}
       <Card className="bg-default-50">
-        <CardBody className="py-3">
+        <Card.Content className="py-3">
           <p className="text-center text-sm text-default-500">
             💡 Tip: Use{" "}
             <kbd className="px-2 py-1 bg-default-200 rounded">←</kbd>{" "}
@@ -322,7 +355,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
             <kbd className="px-2 py-1 bg-default-200 rounded">Space</kbd> to
             toggle answer
           </p>
-        </CardBody>
+        </Card.Content>
       </Card>
     </div>
   );

@@ -1,7 +1,7 @@
 import type { Dictionary } from "@/types/i18n";
 
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
+import Link from "next/link";
+import { Button } from "@heroui/react";
 
 import { Locale } from "@/app/[locale]/dictionaries";
 import { GithubIcon } from "@/components/icons";
@@ -19,48 +19,28 @@ export default function PortfolioActionButtons({
 }: PortfolioActionButtonsProps) {
   return (
     <div className="flex justify-center gap-4 mt-8 mb-16 flex-wrap">
-      <Button
-        isExternal
-        as={Link}
-        className="shadow-lg"
-        href="https://github.com/seongpil0948"
-        radius="full"
-        style={commonStyles.button.secondary}
-      >
-        <GithubIcon size={20} />
-        {dict.buttons.visitGithub}
-      </Button>
-      <Button
-        isExternal
-        as={Link}
-        color="primary"
-        href="http://all-ad.in"
-        radius="full"
-        style={commonStyles.button.primary}
-      >
-        {dict.buttons.visitPortfolio}
-      </Button>
+      <a href="https://github.com/seongpil0948" rel="noreferrer" target="_blank">
+        <Button className="shadow-lg" style={commonStyles.button.secondary}>
+          <GithubIcon size={20} />
+          {dict.buttons.visitGithub}
+        </Button>
+      </a>
+      <a href="http://all-ad.in" rel="noreferrer" target="_blank">
+        <Button className="shadow-lg" style={commonStyles.button.primary}>
+          {dict.buttons.visitPortfolio}
+        </Button>
+      </a>
       <ResumePrintButton label={dict.buttons.downloadResume} locale={locale} />
-      <Button
-        as={Link}
-        className="shadow-lg"
-        color="default"
-        href={`/${locale}/exp-only-test`}
-        radius="full"
-        style={commonStyles.button.secondary}
-      >
-        📝 {dict.buttons.viewTextResume}
-      </Button>
-      <Button
-        as={Link}
-        className="shadow-lg"
-        color="default"
-        href={`/interview`}
-        radius="full"
-        style={commonStyles.button.secondary}
-      >
-        IV
-      </Button>
+      <Link href={`/${locale}/exp-only-test`}>
+        <Button className="shadow-lg" style={commonStyles.button.secondary}>
+          📝 {dict.buttons.viewTextResume}
+        </Button>
+      </Link>
+      <Link href={`/${locale}/interview`}>
+        <Button className="shadow-lg" style={commonStyles.button.secondary}>
+          IV
+        </Button>
+      </Link>
     </div>
   );
 }

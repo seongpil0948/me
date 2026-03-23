@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import clsx from "clsx";
 
 import { Providers } from "./providers";
@@ -85,7 +86,6 @@ export default async function RootLayout({
   return (
     <html suppressHydrationWarning lang={locale}>
       <head />
-      <meta content={locale} name="locale" />
       <body
         className={clsx(
           "min-h-screen bg-background antialiased ",
@@ -96,7 +96,14 @@ export default async function RootLayout({
           nanumMyeongjo.variable,
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+        <Script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('theme')||'dark';document.documentElement.classList.add(t);document.documentElement.setAttribute('data-theme',t);}catch(e){}`,
+          }}
+          id="theme-init"
+          strategy="beforeInteractive"
+        />
+        <Providers>
           <div className="relative flex flex-col h-screen">
             <Navbar />
             <main className="container mx-auto max-w-7xl pt-16 px-6 grow">

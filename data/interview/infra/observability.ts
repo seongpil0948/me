@@ -299,7 +299,7 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "핵심 교훈은, Observability 인프라도 관측이 필요하다는 것입니다. Collector 자체의 메트릭(처리량, drop rate, latency)을 Prometheus로 모니터링하고, 문제가 생기면 즉시 알림이 오도록 했습니다. 관측성을 제공하는 시스템이 blind spot이 되면 안 되니까요.",
   },
   {
-    id: 136,
+    id: 140,
     category1: "Infrastructure",
     category2: "Synthetic Monitoring",
     question:
@@ -359,7 +359,7 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "셋째, Observability 표준(OpenTelemetry)을 지키면 나중에 도구를 바꾸기 쉽습니다. Jaeger에서 Tempo로, Prometheus에서 InfluxDB로 전환해도 에이전트 코드는 변경 없이 Collector 설정만 바꾸면 됐어요. 이게 표준의 힘입니다.",
   },
   {
-    id: 137,
+    id: 141,
     category1: "Infrastructure",
     category2: "High Availability",
     question:
@@ -380,7 +380,7 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "핵심 교훈은, AWS Managed 서비스를 활용하면 운영 부담을 크게 줄이면서도 엔터프라이즈급 가용성을 달성할 수 있다는 것입니다. Auto Scaling과 Multi-AZ 배포는 수동으로 구현하기 어려운 복원력을 제공했고, CloudWatch 통합으로 메타 모니터링까지 자동화할 수 있었습니다. 비용은 월 300달러 정도였지만, 엔지니어 시간 절약과 안정성을 고려하면 충분히 가치가 있었어요.",
   },
   {
-    id: 138,
+    id: 142,
     category1: "Infrastructure",
     category2: "API Gateway",
     question:

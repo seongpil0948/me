@@ -1,8 +1,9 @@
 "use client";
 
+import type { Key } from "react";
+
+import { Label, ListBox, Select } from "@heroui/react";
 import { useRouter, usePathname } from "next/navigation";
-import { Select, SelectItem } from "@heroui/select";
-import { useIsSSR } from "@react-aria/ssr";
 
 import i18nConfig from "@/i18nConfig";
 import { LANGUAGES } from "@/constants/languages";
@@ -17,10 +18,13 @@ export default function LanguageSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
   const currentLocale = useLocale();
-  const isSSR = useIsSSR();
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLocale = e.target.value;
+  const handleChange = (key: Key | null) => {
+    if (typeof key !== "string") {
+      return;
+    }
+
+    const newLocale = key;
 
     // Set locale cookie for persistence
     setLocaleCookie(newLocale);
@@ -33,24 +37,29 @@ export default function LanguageSwitcher() {
     router.refresh();
   };
 
-  // Don't render during SSR to avoid hydration mismatch
-  if (isSSR) {
-    return null;
-  }
-
   return (
     <Select
       aria-label="Language selector"
       className="w-32"
-      color="primary"
-      selectedKeys={currentLocale ? [currentLocale] : []}
-      size="sm"
-      variant="bordered"
+      value={currentLocale}
+      variant="secondary"
       onChange={handleChange}
     >
-      {LANGUAGES.map((lang) => (
-        <SelectItem key={lang.value}>{lang.label}</SelectItem>
-      ))}
+      <Label>Language</Label>
+      <Select.Trigger>
+        <Select.Value />
+        <Select.Indicator />
+      </Select.Trigger>
+      <Select.Popover>
+        <ListBox>
+          {LANGUAGES.map((lang) => (
+            <ListBox.Item key={lang.value} id={lang.value} textValue={lang.label}>
+              {lang.label}
+              <ListBox.ItemIndicator />
+            </ListBox.Item>
+          ))}
+        </ListBox>
+      </Select.Popover>
     </Select>
   );
 }

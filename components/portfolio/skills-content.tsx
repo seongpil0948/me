@@ -1,7 +1,6 @@
 import type { Dictionary } from "@/types/i18n";
 
-import { Progress } from "@heroui/progress";
-import { Chip } from "@heroui/chip";
+import { ProgressBar, Chip } from "@heroui/react";
 
 import { Skill } from "@/types/portfolio";
 
@@ -52,7 +51,7 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
                 {skill.level}%
               </span>
             </div>
-            <Progress
+            <ProgressBar
               aria-label={skill.name}
               className="h-2"
               color="default"
@@ -89,7 +88,7 @@ export default function SkillsContent({ skills, dict }: SkillsContentProps) {
                 borderColor: "var(--color-primary)",
                 color: "var(--color-primary)",
               }}
-              variant="bordered"
+              variant="secondary"
             >
               {skill}
             </Chip>

@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Personal portfolio website built with Next.js 16 (App Router), React 19, HeroUI v2 component library, and Tailwind CSS v4. Features multilingual support (Korean/English/Chinese) and a dark theme-focused design showcasing professional experience and certifications.
+Personal portfolio website built with Next.js 16 (App Router), React 19, HeroUI v3(Use HeroUI React documentation from https://v3.heroui.com/react/llms.txt) component library, and Tailwind CSS v4. Features multilingual support (Korean/English/Chinese) and a dark theme-focused design showcasing professional experience and certifications.
 
 - 질의응답, QA 작성 가이드라인 문서: docs/company/common/QA작성가이드.md
 
@@ -35,11 +35,11 @@ pnpm dev        # Start with Turbopack
 
 ### Component Architecture
 
-**UI Library**: HeroUI v2 components are the standard. Always prefer HeroUI over custom implementations:
+**UI Library**: HeroUI v3 components are the standard. Always prefer HeroUI over custom implementations:
 
 ```tsx
-import { Button } from "@heroui/button";
-import { Card } from "@heroui/card";
+// v3: import from @heroui/react (단일 패키지)
+import { Button, Card, Modal, Drawer, Tabs, Table } from "@heroui/react";
 ```
 
 **Styling Pattern**: Use Tailwind Variants (tv) for component variants:
@@ -267,7 +267,12 @@ throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
 1. **Middleware Migration**: i18n routing logic lives in `proxy.ts` (not `middleware.ts`). Uses `@formatjs/intl-localematcher` and `negotiator` for locale detection
 2. **Server Components**: Dictionary functions use `"server-only"` directive
 3. **Async Params**: Next.js 16 requires `await params` in layouts/pages
-4. **HeroUI Imports**: Always use scoped package imports (`@heroui/button` not `@heroui/react`)
+4. **HeroUI Imports**: Always use `@heroui/react` (not scoped packages like `@heroui/button`)
+5. **HeroUI v3 Event Handlers**: Use `onPress` not `onClick` on all HeroUI Button/pressable components
+6. **Drawer/Modal Trigger**: Always include `Drawer.Trigger` / `Modal.Trigger` inside the Root component
+7. **Dropdown Nesting**: Never nest HeroUI `Button` inside `Dropdown.Trigger` — causes `<button><button>` HTML violation
+8. **Locale Paths**: Always include locale in navigation paths: `/${locale}/interview` not `/interview`
+9. **HeroUI Color Tokens**: Use v3 tokens — `bg-accent` (not `bg-primary`), `bg-surface` (not `bg-content1`), `text-sm` (not `text-small`)
 
 ## Resume PDF Generation
 

@@ -1,273 +1,235 @@
 @import "tailwindcss";
+@import "@heroui/styles";
 @import "./print.css";
-@plugin '../hero.ts';
-@source '../components/**/*.{js,ts,jsx,tsx,mdx}';
-@source '../app/**/*.{js,ts,jsx,tsx,mdx}';
-@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
-@custom-variant dark (&:is(.dark *));
+
+/* =====================================================
+   HeroUI v3 Brand & Theme Overrides
+   Unlayered CSS → higher priority than @heroui/styles' @layer base
+   ===================================================== */
+
+:root {
+  /* === Accent: brand orange #dc6b4a === */
+  --accent: oklch(0.645 0.152 30.2);
+  --accent-foreground: oklch(0.99 0 0);
+  --accent-soft: oklch(0.92 0.048 30.2);
+  --accent-soft-foreground: oklch(0.44 0.13 30.2);
+
+  /* === Light mode base === */
+  --background: oklch(0.978 0.003 248);
+  --foreground: oklch(0.145 0.02 262);
+
+  /* Surface: cards, panels, accordions */
+  --surface: oklch(1 0 0);
+  --surface-foreground: oklch(0.145 0.02 262);
+
+  /* Overlay: dropdowns, popovers, modals */
+  --overlay: oklch(1 0 0);
+  --overlay-foreground: oklch(0.145 0.02 262);
+
+  /* Muted / secondary text */
+  --muted: oklch(0.52 0.014 258);
+  --scrollbar: oklch(0.88 0.006 252);
+
+  /* Default component base (chips, subtle buttons, badges) */
+  --default: oklch(0.935 0.005 252);
+  --default-foreground: oklch(0.145 0.02 262);
+
+  /* Visible borders */
+  --border: oklch(0.882 0.008 252);
+  --separator: oklch(0.882 0.008 252);
+
+  /* === Field colors: inputs, selects, textareas === */
+  --field-background: oklch(1 0 0);
+  --field-foreground: oklch(0.145 0.02 262);
+  --field-placeholder: oklch(0.55 0.01 258);
+  --field-border: oklch(0.82 0.007 252);
+  --field-border-width: 1px;
+
+  /* Focus ring */
+  --focus: var(--accent);
+
+  /* === Bridge vars for component inline styles === */
+  /* These reference HeroUI vars → cascade updates automatically in dark mode */
+  --color-text-primary: var(--foreground);
+  --color-text-secondary: var(--muted);
+  --color-text-tertiary: oklch(0.48 0.012 258);
+  --color-text-accent: var(--accent);
+  --color-background-secondary: var(--surface);
+  --color-background-tertiary: var(--default);
+  --color-border-primary: var(--border);
+  --color-border-accent: var(--accent);
+  --color-progress-bg: var(--default);
+
+  /* === Static brand colors (don't change between themes) === */
+  --color-primary: oklch(0.645 0.152 30.2);
+  --color-primary-foreground: oklch(0.99 0 0);
+  --color-primary-hover: oklch(0.565 0.15 30.2);
+  --color-hero-title-accent: oklch(0.645 0.152 30.2);
+  --color-tab-active: oklch(0.645 0.152 30.2);
+  --color-link-hover: oklch(0.565 0.15 30.2);
+
+  /* Status colors */
+  --color-success: oklch(0.62 0.162 155);
+  --color-success-bg: oklch(0.95 0.048 155);
+  --color-warning: oklch(0.72 0.155 72);
+  --color-warning-bg: oklch(0.965 0.052 80);
+
+  /* Skill progress bar colors */
+  --color-skill-1: oklch(0.645 0.152 30.2);
+  --color-skill-2: oklch(0.82 0.1 199);
+  --color-skill-3: oklch(0.62 0.145 291);
+}
+
+/* =====================================================
+   Dark Mode Overrides
+   ===================================================== */
+.dark,
+[data-theme="dark"] {
+  /* === Rich dark backgrounds === */
+  --background: oklch(0.13 0.02 260);
+  --foreground: oklch(0.96 0.004 248);
+
+  /* Surface: cards, panels */
+  --surface: oklch(0.195 0.018 258);
+  --surface-foreground: oklch(0.96 0.004 248);
+
+  /* Overlay: dropdowns, popovers, modals (lighter than surface for layering depth) */
+  --overlay: oklch(0.245 0.018 256);
+  --overlay-foreground: oklch(0.96 0.004 248);
+
+  /* Muted */
+  --muted: oklch(0.63 0.014 260);
+  --scrollbar: oklch(0.35 0.016 258);
+
+  /* Default component base */
+  --default: oklch(0.26 0.018 258);
+  --default-foreground: oklch(0.9 0.004 248);
+
+  /* Visible borders */
+  --border: oklch(0.315 0.018 258);
+  --separator: oklch(0.315 0.018 258);
+
+  /* Field colors */
+  --field-background: oklch(0.22 0.018 258);
+  --field-foreground: oklch(0.96 0.004 248);
+  --field-placeholder: oklch(0.58 0.012 260);
+  --field-border: oklch(0.38 0.018 256);
+
+  /* Dark mode bridge overrides (fixed values, can't cascade from HeroUI vars) */
+  --color-text-tertiary: oklch(0.6 0.012 260);
+
+  /* Status badge backgrounds — muted for dark context */
+  --color-success-bg: oklch(0.22 0.055 155);
+  --color-warning-bg: oklch(0.22 0.055 75);
+}
+
+/* =====================================================
+   Tailwind v4 — Static Design Tokens
+   Only non-color, non-responsive values here
+   ===================================================== */
 
 @theme {
-  /* ================================
-     Typography System
-     ================================ */
-
-  /* Font Families */
+  /* Font families */
   --font-family-sans: var(--font-sans);
   --font-family-mono: var(--font-mono);
   --font-family-noto-sans-kr: var(--font-noto-sans-kr);
   --font-family-noto-serif-kr: var(--font-noto-serif-kr);
   --font-family-nanum-myeongjo: var(--font-nanum-myeongjo);
 
-  /* Typography Scale - Hierarchical System */
-  /* Headings */
-  --font-size-heading-6xl: 3.75rem; /* 60px - Hero title desktop */
-  --font-size-heading-5xl: 3rem; /* 48px - Hero title mobile */
-  --font-size-heading-3xl: 1.875rem; /* 30px - Section headers */
-  --font-size-heading-2xl: 1.5rem; /* 24px - Subsection headers */
-  --font-size-heading-xl: 1.25rem; /* 20px - Card headers */
-  --font-size-heading-lg: 1.125rem; /* 18px - List headers */
-
-  /* Body Text */
-  --font-size-body-xl: 1.25rem; /* 20px - Hero description */
-  --font-size-body-lg: 1.125rem; /* 18px - Large body text */
-  --font-size-body-base: 1rem; /* 16px - Default body text */
-  --font-size-body-sm: 0.875rem; /* 14px - Small body text */
-  --font-size-body-xs: 0.75rem; /* 12px - Caption text */
-
-  /* Line Heights */
+  /* Typography scale */
+  --font-size-heading-6xl: 3.75rem;
+  --font-size-heading-5xl: 3rem;
+  --font-size-heading-3xl: 1.875rem;
+  --font-size-heading-2xl: 1.5rem;
+  --font-size-heading-xl: 1.25rem;
+  --font-size-heading-lg: 1.125rem;
+  --font-size-body-xl: 1.25rem;
+  --font-size-body-lg: 1.125rem;
+  --font-size-body-base: 1rem;
+  --font-size-body-sm: 0.875rem;
+  --font-size-body-xs: 0.75rem;
   --line-height-tight: 1.25;
   --line-height-snug: 1.375;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.625;
-  --line-height-loose: 1.8; /* Used for readability in prose */
-
-  /* Font Weights */
+  --line-height-loose: 1.8;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   --font-weight-extrabold: 800;
 
-  /* HeroUI Component Sizes */
-  --font-size-tiny: 0.625rem; /* 10px */
-  --font-size-small: 0.75rem; /* 12px */
-  --font-size-medium: 0.875rem; /* 14px */
-  --font-size-large: 1rem; /* 16px */
+  /* HeroUI component size tokens */
+  --font-size-tiny: 0.625rem;
+  --font-size-small: 0.75rem;
+  --font-size-medium: 0.875rem;
+  --font-size-large: 1rem;
+  --line-height-tiny: 0.9375rem;
+  --line-height-small: 1.375rem;
+  --line-height-medium: 1.5rem;
+  --line-height-large: 1.625rem;
 
-  --line-height-tiny: 0.9375rem; /* 15px */
-  --line-height-small: 1.375rem; /* 22px */
-  --line-height-medium: 1.5rem; /* 24px */
-  --line-height-large: 1.625rem; /* 26px */
+  /* Container widths */
+  --width-xs: 20rem;
+  --width-sm: 24rem;
+  --width-md: 28rem;
+  --width-lg: 32rem;
+  --width-xl: 36rem;
+  --width-2xl: 42rem;
+  --width-3xl: 48rem;
+  --width-4xl: 56rem;
+  --width-6xl: 72rem;
 
-  /* ================================
-     Spacing & Layout System
-     ================================ */
-
-  /* Container Widths */
-  --width-xs: 20rem; /* 320px */
-  --width-sm: 24rem; /* 384px */
-  --width-md: 28rem; /* 448px */
-  --width-lg: 32rem; /* 512px */
-  --width-xl: 36rem; /* 576px */
-  --width-2xl: 42rem; /* 672px */
-  --width-3xl: 48rem; /* 768px */
-  --width-4xl: 56rem; /* 896px */
-  --width-6xl: 72rem; /* 1152px */
-
-  /* Border Radius */
-  --radius-small: 0.5rem; /* 8px */
-  --radius-medium: 0.75rem; /* 12px */
-  --radius-large: 1.5rem; /* 24px */
+  /* Border radius */
+  --radius-small: 0.5rem;
+  --radius-medium: 0.75rem;
+  --radius-large: 1.5rem;
 
   /* Opacity */
   --opacity-disabled: 0.3;
-
-  /* ================================
-     Color System - Portfolio Design System
-     ================================ */
-
-  /* Brand Colors */
-  --color-primary: #dc6b4a; /* Original orange - Main accent color */
-  --color-primary-foreground: #ffffff;
-  --color-primary-hover: #c5563a; /* Darker shade for hover states */
-
-  /* Background Colors */
-  --color-background: #ffffff; /* Pure white - Main background */
-  --color-background-secondary: #fafafa; /* Very light gray - Card backgrounds */
-  --color-background-tertiary: #f5f5f5; /* Light gray - Progress backgrounds */
-
-  /* Text Colors */
-  --color-text-primary: #212121; /* Near black - Headings */
-  --color-text-secondary: #424242; /* Dark gray - Body text */
-  --color-text-tertiary: #757575; /* Medium gray - Meta text */
-  --color-text-accent: #dc6b4a; /* Original orange - Links and highlights */
-
-  /* Border Colors */
-  --color-border-primary: #e0e0e0; /* Light gray - Default borders */
-  --color-border-accent: #dc6b4a; /* Original orange - Accent borders */
-
-  /* Skill Progress Bar Colors */
-  --color-skill-1: #dc6b4a; /* Original orange */
-  --color-skill-2: #4dd0e1; /* Cyan */
-  --color-skill-3: #9575cd; /* Purple */
-
-  /* Status Colors */
-  --color-success: #26a69a; /* Teal - Success/certified text */
-  --color-success-bg: #e0f2f1; /* Light teal - Success background */
-  --color-warning: #ffa726; /* Orange - Warning/in-progress text */
-  --color-warning-bg: #fff3e0; /* Light orange - Warning background */
-
-  /* Neutral/Gray Scale */
-  --color-gray-50: #fafafa;
-  --color-gray-100: #f5f5f5;
-  --color-gray-200: #eeeeee;
-  --color-gray-300: #e0e0e0;
-  --color-gray-400: #bdbdbd;
-  --color-gray-500: #9e9e9e;
-  --color-gray-600: #757575;
-  --color-gray-700: #616161;
-  --color-gray-800: #424242;
-  --color-gray-900: #212121;
-
-  /* Component-specific Colors */
-  --color-hero-title-accent: #dc6b4a;
-  --color-tab-active: #dc6b4a;
-  --color-link-hover: #c5563a;
-  --color-progress-bg: #f5f5f5;
-
-  /* Semantic Colors (HeroUI compatibility) */
-  --color-default: #e0e0e0;
-  --color-default-foreground: #212121;
-  --color-divider: #e0e0e0;
-  --color-overlay: #fafafa;
-  --color-focus: #dc6b4a;
-
-  /* Extended Semantic Colors (HeroUI compatibility) */
-
-  /* Danger */
-  --color-danger: #eb1544;
-  --color-danger-foreground: #ffffff;
-
-  /* Secondary */
-  --color-secondary: #757575;
-  --color-secondary-foreground: #ffffff;
-
-  /* Success (using existing values) */
-  --color-success: #26a69a;
-  --color-success-foreground: #ffffff;
-
-  /* Warning (using existing values) */
-  --color-warning: #ffa726;
-  --color-warning-foreground: #ffffff;
 }
 
-/* ================================
-   Root Variables & Dark Mode
-   ================================ */
-:root {
-  /* NextUI compatibility */
-  --nextui-content3: #757575;
-  --nextui-content4: #9e9e9e;
+/* =====================================================
+   Tailwind v4 — Dynamic Color Bridges
+   @theme inline: creates Tailwind utilities from CSS variables
+   These respond to dark mode because they reference HeroUI semantic vars
+   ===================================================== */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-overlay: var(--overlay);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-default: var(--default);
 }
 
-/* Dark mode adjustments */
-.dark {
-  /* Backgrounds */
-  --color-background: #1a1a1a;
-  --color-background-secondary: #262626;
-  --color-background-tertiary: #2e2e2e;
-
-  /* Text Colors */
-  --color-text-primary: #fafafa;
-  --color-text-secondary: #e8e8e5;
-  --color-text-tertiary: #b8b8b2;
-
-  /* Borders */
-  --color-border-primary: #424242;
-  --color-border-accent: #dc6b4a;
-
-  /* Component colors remain similar for consistency */
-  --color-primary: #dc6b4a;
-  --color-primary-foreground: #ffffff;
-  --color-divider: #424242;
-
-  /* Progress backgrounds */
-  --color-progress-bg: #2e2e2e;
-}
-
-/* ================================
+/* =====================================================
    Utility Classes
-   ================================ */
+   ===================================================== */
 
-/* Text Color Utilities */
-.text-primary {
-  color: var(--color-text-primary);
-}
+.text-primary   { color: var(--foreground); }
+.text-secondary { color: var(--muted); }
+.text-tertiary  { color: var(--color-text-tertiary); }
+.text-accent    { color: var(--accent); }
+.text-content3  { color: var(--muted); }
 
-.text-secondary {
-  color: var(--color-text-secondary);
-}
+.bg-primary   { background-color: var(--background); }
+.bg-secondary { background-color: var(--surface); }
+.bg-tertiary  { background-color: var(--default); }
+.bg-default   { background-color: var(--default); }
 
-.text-tertiary {
-  color: var(--color-text-tertiary);
-}
+.border-primary { border-color: var(--border); }
+.border-accent  { border-color: var(--accent); }
 
-.text-accent {
-  color: var(--color-text-accent);
-}
+.font-sans           { font-family: var(--font-family-sans); }
+.font-mono           { font-family: var(--font-family-mono); }
+.font-nanum-myeongjo { font-family: var(--font-family-nanum-myeongjo); }
+.font-noto-sans-kr   { font-family: var(--font-family-noto-sans-kr); }
+.font-noto-serif-kr  { font-family: var(--font-family-noto-serif-kr); }
 
-.text-content3 {
-  color: var(--nextui-content3);
-}
-
-/* Background Utilities */
-.bg-primary {
-  background-color: var(--color-background);
-}
-
-.bg-secondary {
-  background-color: var(--color-background-secondary);
-}
-
-.bg-tertiary {
-  background-color: var(--color-background-tertiary);
-}
-
-.bg-default {
-  background-color: var(--color-gray-100);
-}
-
-/* Border Utilities */
-.border-primary {
-  border-color: var(--color-border-primary);
-}
-
-.border-accent {
-  border-color: var(--color-border-accent);
-}
-
-/* Font Family Utilities */
-.font-sans {
-  font-family: var(--font-family-sans);
-}
-
-.font-mono {
-  font-family: var(--font-family-mono);
-}
-
-.font-nanum-myeongjo {
-  font-family: var(--font-family-nanum-myeongjo);
-}
-
-.font-noto-sans-kr {
-  font-family: var(--font-family-noto-sans-kr);
-}
-
-.font-noto-serif-kr {
-  font-family: var(--font-family-noto-serif-kr);
-}
-
-/* Text truncation */
 .three-line-ellipsis {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -277,43 +239,20 @@
   text-overflow: ellipsis;
 }
 
-/* Flexbox utilities */
-.flex-column {
-  display: flex;
-  flex-direction: column;
-}
+.flex-column     { display: flex; flex-direction: column; }
+.flex-center     { display: flex; align-items: center; justify-content: center; }
+.flex-center-col { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.flex-center-ver { display: flex; align-items: center; }
+.flex-center-hor { display: flex; justify-content: center; }
 
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.flex-center-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.flex-center-ver {
-  display: flex;
-  align-items: center;
-}
-
-.flex-center-hor {
-  display: flex;
-  justify-content: center;
-}
-
-/* Gradient effect */
 .gradient {
   background: linear-gradient(60deg, #61dafb 0%, #d6cbf6 30%, #f2056f 70%);
 }
 
-/* ================================
+/* =====================================================
    View Transitions
-   ================================ */
+   ===================================================== */
+
 @view-transition {
   navigation: auto;
 }

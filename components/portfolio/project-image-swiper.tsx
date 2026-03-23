@@ -1,6 +1,6 @@
 "use client";
 
-import { Image } from "@heroui/image";
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   A11y,
@@ -69,8 +69,10 @@ export default function ProjectImageSwiper({
           <SwiperSlide key={`${image}-${index}`}>
             <div className="relative w-full h-[300px] md:h-[400px]">
               <Image
+                fill
                 alt={`${alt} ${index + 1}`}
-                className="object-cover w-full h-full"
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 src={image}
               />
             </div>

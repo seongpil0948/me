@@ -3,7 +3,7 @@
 import type { Locale } from "@/app/[locale]/dictionaries";
 
 import { useRouter } from "next/navigation";
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/react";
 
 interface ResumePrintButtonProps {
   locale: Locale;
@@ -41,14 +41,13 @@ export default function ResumePrintButton({
   return (
     <Button
       className="shadow-lg"
-      radius="full"
-      startContent={<PrintIcon />}
       style={{
         backgroundColor: "var(--color-primary)",
         color: "#FFFFFF",
       }}
-      onClick={handleClick}
+      onPress={handleClick}
     >
+      <PrintIcon />
       {label}
     </Button>
   );

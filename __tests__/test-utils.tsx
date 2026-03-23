@@ -1,16 +1,8 @@
 import { ReactElement } from "react";
 import { render, RenderOptions } from "@testing-library/react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-/**
- * Custom render function that wraps components with providers
- */
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <NextThemesProvider attribute="class" defaultTheme="dark">
-      {children}
-    </NextThemesProvider>
-  );
+  return <>{children}</>;
 };
 
 const customRender = (

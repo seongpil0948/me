@@ -1,8 +1,7 @@
 import type { Dictionary } from "@/types/i18n";
 
-import { Card, CardBody } from "@heroui/card";
-import { Chip } from "@heroui/chip";
-import { Image } from "@heroui/image";
+import { Card, Chip } from "@heroui/react";
+import Image from 'next/image';
 
 import { Certification } from "@/types/portfolio";
 
@@ -33,7 +32,7 @@ export default function CertificationsContent({
               borderColor: "var(--color-border-primary)",
             }}
           >
-            <CardBody className="p-0">
+            <Card.Content className="p-0">
               <div className="flex items-start gap-4 mb-4">
                 {cert.logo && (
                   <Image
@@ -78,14 +77,14 @@ export default function CertificationsContent({
                         ? "var(--color-success)"
                         : "var(--color-warning)",
                   }}
-                  variant="flat"
+                  variant="soft"
                 >
                   {cert.status === "certified"
                     ? dict.certifications.certified
                     : dict.certifications.inProgress}
                 </Chip>
               </div>
-            </CardBody>
+            </Card.Content>
           </Card>
         ))}
       </div>

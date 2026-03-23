@@ -5,10 +5,9 @@ Personal portfolio website showcasing professional experience, skills, and certi
 ## 🚀 Technologies
 
 - **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
-- **UI Library**: [HeroUI v2](https://heroui.com/)
+- **UI Library**: [HeroUI v3](https://v3.heroui.com/react/llms.txt)
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) + [Tailwind Variants](https://tailwind-variants.org)
 - **Language**: [TypeScript 5.9](https://www.typescriptlang.org/)
-- **Animation**: [Framer Motion](https://www.framer.com/motion/)
 - **Theming**: [next-themes](https://github.com/pacocoursey/next-themes)
 - **i18n**: Custom implementation with Next.js 16
 - **Package Manager**: [pnpm](https://pnpm.io/)
