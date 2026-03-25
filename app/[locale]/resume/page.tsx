@@ -216,9 +216,8 @@ export default async function ResumePage({
               {certifications.map((cert, index) => (
                 <div
                   key={index}
-                  className={`flex justify-between items-center mb-1.5 py-1.5 px-2 rounded border border-gray-200 ${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  }`}
+                  className={`flex justify-between items-center mb-1.5 py-1.5 px-2 rounded border border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    }`}
                 >
                   <div className="flex items-center gap-2 flex-1">
                     {cert.logo && (
@@ -306,9 +305,8 @@ export default async function ResumePage({
           {experiences.map((exp, index) => (
             <div
               key={index}
-              className={`mb-4 p-3.5 rounded border border-gray-200 ${
-                index % 2 === 0 ? "bg-white" : "bg-gray-50"
-              }`}
+              className={`mb-4 p-3.5 rounded border border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                }`}
             >
               <div className="flex justify-between items-start mb-1.5">
                 <div>

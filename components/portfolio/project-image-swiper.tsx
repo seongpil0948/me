@@ -44,9 +44,9 @@ export default function ProjectImageSwiper({
         autoplay={
           autoplay
             ? {
-                delay: 3000,
-                disableOnInteraction: false,
-              }
+              delay: 3000,
+              disableOnInteraction: false,
+            }
             : false
         }
         breakpoints={{
