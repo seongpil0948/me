@@ -36,7 +36,7 @@ export default function PortfolioActionButtons({
           📝 {dict.buttons.viewTextResume}
         </Button>
       </Link>
-      <Link href={`/${locale}/interview`}>
+      <Link href="/interview">
         <Button className="shadow-lg" style={commonStyles.button.secondary}>
           IV
         </Button>

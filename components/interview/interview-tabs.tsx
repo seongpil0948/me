@@ -3,18 +3,10 @@
 import type { InterviewQuestion } from "@/types/portfolio";
 import type { Dictionary } from "@/types/i18n";
 
-import dynamic from "next/dynamic";
-import { Card, Tabs } from "@heroui/react";
+import { Card, CardContent, Tabs } from "@heroui/react";
 
-const QATable = dynamic(() => import("./qa-table").then((m) => m.QATable), {
-  ssr: false,
-  loading: () => <div className="p-8 text-center text-muted">Loading...</div>,
-});
-
-const QuizMode = dynamic(() => import("./quiz-mode").then((m) => m.QuizMode), {
-  ssr: false,
-  loading: () => <div className="p-8 text-center text-muted">Loading...</div>,
-});
+import { QATable } from "./qa-table";
+import { QuizMode } from "./quiz-mode";
 
 interface InterviewTabsProps {
   dict: Dictionary;
@@ -39,9 +31,9 @@ export function InterviewTabs({ dict, questions }: InterviewTabsProps) {
 
       <Tabs.Panel id="table">
         <Card>
-          <Card.Content>
+          <CardContent>
             <QATable questions={questions} />
-          </Card.Content>
+          </CardContent>
         </Card>
       </Tabs.Panel>
 

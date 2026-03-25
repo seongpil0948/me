@@ -3,11 +3,9 @@ import type { Metadata } from "next";
 
 import { getDictionary } from "../dictionaries";
 
-import { InterviewTabs } from "@/components/interview/interview-tabs";
+import { InterviewTabsClient } from "@/components/interview/interview-tabs-client";
 import { interviewQuestions } from "@/data/interview";
 import { layoutStyles, spacing } from "@/constants/styles";
-
-export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "Interview Q&A Practice | Seongpil Choi",
@@ -35,7 +33,7 @@ export default async function InterviewPage({
           </p>
         </header>
 
-        <InterviewTabs dict={dict} questions={interviewQuestions} />
+        <InterviewTabsClient dict={dict} questions={interviewQuestions} />
       </div>
     </div>
   );

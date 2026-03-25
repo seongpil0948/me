@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Card, Chip } from "@heroui/react";
+import { Card, CardContent, Chip } from "@heroui/react";
 import Image from 'next/image';
 
 import { getDictionary, Locale } from "../dictionaries";
@@ -112,7 +112,7 @@ export default async function ResumePage({
                     </div>
                   </div>
                 </div>
-                <Image alt={nameByLocale} height={150} src="/me/face.jpg" width={150} />
+                <Image alt={nameByLocale} src="/me/face.jpg" width={150} />
               </div>
             </div>
           </div>
@@ -169,7 +169,7 @@ export default async function ResumePage({
             {dict.resume.summary}
           </h2>
           <Card>
-            <Card.Content className="p-4">
+            <CardContent className="p-4">
               <p className="text-[10pt] leading-relaxed text-gray-800 mb-2.5">
                 {dict.profile.aboutMeParagraph1}
               </p>
@@ -182,7 +182,7 @@ export default async function ResumePage({
               <p className="text-[10pt] leading-relaxed text-gray-800 m-0">
                 {dict.profile.aboutMeParagraph4}
               </p>
-            </Card.Content>
+            </CardContent>
           </Card>
         </section>
 
@@ -201,9 +201,8 @@ export default async function ResumePage({
               {certifications.map((cert, index) => (
                 <div
                   key={index}
-                  className={`flex justify-between items-center mb-1.5 py-1.5 px-2 rounded border border-gray-200 ${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  }`}
+                  className={`flex justify-between items-center mb-1.5 py-1.5 px-2 rounded border border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    }`}
                 >
                   <div className="flex items-center gap-2 flex-1">
                     {cert.logo && (
@@ -291,9 +290,8 @@ export default async function ResumePage({
           {experiences.map((exp, index) => (
             <div
               key={index}
-              className={`mb-4 p-3.5 rounded border border-gray-200 ${
-                index % 2 === 0 ? "bg-white" : "bg-gray-50"
-              }`}
+              className={`mb-4 p-3.5 rounded border border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                }`}
             >
               <div className="flex justify-between items-start mb-1.5">
                 <div>
@@ -332,7 +330,7 @@ export default async function ResumePage({
           </h2>
           <div className="text-[10pt]">
             <Card className="mb-3.5 p-4">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[11pt] font-bold mb-2 text-gray-800">
                   {dict.projects.monitoring.title}
                 </h3>
@@ -353,11 +351,11 @@ export default async function ResumePage({
                     src="/projects/otel-grafana/Grafana - System Dashboard.png"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.dataLake.title}
                 </h3>
@@ -378,11 +376,11 @@ export default async function ResumePage({
                     src="/projects/business-grafana/Grafana NPS.png"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.theshop.title}
                 </h3>
@@ -403,11 +401,11 @@ export default async function ResumePage({
                     src="/projects/theshop/TheShop_Pharmacy.png"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.gateway.title}
                 </h3>
@@ -428,11 +426,11 @@ export default async function ResumePage({
                     src="/projects/APISIX-Dashboard.png"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.airflow.title}
                 </h3>
@@ -453,11 +451,11 @@ export default async function ResumePage({
                     src="/projects/Aiflow.png"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.ixiStudio.title}
                 </h3>
@@ -478,11 +476,11 @@ export default async function ResumePage({
                     src="/projects/ixi-studio/0.png"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.ixiAdmin.title}
                 </h3>
@@ -503,11 +501,11 @@ export default async function ResumePage({
                     src="/projects/ixi-admin/1.png"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.drone.title}
                 </h3>
@@ -528,11 +526,11 @@ export default async function ResumePage({
                     src="/projects/drone/3.png"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.robotPlatform.title}
                 </h3>
@@ -553,11 +551,11 @@ export default async function ResumePage({
                     src="/projects/robot-platform/1.png"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.inoutbox.title}
                 </h3>
@@ -578,11 +576,11 @@ export default async function ResumePage({
                     src="/projects/iobox/app-store.jpeg"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.campi.title}
                 </h3>
@@ -603,11 +601,11 @@ export default async function ResumePage({
                     src="/projects/campi/feed.jpg"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.virtualTryOn.title}
                 </h3>
@@ -628,11 +626,11 @@ export default async function ResumePage({
                     src="/projects/try-on.png"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
 
             <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
                   {dict.projects.intellisysWebsite.title}
                 </h3>
@@ -653,7 +651,7 @@ export default async function ResumePage({
                     src="/projects/intellisys.png"
                   />
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
           </div>
         </section>
@@ -669,7 +667,7 @@ export default async function ResumePage({
           <div className="grid grid-cols-2 gap-3 text-[10pt]">
             {portfolioLinks.map((link, index) => (
               <Card key={index} className="p-3.5 transition-all duration-200">
-                <Card.Content className="p-0">
+                <CardContent className="p-0">
                   <div className="text-[10pt] font-semibold text-gray-800 mb-1.5">
                     {link.name}
                   </div>
@@ -679,7 +677,7 @@ export default async function ResumePage({
                   >
                     {link.url.replace(/^https?:\/\//, "")}
                   </a>
-                </Card.Content>
+                </CardContent>
               </Card>
             ))}
           </div>

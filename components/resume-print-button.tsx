@@ -45,7 +45,7 @@ export default function ResumePrintButton({
         backgroundColor: "var(--color-primary)",
         color: "#FFFFFF",
       }}
-      onPress={handleClick}
+      onClick={handleClick}
     >
       <PrintIcon />
       {label}

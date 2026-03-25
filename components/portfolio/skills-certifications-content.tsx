@@ -1,6 +1,6 @@
 import type { Dictionary } from "@/types/i18n";
 
-import { Card, Chip, Separator } from "@heroui/react";
+import { Card, CardContent, Chip, Separator } from "@heroui/react";
 import Image from 'next/image';
 
 import { Certification, Skill } from "@/types/portfolio";
@@ -50,7 +50,7 @@ export default function SkillsCertificationsContent({
                 borderColor: "var(--color-border-primary)",
               }}
             >
-              <Card.Content className="p-0">
+              <CardContent className="p-0">
                 <div className="flex items-start gap-4 mb-4">
                   {cert.logo && (
                     <Image
@@ -102,7 +102,7 @@ export default function SkillsCertificationsContent({
                       : dict.certifications.inProgress}
                   </Chip>
                 </div>
-              </Card.Content>
+              </CardContent>
             </Card>
           ))}
         </div>

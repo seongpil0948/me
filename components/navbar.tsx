@@ -1,6 +1,6 @@
 "use client";
 
-import { Drawer, Link } from "@heroui/react";
+import { Button, Drawer, Link } from "@heroui/react";
 import NextLink from "next/link";
 
 import { siteConfig } from "@/config/site";
@@ -54,11 +54,10 @@ export const Navbar = () => {
           </Link>
           <ThemeSwitch />
           <LanguageSwitcher />
+
+          {/* Mobile Menu Drawer — trigger button must be first child of Drawer */}
           <Drawer>
-            <Drawer.Trigger
-              aria-label="Menu"
-              className="button button--md button--ghost button--icon-only"
-            >
+            <Button isIconOnly aria-label="Menu" variant="ghost">
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -72,13 +71,12 @@ export const Navbar = () => {
                   strokeWidth={2}
                 />
               </svg>
-            </Drawer.Trigger>
+            </Button>
             <Drawer.Backdrop>
               <Drawer.Content className="w-72" placement="right">
                 <Drawer.Dialog>
-                  <Drawer.CloseTrigger />
-                  <Drawer.Header className="px-4">Navigation</Drawer.Header>
-                  <Drawer.Body className="px-4">
+                  <Drawer.Header>Navigation</Drawer.Header>
+                  <Drawer.Body>
                     <div className="flex flex-col gap-4">
                       <Link
                         aria-label="Discord"

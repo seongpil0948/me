@@ -73,9 +73,9 @@ export const experiences: Experience[] = [
       zh: "高级工程师",
     },
     period: {
-      ko: "2024년 6월 – 현재 (1년 5개월)",
-      en: "Jun 2024 – Present (1 year 5 months)",
-      zh: "2024年6月 – 至今 (1年5个月)",
+      ko: "2024년 6월 – 현재",
+      en: "Jun 2024 – Present",
+      zh: "2024年6月 – 至今",
     },
     description: {
       ko: "대웅그룹 TheShop 이커머스 플랫폼 SRE (연간 거래액 5,000억 원). 레거시 시스템(Oracle/Tomcat) 현대화를 Next.js/Spring 마이크로서비스로 전환 설계 및 구현. 일일 2천만~5천만 건 메시지, 월간 20TB 데이터 레이크, 200+ Airflow DAG 인프라 설계 및 운영. OpenTelemetry, Kafka, AWS ECS 기반 MSA 아키텍처 전문.",

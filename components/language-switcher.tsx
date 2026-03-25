@@ -41,9 +41,9 @@ export default function LanguageSwitcher() {
     <Select
       aria-label="Language selector"
       className="w-32"
-      value={currentLocale}
+      selectedKey={currentLocale}
       variant="secondary"
-      onChange={handleChange}
+      onSelectionChange={handleChange}
     >
       <Label>Language</Label>
       <Select.Trigger>

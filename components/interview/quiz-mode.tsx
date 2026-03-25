@@ -10,6 +10,9 @@ import { useCallback, useEffect, useMemo } from "react";
 import {
   Button,
   Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
   Chip,
   Label,
   ListBox,
@@ -141,11 +144,11 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
   if (!currentQuestion) {
     return (
       <Card>
-        <Card.Content>
+        <CardContent>
           <p className="text-center text-default-500">
             {dict.common.loading}...
           </p>
-        </Card.Content>
+        </CardContent>
       </Card>
     );
   }
@@ -160,9 +163,9 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
         <Select
           className="max-w-xs"
           placeholder={dict.interview.settings.allCategories}
-          value={selectedCategory}
+          selectedKey={selectedCategory}
           variant="secondary"
-          onChange={(key: Key | null) => {
+          onSelectionChange={(key: Key | null) => {
             if (typeof key === "string") {
               setSelectedCategory(key || "all");
             }
@@ -220,7 +223,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
       <AnimatePresence mode="wait">
         <motion.div key={currentQuestion.id} {...QUIZ_ANIMATION.card}>
           <Card style={{ minHeight: `${QUIZ_DEFAULTS.MIN_CARD_HEIGHT}px` }}>
-            <Card.Header>
+            <CardHeader>
               <div className="flex w-full items-center justify-between">
                 <div className="flex gap-2">
                   {currentQuestion.category1 && (
@@ -238,11 +241,11 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
                   Q{currentQuestion.id}
                 </Chip>
               </div>
-            </Card.Header>
+            </CardHeader>
 
             <Separator />
 
-            <Card.Content className="py-8">
+            <CardContent className="py-8">
               <div className="space-y-6">
                 {/* Question */}
                 <div>
@@ -259,7 +262,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
                   <Button
                     size="lg"
                     variant={showAnswer ? "secondary" : "primary"}
-                    onPress={toggleAnswer}
+                    onClick={toggleAnswer}
                   >
                     {showAnswer
                       ? dict.interview.quiz.hideAnswer
@@ -282,39 +285,39 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
                   )}
                 </AnimatePresence>
               </div>
-            </Card.Content>
+            </CardContent>
 
             <Separator />
 
-            <Card.Footer>
+            <CardFooter>
               <div className="flex w-full items-center justify-between">
                 <Button
                   isDisabled={currentIndex === 0}
                   variant="secondary"
-                  onPress={handlePrevious}
+                  onClick={handlePrevious}
                 >
                   ← {dict.interview.quiz.previousQuestion}
                 </Button>
 
                 <Button
                   variant="ghost"
-                  onPress={handleRandomQuestion}
+                  onClick={handleRandomQuestion}
                 >
                   🎲 {dict.interview.quiz.randomQuestion}
                 </Button>
 
-                <Button variant="secondary" onPress={handleNext}>
+                <Button variant="secondary" onClick={handleNext}>
                   {dict.interview.quiz.nextQuestion} →
                 </Button>
               </div>
-            </Card.Footer>
+            </CardFooter>
           </Card>
         </motion.div>
       </AnimatePresence>
 
       {/* Stats Card */}
       <Card>
-        <Card.Content>
+        <CardContent>
           <div className="flex justify-around text-center">
             <div>
               <p className="text-2xl font-bold text-primary">
@@ -341,12 +344,12 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
               </p>
             </div>
           </div>
-        </Card.Content>
+        </CardContent>
       </Card>
 
       {/* Keyboard Shortcuts Hint */}
       <Card className="bg-default-50">
-        <Card.Content className="py-3">
+        <CardContent className="py-3">
           <p className="text-center text-sm text-default-500">
             💡 Tip: Use{" "}
             <kbd className="px-2 py-1 bg-default-200 rounded">←</kbd>{" "}
@@ -355,7 +358,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
             <kbd className="px-2 py-1 bg-default-200 rounded">Space</kbd> to
             toggle answer
           </p>
-        </Card.Content>
+        </CardContent>
       </Card>
     </div>
   );
