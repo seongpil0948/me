@@ -1,6 +1,6 @@
 "use client";
 
-import Image from 'next/image';
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   A11y,
@@ -9,6 +9,8 @@ import {
   Pagination,
   Scrollbar,
 } from "swiper/modules";
+
+import ZoomableImage from "@/components/zoomable-image";
 
 // Import Swiper styles
 import "swiper/css";
@@ -67,15 +69,17 @@ export default function ProjectImageSwiper({
       >
         {images.map((image, index) => (
           <SwiperSlide key={`${image}-${index}`}>
-            <div className="relative w-full h-[300px] md:h-[400px]">
-              <Image
-                fill
-                alt={`${alt} ${index + 1}`}
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                src={image}
-              />
-            </div>
+            <ZoomableImage>
+              <div className="relative w-full h-[300px] overflow-hidden rounded-lg md:h-[400px]">
+                <Image
+                  fill
+                  alt={`${alt} ${index + 1}`}
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  src={image}
+                />
+              </div>
+            </ZoomableImage>
           </SwiperSlide>
         ))}
       </Swiper>

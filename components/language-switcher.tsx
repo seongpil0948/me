@@ -1,6 +1,6 @@
 "use client";
 
-import type { Key } from "react";
+import type { Key } from "@heroui/react";
 
 import { Label, ListBox, Select } from "@heroui/react";
 import { useRouter, usePathname } from "next/navigation";
@@ -41,11 +41,10 @@ export default function LanguageSwitcher() {
     <Select
       aria-label="Language selector"
       className="w-32"
-      selectedKey={currentLocale}
-      variant="secondary"
-      onSelectionChange={handleChange}
+      value={currentLocale}
+      variant="primary"
+      onChange={handleChange}
     >
-      <Label>Language</Label>
       <Select.Trigger>
         <Select.Value />
         <Select.Indicator />

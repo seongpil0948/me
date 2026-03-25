@@ -32,7 +32,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
       onClick={onChange}
     >
       <Switch isReadOnly isSelected={isSelected} />
-      <span className="ml-2 text-default-500">
+      <span className="ml-2 text-muted">
         {isSelected ? <SunFilledIcon size={22} /> : <MoonFilledIcon size={22} />}
       </span>
     </button>

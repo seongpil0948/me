@@ -56,7 +56,7 @@ export function HeroCanvas() {
       />
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-default-400">Loading...</div>
+          <div className="text-muted">Loading...</div>
         </div>
       )}
     </motion.div>

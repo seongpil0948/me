@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 
 import { Card, CardContent, Chip } from "@heroui/react";
-import Image from 'next/image';
+import Image from "next/image";
 
 import { getDictionary, Locale } from "../dictionaries";
 
 import { ResumePrintWrapper } from "@/components/resume-print-wrapper";
+import ZoomableImage from "@/components/zoomable-image";
 import { personalInfo } from "@/data/personal";
 import {
   certifications,
@@ -20,6 +21,20 @@ export const metadata: Metadata = {
   title: "Resume | Seongpil Choi",
   description: "Professional resume of Seongpil Choi",
 };
+
+function ResumeProjectImage({ alt, src }: { alt: string; src: string }) {
+  return (
+    <div className="mt-2">
+      <ZoomableImage>
+        <Image
+          alt={alt}
+          className="w-full h-auto rounded border border-gray-200"
+          src={src}
+        />
+      </ZoomableImage>
+    </div>
+  );
+}
 
 export default async function ResumePage({
   params,
@@ -201,8 +216,9 @@ export default async function ResumePage({
               {certifications.map((cert, index) => (
                 <div
                   key={index}
-                  className={`flex justify-between items-center mb-1.5 py-1.5 px-2 rounded border border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                    }`}
+                  className={`flex justify-between items-center mb-1.5 py-1.5 px-2 rounded border border-gray-200 ${
+                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                  }`}
                 >
                   <div className="flex items-center gap-2 flex-1">
                     {cert.logo && (
@@ -290,8 +306,9 @@ export default async function ResumePage({
           {experiences.map((exp, index) => (
             <div
               key={index}
-              className={`mb-4 p-3.5 rounded border border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                }`}
+              className={`mb-4 p-3.5 rounded border border-gray-200 ${
+                index % 2 === 0 ? "bg-white" : "bg-gray-50"
+              }`}
             >
               <div className="flex justify-between items-start mb-1.5">
                 <div>
@@ -344,13 +361,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.monitoring.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/otel-grafana/Grafana - System Dashboard.png"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.monitoring.title}
+                  src="/projects/otel-grafana/Grafana - System Dashboard.png"
+                />
               </CardContent>
             </Card>
 
@@ -369,13 +383,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.dataLake.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/business-grafana/Grafana NPS.png"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.dataLake.title}
+                  src="/projects/business-grafana/Grafana NPS.png"
+                />
               </CardContent>
             </Card>
 
@@ -394,13 +405,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.theshop.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/theshop/TheShop_Pharmacy.png"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.theshop.title}
+                  src="/projects/theshop/TheShop_Pharmacy.png"
+                />
               </CardContent>
             </Card>
 
@@ -419,13 +427,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.gateway.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/APISIX-Dashboard.png"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.gateway.title}
+                  src="/projects/APISIX-Dashboard.png"
+                />
               </CardContent>
             </Card>
 
@@ -444,13 +449,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.airflow.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/Aiflow.png"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.airflow.title}
+                  src="/projects/Aiflow.png"
+                />
               </CardContent>
             </Card>
 
@@ -469,13 +471,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.ixiStudio.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/ixi-studio/0.png"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.ixiStudio.title}
+                  src="/projects/ixi-studio/0.png"
+                />
               </CardContent>
             </Card>
 
@@ -494,13 +493,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.ixiAdmin.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/ixi-admin/1.png"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.ixiAdmin.title}
+                  src="/projects/ixi-admin/1.png"
+                />
               </CardContent>
             </Card>
 
@@ -519,13 +515,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.drone.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/drone/3.png"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.drone.title}
+                  src="/projects/drone/3.png"
+                />
               </CardContent>
             </Card>
 
@@ -544,13 +537,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.robotPlatform.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/robot-platform/1.png"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.robotPlatform.title}
+                  src="/projects/robot-platform/1.png"
+                />
               </CardContent>
             </Card>
 
@@ -569,13 +559,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.inoutbox.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/iobox/app-store.jpeg"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.inoutbox.title}
+                  src="/projects/iobox/app-store.jpeg"
+                />
               </CardContent>
             </Card>
 
@@ -594,13 +581,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.campi.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/campi/feed.jpg"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.campi.title}
+                  src="/projects/campi/feed.jpg"
+                />
               </CardContent>
             </Card>
 
@@ -619,13 +603,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.virtualTryOn.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/try-on.png"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.virtualTryOn.title}
+                  src="/projects/try-on.png"
+                />
               </CardContent>
             </Card>
 
@@ -644,13 +625,10 @@ export default async function ResumePage({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-2">
-                  <Image
-                    alt={dict.projects.intellisysWebsite.title}
-                    className="w-full h-auto rounded border border-gray-200"
-                    src="/projects/intellisys.png"
-                  />
-                </div>
+                <ResumeProjectImage
+                  alt={dict.projects.intellisysWebsite.title}
+                  src="/projects/intellisys.png"
+                />
               </CardContent>
             </Card>
           </div>

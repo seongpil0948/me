@@ -21,7 +21,7 @@ export const Navbar = () => {
         <div className="hidden sm:flex items-center gap-4">
           <Link
             aria-label="Discord"
-            className="text-default-500 hover:text-default-700"
+            className="text-muted hover:text-foreground"
             href={siteConfig.links.discord}
             rel="noreferrer"
             target="_blank"
@@ -30,7 +30,7 @@ export const Navbar = () => {
           </Link>
           <Link
             aria-label="Github"
-            className="text-default-500 hover:text-default-700"
+            className="text-muted hover:text-foreground"
             href={siteConfig.links.github}
             rel="noreferrer"
             target="_blank"
@@ -45,7 +45,7 @@ export const Navbar = () => {
         <div className="sm:hidden flex items-center gap-3">
           <Link
             aria-label="Github"
-            className="text-default-500"
+            className="text-muted"
             href={siteConfig.links.github}
             rel="noreferrer"
             target="_blank"

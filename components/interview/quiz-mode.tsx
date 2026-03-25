@@ -145,7 +145,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
     return (
       <Card>
         <CardContent>
-          <p className="text-center text-default-500">
+          <p className="text-center text-muted">
             {dict.common.loading}...
           </p>
         </CardContent>
@@ -163,9 +163,9 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
         <Select
           className="max-w-xs"
           placeholder={dict.interview.settings.allCategories}
-          selectedKey={selectedCategory}
+          value={selectedCategory}
           variant="secondary"
-          onSelectionChange={(key: Key | null) => {
+          onChange={(key: Key | null) => {
             if (typeof key === "string") {
               setSelectedCategory(key || "all");
             }
@@ -201,7 +201,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
 
       {/* Progress Bar */}
       <div className="space-y-2">
-        <div className="flex justify-between text-sm text-default-500">
+        <div className="flex justify-between text-sm text-muted">
           <span>
             {dict.interview.quiz.progress}: {currentIndex + 1} /{" "}
             {shuffledQuestions.length}
@@ -323,7 +323,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
               <p className="text-2xl font-bold text-primary">
                 {shuffledQuestions.length}
               </p>
-              <p className="text-sm text-default-500">
+              <p className="text-sm text-muted">
                 {dict.interview.stats.totalQuestions}
               </p>
             </div>
@@ -331,7 +331,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
               <p className="text-2xl font-bold text-success">
                 {viewedQuestionIds.size}
               </p>
-              <p className="text-sm text-default-500">
+              <p className="text-sm text-muted">
                 {dict.interview.stats.viewedQuestions}
               </p>
             </div>
@@ -339,7 +339,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
               <p className="text-2xl font-bold text-warning">
                 {shuffledQuestions.length - viewedQuestionIds.size}
               </p>
-              <p className="text-sm text-default-500">
+              <p className="text-sm text-muted">
                 {dict.interview.stats.remainingQuestions}
               </p>
             </div>
@@ -348,14 +348,14 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
       </Card>
 
       {/* Keyboard Shortcuts Hint */}
-      <Card className="bg-default-50">
+      <Card className="bg-surface">
         <CardContent className="py-3">
-          <p className="text-center text-sm text-default-500">
+          <p className="text-center text-sm text-muted">
             💡 Tip: Use{" "}
-            <kbd className="px-2 py-1 bg-default-200 rounded">←</kbd>{" "}
-            <kbd className="px-2 py-1 bg-default-200 rounded">→</kbd> arrow keys
+            <kbd className="px-2 py-1 bg-default rounded">←</kbd>{" "}
+            <kbd className="px-2 py-1 bg-default rounded">→</kbd> arrow keys
             to navigate,{" "}
-            <kbd className="px-2 py-1 bg-default-200 rounded">Space</kbd> to
+            <kbd className="px-2 py-1 bg-default rounded">Space</kbd> to
             toggle answer
           </p>
         </CardContent>
