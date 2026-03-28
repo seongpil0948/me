@@ -151,9 +151,6 @@ export const infraOperationsQuestions: InterviewQuestion[] = [
       "Mission-critical DB는 synchronous replication으로 zero data loss를 보장하고, " +
       "일반 DB는 asynchronous replication으로 비용과 성능을 최적화했습니다. " +
       "Read Replica를 DR 용도로 활용했습니다.\n\n" +
-      "Infrastructure as Code로 DR 환경을 구축했습니다. " +
-      "Terraform으로 전체 인프라를 코드화하여 " +
-      "DR 발생 시 15분 내에 전체 환경을 재구축할 수 있도록 했습니다. " +
       "Blue-Green deployment 패턴으로 zero-downtime failover를 구현했습니다.\n\n" +
       "데이터 백업 전략을 3-2-1 규칙으로 설계했습니다. " +
       "3개 복사본을 만들고, 2개 다른 미디어에 저장하며, 1개는 offsite에 보관했습니다. " +

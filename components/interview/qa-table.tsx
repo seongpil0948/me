@@ -8,7 +8,6 @@ import {
   Button,
   Chip,
   Dropdown,
-  Label,
   Modal,
   SearchField,
   Table,
@@ -27,6 +26,17 @@ const category1Options: { name: string; uid: Category1 }[] = [
   { name: "Frontend", uid: "Frontend" },
   { name: "Backend", uid: "Backend" },
 ];
+
+const tableColumns: Array<{
+  className?: string;
+  id: string;
+  label: string;
+}> = [
+    { className: "w-14", id: "favorite", label: "★" },
+    { id: "question", label: "Question" },
+    { id: "category1", label: "Category 1" },
+    { id: "category2", label: "Category 2" },
+  ];
 
 interface InterviewQATableProps {
   companyFilter?: string;
@@ -241,6 +251,19 @@ export function QATable({
     [favorites, toggleFavorite],
   );
 
+  const renderFilterTrigger = React.useCallback(
+    (label: string, count: number, minWidth: string) => (
+      <Dropdown.Trigger
+        className="button button--sm button--secondary inline-flex items-center justify-between gap-2"
+        style={{ minWidth }}
+      >
+        <span>{count > 0 ? `${label} (${count})` : label}</span>
+        <ChevronDownIcon />
+      </Dropdown.Trigger>
+    ),
+    [],
+  );
+
   const topContent = React.useMemo(() => {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
@@ -254,7 +277,7 @@ export function QATable({
           }}
         >
           <SearchField
-            className="max-w-[400px]"
+            className="max-w-100"
             value={filterValue}
             onChange={setFilterValue}
           >
@@ -268,30 +291,21 @@ export function QATable({
           </SearchField>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <Dropdown>
-              <Dropdown.Trigger>
-                <Button
-                  size="sm"
-                  style={{ minWidth: "120px" }}
-                  variant="secondary"
-                >
-                  {category1Filter.size > 0
-                    ? `Category 1 (${category1Filter.size})`
-                    : "Category 1"}{" "}
-                  <ChevronDownIcon />
-                </Button>
-              </Dropdown.Trigger>
+              {renderFilterTrigger("Category 1", category1Filter.size, "120px")}
               <Dropdown.Popover>
                 <Dropdown.Menu
                   selectedKeys={category1Filter}
                   selectionMode="multiple"
                   onSelectionChange={(keys: Selection) =>
-                    setCategory1Filter(new Set(Array.from(keys as Set<Key>).map(String)))
+                    setCategory1Filter(
+                      new Set(Array.from(keys as Set<Key>).map(String)),
+                    )
                   }
                 >
                   {category1Options.map((cat) => (
                     <Dropdown.Item key={cat.uid} id={cat.uid} textValue={cat.name}>
                       <Dropdown.ItemIndicator />
-                      <Label>{cat.name}</Label>
+                      {cat.name}
                     </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
@@ -299,30 +313,21 @@ export function QATable({
             </Dropdown>
 
             <Dropdown>
-              <Dropdown.Trigger>
-                <Button
-                  size="sm"
-                  style={{ minWidth: "150px" }}
-                  variant="secondary"
-                >
-                  {category2Filter.size > 0
-                    ? `Category 2 (${category2Filter.size})`
-                    : "Category 2"}{" "}
-                  <ChevronDownIcon />
-                </Button>
-              </Dropdown.Trigger>
+              {renderFilterTrigger("Category 2", category2Filter.size, "150px")}
               <Dropdown.Popover>
                 <Dropdown.Menu
                   selectedKeys={category2Filter}
                   selectionMode="multiple"
                   onSelectionChange={(keys: Selection) =>
-                    setCategory2Filter(new Set(Array.from(keys as Set<Key>).map(String)))
+                    setCategory2Filter(
+                      new Set(Array.from(keys as Set<Key>).map(String)),
+                    )
                   }
                 >
                   {category2Options.map((cat) => (
                     <Dropdown.Item key={cat.uid} id={cat.uid} textValue={cat.name}>
                       <Dropdown.ItemIndicator />
-                      <Label>{cat.name}</Label>
+                      {cat.name}
                     </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
@@ -356,27 +361,34 @@ export function QATable({
     showFavoritesOnly,
     sortedItems.length,
     favorites.size,
+    renderFilterTrigger,
   ]);
 
   return (
     <>
       {topContent}
       <Table aria-label="Interview Q&A table with filters and favorites">
-        <Table.Header>
-          <Table.Column className="w-14">★</Table.Column>
-          <Table.Column>Question</Table.Column>
-          <Table.Column>Category 1</Table.Column>
-          <Table.Column>Category 2</Table.Column>
+        <Table.Header columns={tableColumns}>
+          {(column) => (
+            <Table.Column className={column.className} id={column.id}>
+              {column.label}
+            </Table.Column>
+          )}
         </Table.Header>
-        <Table.Body>
-          {sortedItems.map((item) => (
-            <Table.Row key={item.id} className="cursor-pointer" onAction={() => handleRowClick(item)}>
+        <Table.Body items={sortedItems}>
+          {(item) => (
+            <Table.Row
+              key={item.id}
+              className="cursor-pointer"
+              id={String(item.id)}
+              onAction={() => handleRowClick(item)}
+            >
               <Table.Cell>{renderCell(item, "favorite")}</Table.Cell>
               <Table.Cell>{renderCell(item, "question")}</Table.Cell>
               <Table.Cell>{renderCell(item, "category1")}</Table.Cell>
               <Table.Cell>{renderCell(item, "category2")}</Table.Cell>
             </Table.Row>
-          ))}
+          )}
         </Table.Body>
       </Table>
 

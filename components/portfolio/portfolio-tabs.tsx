@@ -37,7 +37,7 @@ export default function PortfolioTabs({
             <Tabs.Indicator />
           </Tabs.Tab>
           <Tabs.Tab id="skills-certifications">
-            기술 스택 및 자격증
+            자격
             <Tabs.Indicator />
           </Tabs.Tab>
           <Tabs.Tab id="experience">

@@ -85,21 +85,4 @@ export const infraCoreQuestions: InterviewQuestion[] = [
       "가용성 99.9%에서 99.95%로 개선, 월 인프라 비용 2,500달러 유지, Auto Scaling으로 트래픽 5배 증가에도 안정적 대응.\n\n" +
       "핵심 교훈은, 최신 기술이 항상 정답은 아니라는 거예요. EKS가 기술적으로 더 나아도, 팀 상황과 비즈니스 우선순위를 고려하면 ECS가 더 현명한 선택일 수 있죠. 토스 입사 후에는 이미 Kubernetes가 표준화되어 있고 DevOps 팀이 성숙해 있으니, 그때는 EKS의 진가를 발휘할 수 있을 것 같습니다.",
   },
-  {
-    id: 14,
-    category1: "Infrastructure",
-    category2: "IaC",
-    question: "Infrastructure as Code 경험에 대해 설명해주세요.",
-    answer:
-      "IaC는 Terraform으로 시작했어요. 사내에서 소규모 애플리케이션을 VPC 격리 환경으로 배포할 때 사용했습니다.\n\n" +
-      "당시 상황은 이랬어요. MSK(Managed Kafka)와 ECS 도입을 검토하면서, 매번 콘솔에서 VPC, 서브넷, 보안 그룹을 수동으로 만드는 게 너무 비효율적이었습니다. 실수도 많았고, 환경별로 설정이 달라서 관리가 어려웠죠.\n\n" +
-      "Terraform으로 VPC 모듈을 만들었어요. Public/Private 서브넷, NAT Gateway, Route Table을 코드로 정의하니까 환경 복제가 5분이면 됐습니다. Dev, Staging, Prod 환경을 동일하게 유지할 수 있었고요.\n\n" +
-      "MSK 클러스터도 Terraform으로 구성했습니다. Broker 수, 인스턴스 타입, 스토리지 크기를 변수로 만들어서 환경별로 다르게 설정했어요. 특히 보안 그룹 규칙을 코드로 관리하니까 'MSK에 누가 접근 가능한지' 한눈에 파악할 수 있었습니다.\n\n" +
-      "ECS도 Terraform으로 프로비저닝했어요. Task Definition, Service, ALB까지 전부 코드화했죠. 다만 컨테이너 이미지 태그 같은 동적 값은 Terraform 변수로 받아서 처리했습니다.\n\n" +
-      "AWS 자격증 준비하면서 CloudFormation도 자연스럽게 익혔어요. DevOps Professional 시험에서 CodePipeline, CodeBuild, CloudFormation 통합 문제가 많이 나왔거든요. 실제로 간단한 프로젝트에서 CloudFormation으로 인프라를 구성해봤는데, YAML 문법이 직관적이고 AWS 서비스와 통합이 잘 되더라고요.\n\n" +
-      "Terraform과 CloudFormation의 차이를 체감했습니다. Terraform은 멀티 클라우드에 강하고 모듈 재사용이 편했어요. CloudFormation은 AWS 네이티브라서 최신 서비스 지원이 빠르고, StackSets로 멀티 리전 배포가 쉬웠습니다.\n\n" +
-      "IaC의 가장 큰 장점은 재현 가능성이었어요. 인프라를 날려도 10분이면 복구할 수 있다는 자신감이 생겼죠. 또 코드 리뷰를 통해 인프라 변경을 검증할 수 있었고, Git으로 변경 이력을 추적할 수 있었습니다.\n\n" +
-      "다만 초기 학습 곡선이 있었어요. State 관리, Remote Backend 설정, 모듈 의존성 같은 개념이 처음엔 어려웠습니다. 하지만 한 번 익히고 나니 수동 작업으로 돌아갈 수 없더라고요.\n\n" +
-      "앞으로는 GitOps와 IaC를 결합해보고 싶어요. ArgoCD나 Flux로 Kubernetes 배포를 자동화하고, Terraform으로 클라우드 인프라를 관리하는 조합이 궁금합니다.",
-  },
 ];

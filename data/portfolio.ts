@@ -22,7 +22,6 @@ export const skills: Skill[] = [
   { name: "OpenTelemetry", level: 95, proficiency: 95 },
   { name: "Grafana&Prometheus", level: 88, proficiency: 88 },
   { name: "Three.js", level: 75, proficiency: 75 },
-  { name: "Terraform", level: 82, proficiency: 82 },
 ];
 
 export const certifications: Certification[] = [
@@ -114,6 +113,7 @@ export const experiences: Experience[] = [
         "Developed Grafana business intelligence dashboards visualizing customer retention rates, purchase conversion funnels, and key performance indicators",
         "Executed zero-downtime Redis v5 to v7 LTS migration using dual-write strategy and phased rollout approach",
         "Built automated developer sandbox environment provisioning system reducing setup time by 80%",
+
       ],
       zh: [
         "架构设计并执行从 Oracle/Tomcat 单体应用到 Next.js/Spring 微服务的遗留系统现代化，包括核心模块设计",

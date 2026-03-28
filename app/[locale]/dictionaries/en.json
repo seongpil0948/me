@@ -7,7 +7,7 @@
   "hero": {
     "greeting": "Hello",
     "title": "Platform Lead Engineer",
-    "description": "Platform Engineer specializing in large-scale distributed system design and operations (6 years)\n\nLed infrastructure optimization and developer productivity improvements for an MSA-based e-commerce platform. Reduced error detection time by 99%, deployment time by 90%, and infrastructure costs by 50%.\n\nOperates high-availability environments handling 100K daily users, 500GB/day network traffic, 20TB/month data lake, and 3TB/month distributed tracing data."
+    "description": "Platform Engineer specializing in large-scale distributed system design and operations (7 years)\n\nLed infrastructure optimization and developer productivity improvements for an MSA-based e-commerce platform. Reduced error detection time by 99%, deployment time by 90%, and infrastructure costs by 50%.\n\nOperates high-availability environments handling 100K daily users, 500GB/day network traffic, 20TB/month data lake, and 3TB/month distributed tracing data."
   },
   "common": {
     "welcome": "Welcome",
@@ -36,7 +36,7 @@
     "aboutMe": "About Me",
     "skills": "Technical Skills",
     "teamworkSkills": "Teamwork Skills",
-    "aboutMeParagraph1": "Over 6 years, I've worked across organizations of varying scales, designing and operating scalable distributed systems spanning infrastructure to applications. Starting as a solo full-stack developer at a startup, I now serve as Platform Lead Engineer for an enterprise e-commerce platform with ₩500 billion in annual revenue.",
+    "aboutMeParagraph1": "Over 7 years, I've worked across organizations of varying scales, designing and operating scalable distributed systems spanning infrastructure to applications. Starting as a solo full-stack developer at a startup, I now serve as Platform Lead Engineer for an enterprise e-commerce platform with ₩500 billion in annual revenue.",
     "aboutMeParagraph2": "Key achievements include reducing error detection time by 99%, deployment cycles by 90%, and infrastructure costs by 50%. I reliably operate services used by 100K daily users, managing a 20TB/month data lake and 3TB of distributed tracing data, enhancing system efficiency and reliability in high-availability environments. Through diverse projects with LG Electronics, SK Telecom, and others, I gained deep understanding of collaboration structures between product managers, designers, and developers, building the capability to design systems that realize business objectives beyond mere technical implementation.",
     "aboutMeParagraph3": "My core tech stack centers on Kubernetes and AWS-based cloud-native architectures. On the backend, I develop services and APIs with Django, Spring Boot, and Gin, building reliable messaging and data pipelines using Kafka and Airflow. I've developed frontend applications with React, Vue.js, and Flutter, gaining full-stack experience. My deep interest in container orchestration and cloud infrastructure led me to obtain CKA (Certified Kubernetes Administrator) and LFCS (Linux Foundation Certified SysOps), followed by AWS SysOps Administrator, DevOps Professional, and Advanced Networking Specialty certifications to optimize AWS environments. Recently, I built an OpenTelemetry-based observability platform that significantly reduced error detection time, and actively contribute to multiple open source projects.",
     "aboutMeParagraph4": "Currently serving as SRE for Daewoong Group's TheShop e-commerce platform. I operate Kafka clusters processing 20-50 million daily messages and manage 200+ Airflow DAGs while leading the microservices transformation of legacy systems. Through this process, I reduced deployment time by 90% and cut infrastructure costs in half. Moving forward, I aim to actively adopt AI-based development tools to further elevate development productivity and build a technical culture of collective growth.",
@@ -329,7 +329,6 @@
     "downloadPdf": "Download PDF",
     "errorDetection": "Error Detection Reduction",
     "costSavings": "Cost Savings",
-
     "logRetention": "Log Retention Expansion",
     "projectRevenue": "Revenue Increase",
     "dailyMessages": "Daily Messages",
