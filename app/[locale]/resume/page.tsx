@@ -400,6 +400,7 @@ export default async function ResumePage({
                             className="rounded object-cover"
                             height={110}
                             src={src}
+                            style={{ height: "auto" }}
                             width={180}
                           />
                         ))}
