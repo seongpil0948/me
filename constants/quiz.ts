@@ -57,7 +57,7 @@ export function cleanupOldQuizData(): void {
       localStorage.removeItem(stateKey);
     }
   } catch (error) {
-    // eslint-disable-next-line no-console
+     
     console.warn("Failed to cleanup old quiz data:", error);
   }
 }

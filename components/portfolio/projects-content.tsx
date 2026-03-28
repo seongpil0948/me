@@ -47,6 +47,12 @@ export default function ProjectsContent({ dict }: ProjectsContentProps) {
         images: projectImages.theshop,
       },
       {
+        title: dict.projects.shopAi.title,
+        subtitle: dict.projects.shopAi.subtitle,
+        content: dict.projects.shopAi.content,
+        images: projectImages.shopAi,
+      },
+      {
         title: dict.projects.gateway.title,
         subtitle: dict.projects.gateway.subtitle,
         content: dict.projects.gateway.content,
@@ -129,7 +135,7 @@ export default function ProjectsContent({ dict }: ProjectsContentProps) {
               style={{ borderColor: "var(--color-border-primary)" }}
             >
               <button
-                className="w-full text-left py-4 px-2 hover:bg-gray-50 transition-colors"
+                className="w-full px-2 py-4 text-left transition-colors hover:bg-[var(--color-background-secondary)]"
                 onClick={() => toggleExpanded(idx)}
               >
                 <div className="flex justify-between items-center">

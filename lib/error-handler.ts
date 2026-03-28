@@ -43,19 +43,19 @@ export class NotFoundError extends AppError {
  */
 export function logError(error: Error, context?: Record<string, any>): void {
   if (process.env.NODE_ENV === "development") {
-    /* eslint-disable no-console */
+     
     console.error("❌ Error:", {
       name: error.name,
       message: error.message,
       stack: error.stack,
       context,
     });
-    /* eslint-enable no-console */
+     
   } else {
     // In production, send to error tracking service (Sentry, etc.)
-    /* eslint-disable no-console */
+     
     console.error(error.message);
-    /* eslint-enable no-console */
+     
   }
 }
 
@@ -78,9 +78,9 @@ export function handleError(
     return error.message;
   }
 
-  /* eslint-disable no-console */
+   
   console.error("Unknown error:", error);
-  /* eslint-enable no-console */
+   
 
   return fallbackMessage;
 }

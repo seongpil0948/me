@@ -145,7 +145,7 @@ export const personalInfo: PersonalInfo = {
       zh: "满期退伍",
     },
   },
-  careerYears: 6,
+  careerYears: 7,
   compensation: {
     current: {
       baseSalary: 41_500_000,
@@ -165,22 +165,22 @@ export const personalInfo: PersonalInfo = {
     {
       title: "OpenTelemetry 기반 Full-Stack 관측성 플랫폼",
       description:
-        "레거시 시스템(Tomcat/Spring)과 마이크로서비스가 혼재된 환경에서 OpenTelemetry 기반 관측성 플랫폼 구축. 중앙 Monitoring 수집 Gateway(OTEL Collector)와 각 서버별 Agent 배포로 시스템 전반 Monitoring Stack 운영. 단일 Trace ID로 Client→Gateway→Frontend→Backend→Kafka 전체 경로 추적. MTTI 18시간→10분(99% 개선). Grafana/Loki/Tempo/Prometheus 스택 운영, 15개 셀프서비스 대시보드로 비기술팀 지원.",
+        "Scouter 기반 레거시 모니터링을 OpenTelemetry, Grafana, Prometheus, ClickHouse 기반 통합 관측성 플랫폼으로 현대화했습니다. Receiver 분리와 Nginx 로드밸런싱을 적용해 수집 계층을 확장하고, AI·CDC·Java·Go·Node.js 환경에서 월 20억 Trace, 150억 Metric, 2억5천만 Log를 처리합니다. 단일 Trace ID 기반 Root Cause 분석으로 MTTD를 18시간에서 10분으로 단축했습니다.",
     },
     {
       title: "대규모 데이터 파이프라인 & 비즈니스 인텔리전스",
       description:
-        "AWS Step Functions + Athena로 일 2천만~5천만 건 Kafka 메시지 처리. JSON→Parquet 전환으로 90% 용량 절감, 파티션 프로젝션으로 쿼리 시간 5분→10초. Airflow 5개 노드 200+ DAG 구축 및 운영. MAU/DAU, Conversion Funnel, Product Top 100 등 핵심 KPI 자동화. 월 20TB 데이터 처리",
+        "Spring Batch와 Docker Compose Airflow 기반 배치 체계를 Kubernetes Airflow + OpenTelemetry 플랫폼으로 전환해 200+ DAG를 운영했습니다. Oracle On-Premise → Kafka CDC → AWS RDS 이관, AWS Glue/Athena 기반 데이터 레이크, 10년 장기 검색 환경을 함께 구축했고 월 20TB 이상 데이터를 분석합니다.",
     },
     {
       title: "API Gateway & Service Discovery 아키텍처",
       description:
-        "APISIX Gateway로 레거시 트래픽 중앙화, Netflix Eureka Service Discovery 구축. 마이크로서비스 라우팅, Rate Limiting, Circuit Breaker 패턴 적용. API 지연시간 40% 감소. Graceful Shutdown으로 502 에러 제로 달성.",
+        "IDC 이전과 함께 Docker 기반 온프레미스 레거시 시스템을 EKS·온프레미스 멀티 Kubernetes 클러스터·AWS ECS 하이브리드 아키텍처로 전환했습니다. Cilium, Argo CD, GitLab CI, APISIX, Eureka를 조합해 서비스 디스커버리, 배포 표준화, 트래픽 제어를 정리했고 Standby/Production 분리로 운영 안정성을 높였습니다.",
     },
     {
-      title: "Redis 운영 & 비즈니스 메트릭 최적화",
+      title: "Bedrock 기반 멀티 에이전트 AI 서비스",
       description:
-        "Redis Sentinel 3 Node HA 클러스터 구축, v5→v7 무중단 마이그레이션(Dual-Write 전략). Custom Signal SDK 개발로 API별 Cache Hit/Miss 측정(상품 85%, 장바구니 92%, 주문 78%). P95 응답시간 5ms 이내, 4개 클러스터 실시간 모니터링. ClickHouse 장기 저장소 운영",
+        "Amazon Bedrock, ADK, MCP를 기반으로 Seller/Admin/Developer/CS 조직별 멀티 에이전트 LLM PWA를 EKS에 구축했습니다. 사용자별 Bedrock API Token 발급 체계를 설계해 Claude 팀 사용을 확산했고, Grafana로 Prompt Cache, 에이전트 실행 흐름, Root Cause 지표를 시각화했습니다.",
     },
   ],
 };

@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import clsx from "clsx";
 
 import { Providers } from "./providers";
@@ -16,6 +15,7 @@ import {
 } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
 import i18nConfig from "@/i18nConfig";
+import { DEFAULT_THEME } from "@/lib/theme-store";
 
 export async function generateStaticParams() {
   return i18nConfig.locales.map((locale) => ({ locale }));
@@ -84,7 +84,12 @@ export default async function RootLayout({
   }
 
   return (
-    <html suppressHydrationWarning lang={locale}>
+    <html
+      suppressHydrationWarning
+      className={DEFAULT_THEME}
+      data-theme={DEFAULT_THEME}
+      lang={locale}
+    >
       <head />
       <body
         className={clsx(
@@ -96,13 +101,6 @@ export default async function RootLayout({
           nanumMyeongjo.variable,
         )}
       >
-        <Script
-          dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem('theme')||'dark';document.documentElement.classList.add(t);document.documentElement.setAttribute('data-theme',t);}catch(e){}`,
-          }}
-          id="theme-init"
-          strategy="beforeInteractive"
-        />
         <Providers>
           <div className="relative flex flex-col h-screen">
             <Navbar />

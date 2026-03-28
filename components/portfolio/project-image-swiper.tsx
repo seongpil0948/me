@@ -29,7 +29,9 @@ export default function ProjectImageSwiper({
   alt = "Project Image",
   autoplay = false,
 }: ProjectImageSwiperProps) {
-  if (!images || images.length === 0) {
+  const validImages = images.filter((image) => image.trim().length > 0);
+
+  if (validImages.length === 0) {
     return null;
   }
 
@@ -54,10 +56,10 @@ export default function ProjectImageSwiper({
             slidesPerView: 1,
           },
           768: {
-            slidesPerView: images.length > 1 ? 2 : 1,
+            slidesPerView: validImages.length > 1 ? 2 : 1,
           },
           1024: {
-            slidesPerView: images.length > 2 ? 3 : images.length,
+            slidesPerView: validImages.length > 2 ? 3 : validImages.length,
           },
         }}
         className="rounded-lg"
@@ -67,10 +69,14 @@ export default function ProjectImageSwiper({
         slidesPerView={1}
         spaceBetween={30}
       >
-        {images.map((image, index) => (
+        {validImages.map((image, index) => (
           <SwiperSlide key={`${image}-${index}`}>
             <ZoomableImage>
-              <div className="relative w-full h-[300px] overflow-hidden rounded-lg md:h-[400px]">
+              <div
+                aria-label={`${alt} ${index + 1}`}
+                className="relative w-full h-75 overflow-hidden rounded-lg md:h-100"
+                style={{ backgroundImage: `url("${image}")` }}
+              >
                 <Image
                   fill
                   alt={`${alt} ${index + 1}`}

@@ -10,7 +10,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
-    /* eslint-disable no-console */
+     
     console.error(error);
   }, [error]);
 

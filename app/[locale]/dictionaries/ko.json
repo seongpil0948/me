@@ -7,7 +7,7 @@
   "hero": {
     "greeting": "안녕하세요",
     "title": "Platform Lead Engineer",
-    "description": "대규모 분산 시스템 설계 및 운영 전문 플랫폼 엔지니어 (6년차)\n\nMSA 기반 이커머스 플랫폼에서 인프라 최적화와 개발 생산성 향상을 주도했습니다. 오류 감지 시간 99% 단축, 인프라 비용 50% 절감.\n\n일 10만 사용자, 네트워크 트래픽 500GB/일, 데이터레이크 20TB/월, 분산 추적 데이터 3TB/월을 처리하는 고가용성 환경을 운영합니다."
+    "description": "대규모 분산 시스템 설계·운영과 AI 플랫폼화를 함께 수행하는 플랫폼 엔지니어 (7년차)\n\nDocker 기반 온프레미스 레거시 시스템을 IDC 이전과 함께 EKS·온프레미스 멀티 Kubernetes 클러스터, ECS, 데이터 플랫폼으로 현대화했습니다. 오류 탐지 시간 99% 단축, 배포 시간 90% 단축, 10년 장기 데이터 검색 환경을 구축했습니다.\n\n현재 월 20억 Trace, 150억 Metric, 2억5천만 Log, 월 20TB+ 데이터 레이크, Bedrock 기반 멀티에이전트 서비스를 운영합니다."
   },
   "common": {
     "welcome": "환영합니다",
@@ -72,41 +72,52 @@
     "keyAchievements": "주요 성과",
     "monitoring": {
       "title": "모니터링 시스템 고도화",
-      "subtitle": "레거시 인프라 대상 End-to-End 관측성 플랫폼",
+      "subtitle": "Scouter에서 OpenTelemetry로 확장한 하이브리드 관측성 플랫폼",
       "content": [
         "2024년 6월 – 현재 | 프로젝트 리드",
-        "레거시 Scouter 모니터링 시스템을 OpenTelemetry, Grafana, Prometheus, AWS CloudWatch 통합 관측성 플랫폼으로 전환 아키텍처 설계",
-        "10년 이상 운영된 레거시 모놀리식 시스템과 현대적 마이크로서비스 아키텍처가 혼재된 하이브리드 환경에서 End-to-End 분산 추적, 메트릭 집계, 중앙 로깅 구현",
-        "프로덕션 환경 12개 서버에 OpenTelemetry Collector 배포 및 Grafana 실시간 모니터링 대시보드 통합",
-        "평균 장애 감지 시간(MTTD) 99% 단축 (18시간 → 10분 이내)",
-        "OpenTelemetry 오픈소스 프로젝트에 클라우드 네이티브, 컨테이너 오케스트레이션, AWS 통합 관련 이슈 기여"
+        "레거시 Scouter 중심 모니터링을 OpenTelemetry, Grafana, Prometheus, ClickHouse 기반 통합 관측성 플랫폼으로 전환 설계",
+        "Docker 기반 온프레미스, EKS, ECS가 혼재된 환경에서 Trace·Metric·Log를 단일 상관관계로 조회하는 운영 체계 구축",
+        "Prometheus의 클러스터 한계를 보완하기 위해 Receiver 분리, Nginx 로드밸런싱, Helm 배포 구조를 적용한 수집 아키텍처 설계",
+        "EKS EBS 단일 AZ 제약을 고려해 상태 저장 워크로드를 분리하고 Scouter·ClickHouse를 단일 인터페이스로 운영",
+        "월 20억 Trace, 150억 Metric, 2억5천만 Log를 처리하며 10년 장기 검색 환경과 Grafana Root Cause 대시보드 운영",
+        "평균 장애 감지 시간(MTTD) 99% 단축 (18시간 → 10분 이내) 및 OpenTelemetry 오픈소스 이슈 기여"
       ]
     },
     "dataLake": {
       "title": "데이터 레이크 아키텍처 및 비즈니스 인텔리전스",
       "subtitle": "AWS Glue & Athena 기반 분석 플랫폼",
       "content": [
-        "장기 분석 역량 확보를 위한 AWS Glue (Apache Spark) 및 Athena (Apache Hive) 기반 확장 가능 데이터 레이크 아키텍처 설계 및 구현",
-        "S3 기반 중앙 저장소 인프라 구축으로 자동화된 생명주기 관리를 통한 10년 데이터 보존 체계 확립",
-        "Parquet 컬럼형 압축 및 시간 파티셔닝 데이터 구조 최적화로 쿼리 지연시간 85% 감소",
-        "로그 보존 기간 7일에서 10년으로 확장 (142배), 포괄적 히스토리컬 분석 및 규제 컴플라이언스 대응 가능",
-        "Grafana 비즈니스 인텔리전스 대시보드 구축을 통한 고객 리텐션율, 구매 전환 퍼널, 코호트 분석 등 핵심 이커머스 KPI 시각화",
-        "월간 20TB 데이터 볼륨을 경영진 보고를 위한 밀리초 단위 쿼리 응답 시간으로 처리"
+        "AWS Glue (Apache Spark), Athena, Kafka CDC를 결합한 장기 분석·이관 겸용 데이터 플랫폼 설계 및 구현",
+        "On-Premise Oracle 데이터를 Kafka CDC 파이프라인으로 AWS RDS와 데이터 레이크에 동기화하여 무중단 현대화 수행",
+        "S3 기반 중앙 저장소와 자동 수명주기 정책으로 7일 로그 보존 체계를 10년 검색 환경으로 확장",
+        "Parquet 컬럼 압축, 파티션 최적화, 통계 적재 구조 개선으로 대용량 분석 쿼리 성능 고도화",
+        "월 20TB+ 데이터와 관측성 원시 데이터를 기반으로 리텐션, 전환 퍼널, 상품 분석, 운영 통계를 Grafana에서 셀프서비스화",
+        "경영진 보고와 운영 분석에 필요한 히스토리컬 검색·집계를 단일 플랫폼에서 처리"
       ]
     },
     "theshop": {
       "title": "TheShop 이커머스 플랫폼 — 사이트 신뢰성 엔지니어링",
       "subtitle": "의약품 및 B2B 플랫폼 | 연매출 5,000억 원",
       "content": [
-        "대웅그룹 핵심 B2B/B2C 이커머스 플랫폼의 사이트 신뢰성 엔지니어링 총괄. 연간 거래액 5,000억 원, 일일 활성 사용자 100,000명, 월간 데이터 처리량 20TB 규모",
-        "레거시 시스템 현대화 아키텍처 설계 및 실행, Oracle/Tomcat 모놀리스를 Next.js 프론트엔드 및 Spring Boot 백엔드 마이크로서비스로 전환",
-        "Apache Airflow 5노드 클러스터 구현으로 200+ DAG를 통한 ETL 워크플로우, 통계 집계, 데이터 레이크 동기화, 준실시간 CDC 관리",
-        "AWS ECS Fargate 서버리스 컨테이너와 온프레미스 Docker 환경(CentOS/Ubuntu)을 통합한 하이브리드 클라우드 인프라 설계, 원활한 워크로드 분산 보장",
-        "APISIX 및 Nginx 기반 중앙집중식 API 게이트웨이 구축, Rate Limiting, Circuit Breaker 패턴, Spring Cloud Eureka 동적 서비스 디스커버리 적용",
-        "React/Next.js 프론트엔드, Spring Boot/Node.js 마이크로서비스, Oracle 데이터베이스 전체 스택 성능 최적화로 핵심 병목 지점 제거",
-        "OpenTelemetry 관측성 플랫폼 배포로 분산 추적 및 메트릭 상관관계 분석을 통한 MTTD 99% 단축 (18시간 → 10분)",
-        "Apache Kafka 및 Redis Sentinel 고가용성 클러스터 구축으로 일일 2천만~5천만 건 메시지를 99.9% 가동시간 SLA로 처리",
-        "CI/CD 파이프라인 자동화로 무중단 릴리스 유지 및 MTTR 대폭 개선"
+        "대웅그룹 핵심 B2B/B2C 이커머스 플랫폼과 내부 플랫폼의 SRE/Platform 업무 총괄. 연간 거래액 5,000억 원, 일일 10만 사용자, 월 20TB+ 데이터 처리 환경 운영",
+        "IDC 이전과 함께 Docker 기반 온프레미스 레거시 시스템을 EKS·온프레미스 멀티 Kubernetes 클러스터·AWS ECS 하이브리드 구조로 전환",
+        "Standby/Production 분리 아키텍처를 설계하고 Airflow, API Server, Kafka 워크로드를 클러스터 기반으로 재배치",
+        "Oracle/Tomcat 모놀리스를 Next.js·Spring Boot 마이크로서비스로 현대화하고 Oracle On-Premise → Kafka CDC → AWS RDS 이관 체계 구축",
+        "Bedrock + ADK + MCP 기반 멀티 에이전트 LLM PWA를 EKS에 구축해 Seller/Admin/Developer/CS 조직별 워크플로우와 데이터 변경 API 연결",
+        "Cilium, Argo CD, GitLab CI, APISIX, Scouter, ClickHouse를 조합한 운영 표준을 정리하고 신규 서비스 온보딩 자동화 기반 마련",
+        "OpenTelemetry 기반 Root Cause 분석과 Grafana 대시보드로 장애 탐지 시간을 99% 단축하고 배포/운영 가시성을 개선"
+      ]
+    },
+    "shopAi": {
+      "title": "Shop AI 멀티에이전트 업무 플랫폼",
+      "subtitle": "Bedrock · ADK · MCP 기반 EKS PWA",
+      "content": [
+        "Seller, Admin, Developer, CS 조직이 공통으로 사용하는 멀티에이전트 LLM PWA를 EKS 환경에 설계·구축",
+        "Amazon Bedrock, ADK, MCP 서버를 조합해 역할별 에이전트와 업무별 도구 체인을 분리하고 공통 인증 체계를 연결",
+        "상품, 운영, 고객응대, 개발지원 시나리오별로 서로 다른 MCP·LLM 서비스를 연결하고 데이터 변경용 API까지 통합",
+        "Grafana 대시보드로 Prompt Cache 효율, 에이전트 실행 흐름, Root Cause 추적 지표를 시각화해 운영 가시성 확보",
+        "Bedrock 사용자별 API 토큰 발급 체계를 설계해 Claude Team 사용을 팀 단위로 확산하고 내부 활용 표준을 정착",
+        "모바일 우선 PWA UI로 현장 실무자가 빠르게 질의·실행·검증할 수 있는 업무 자동화 인터페이스 구현"
       ]
     },
     "gateway": {
@@ -123,14 +134,14 @@
     },
     "airflow": {
       "title": "Apache Airflow 워크플로우 오케스트레이션 플랫폼",
-      "subtitle": "ETL 및 실시간 데이터 처리를 위한 멀티 클러스터 아키텍처",
+      "subtitle": "Docker Compose 배치에서 Kubernetes Airflow + OTEL로 전환",
       "content": [
-        "엔터프라이즈급 워크플로우 오케스트레이션을 지원하는 고가용성 Apache Airflow 클러스터 5개 아키텍처 설계 및 배포",
-        "배치 ETL 처리, CDC(Change Data Capture) 동기화, 200+ 방향성 비순환 그래프(DAG)에 걸친 통계 집계를 포함한 복잡한 데이터 워크플로우 자동화",
-        "PostgreSQL 기반 메타데이터 저장소 및 Redis 기반 메시지 큐잉과 Celery Executor를 활용한 병렬 태스크 실행으로 분산 워크플로우 관리 구현",
-        "동적 태스크 병렬화 및 리소스 할당 전략을 통한 월간 20TB 데이터 볼륨 처리 파이프라인 성능 최적화",
-        "실시간 Grafana 대시보드, Slack 알림, SLA 추적 기능을 갖춘 포괄적 모니터링 솔루션 개발로 파이프라인 상태 보장",
-        "자동화된 증분 ETL 프로세스를 통한 데이터 웨어하우스 갱신 주기 60% 단축, 준실시간 분석 가능"
+        "Spring Batch와 Docker Compose 중심 배치 시스템을 Kubernetes 기반 Apache Airflow 플랫폼으로 재구축",
+        "Standby/Production 구성을 고려한 클러스터 배치 전략과 200+ DAG 기반 통계 집계, CDC, 데이터 레이크 워크플로우 운영",
+        "PostgreSQL 메타데이터 저장소, Redis/Celery Executor, OTEL 계측을 결합한 분산 워크플로우 실행 체계 구축",
+        "동시성 분석과 리소스 산정(분당 22 Task → 110 Core)을 기반으로 클러스터 확장 의사결정을 체계화",
+        "Grafana, Slack, SLA 추적을 연결해 파이프라인 지연과 실패를 실시간 모니터링하고 운영 대응 시간을 단축",
+        "데이터 웨어하우스·분석 시스템 갱신 주기를 개선해 준실시간 통계 활용이 가능한 배치 플랫폼 완성"
       ]
     },
     "ixiStudio": {
@@ -328,7 +339,6 @@
     "downloadPdf": "PDF 다운로드",
     "errorDetection": "오류 감지 시간 단축",
     "costSavings": "인프라 비용 절감",
-
     "logRetention": "로그 조회 기간 확장",
     "projectRevenue": "프로젝트 매출 증가",
     "dailyMessages": "일일 메시지 처리",

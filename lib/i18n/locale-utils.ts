@@ -10,10 +10,14 @@
  * @returns The detected locale code
  */
 export function getLocaleFromPathname(
-  pathname: string,
+  pathname: string | null | undefined,
   locales: string[],
   defaultLocale: string,
 ): string {
+  if (!pathname) {
+    return defaultLocale;
+  }
+
   const segments = pathname.split("/").filter(Boolean);
 
   return segments.length > 0 && locales.includes(segments[0])
@@ -43,11 +47,12 @@ export function setLocaleCookie(
  * @returns New pathname with updated locale
  */
 export function buildLocalePath(
-  pathname: string,
+  pathname: string | null | undefined,
   newLocale: string,
   locales: string[],
 ): string {
-  const segments = pathname.split("/");
+  const safePathname = pathname ?? "";
+  const segments = safePathname.split("/");
   const localeIndex = segments.findIndex((segment) =>
     locales.includes(segment),
   );
@@ -66,10 +71,11 @@ export function buildLocalePath(
  * @returns Pathname without locale prefix
  */
 export function removeLocaleFromPathname(
-  pathname: string,
+  pathname: string | null | undefined,
   locales: string[],
 ): string {
-  const segments = pathname.split("/").filter(Boolean);
+  const safePathname = pathname ?? "";
+  const segments = safePathname.split("/").filter(Boolean);
   const localeIndex = segments.findIndex((segment) =>
     locales.includes(segment),
   );

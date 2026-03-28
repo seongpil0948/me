@@ -29,7 +29,9 @@ function ResumeProjectImage({ alt, src }: { alt: string; src: string }) {
         <Image
           alt={alt}
           className="w-full h-auto rounded border border-gray-200"
+          height={675}
           src={src}
+          width={1200}
         />
       </ZoomableImage>
     </div>
@@ -127,7 +129,12 @@ export default async function ResumePage({
                     </div>
                   </div>
                 </div>
-                <Image alt={nameByLocale} src="/me/face.jpg" width={150} />
+                <Image
+                  alt={nameByLocale}
+                  height={150}
+                  src="/me/face.jpg"
+                  width={150}
+                />
               </div>
             </div>
           </div>
@@ -224,7 +231,9 @@ export default async function ResumePage({
                       <Image
                         alt={cert.org}
                         className="w-5 h-5 object-contain shrink-0"
+                        height={20}
                         src={cert.logo}
+                        width={20}
                       />
                     )}
                     <span className="font-semibold text-[10pt]">

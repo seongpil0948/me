@@ -2,7 +2,7 @@
 
 import type { Key } from "@heroui/react";
 
-import { Label, ListBox, Select } from "@heroui/react";
+import { ListBox, Select } from "@heroui/react";
 import { useRouter, usePathname } from "next/navigation";
 
 import i18nConfig from "@/i18nConfig";

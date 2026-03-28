@@ -1,23 +1,51 @@
 "use client";
 
-import type { ThemeProviderProps } from "next-themes";
+import { useEffect, useInsertionEffect, useSyncExternalStore } from "react";
 
-import * as React from "react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import {
+  DEFAULT_THEME,
+  getSystemTheme,
+  resolveTheme,
+  subscribeToSystemTheme,
+  useThemeStore,
+} from "@/lib/theme-store";
 
 export interface ProvidersProps {
   children: React.ReactNode;
-  themeProps?: ThemeProviderProps;
 }
 
-export function Providers({ children, themeProps }: ProvidersProps) {
+function HtmlThemeSync() {
+  const hydrated = useThemeStore((state) => state.hydrated);
+  const themePreference = useThemeStore((state) => state.themePreference);
+  useSyncExternalStore(subscribeToSystemTheme, getSystemTheme, () => DEFAULT_THEME);
+
+  useEffect(() => {
+    if (!hydrated) {
+      void useThemeStore.persist.rehydrate();
+    }
+  }, [hydrated]);
+
+  useInsertionEffect(() => {
+    const resolvedTheme = resolveTheme(
+      hydrated ? themePreference : "system",
+      getSystemTheme(),
+    );
+    const root = document.documentElement;
+
+    root.classList.remove("light", "dark");
+    root.classList.add(resolvedTheme);
+    root.setAttribute("data-theme", resolvedTheme);
+    root.style.colorScheme = resolvedTheme;
+  }, [hydrated, themePreference]);
+
+  return null;
+}
+
+export function Providers({ children }: ProvidersProps) {
   return (
-    <NextThemesProvider
-      attribute={["class", "data-theme"]}
-      defaultTheme="dark"
-      {...themeProps}
-    >
+    <>
+      <HtmlThemeSync />
       {children}
-    </NextThemesProvider>
+    </>
   );
 }

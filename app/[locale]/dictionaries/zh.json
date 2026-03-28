@@ -7,7 +7,7 @@
   "hero": {
     "greeting": "你好",
     "title": "Platform Lead Engineer",
-    "description": "专注于大规模分布式系统设计与运营的平台工程师（6年）\n\n主MSA电商平台的基础设施优化与开发生产力提升。错误检测时间缩短99%，部署时间缩短90%，基础设施成本降低50%。\n\n运营高可用环境，处理10万日活跃用户、500GB/天网络流量、20TB/月数据湖、3TB/月分布式追踪数据。"
+    "description": "同时负责大规模分布式系统与 AI 平台运营的平台工程师（7年）。\n\n在 IDC 迁移过程中，将基于 Docker 的 on-prem 遗留系统现代化为 EKS、on-prem 多 Kubernetes 集群、ECS 与长期数据平台。错误检测时间缩短 99%，部署时间缩短 90%，并构建 10 年可检索数据环境。\n\n当前负责运营每月 20 亿 Trace、150 亿 Metric、2.5 亿 Log、20TB 以上数据湖工作负载，以及基于 Bedrock 的多代理服务。"
   },
   "common": {
     "welcome": "欢迎",
@@ -72,42 +72,52 @@
     "keyAchievements": "主要成就",
     "monitoring": {
       "title": "📊 监控系统升级",
-      "subtitle": "遗留系统端到端可观测性环境",
+      "subtitle": "从 Scouter 演进到 OpenTelemetry 的混合可观测性平台",
       "content": [
-        "期间：2024.06 ~ 至今 · 项目领导",
-        "挑战：基于Scouter的遗留监控限制以及容器化服务网格环境中可观测性断裂导致的故障检测延迟",
-        "解决方案：主导向基于OpenTelemetry、Grafana堆栈、Prometheus和AWS的统一可观测性系统迁移",
-        "在混合了10年以上运营的遗留单体系统和新MSA的环境中，在单一平台上收集端到端分布式跟踪、指标和日志",
-        "在12台服务器上构建Collector并与Grafana仪表板集成",
-        "正在为OpenTelemetry开源项目贡献AWS和容器相关问题"
+        "期间：2024.06 ~ 至今 · 项目负责人",
+        "将以 Scouter 为主的遗留监控体系迁移为 OpenTelemetry、Grafana、Prometheus、ClickHouse 统一可观测性平台",
+        "在 Docker on-prem、EKS、ECS 混合环境中建立 Trace、Metric、Log 单一关联视图",
+        "为应对 Prometheus 集群能力限制，设计 Receiver 拆分、Nginx 负载均衡与 Helm 部署架构",
+        "考虑 EKS EBS 单 AZ 限制隔离有状态工作负载，并将 Scouter 与 ClickHouse 统一到单一入口",
+        "当前处理每月 20 亿 Trace、150 亿 Metric、2.5 亿 Log，并提供 10 年检索与 Grafana Root Cause 看板",
+        "将故障检测时间缩短 99%（18 小时 → 10 分钟以内），同时向 OpenTelemetry 开源项目贡献问题修复"
       ]
     },
     "dataLake": {
       "title": "🗄️ 基于数据湖的业务指标可视化",
       "subtitle": "使用AWS Glue & Athena的长期数据分析环境",
       "content": [
-        "挑战：由于7天日志保留限制导致的长期数据分析和事件响应限制",
-        "解决方案：使用AWS Glue（基于Spark）和Athena（基于Hive）构建数据湖架构",
-        "使用S3作为中央存储进行10年日志保留",
-        "通过Parquet格式压缩和基于时间/日期的分区优化查询性能",
-        "成就：日志保留期扩展142倍（7天 → 10年）",
-        "从收集的数据构建Grafana仪表板，可视化保留率、购买转化率等核心电商分析指标"
+        "结合 AWS Glue、Athena 与 Kafka CDC 构建兼顾长期分析与系统迁移的数据平台",
+        "通过 Kafka CDC 将 on-prem Oracle 数据同步到 AWS RDS 与数据湖，实现无停机现代化",
+        "基于 S3 中央存储与自动生命周期策略，将 7 天保留扩展为 10 年可检索历史环境",
+        "通过 Parquet 压缩、分区设计与批量装载优化大规模分析性能",
+        "基于每月 20TB 以上数据，在 Grafana 中提供留存率、转化漏斗、商品分析、运营统计等自助仪表板",
+        "将历史搜索、经营分析与运维聚合统一到单一平台"
       ]
     },
     "theshop": {
       "title": "🏥 TheShop医药/B2B电商平台SRE",
       "subtitle": "混合架构运营 · 年交易额5000亿韩元",
       "content": [
-        "情况与任务：全面负责大雄集团核心B2B/B2C电商平台'TheShop'的稳定运营和扩展的SRE工作",
-        "年交易额5000亿韩元，日均10万用户流量，月均20TB以上数据处理",
-        "主导遗留系统迁移：为Oracle/Tomcat → Next.js/Spring迁移设计核心模块、脚手架和应用架构",
-        "构建Airflow 5服务器集群：通过统计数据、Data Lake、准实时CDC进行数据迁移 (200+ DAGs)",
-        "行动1：设计和运营混合了AWS ECS Fargate无服务器容器环境和本地（CentOS/Ubuntu）Docker环境的混合基础设施",
-        "通过APISIX网关和Nginx集中管理微服务流量，应用速率限制和断路器模式",
-        "行动2：识别和优化复杂应用堆栈的性能瓶颈：React/Next.js前端、Spring Boot/Node.js后端API服务器、Oracle DB",
-        "通过引入OpenTelemetry升级遗留监控系统，通过分布式跟踪将新系统的错误检测时间从18小时缩短到10分钟以内，减少99%",
-        "构建Apache Kafka和Redis Sentinel集群，稳定处理日均10亿条消息",
-        "结果：确保业务连续性，实现成本优化（50%削减）和部署自动化（90%加速），显著缩短平均故障恢复时间（MTTR）"
+        "负责大熊集团核心 B2B/B2C 电商平台与内部平台的 SRE / Platform 工作，支撑年交易额 5000 亿韩元、日均 10 万用户与月 20TB 以上数据",
+        "在 IDC 迁移过程中，将基于 Docker 的 on-prem 遗留系统升级为 EKS、on-prem 多 Kubernetes 集群与 AWS ECS 的混合架构",
+        "设计 Standby / Production 分离体系，并将 Airflow、API Server、Kafka 工作负载迁移到集群平台",
+        "将 Oracle/Tomcat 现代化为 Next.js 与 Spring Boot 微服务，并建立 Oracle On-Premise → Kafka CDC → AWS RDS 迁移路径",
+        "在 EKS 上构建基于 Bedrock、ADK、MCP 的多代理 LLM PWA，服务 Seller、Admin、Developer、CS 团队并接入变更数据 API",
+        "以 Cilium、Argo CD、GitLab CI、APISIX、Scouter、ClickHouse 为核心标准化运维与新服务接入流程",
+        "通过 OpenTelemetry Root Cause 分析与 Grafana 仪表板提升部署与故障响应可见性"
+      ]
+    },
+    "shopAi": {
+      "title": "Shop AI 多代理工作平台",
+      "subtitle": "基于 Bedrock、ADK、MCP 的 EKS PWA",
+      "content": [
+        "在 EKS 上设计并构建面向 Seller、Admin、Developer、CS 团队的多代理 LLM PWA",
+        "结合 Amazon Bedrock、ADK 与 MCP Server，拆分角色代理、共享认证与工具链",
+        "针对商品、运营、客服、开发支持等场景接入不同的 MCP 与 LLM 服务，并整合数据变更 API",
+        "通过 Grafana 仪表板可视化 Prompt Cache 效率、代理执行链路与 Root Cause 排查指标",
+        "设计按用户发放 Bedrock API Token 的体系，将 Claude Team 使用推广到团队级协作流程",
+        "以移动优先 PWA 方式实现一体化工作界面，让一线用户能直接完成提问、执行与验证"
       ]
     },
     "gateway": {
@@ -126,15 +136,14 @@
     },
     "airflow": {
       "title": "🔄 Apache Airflow数据管道",
-      "subtitle": "5个高可用集群运营 · 批处理/CDC/统计自动化",
+      "subtitle": "从 Docker Compose 批处理到 Kubernetes Airflow + OTEL",
       "content": [
-        "基于HA架构设计和构建5个Airflow集群",
-        "自动化批处理、CDC（变更数据捕获）和统计聚合作业",
-        "使用PostgreSQL元数据DB和Redis消息代理进行分布式工作流管理",
-        "通过基于Celery Executor的并行任务处理优化大规模数据管道性能",
-        "基于DAG（有向无环图）管理复杂数据依赖关系和调度",
-        "通过实时监控仪表板和警报系统确保数据管道稳定性",
-        "通过自动化数据仓库ETL流程提高分析工作效率"
+        "将 Spring Batch 与 Docker Compose 为中心的批处理系统重构为 Kubernetes 原生 Apache Airflow 平台",
+        "运营 200+ DAG 的统计聚合、CDC 与数据湖工作流，并考虑 Standby / Production 的集群放置策略",
+        "结合 PostgreSQL 元数据、Redis/Celery Executor 与 OTEL 监控实现分布式执行体系",
+        "基于并发分析与资源估算（22 tasks/min → 110 cores）建立集群扩容决策机制",
+        "连接 Grafana、Slack 与 SLA 跟踪，实现对延迟与失败的实时监控",
+        "缩短数仓与分析系统刷新延迟，使准实时运营统计成为可能"
       ]
     },
     "ixiStudio": {
@@ -331,7 +340,6 @@
     "downloadPdf": "下载PDF",
     "errorDetection": "错误检测时间减少",
     "costSavings": "成本节省",
-
     "logRetention": "日志保留扩展",
     "projectRevenue": "收入增长",
     "dailyMessages": "每日消息处理量",

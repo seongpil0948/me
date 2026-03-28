@@ -7,7 +7,7 @@
   "hero": {
     "greeting": "Hello",
     "title": "Platform Lead Engineer",
-    "description": "Platform Engineer specializing in large-scale distributed system design and operations (7 years)\n\nLed infrastructure optimization and developer productivity improvements for an MSA-based e-commerce platform. Reduced error detection time by 99%, deployment time by 90%, and infrastructure costs by 50%.\n\nOperates high-availability environments handling 100K daily users, 500GB/day network traffic, 20TB/month data lake, and 3TB/month distributed tracing data."
+    "description": "Platform engineer focused on large-scale distributed systems and AI platform operations (7 years).\n\nModernized Docker-based on-prem legacy systems during IDC relocation into EKS, on-prem multi-cluster Kubernetes, ECS, and long-term data platforms. Reduced detection time by 99%, deployment time by 90%, and built 10-year searchable retention.\n\nCurrently operating environments handling 2B traces, 15B metrics, 250M logs per month, 20TB+ data lake workloads, and Bedrock-based multi-agent services."
   },
   "common": {
     "welcome": "Welcome",
@@ -72,42 +72,52 @@
     "keyAchievements": "Key Achievements",
     "monitoring": {
       "title": "Monitoring System Enhancement",
-      "subtitle": "End-to-End Observability Platform for Legacy Infrastructure",
+      "subtitle": "Hybrid observability platform evolved from Scouter to OpenTelemetry",
       "content": [
         "June 2024 – Present | Project Lead",
-        "Architected unified observability platform migrating from legacy Scouter monitoring to OpenTelemetry, Grafana, Prometheus, and AWS CloudWatch integration",
-        "Implemented end-to-end distributed tracing, metrics aggregation, and centralized logging across hybrid environment comprising 10-year legacy monolithic systems and modern microservices architecture",
-        "Deployed OpenTelemetry Collectors across 12 production servers with Grafana dashboard integration for real-time monitoring",
-        "Reduced mean time to detection (MTTD) by 99%, decreasing error identification from 18 hours to under 10 minutes",
-        "Contributing to OpenTelemetry open-source project addressing cloud-native, container orchestration, and AWS integration issues"
+        "Architected a unified observability stack migrating from legacy Scouter monitoring into OpenTelemetry, Grafana, Prometheus, and ClickHouse",
+        "Established trace-metric-log correlation across Docker-based on-prem workloads, EKS, and ECS in a single operational view",
+        "Solved Prometheus clustering limits with receiver-split ingestion, Nginx load balancing, and Helm-driven deployment patterns",
+        "Designed stateful workload boundaries around single-AZ EKS EBS constraints and operated Scouter plus ClickHouse behind one operational interface",
+        "Running 2B traces, 15B metrics, and 250M logs per month with 10-year searchable retention and Grafana root-cause dashboards",
+        "Reduced mean time to detection by 99% (18 hours to under 10 minutes) while contributing fixes back to OpenTelemetry OSS"
       ]
     },
     "dataLake": {
       "title": "Data Lake Architecture & Business Intelligence",
       "subtitle": "AWS Glue & Athena-Based Analytics Platform",
       "content": [
-        "Designed and implemented scalable data lake architecture leveraging AWS Glue (Apache Spark) and Athena (Apache Hive) for long-term analytics capabilities",
-        "Established S3-based centralized storage infrastructure supporting 10-year data retention with automated lifecycle management",
-        "Optimized query performance through Parquet columnar compression and time-partitioned data organization, reducing query latency by 85%",
-        "Extended log retention period from 7 days to 10 years (142× expansion), enabling comprehensive historical analysis and regulatory compliance",
-        "Developed Grafana business intelligence dashboards visualizing key e-commerce KPIs including customer retention rates, purchase conversion funnels, and cohort analysis",
-        "Processing 20TB monthly data volume with sub-second query response for executive reporting"
+        "Designed a long-term analytics platform combining AWS Glue, Athena, and Kafka CDC for both reporting and system modernization",
+        "Synced on-prem Oracle data into AWS RDS and the data lake through Kafka CDC pipelines for zero-downtime migration",
+        "Expanded centralized S3 retention from 7 days to 10 years with automated lifecycle controls and searchable historical access",
+        "Optimized large-scale analytics with Parquet compression, partition design, and batch layout improvements",
+        "Exposed self-service Grafana dashboards for retention, conversion funnels, product analytics, and operational statistics on top of 20TB+ monthly data",
+        "Unified historical search, reporting, and operational aggregation on a single platform"
       ]
     },
     "theshop": {
       "title": "TheShop E-commerce Platform — Site Reliability Engineering",
       "subtitle": "Pharmaceutical & B2B Platform | ₩500 Billion Annual Revenue",
       "content": [
-        "Lead Site Reliability Engineer responsible for Daewoong Group's mission-critical B2B/B2C e-commerce platform serving ₩500 billion annual transaction volume, 100,000 daily active users, and processing 20TB monthly data",
-        "Architected and executed legacy system modernization, migrating Oracle/Tomcat monolith to microservices architecture utilizing Next.js frontend and Spring Boot backend",
-        "Implemented 5-node Apache Airflow cluster managing 200+ DAGs for ETL workflows, statistical aggregation, data lake synchronization, and near-realtime change data capture (CDC)",
-        "Designed hybrid cloud infrastructure integrating AWS ECS Fargate serverless containers with on-premise Docker environments (CentOS/Ubuntu), ensuring seamless workload distribution",
-        "Established centralized API gateway using APISIX and Nginx with rate limiting, circuit breaker patterns, and dynamic service discovery via Spring Cloud Eureka",
-        "Automated infrastructure-as-code provisioning through AWS CloudFormation, achieving 50% monthly cost reduction via EC2 right-sizing and intelligent S3 lifecycle policies",
-        "Optimized full-stack performance across React/Next.js frontend, Spring Boot/Node.js microservices, and Oracle database, eliminating critical bottlenecks",
-        "Deployed OpenTelemetry observability platform reducing MTTD by 99% (18 hours to 10 minutes) through distributed tracing and metrics correlation",
-        "Engineered high-availability Apache Kafka and Redis Sentinel clusters processing 20-50 million messages daily with 99.9% uptime SLA",
-        "Delivered 90% deployment cycle time reduction through CI/CD pipeline automation, maintaining zero-downtime releases and significantly improved MTTR"
+        "Led SRE and platform engineering for Daewoong Group's core B2B/B2C commerce platform and internal services handling ₩500B annual transaction volume, 100K daily users, and 20TB+ monthly data",
+        "Migrated Docker-based on-prem legacy services during IDC relocation into a hybrid architecture spanning EKS, on-prem multi-cluster Kubernetes, and AWS ECS",
+        "Separated standby and production environments and relocated Airflow, API server, and Kafka workloads onto cluster-based platforms",
+        "Modernized Oracle/Tomcat systems into Next.js and Spring Boot microservices while building an Oracle on-prem to Kafka CDC to AWS RDS migration path",
+        "Built a Bedrock, ADK, and MCP-based multi-agent LLM PWA on EKS for seller, admin, developer, and customer support workflows with mutation APIs",
+        "Standardized operations with Cilium, Argo CD, GitLab CI, APISIX, Scouter, and ClickHouse to streamline new service onboarding",
+        "Improved deployment and incident response visibility with OpenTelemetry-based root-cause analysis and Grafana dashboards"
+      ]
+    },
+    "shopAi": {
+      "title": "Shop AI Multi-Agent Work Platform",
+      "subtitle": "Bedrock, ADK, and MCP-based PWA on EKS",
+      "content": [
+        "Designed and built a multi-agent LLM PWA on EKS for seller, admin, developer, and customer support workflows",
+        "Combined Amazon Bedrock, ADK, and MCP servers to separate role-specific agents, shared identity, and tool chains",
+        "Connected different MCP and LLM services per business scenario, including mutation APIs for operational data changes",
+        "Added Grafana dashboards for prompt cache efficiency, agent execution flows, and root-cause investigation",
+        "Issued Bedrock API tokens per user to scale Claude Team adoption across working groups with a standardized enablement model",
+        "Implemented a mobile-first PWA experience so field users could query, execute, and validate operational tasks from one interface"
       ]
     },
     "gateway": {
@@ -124,14 +134,14 @@
     },
     "airflow": {
       "title": "Apache Airflow Workflow Orchestration Platform",
-      "subtitle": "Multi-Cluster Architecture for ETL & Real-Time Data Processing",
+      "subtitle": "From Docker Compose batch systems to Kubernetes Airflow with OTEL",
       "content": [
-        "Architected and deployed 5 high-availability Apache Airflow clusters supporting enterprise-scale workflow orchestration",
-        "Automated complex data workflows including batch ETL processing, change data capture (CDC) synchronization, and statistical aggregation across 200+ directed acyclic graphs (DAGs)",
-        "Implemented distributed task execution using PostgreSQL-backed metadata storage and Redis-based message queueing with Celery Executor for parallel processing",
-        "Optimized pipeline performance handling 20TB monthly data volume through dynamic task parallelization and resource allocation strategies",
-        "Developed comprehensive monitoring solution with real-time Grafana dashboards, Slack alerting, and SLA tracking for pipeline health",
-        "Reduced data warehouse refresh cycles by 60% through automated incremental ETL processes, enabling near-realtime analytics"
+        "Rebuilt Spring Batch and Docker Compose-oriented batch systems into Kubernetes-native Apache Airflow",
+        "Operated 200+ DAGs for statistical aggregation, CDC, and data lake workflows with standby and production-aware cluster placement",
+        "Implemented distributed execution with PostgreSQL metadata, Redis/Celery Executor, and OTEL instrumentation",
+        "Systematized capacity planning through concurrency analysis and resource sizing (22 tasks/min to 110 cores)",
+        "Connected Grafana, Slack, and SLA tracking to detect pipeline delays and failures in real time",
+        "Improved refresh latency for warehouse and analytics systems to enable near-realtime operational reporting"
       ]
     },
     "ixiStudio": {
