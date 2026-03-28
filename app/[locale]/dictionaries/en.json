@@ -110,14 +110,28 @@
     },
     "shopAi": {
       "title": "Shop AI Multi-Agent Work Platform",
-      "subtitle": "Bedrock, ADK, and MCP-based PWA on EKS",
+      "subtitle": "Bedrock, ADK, and MCP-based PWA on EKS | Jan 2026 – Building (Beta)",
       "content": [
-        "Designed and built a multi-agent LLM PWA on EKS for seller, admin, developer, and customer support workflows",
-        "Combined Amazon Bedrock, ADK, and MCP servers to separate role-specific agents, shared identity, and tool chains",
-        "Connected different MCP and LLM services per business scenario, including mutation APIs for operational data changes",
-        "Added Grafana dashboards for prompt cache efficiency, agent execution flows, and root-cause investigation",
-        "Issued Bedrock API tokens per user to scale Claude Team adoption across working groups with a standardized enablement model",
-        "Implemented a mobile-first PWA experience so field users could query, execute, and validate operational tasks from one interface"
+        "Designed and built a TheShop-specialized AI platform connecting internal DB, documents, and APIs to close the domain knowledge gap of general-purpose LLMs (Jan 2026 –, beta)",
+        "Deployed a multi-agent LLM PWA on EKS for Seller, Admin, Developer, and CS workflows; integrated 10+ heterogeneous agents under an Orchestrator Agent including DB, Code, Sonic API, Jira, Confluence, and S3",
+        "Meeting Agent: uploads voice recordings and documents for AI to split speakers, extract summaries and action items, then auto-publish to Confluence sub-pages for review within 5 minutes — reducing meeting documentation time by 80%+",
+        "Recommendation system: auto-suggests prompts based on user/group role and usage history for one-click task automation with minimal typing (in development)",
+        "Per-role permission isolation: separate agent contexts and access for Seller, Planner, Developer, and VC groups; Bedrock API tokens issued per user to scale adoption team-wide",
+        "Grafana dashboards for Prompt Cache efficiency, LLM token cost, and agent execution flow monitoring; built a FinOps-oriented cost optimization framework",
+        "Pilot feedback — Business team: 'Structured meeting summaries made follow-up much easier, high value'; Engineering: 'Architecture discussion history now documented, greatly improving code review and handover'"
+      ]
+    },
+    "gitops": {
+      "title": "GitOps Enhancement & Standardization",
+      "subtitle": "Argo CD, Argo Image Updater, ECR, EKS, and CodeArtifact | Dec 2025 – Feb 2026",
+      "content": [
+        "Established a cloud development and deployment standard for customer management and ad performance platforms to overcome internal resource constraints",
+        "Migrated shared Maven and Docker repositories to AWS CodeArtifact and ECR with module-level image tag governance based on Git hash",
+        "Consolidated container workloads that were previously managed per server into centrally operated EKS clusters",
+        "Re-architected CI/CD from Jenkins plus server scripts to a GitLab Agent and Argo CD-based GitOps workflow",
+        "Defined dual release policy: dev branch for automatic test/build/deploy on merge, and prd branch for manual Argo CD Sync approval",
+        "Automated end-to-end flow: GitLab merge → test/build → ECR push → Argo Image Updater chart tag commit → Argo CD sync",
+        "Removed manual image-tag edits and shortened lead time for zero-downtime rollback and redeployment of demo app sets"
       ]
     },
     "gateway": {
@@ -137,7 +151,7 @@
       "subtitle": "From Docker Compose batch systems to Kubernetes Airflow with OTEL",
       "content": [
         "Rebuilt Spring Batch and Docker Compose-oriented batch systems into Kubernetes-native Apache Airflow",
-        "Operated 200+ DAGs for statistical aggregation, CDC, and data lake workflows with standby and production-aware cluster placement",
+        "Operated 100+ DAGs for statistical aggregation, CDC, and data lake workflows with standby and production-aware cluster placement",
         "Implemented distributed execution with PostgreSQL metadata, Redis/Celery Executor, and OTEL instrumentation",
         "Systematized capacity planning through concurrency analysis and resource sizing (22 tasks/min to 110 cores)",
         "Connected Grafana, Slack, and SLA tracking to detect pipeline delays and failures in real time",

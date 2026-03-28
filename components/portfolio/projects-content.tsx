@@ -53,6 +53,12 @@ export default function ProjectsContent({ dict }: ProjectsContentProps) {
         images: projectImages.shopAi,
       },
       {
+        title: dict.projects.gitops.title,
+        subtitle: dict.projects.gitops.subtitle,
+        content: dict.projects.gitops.content,
+        images: projectImages.gitops,
+      },
+      {
         title: dict.projects.gateway.title,
         subtitle: dict.projects.gateway.subtitle,
         content: dict.projects.gateway.content,

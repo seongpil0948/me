@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "@heroui/styles";
-@import "react-medium-image-zoom/dist/styles.css";
 @import "./print.css";
 @source '../components/**/*.{js,ts,jsx,tsx,mdx}';
 @source '../app/**/*.{js,ts,jsx,tsx,mdx}';

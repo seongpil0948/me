@@ -85,7 +85,7 @@ export const experiences: Experience[] = [
       ko: [
         "Docker 기반 온프레미스 Oracle/Tomcat 레거시 시스템의 IDC 이전을 주도하고, EKS·온프레미스 멀티 Kubernetes 클러스터·AWS ECS를 함께 사용하는 하이브리드 표준 아키텍처로 단계 전환",
         "Standby/Production 환경을 분리하고 Airflow, API Server, Kafka 핵심 워크로드를 클러스터 기반으로 재배치하여 배포 안정성과 재해복구 대응력 강화",
-        "Spring Batch + Docker Compose 기반 배치 환경을 Kubernetes Airflow + OpenTelemetry 기반 플랫폼으로 재구성하여 200+ DAG, 통계 집계, 데이터 레이크 적재, CDC 워크플로우 운영",
+        "Spring Batch + Docker Compose 기반 배치 환경을 Kubernetes Airflow + OpenTelemetry 기반 플랫폼으로 재구성하여 100+ DAG, 통계 집계, 데이터 레이크 적재, CDC 워크플로우 운영",
         "Oracle 온프레미스 데이터베이스를 Kafka CDC 파이프라인을 통해 AWS RDS로 점진 이관하여 다운타임 없는 데이터 현대화 수행",
         "Prometheus의 클러스터형 수평 확장 한계를 보완하기 위해 Receiver 분리, Nginx 로드밸런싱, Helm 배포 구조를 조합한 수집 아키텍처를 설계",
         "EKS EBS의 단일 AZ 제약을 고려해 상태 저장 워크로드를 AZ 경계 기준으로 분리하고, Scouter와 ClickHouse는 단일 진입 인터페이스로 운영하여 장애 표면 최소화",
@@ -101,7 +101,7 @@ export const experiences: Experience[] = [
       en: [
         "Led IDC relocation of Docker-based on-prem Oracle/Tomcat legacy systems and migrated them stepwise into a hybrid standard architecture spanning EKS, on-prem multi-cluster Kubernetes, and AWS ECS",
         "Separated standby and production environments and moved Airflow, API server, and Kafka workloads onto cluster-based platforms to improve release safety and disaster recovery posture",
-        "Rebuilt Spring Batch and Docker Compose-based scheduling systems into Kubernetes Airflow with OpenTelemetry, operating 200+ DAGs for analytics, data lake ingestion, and CDC workflows",
+        "Rebuilt Spring Batch and Docker Compose-based scheduling systems into Kubernetes Airflow with OpenTelemetry, operating 100+ DAGs for analytics, data lake ingestion, and CDC workflows",
         "Delivered zero-downtime database modernization from on-prem Oracle to AWS RDS through Kafka CDC pipelines",
         "Addressed Prometheus clustering limitations by designing a receiver-split ingestion tier with Nginx load balancing and Helm-based deployment patterns",
         "Designed stateful workload boundaries around the single-AZ nature of EKS EBS and operated Scouter plus ClickHouse behind a single operational interface",
@@ -117,7 +117,7 @@ export const experiences: Experience[] = [
       zh: [
         "主导基于 Docker 的本地 Oracle/Tomcat 遗留系统 IDC 迁移，并逐步演进为覆盖 EKS、on-prem 多 Kubernetes 集群与 AWS ECS 的混合标准架构",
         "拆分 Standby / Production 环境，将 Airflow、API Server、Kafka 等核心工作负载迁移到集群平台，提高发布稳定性与灾备能力",
-        "将 Spring Batch 与 Docker Compose Airflow 批处理系统重构为 Kubernetes Airflow + OpenTelemetry 平台，运营 200+ DAG 的统计、数据湖与 CDC 工作流",
+        "将 Spring Batch 与 Docker Compose Airflow 批处理系统重构为 Kubernetes Airflow + OpenTelemetry 平台，运营 100+ DAG 的统计、数据湖与 CDC 工作流",
         "通过 Kafka CDC 管道将 on-prem Oracle 数据库平滑迁移到 AWS RDS，实现无停机数据现代化",
         "针对 Prometheus 集群化能力限制，设计 Receiver 拆分、Nginx 负载均衡与 Helm 部署相结合的采集架构",
         "考虑 EKS EBS 的单 AZ 限制，以 AZ 边界隔离有状态工作负载，并将 Scouter 与 ClickHouse 统一到单一运维入口",
@@ -415,9 +415,19 @@ export const projectImages = {
     "/projects/shop-ai/IMG_8938.PNG",
     "/projects/shop-ai/IMG_8939.PNG",
     "/projects/shop-ai/IMG_8941.PNG",
+    "/projects/shop-ai/seminar-1.png",
+    "/projects/shop-ai/seminar-2.png",
+    "/projects/shop-ai/seminar-3.png",
+    "/projects/shop-ai/seminar-4.png",
+    "/projects/shop-ai/seminar-5.png",
+  ],
+  gitops: [
+    "/projects/gitops/new-dev-flow.png",
+    "/projects/gitops/New-Infra-Tool.png",
+    "/projects/gitops/Gitops-pipeline-flow.png",
   ],
   gateway: ["/projects/APISIX-Dashboard.png"],
-  airflow: ["/projects/Aiflow.png"],
+  airflow: ["/projects/airflow/Aiflow.png"],
   ixiStudio: [
     "/projects/ixi-studio/0.png",
     "/projects/ixi-studio/1.png",
@@ -454,8 +464,39 @@ export const projectImages = {
     "/projects/iobox/inquiry.png",
     "/projects/iobox/uncle-app-1.png",
     "/projects/iobox/uncle-app-2.png",
+    "/projects/iobox/app-store.jpeg",
   ],
   campi: ["/projects/campi/feed.jpg", "/projects/campi/my-page.jpg"],
   virtualTryOn: ["/projects/try-on.png"],
   intellisysWebsite: ["/projects/intellisys.png"],
 } as const;
+
+/**
+ * Project key type derived from projectImages
+ */
+export type ProjectKey = keyof typeof projectImages;
+
+/**
+ * Resume project list — controls which projects appear on the resume page
+ * and which image index to use as the representative thumbnail.
+ * Display order matches array order.
+ */
+export const resumeProjects: {
+  key: ProjectKey;
+  thumbnailIndex?: number;
+}[] = [
+    { key: "monitoring" },
+    { key: "dataLake" },
+    { key: "theshop" },
+    { key: "gitops" },
+    { key: "gateway" },
+    { key: "airflow" },
+    { key: "ixiStudio" },
+    { key: "ixiAdmin" },
+    { key: "drone", thumbnailIndex: 2 },
+    { key: "robotPlatform" },
+    { key: "inoutbox", thumbnailIndex: 8 },
+    { key: "campi" },
+    { key: "virtualTryOn" },
+    { key: "intellisysWebsite" },
+  ];

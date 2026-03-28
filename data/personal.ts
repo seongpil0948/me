@@ -170,7 +170,7 @@ export const personalInfo: PersonalInfo = {
     {
       title: "대규모 데이터 파이프라인 & 비즈니스 인텔리전스",
       description:
-        "Spring Batch와 Docker Compose Airflow 기반 배치 체계를 Kubernetes Airflow + OpenTelemetry 플랫폼으로 전환해 200+ DAG를 운영했습니다. Oracle On-Premise → Kafka CDC → AWS RDS 이관, AWS Glue/Athena 기반 데이터 레이크, 10년 장기 검색 환경을 함께 구축했고 월 20TB 이상 데이터를 분석합니다.",
+        "Spring Batch와 Docker Compose Airflow 기반 배치 체계를 Kubernetes Airflow + OpenTelemetry 플랫폼으로 전환해 100+ DAG를 운영했습니다. Oracle On-Premise → Kafka CDC → AWS RDS 이관, AWS Glue/Athena 기반 데이터 레이크, 10년 장기 검색 환경을 함께 구축했고 월 20TB 이상 데이터를 분석합니다.",
     },
     {
       title: "API Gateway & Service Discovery 아키텍처",

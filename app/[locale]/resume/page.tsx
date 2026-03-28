@@ -5,14 +5,16 @@ import Image from "next/image";
 
 import { getDictionary, Locale } from "../dictionaries";
 
+import ProjectImageSwiper from "@/components/portfolio/project-image-swiper";
 import { ResumePrintWrapper } from "@/components/resume-print-wrapper";
-import ZoomableImage from "@/components/zoomable-image";
 import { personalInfo } from "@/data/personal";
 import {
   certifications,
   experiences,
   openSourceContributions,
   portfolioLinks,
+  projectImages,
+  resumeProjects,
   skills,
 } from "@/data/portfolio";
 import { categorizeSkills, getSkillEmoji } from "@/lib/skill-utils";
@@ -21,22 +23,6 @@ export const metadata: Metadata = {
   title: "Resume | Seongpil Choi",
   description: "Professional resume of Seongpil Choi",
 };
-
-function ResumeProjectImage({ alt, src }: { alt: string; src: string }) {
-  return (
-    <div className="mt-2">
-      <ZoomableImage>
-        <Image
-          alt={alt}
-          className="w-full h-auto rounded border border-gray-200"
-          height={675}
-          src={src}
-          width={1200}
-        />
-      </ZoomableImage>
-    </div>
-  );
-}
 
 export default async function ResumePage({
   params,
@@ -66,7 +52,7 @@ export default async function ResumePage({
 
   return (
     <ResumePrintWrapper dict={dict}>
-      <div className="min-h-screen bg-white text-black p-8 max-w-[210mm] mx-auto font-sans">
+      <div className="min-h-screen bg-white text-black p-8 max-w-full mx-auto font-sans">
         {/* Header */}
         <header className="mb-8 pb-4">
           <div className="grid grid-cols-[1fr_auto] gap-4 items-start">
@@ -353,291 +339,51 @@ export default async function ResumePage({
             {dict.resume.projects}
           </h2>
           <div className="text-[10pt]">
-            <Card className="mb-3.5 p-4">
-              <CardContent className="p-0">
-                <h3 className="text-[11pt] font-bold mb-2 text-gray-800">
-                  {dict.projects.monitoring.title}
-                </h3>
-                <p className="text-[9pt] text-gray-600 mb-2 italic">
-                  {dict.projects.monitoring.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.monitoring.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.monitoring.title}
-                  src="/projects/otel-grafana/Grafana - System Dashboard.png"
-                />
-              </CardContent>
-            </Card>
+            {resumeProjects.map(({ key, thumbnailIndex = 0 }, index) => {
+              const project = dict.projects[
+                key as keyof typeof dict.projects
+              ] as { title: string; subtitle: string; content: string[] };
+              const images = projectImages[key];
+              const startIndex =
+                images.length > 0 ? thumbnailIndex % images.length : 0;
+              const orderedImages =
+                images.length > 1
+                  ? [
+                    ...images.slice(startIndex),
+                    ...images.slice(0, startIndex),
+                  ]
+                  : images;
 
-            <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.dataLake.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.dataLake.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.dataLake.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.dataLake.title}
-                  src="/projects/business-grafana/Grafana NPS.png"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="mb-3.5 p-3.5">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.theshop.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.theshop.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.theshop.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.theshop.title}
-                  src="/projects/theshop/TheShop_Pharmacy.png"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.gateway.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.gateway.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.gateway.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.gateway.title}
-                  src="/projects/APISIX-Dashboard.png"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="mb-3.5 p-3.5">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.airflow.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.airflow.subtitle}
-                </p>
-                <ul className=" leading-relaxed">
-                  {dict.projects.airflow.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.airflow.title}
-                  src="/projects/Aiflow.png"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.ixiStudio.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.ixiStudio.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.ixiStudio.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.ixiStudio.title}
-                  src="/projects/ixi-studio/0.png"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="mb-3.5 p-3.5">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.ixiAdmin.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.ixiAdmin.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.ixiAdmin.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.ixiAdmin.title}
-                  src="/projects/ixi-admin/1.png"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.drone.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.drone.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.drone.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.drone.title}
-                  src="/projects/drone/3.png"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.robotPlatform.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.robotPlatform.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.robotPlatform.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.robotPlatform.title}
-                  src="/projects/robot-platform/1.png"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="mb-3.5 p-3.5">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.inoutbox.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.inoutbox.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.inoutbox.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.inoutbox.title}
-                  src="/projects/iobox/app-store.jpeg"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.campi.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.campi.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.campi.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.campi.title}
-                  src="/projects/campi/feed.jpg"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="mb-3.5 p-3.5">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.virtualTryOn.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.virtualTryOn.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.virtualTryOn.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.virtualTryOn.title}
-                  src="/projects/try-on.png"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="mb-3.5 p-3.5 bg-gray-50">
-              <CardContent className="p-0">
-                <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
-                  {dict.projects.intellisysWebsite.title}
-                </h3>
-                <p className="text-[8pt] text-gray-600 mb-1.5 italic">
-                  {dict.projects.intellisysWebsite.subtitle}
-                </p>
-                <ul className="ml-5 leading-relaxed list-disc">
-                  {dict.projects.intellisysWebsite.content.map((item, idx) => (
-                    <li key={idx} className="mb-1">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ResumeProjectImage
-                  alt={dict.projects.intellisysWebsite.title}
-                  src="/projects/intellisys.png"
-                />
-              </CardContent>
-            </Card>
+              return (
+                <Card
+                  key={key}
+                  className={`mb-3.5 p-3.5 ${index % 2 !== 0 ? "bg-gray-50" : ""
+                    }`}
+                >
+                  <CardContent className="p-0">
+                    <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
+                      {project.title}
+                    </h3>
+                    <p className="text-[8pt] text-gray-600 mb-1.5 italic">
+                      {project.subtitle}
+                    </p>
+                    <ul className="ml-5 leading-relaxed list-disc">
+                      {project.content.map((item: string, idx: number) => (
+                        <li key={idx} className="mb-1">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    {orderedImages.length > 0 && (
+                      <ProjectImageSwiper
+                        alt={project.title}
+                        images={orderedImages}
+                      />
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </section>
 

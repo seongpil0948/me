@@ -110,14 +110,28 @@
     },
     "shopAi": {
       "title": "Shop AI 多代理工作平台",
-      "subtitle": "基于 Bedrock、ADK、MCP 的 EKS PWA",
+      "subtitle": "基于 Bedrock、ADK、MCP 的 EKS PWA | 2026.01 ~ 建设中(Beta)",
       "content": [
-        "在 EKS 上设计并构建面向 Seller、Admin、Developer、CS 团队的多代理 LLM PWA",
-        "结合 Amazon Bedrock、ADK 与 MCP Server，拆分角色代理、共享认证与工具链",
-        "针对商品、运营、客服、开发支持等场景接入不同的 MCP 与 LLM 服务，并整合数据变更 API",
-        "通过 Grafana 仪表板可视化 Prompt Cache 效率、代理执行链路与 Root Cause 排查指标",
-        "设计按用户发放 Bedrock API Token 的体系，将 Claude Team 使用推广到团队级协作流程",
-        "以移动优先 PWA 方式实现一体化工作界面，让一线用户能直接完成提问、执行与验证"
+        "为填补通用 LLM 的领域知识空白，构建连接更商内部 DB、文档与 API 的专属 AI 平台（2026.01 ~，beta）",
+        "在 EKS 上部署面向 Seller、Admin、Developer、CS 的多代理 LLM PWA；Orchestrator Agent 下集成 DB、Code、Sonic API、Jira、Confluence、S3 等 10 个以上异构代理",
+        "Meeting Agent：上传会议录音与文档后，AI 自动分离发言人、提取摘要与 Action Item，并在 5 分钟内自动发布到 Confluence 子页面，会议记录时间减少 80% 以上",
+        "推荐系统：基于用户/组别角色与使用历史自动推荐提示词，实现一键任务自动化，最大程度减少手动输入（开发中）",
+        "角色权限隔离：为 Seller、规划、开发、VC 等岗位分配独立代理上下文与权限；按用户发放 Bedrock API Token，推动全团队规模化采用",
+        "Grafana 仪表板监控 Prompt Cache 效率、LLM Token 费用与代理执行链路；构建 FinOps 导向的成本优化体系",
+        "试点反馈 — 业务部门：'会议内容整理有条理，跟进工作更顺畅，使用价值高'；工程团队：'开发讨论架构历史得以文档化，大幅改善代码审查与交接效率'"
+      ]
+    },
+    "gitops": {
+      "title": "GitOps 升级与标准化",
+      "subtitle": "Argo CD、Argo Image Updater、ECR、EKS、CodeArtifact | 2025.12 ~ 2026.02",
+      "content": [
+        "为解决内部资源限制，建立了客户管理与广告绩效平台的云端开发与部署标准",
+        "将共享 Maven 与 Docker 仓库迁移至 AWS CodeArtifact 和 ECR，并按模块以 Git hash 进行镜像标签治理",
+        "把原本分散在各服务器独立运行的容器工作负载统一纳入 EKS 集群集中管理",
+        "将 Jenkins + 服务器脚本的传统 CI/CD 重构为 GitLab Agent + Argo CD 的 GitOps 自动化流程",
+        "制定双轨发布策略：dev 分支合并后自动测试/构建/部署，prd 分支通过 Argo CD 手动 Sync 审批后部署",
+        "实现全链路自动化：GitLab 合并 → 测试/构建 → ECR 推送 → Argo Image Updater 提交 Helm Chart 标签 → Argo CD 同步",
+        "取消手动修改镜像标签流程，并显著缩短演示应用无中断回滚与再部署耗时"
       ]
     },
     "gateway": {
@@ -139,7 +153,7 @@
       "subtitle": "从 Docker Compose 批处理到 Kubernetes Airflow + OTEL",
       "content": [
         "将 Spring Batch 与 Docker Compose 为中心的批处理系统重构为 Kubernetes 原生 Apache Airflow 平台",
-        "运营 200+ DAG 的统计聚合、CDC 与数据湖工作流，并考虑 Standby / Production 的集群放置策略",
+        "运营 100+ DAG 的统计聚合、CDC 与数据湖工作流，并考虑 Standby / Production 的集群放置策略",
         "结合 PostgreSQL 元数据、Redis/Celery Executor 与 OTEL 监控实现分布式执行体系",
         "基于并发分析与资源估算（22 tasks/min → 110 cores）建立集群扩容决策机制",
         "连接 Grafana、Slack 与 SLA 跟踪，实现对延迟与失败的实时监控",

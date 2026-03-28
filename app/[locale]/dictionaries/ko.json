@@ -110,14 +110,28 @@
     },
     "shopAi": {
       "title": "Shop AI 멀티에이전트 업무 플랫폼",
-      "subtitle": "Bedrock · ADK · MCP 기반 EKS PWA",
+      "subtitle": "Bedrock · ADK · MCP 기반 EKS PWA | 2026.01 ~ 구축중(beta)",
       "content": [
-        "Seller, Admin, Developer, CS 조직이 공통으로 사용하는 멀티에이전트 LLM PWA를 EKS 환경에 설계·구축",
-        "Amazon Bedrock, ADK, MCP 서버를 조합해 역할별 에이전트와 업무별 도구 체인을 분리하고 공통 인증 체계를 연결",
-        "상품, 운영, 고객응대, 개발지원 시나리오별로 서로 다른 MCP·LLM 서비스를 연결하고 데이터 변경용 API까지 통합",
-        "Grafana 대시보드로 Prompt Cache 효율, 에이전트 실행 흐름, Root Cause 추적 지표를 시각화해 운영 가시성 확보",
-        "Bedrock 사용자별 API 토큰 발급 체계를 설계해 Claude Team 사용을 팀 단위로 확산하고 내부 활용 표준을 정착",
-        "모바일 우선 PWA UI로 현장 실무자가 빠르게 질의·실행·검증할 수 있는 업무 자동화 인터페이스 구현"
+        "범용 LLM의 도메인 지식 공백 문제를 해소하기 위해 더샵 내부 DB·문서·API를 연결한 특화 AI 플랫폼을 기획·구축 (2026.01 ~, beta)",
+        "Seller, Admin, Developer, CS 조직이 공통으로 사용하는 멀티에이전트 LLM PWA를 EKS에 설계·구축; Orchestrator Agent 하위 DB, Code, Sonic API, Jira, Confluence, S3 등 10개 이상 이기종 에이전트 연동",
+        "Meeting Agent: 회의 음성·문서 업로드 시 AI가 발화자 분리·요약·Action Item 추출 후 Confluence 하위 페이지 자동 생성, 5분 이내 검토·배포로 회의록 작성 시간 80% 이상 단축",
+        "추천 시스템: 유저/그룹 직군별 사용 이력 기반 프롬프트 자동 추천으로 타이핑 없는 원클릭 업무 자동화 구현 (개발 중)",
+        "그룹별 권한 분리: Seller, 기획, 개발, VC 등 직군마다 다른 컨텍스트·권한 환경의 개별 에이전트를 운영하고 Bedrock 사용자별 토큰 발급 체계로 팀 단위 확산",
+        "Grafana 대시보드로 Prompt Cache 효율, LLM 토큰 비용, 에이전트 실행 흐름 모니터링; FinOps 관점의 비용 최적화 체계 구축",
+        "파일럿 피드백 — 사업부: '회의 내용 체계 정리로 업무 팔로업 수월, 활용 가치 높음'; 개발팀: '개발 논의 아키텍처 히스토리 문서화로 코드 리뷰·인수인계에 큰 도움'"
+      ]
+    },
+    "gitops": {
+      "title": "GitOps 고도화 및 표준화",
+      "subtitle": "Argo CD · Argo Image Updater · ECR · EKS · CodeArtifact | 2025.12 ~ 2026.02",
+      "content": [
+        "사내 리소스 제약을 해소하기 위해 고객관리/광고성과 플랫폼의 클라우드 개발·배포 표준을 수립",
+        "공용 Maven 및 Docker 저장소를 AWS CodeArtifact와 ECR로 이관하고 모듈별 이미지 태그(Git hash) 관리 체계를 정립",
+        "서버별로 분산 운영되던 컨테이너 워크로드를 EKS 기반 중앙 관리 구조로 전환",
+        "Jenkins + 서버 스크립트 중심 CI/CD를 GitLab Agent + Argo CD GitOps로 재설계해 운영 복잡도를 축소",
+        "dev는 MR 테스트/머지 시 자동 빌드·배포, prd는 Argo CD 수동 Sync 승인 배포 정책으로 안정성과 속도를 분리",
+        "GitLab Merge → 테스트/빌드 → ECR Push → Argo Image Updater의 Helm Chart 태그 커밋 → Argo CD Sync 흐름을 자동화",
+        "수동 이미지 태그 수정 과정을 제거하고 데모 앱 무중단 롤백 및 재배포 리드타임을 단축"
       ]
     },
     "gateway": {
@@ -137,7 +151,7 @@
       "subtitle": "Docker Compose 배치에서 Kubernetes Airflow + OTEL로 전환",
       "content": [
         "Spring Batch와 Docker Compose 중심 배치 시스템을 Kubernetes 기반 Apache Airflow 플랫폼으로 재구축",
-        "Standby/Production 구성을 고려한 클러스터 배치 전략과 200+ DAG 기반 통계 집계, CDC, 데이터 레이크 워크플로우 운영",
+        "Standby/Production 구성을 고려한 클러스터 배치 전략과 100+ DAG 기반 통계 집계, CDC, 데이터 레이크 워크플로우 운영",
         "PostgreSQL 메타데이터 저장소, Redis/Celery Executor, OTEL 계측을 결합한 분산 워크플로우 실행 체계 구축",
         "동시성 분석과 리소스 산정(분당 22 Task → 110 Core)을 기반으로 클러스터 확장 의사결정을 체계화",
         "Grafana, Slack, SLA 추적을 연결해 파이프라인 지연과 실패를 실시간 모니터링하고 운영 대응 시간을 단축",

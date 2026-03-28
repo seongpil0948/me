@@ -10,7 +10,6 @@ import {
   Scrollbar,
 } from "swiper/modules";
 
-import ZoomableImage from "@/components/zoomable-image";
 
 // Import Swiper styles
 import "swiper/css";
@@ -43,6 +42,7 @@ export default function ProjectImageSwiper({
     <div className="w-full my-4">
       <Swiper
         navigation
+        zoom
         autoplay={
           autoplay
             ? {
@@ -51,17 +51,17 @@ export default function ProjectImageSwiper({
             }
             : false
         }
-        breakpoints={{
-          640: {
-            slidesPerView: 1,
-          },
-          768: {
-            slidesPerView: validImages.length > 1 ? 2 : 1,
-          },
-          1024: {
-            slidesPerView: validImages.length > 2 ? 3 : validImages.length,
-          },
-        }}
+        // breakpoints={{
+        //   640: {
+        //     slidesPerView: 1,
+        //   },
+        //   768: {
+        //     slidesPerView: validImages.length > 1 ? 2 : 1,
+        //   },
+        //   1024: {
+        //     slidesPerView: validImages.length > 2 ? 3 : validImages.length,
+        //   },
+        // }}
         className="rounded-lg"
         modules={modules}
         pagination={{ clickable: true }}
@@ -71,21 +71,19 @@ export default function ProjectImageSwiper({
       >
         {validImages.map((image, index) => (
           <SwiperSlide key={`${image}-${index}`}>
-            <ZoomableImage>
-              <div
-                aria-label={`${alt} ${index + 1}`}
-                className="relative w-full h-75 overflow-hidden rounded-lg md:h-100"
-                style={{ backgroundImage: `url("${image}")` }}
-              >
-                <Image
-                  fill
-                  alt={`${alt} ${index + 1}`}
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  src={image}
-                />
-              </div>
-            </ZoomableImage>
+            <div
+              aria-label={`${alt} ${index + 1}`}
+              className="relative w-full h-75 overflow-hidden rounded-lg md:h-100"
+              style={{ backgroundImage: `url("${image}")` }}
+            >
+              <Image
+                fill
+                alt={`${alt} ${index + 1}`}
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                src={image}
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
