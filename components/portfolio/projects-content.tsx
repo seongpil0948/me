@@ -141,7 +141,7 @@ export default function ProjectsContent({ dict }: ProjectsContentProps) {
               style={{ borderColor: "var(--color-border-primary)" }}
             >
               <button
-                className="w-full px-2 py-4 text-left transition-colors hover:bg-[var(--color-background-secondary)]"
+                className="w-full px-2 py-4 text-left transition-colors hover:bg-(--color-background-secondary)"
                 onClick={() => toggleExpanded(idx)}
               >
                 <div className="flex justify-between items-center">

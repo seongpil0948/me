@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 
-import { Card, CardContent, Chip } from "@heroui/react";
+import { Card, CardContent } from "@heroui/react";
 import Image from "next/image";
 
 import { getDictionary, Locale } from "../dictionaries";
 
-import ProjectImageSwiper from "@/components/portfolio/project-image-swiper";
 import { ResumePrintWrapper } from "@/components/resume-print-wrapper";
 import { personalInfo } from "@/data/personal";
 import {
@@ -17,7 +16,6 @@ import {
   resumeProjects,
   skills,
 } from "@/data/portfolio";
-import { categorizeSkills, getSkillEmoji } from "@/lib/skill-utils";
 
 export const metadata: Metadata = {
   title: "Resume | Seongpil Choi",
@@ -42,13 +40,6 @@ export default async function ResumePage({
   const militaryBranchByLocale = personalInfo.military.branch[locale];
   const militaryRankByLocale = personalInfo.military.rank[locale];
   const militaryStatusByLocale = personalInfo.military.status[locale];
-
-  // Categorize skills by proficiency level using utility function
-  const {
-    expert: expertSkills,
-    advanced: advancedSkills,
-    competent: competentSkills,
-  } = categorizeSkills(skills);
 
   return (
     <ResumePrintWrapper dict={dict}>
@@ -234,62 +225,87 @@ export default async function ResumePage({
             </div>
           </div>
 
-          {/* Expert Level Skills */}
-          {expertSkills.length > 0 && (
-            <div className="mb-2">
-              <div className="flex flex-wrap gap-1.5 text-[10pt]">
-                {expertSkills.map((skill, index) => (
-                  <Chip
-                    key={index}
-                    className="text-[8pt] h-6 bg-green-600 text-white"
-                    color="success"
-                    size="sm"
-                    variant="soft"
-                  >
-                    {getSkillEmoji(skill.name)} {skill.name}
-                  </Chip>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Advanced Level Skills */}
-          {advancedSkills.length > 0 && (
-            <div className="mb-2">
-              <div className="flex flex-wrap gap-1.5 text-[10pt]">
-                {advancedSkills.map((skill, index) => (
-                  <Chip
-                    key={index}
-                    className="text-[8pt] h-6 bg-blue-600 text-white"
-                    color="accent"
-                    size="sm"
-                    variant="soft"
-                  >
-                    {getSkillEmoji(skill.name)} {skill.name}
-                  </Chip>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Competent Level Skills */}
-          {competentSkills.length > 0 && (
-            <div className="mb-2">
-              <div className="flex flex-wrap gap-1.5 text-[10pt]">
-                {competentSkills.map((skill, index) => (
-                  <Chip
-                    key={index}
-                    className="text-[8pt] h-6 bg-gray-300 text-gray-900"
-                    color="default"
-                    size="sm"
-                    variant="soft"
-                  >
-                    {getSkillEmoji(skill.name)} {skill.name}
-                  </Chip>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Technical Skills - Categorized Table */}
+          <div className="my-4">
+            <h3 className="text-[11pt] font-semibold mb-2 text-gray-800">
+              🛠️ Technical Skills
+            </h3>
+            <table className="w-full border-collapse text-[9pt] border border-gray-300">
+              <tbody>
+                <tr>
+                  <td className="py-2 px-3 border border-gray-300 font-semibold bg-blue-50 w-[20%] align-top">
+                    🏗️ Infrastructure &amp; Cloud
+                  </td>
+                  <td className="py-2 px-3 border border-gray-300">
+                    {skills
+                      .filter(
+                        (s) =>
+                          s.name.includes("Kubernetes") ||
+                          s.name.includes("AWS") ||
+                          s.name.includes("Docker") ||
+                          s.name.includes("Linux"),
+                      )
+                      .map((s) => s.name)
+                      .join(" · ")}
+                  </td>
+                </tr>
+                <tr className="bg-gray-50">
+                  <td className="py-2 px-3 border border-gray-300 font-semibold bg-blue-50 align-top">
+                    📊 Observability &amp; Data
+                  </td>
+                  <td className="py-2 px-3 border border-gray-300">
+                    {skills
+                      .filter(
+                        (s) =>
+                          s.name.includes("OpenTelemetry") ||
+                          s.name.includes("Grafana") ||
+                          s.name.includes("Prometheus") ||
+                          s.name.includes("Kafka") ||
+                          s.name.includes("Airflow"),
+                      )
+                      .map((s) => s.name)
+                      .join(" · ")}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-3 border border-gray-300 font-semibold bg-blue-50 align-top">
+                    💻 Backend
+                  </td>
+                  <td className="py-2 px-3 border border-gray-300">
+                    {skills
+                      .filter(
+                        (s) =>
+                          s.name.includes("Python") ||
+                          s.name.includes("Go") ||
+                          s.name.includes("Node.js") ||
+                          s.name.includes("Spring"),
+                      )
+                      .map((s) => s.name)
+                      .join(" · ")}
+                  </td>
+                </tr>
+                <tr className="bg-gray-50">
+                  <td className="py-2 px-3 border border-gray-300 font-semibold bg-blue-50 align-top">
+                    🎨 Frontend &amp; Mobile
+                  </td>
+                  <td className="py-2 px-3 border border-gray-300">
+                    {skills
+                      .filter(
+                        (s) =>
+                          s.name.includes("React") ||
+                          s.name.includes("Vue") ||
+                          s.name.includes("Next.js") ||
+                          s.name.includes("TypeScript") ||
+                          s.name.includes("Flutter") ||
+                          s.name.includes("Three.js"),
+                      )
+                      .map((s) => s.name)
+                      .join(" · ")}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
 
         {/* Work Experience */}
@@ -359,6 +375,7 @@ export default async function ResumePage({
                   key={key}
                   className={`mb-3.5 p-3.5 ${index % 2 !== 0 ? "bg-gray-50" : ""
                     }`}
+                  style={{ pageBreakInside: "avoid" }}
                 >
                   <CardContent className="p-0">
                     <h3 className="text-[10pt] font-bold mb-1.5 text-gray-800">
@@ -375,10 +392,18 @@ export default async function ResumePage({
                       ))}
                     </ul>
                     {orderedImages.length > 0 && (
-                      <ProjectImageSwiper
-                        alt={project.title}
-                        images={orderedImages}
-                      />
+                      <div className="flex gap-2 mt-2">
+                        {orderedImages.slice(0, 2).map((src, imgIdx) => (
+                          <Image
+                            key={imgIdx}
+                            alt={`${project.title} ${imgIdx + 1}`}
+                            className="rounded object-cover"
+                            height={110}
+                            src={src}
+                            width={180}
+                          />
+                        ))}
+                      </div>
                     )}
                   </CardContent>
                 </Card>
@@ -388,7 +413,7 @@ export default async function ResumePage({
         </section>
 
         {/* Page break before portfolio links */}
-        <div className="break-before-page" />
+        <div style={{ pageBreakBefore: "always" }} />
 
         {/* Portfolio Links */}
         <section className="mb-6">
