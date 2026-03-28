@@ -208,7 +208,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
           </span>
           <span>
             {dict.interview.stats.viewedQuestions}: {viewedQuestionIds.size}
-            {dict.common.language === "ko" ? "개" : ""}
+            {dict.common.countSuffix}
           </span>
         </div>
         <ProgressBar

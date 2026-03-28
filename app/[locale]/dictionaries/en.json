@@ -14,7 +14,8 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "language": "Language",
-    "selectLanguage": "Select Language"
+    "selectLanguage": "Select Language",
+    "countSuffix": ""
   },
   "error": {
     "title": "Something went wrong!",

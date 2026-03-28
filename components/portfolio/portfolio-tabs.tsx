@@ -2,19 +2,22 @@
 
 import { useState } from "react";
 import { Tabs } from "@heroui/react";
+import type { Dictionary } from "@/types/i18n";
 
 interface PortfolioTabsProps {
   aboutContent: React.ReactNode;
-  skillsCertificationsContent: React.ReactNode;
+  dict: Dictionary;
   experienceContent: React.ReactNode;
   projectsContent: React.ReactNode;
+  skillsCertificationsContent: React.ReactNode;
 }
 
 export default function PortfolioTabs({
   aboutContent,
-  skillsCertificationsContent,
+  dict,
   experienceContent,
   projectsContent,
+  skillsCertificationsContent,
 }: PortfolioTabsProps) {
   const [selected, setSelected] = useState("about");
 
@@ -33,19 +36,19 @@ export default function PortfolioTabs({
           className="w-full border-b border-border *:px-8 *:py-3"
         >
           <Tabs.Tab id="about">
-            프로필
+            {dict.tabs.profile}
             <Tabs.Indicator />
           </Tabs.Tab>
           <Tabs.Tab id="skills-certifications">
-            자격
+            {dict.tabs.certifications}
             <Tabs.Indicator />
           </Tabs.Tab>
           <Tabs.Tab id="experience">
-            경력
+            {dict.tabs.experience}
             <Tabs.Indicator />
           </Tabs.Tab>
           <Tabs.Tab id="projects">
-            프로젝트
+            {dict.tabs.projects}
             <Tabs.Indicator />
           </Tabs.Tab>
         </Tabs.List>

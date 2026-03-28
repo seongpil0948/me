@@ -24,6 +24,7 @@ export default function PortfolioSection({
 
       <section className="max-w-6xl mx-auto px-6">
         <PortfolioTabs
+          dict={dict}
           aboutContent={
             <AboutContent
               dict={dict}

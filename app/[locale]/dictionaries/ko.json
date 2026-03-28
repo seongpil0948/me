@@ -14,7 +14,8 @@
     "loading": "로딩 중...",
     "error": "오류가 발생했습니다",
     "language": "언어",
-    "selectLanguage": "언어 선택"
+    "selectLanguage": "언어 선택",
+    "countSuffix": "개"
   },
   "error": {
     "title": "문제가 발생했습니다!",
