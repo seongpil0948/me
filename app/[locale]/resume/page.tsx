@@ -107,9 +107,12 @@ export default async function ResumePage({
                   </div>
                 </div>
                 <Image
+                  priority
                   alt={nameByLocale}
                   height={150}
+                  loading="eager"
                   src="/me/face.jpg"
+                  style={{ height: "auto" }}
                   width={150}
                 />
               </div>
