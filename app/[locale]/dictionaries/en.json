@@ -7,7 +7,7 @@
   "hero": {
     "greeting": "Hello",
     "title": "Platform Lead Engineer",
-    "description": "Platform engineer focused on large-scale distributed systems and AI platform operations (7 years).\n\nModernized Docker-based on-prem legacy systems during IDC relocation into EKS, on-prem multi-cluster Kubernetes, ECS, and long-term data platforms. Reduced detection time by 99%, deployment time by 90%, and built 10-year searchable retention.\n\nCurrently operating environments handling 2B traces, 15B metrics, 250M logs per month, 20TB+ data lake workloads, and Bedrock-based multi-agent services."
+    "description": "Platform engineer focused on large-scale distributed systems and AI platform operations (7 years).\n\nModernized Docker-based on-prem legacy systems during IDC relocation into EKS, on-prem multi-cluster Kubernetes, ECS, and long-term data platforms. Reduced detection time by 99%, deployment time by 90%, and built 10-year searchable retention.\n\nCurrently operating environments handling 2B traces, 15B metrics, 250M logs per month, 20TB+ data lake workloads, and ADK + Bedrock-based multi-agent services."
   },
   "common": {
     "welcome": "Welcome",
@@ -23,7 +23,7 @@
   },
   "profile": {
     "title": "Profile",
-    "name": "Seongpil Song",
+    "name": "Seongpil Choi",
     "contactInfo": "Contact Information",
     "phone": "Phone",
     "email": "Email",
@@ -38,9 +38,9 @@
     "skills": "Technical Skills",
     "teamworkSkills": "Teamwork Skills",
     "aboutMeParagraph1": "Over 7 years, I've worked across organizations of varying scales, designing and operating scalable distributed systems spanning infrastructure to applications. Starting as a solo full-stack developer at a startup, I now serve as Platform Lead Engineer for an enterprise e-commerce platform with ₩500 billion in annual revenue.",
-    "aboutMeParagraph2": "Key achievements include reducing error detection time by 99%, deployment cycles by 90%, and infrastructure costs by 50%. I reliably operate services used by 100K daily users, managing a 20TB/month data lake and 3TB of distributed tracing data, enhancing system efficiency and reliability in high-availability environments. Through diverse projects with LG Electronics, SK Telecom, and others, I gained deep understanding of collaboration structures between product managers, designers, and developers, building the capability to design systems that realize business objectives beyond mere technical implementation.",
-    "aboutMeParagraph3": "My core tech stack centers on Kubernetes and AWS-based cloud-native architectures. On the backend, I develop services and APIs with Django, Spring Boot, and Gin, building reliable messaging and data pipelines using Kafka and Airflow. I've developed frontend applications with React, Vue.js, and Flutter, gaining full-stack experience. My deep interest in container orchestration and cloud infrastructure led me to obtain CKA (Certified Kubernetes Administrator) and LFCS (Linux Foundation Certified SysOps), followed by AWS SysOps Administrator, DevOps Professional, and Advanced Networking Specialty certifications to optimize AWS environments. Recently, I built an OpenTelemetry-based observability platform that significantly reduced error detection time, and actively contribute to multiple open source projects.",
-    "aboutMeParagraph4": "Currently serving as SRE for Daewoong Group's TheShop e-commerce platform. I operate Kafka clusters processing 20-50 million daily messages and manage 200+ Airflow DAGs while leading the microservices transformation of legacy systems. Through this process, I reduced deployment time by 90% and cut infrastructure costs in half. Moving forward, I aim to actively adopt AI-based development tools to further elevate development productivity and build a technical culture of collective growth.",
+    "aboutMeParagraph2": "Key achievements include reducing error detection time by 99%, deployment cycles by 90%, and infrastructure costs by 50%. I reliably operate services used by 100K daily users, managing 20TB+/month data lake and monthly volumes of 2B traces, 15B metrics, and 250M logs in high-availability environments. I also built a multi-agent LLM platform on EKS using ADK + Amazon Bedrock with MCP/A2A protocols, enabling workflow automation for Seller, Admin, Developer, and CS teams. Through diverse projects with LG Electronics, SK Telecom, and others, I gained deep understanding of collaboration structures between product managers, designers, and developers, building the capability to design systems that realize business objectives beyond mere technical implementation.",
+    "aboutMeParagraph3": "My core tech stack centers on Kubernetes and AWS-based cloud-native architectures. On the backend, I develop services and APIs with Django, Spring Boot, and Gin, building reliable messaging and data pipelines using Kafka and Airflow. For AI engineering, I implement multi-agent systems using Go + ADK-Go with MCP/A2A protocols, integrated with Amazon Bedrock Converse API. I've developed frontend applications with React, Vue.js, and Flutter, gaining full-stack experience. My deep interest in container orchestration and cloud infrastructure led me to obtain CKA (Certified Kubernetes Administrator) and LFCS (Linux Foundation Certified System Administrator), followed by AWS SysOps Administrator, DevOps Professional, and Advanced Networking Specialty certifications to optimize AWS environments. I built an OpenTelemetry-based observability platform and actively contribute to upstream issues.",
+    "aboutMeParagraph4": "Currently serving as Platform Lead Engineer for Daewoong Group's TheShop e-commerce platform. I self-host and manage internal CI/CD and platform infrastructure including GitLab (self-managed), Jenkins on Kubernetes, Argo CD, and Nexus, while migrating legacy on-premises platform services such as Scouter and ClickHouse to EKS and on-prem Kubernetes for modernization. I operate Kafka clusters processing 20-50M daily messages and 200+ Airflow DAGs, leading the legacy microservices migration that cut infrastructure costs by half. A multi-agent AI service powered by ADK + Amazon Bedrock is currently in production. Looking ahead, I aim to deepen contributions to cloud-native standards such as OpenTelemetry and OCI, and further sharpen expertise in Kubernetes networking.",
     "teamwork": {
       "jiraConfluence": "Jira / Confluence",
       "gitTools": "Git / GitHub / GitLab",
@@ -97,24 +97,27 @@
       ]
     },
     "theshop": {
-      "title": "TheShop E-commerce Platform — Site Reliability Engineering",
+      "title": "TheShop E-commerce Platform — Platform Engineering & SRE",
       "subtitle": "Pharmaceutical & B2B Platform | ₩500 Billion Annual Revenue",
       "content": [
         "Led SRE and platform engineering for Daewoong Group's core B2B/B2C commerce platform and internal services handling ₩500B annual transaction volume, 100K daily users, and 20TB+ monthly data",
-        "Migrated Docker-based on-prem legacy services during IDC relocation into a hybrid architecture spanning EKS, on-prem multi-cluster Kubernetes, and AWS ECS",
+        "Migrated Docker-based on-prem legacy services during IDC relocation into a hybrid architecture spanning EKS 1.34, on-prem multi-cluster Kubernetes, and AWS ECS",
+        "Built and operated a 6-node on-prem HA Kubernetes cluster using Kubespray IaC, Cilium eBPF CNI (kube-proxy replacement + Gateway API), and Rook-Ceph distributed block/file storage (CephFS RWX + RBD RWO) with AWS Cognito OIDC for multi-tenant auth",
         "Separated standby and production environments and relocated Airflow, API server, and Kafka workloads onto cluster-based platforms",
         "Modernized Oracle/Tomcat systems into Next.js and Spring Boot microservices while building an Oracle on-prem to Kafka CDC to AWS RDS migration path",
-        "Built a Bedrock, ADK, and MCP-based multi-agent LLM PWA on EKS for seller, admin, developer, and customer support workflows with mutation APIs",
+        "Managed AWS infrastructure as code with Terraform across isolated DEV and PRD accounts (S3 + DynamoDB state backends, ECR, Security Groups, Cognito); Jenkins CI/CD pipeline with destroy-guard and Slack approval to prevent accidental deletion",
+        "Built an ADK-Go + Bedrock + MCP-based multi-agent LLM PWA on EKS for seller, admin, developer, and customer support workflows with mutation APIs",
         "Standardized operations with Cilium, Argo CD, GitLab CI, APISIX, Scouter, and ClickHouse to streamline new service onboarding",
         "Improved deployment and incident response visibility with OpenTelemetry-based root-cause analysis and Grafana dashboards"
       ]
     },
     "shopAi": {
       "title": "Shop AI Multi-Agent Work Platform",
-      "subtitle": "Bedrock, ADK, and MCP-based PWA on EKS | Jan 2026 – Building (Beta)",
+      "subtitle": "ADK-Go + Bedrock + MCP-based PWA on EKS | Jan 2026 – Production",
       "content": [
-        "Designed and built a TheShop-specialized AI platform connecting internal DB, documents, and APIs to close the domain knowledge gap of general-purpose LLMs (Jan 2026 –, beta)",
-        "Deployed a multi-agent LLM PWA on EKS for Seller, Admin, Developer, and CS workflows; integrated 10+ heterogeneous agents under an Orchestrator Agent including DB, Code, Sonic API, Jira, Confluence, and S3",
+        "Designed and built a TheShop-specialized AI platform connecting internal DB, documents, and APIs to close the domain knowledge gap of general-purpose LLMs (Jan 2026 – in production)",
+        "Built in Go 1.25 using the ADK-Go framework with A2A (Agent-to-Agent) protocol for inter-agent communication; deployed a multi-agent LLM PWA on EKS for Seller, Admin, Developer, and CS workflows — Orchestrator Agent coordinates DB, Code, codesearch-mcp, Jira, Confluence, and S3 sub-agents via MCP",
+        "Memory architecture: PostgreSQL + S3 Vector Store with Amazon Titan embeddings for semantic search; Redis/ElastiCache for recommendation prompt caching",
         "Meeting Agent: uploads voice recordings and documents for AI to split speakers, extract summaries and action items, then auto-publish to Confluence sub-pages for review within 5 minutes — reducing meeting documentation time by 80%+",
         "Recommendation system: auto-suggests prompts based on user/group role and usage history for one-click task automation with minimal typing (in development)",
         "Per-role permission isolation: separate agent contexts and access for Seller, Planner, Developer, and VC groups; Bedrock API tokens issued per user to scale adoption team-wide",
@@ -264,7 +267,7 @@
   },
   "reviews": {
     "title": "Recent Achievements",
-    "yearlyPerformance": "2025 Key Technical Achievements & Contributions",
+    "yearlyPerformance": "2025-2026 Key Technical Achievements & Contributions",
     "sections": {
       "infrastructure": "Infrastructure Stability & Cost Optimization",
       "highAvailability": "High Availability Architecture Implementation",

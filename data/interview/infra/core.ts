@@ -51,6 +51,66 @@ export const infraCoreQuestions: InterviewQuestion[] = [
       "각 컴포넌트의 상호작용을 이해해야 안정적 운영이 가능합니다.",
   },
   {
+    id: 313,
+    category1: "Infrastructure",
+    category2: "Kubernetes",
+    question:
+      "온프레미스 Kubernetes 클러스터를 직접 구축·운영한 경험을 설명해주세요. Kubespray, Cilium, Rook-Ceph를 선택한 이유는 무엇인가요?",
+    answer:
+      "IDC 이전 과정에서 Docker 기반 레거시 시스템을 Kubernetes로 전환하면서, 직접 온프레미스 HA 클러스터를 처음부터 설계하고 구축했습니다.\n\n" +
+      "**클러스터 구성**\n\n" +
+      "6노드 구성입니다:\n" +
+      "- Control Plane 3대 (Stacked etcd, 로컬 nginx LB로 API 서버 이중화)\n" +
+      "- Worker 3대 (각각 Ceph OSD 로 raw 디스크 /dev/sdb 사용)\n" +
+      "- Ubuntu 24.04 LTS, containerd 2.2.1 (초기 CRI-O 1.35.0에서 2026-03-31 마이그레이션)\n\n" +
+      "**Kubespray를 선택한 이유**\n\n" +
+      "kubeadm을 직접 사용하는 방법도 있지만, 6노드 HA 클러스터를 반복 재현 가능하게 배포하려면 Ansible 기반 IaC가 필수였어요. Kubespray는 etcd 클러스터링, Control Plane HA, Worker 노드 등록을 inventory 파일 하나로 선언적으로 관리할 수 있어서 선택했습니다. 핵심 원칙은 '업스트림 Kubespray 소스는 건드리지 않고, `inventory/group_vars`에서만 오버라이드'예요. 이렇게 하면 Kubespray 버전업이 쉽죠.\n\n" +
+      "**Cilium을 CNI로 선택한 이유**\n\n" +
+      "이 선택이 가장 중요했어요. Calico, Flannel도 고려했지만 Cilium을 선택한 이유는:\n\n" +
+      "1. **kube-proxy 완전 대체**: eBPF 기반으로 kube-proxy 없이 서비스 라우팅을 처리해요. 커널 레벨에서 패킷을 처리하니 latency가 낮고, CPU 오버헤드도 줄어들죠.\n" +
+      "2. **Hubble 네트워크 가시성**: 어떤 Pod가 어디와 통신하는지 flow 단위로 관찰할 수 있어요. 온프레미스에서 네트워크 이슈 디버깅이 훨씬 쉬워졌습니다.\n" +
+      "3. **Gateway API 지원**: shop.co.kr, *.shop.co.kr, dwoong.com 도메인의 인그레스를 Gateway API로 관리해요. cert-manager + Let's Encrypt DNS-01(Route53)으로 TLS를 자동화했죠.\n" +
+      "4. **NetworkPolicy 고도화**: eBPF 기반 L7 정책으로 HTTP 메서드, 경로 단위 세밀한 제어가 가능해요.\n\n" +
+      "**Rook-Ceph를 스토리지로 선택한 이유**\n\n" +
+      "온프레미스에서 StatefulSet을 운영하려면 분산 스토리지가 필수예요. NFS는 SPOF 리스크가 있고, hostPath는 노드 고정이라 이동성이 없죠. Rook-Ceph를 선택한 이유:\n\n" +
+      "1. **3가지 StorageClass 제공**: `ceph-block`(RWO, RBD), `ceph-filesystem`(RWX, CephFS), `local-path`(노드 로컬). 워크로드 특성에 맞게 선택 가능\n" +
+      "2. **자동 복제**: Worker 3대에 걸쳐 자동으로 데이터를 복제해서, 노드 1대 장애에도 데이터 손실 없음\n" +
+      "3. **Kubernetes Native**: Operator 기반으로 Kubernetes가 직접 Ceph를 관리해요. 별도 관리 서버가 필요 없습니다\n\n" +
+      "운영 중 가장 주의해야 할 것은 OSD에 사용하는 디스크입니다. 반드시 raw 디스크(/dev/sdb)를 써야 하고, 이미 포맷된 디스크는 사용하면 안 돼요. `scripts/fix-containerd-overlayfs.sh`처럼 containerd의 overlayfs 이미지가 stale 상태가 되는 문제도 간헐적으로 발생했는데, 모니터링 스크립트를 만들어 주기적으로 체크하고 있습니다.\n\n" +
+      "**AWS Cognito OIDC 멀티 테넌트 인증**\n\n" +
+      "클러스터 API 서버에 OIDC Provider로 AWS Cognito를 연결했어요. 개발자마다 Cognito로 인증 후 kubeconfig를 발급받는 방식입니다. 스크립트로 자동화했고 (`scripts/auth/create-kubeconfig.sh`), RBAC으로 네임스페이스 단위 권한을 관리해요.\n\n" +
+      "**운영 성과**\n\n" +
+      "이 클러스터 위에서 Airflow, Kafka, GitLab, ClickHouse, APISIX Gateway 등 10개 이상의 핵심 워크로드를 운영하고 있습니다. Argo CD로 GitOps 배포를 표준화하고, Jenkins로 CI 파이프라인을 운영하면서 신규 서비스 온보딩이 크게 빨라졌어요.",
+  },
+  {
+    id: 314,
+    category1: "Infrastructure",
+    category2: "AWS",
+    question:
+      "EKS 클러스터에서 Cilium Gateway API + NLB + External DNS를 통합한 경험을 설명해주세요.",
+    answer:
+      "EKS 클러스터(theshop-eks-general, K8s 1.34, Seoul ap-northeast-2)에서 인터넷 → NLB → Cilium Gateway → HTTPRoute → 서비스 흐름을 직접 설계·운영했습니다.\n\n" +
+      "**아키텍처 결정: Cilium Gateway API vs Nginx Ingress**\n\n" +
+      "기존에는 Nginx Ingress를 사용했는데, EKS로 옮기면서 Cilium을 CNI로 채택한 김에 Cilium의 Gateway API 컨트롤러도 함께 사용하기로 결정했어요. 이유:\n\n" +
+      "1. **단일 eBPF 데이터플레인**: Cilium CNI + Cilium Gateway가 같은 eBPF 맵을 공유해서 오버헤드가 적어요\n" +
+      "2. **Hubble 통합 관측**: Gateway를 통과하는 모든 트래픽을 Hubble로 flow 단위로 관찰 가능\n" +
+      "3. **Gateway API 표준**: Ingress 대신 Kubernetes 표준 Gateway API 사용\n\n" +
+      "**NLB 연동 핵심 포인트**\n\n" +
+      "가장 많이 실수하는 부분이에요. Gateway 리소스에서 NLB 어노테이션 위치가 중요합니다:\n\n" +
+      "```yaml\nspec:\n  infrastructure:\n    annotations:  # ← 여기! metadata가 아닌 spec.infrastructure.annotations\n      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: \"instance\"  # ip 아닌 instance 필수!\n      service.beta.kubernetes.io/aws-load-balancer-type: \"external\"\n      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: \"<ACM_ARN>\"\n```\n\n" +
+      "`nlb-target-type: ip`로 설정하면 Target Group이 아예 비어서 트래픽이 안 들어와요. `instance` 타입이어야 NLB가 노드 IP로 라우팅합니다.\n\n" +
+      "**External DNS로 Route53 자동화**\n\n" +
+      "HTTPRoute에 hostname을 지정하면 External DNS가 자동으로 Route53 레코드를 생성해요:\n\n" +
+      "```yaml\nhostnames:\n  - my-app.shop.co.kr  # ← External DNS가 이 값으로 Route53 A 레코드 자동 생성\n```\n\n" +
+      "Pod Identity로 IAM 역할을 부여해서 External DNS가 Route53을 수정할 수 있게 했어요. IRSA 대신 Pod Identity를 사용한 이유는 관리가 단순하고, 노드 간 역할 공유 없이 Pod 단위 권한 격리가 가능하기 때문입니다.\n\n" +
+      "**GitOps CI/CD**\n\n" +
+      "흐름: GitLab CI → ECR push → Argo CD Image Updater 감지 → Helm Chart 태그 자동 커밋 → Argo CD Sync\n\n" +
+      "- dev: Image Updater가 ECR 변경을 감지해서 자동 배포\n" +
+      "- prd: PR 생성 후 관리자 수동 Sync 승인\n\n" +
+      "**운영 중 겪은 주요 장애**\n\n" +
+      "Spot 노드 인터럽션 이슈(2026-03-07)가 있었어요. Spot 인스턴스를 사용하던 GitLab, ClickHouse가 인터럽션으로 Pod가 종료됐는데, EBS PV의 AZ가 새 노드 AZ와 달라서 재마운트가 안 됐습니다. 이후 critical stateful 워크로드(GitLab, ClickHouse, Scouter)는 별도 On-Demand 전용 NodeGroup으로 분리하고, PV nodeAffinity와 NodeGroup AZ를 반드시 일치시키는 정책을 수립했어요.",
+  },
+  {
     id: 130,
     category1: "Infrastructure",
     category2: "AWS",
@@ -84,5 +144,50 @@ export const infraCoreQuestions: InterviewQuestion[] = [
       "운영 성과:\n\n" +
       "가용성 99.9%에서 99.95%로 개선, 월 인프라 비용 2,500달러 유지, Auto Scaling으로 트래픽 5배 증가에도 안정적 대응.\n\n" +
       "핵심 교훈은, 최신 기술이 항상 정답은 아니라는 거예요. EKS가 기술적으로 더 나아도, 팀 상황과 비즈니스 우선순위를 고려하면 ECS가 더 현명한 선택일 수 있죠. 토스 입사 후에는 이미 Kubernetes가 표준화되어 있고 DevOps 팀이 성숙해 있으니, 그때는 EKS의 진가를 발휘할 수 있을 것 같습니다.",
+  },
+  {
+    id: 315,
+    category1: "Infrastructure",
+    category2: "IaC",
+    question:
+      "Terraform으로 멀티 어카운트 AWS 인프라를 관리한 경험을 설명해주세요. S3+DynamoDB 상태 백엔드 설계와 Jenkins CI/CD 파이프라인 구축 경험이 궁금합니다.",
+    answer:
+      "**배경: 콘솔 수동 작업의 한계**\n\n" +
+      "EKS + 온프레미스 클러스터를 운영하면서 AWS 콘솔로 ECR, Security Group, Cognito를 관리하다 보니 세 가지 문제가 반복됐어요:\n" +
+      "1. '이 Security Group은 누가 언제 왜 만들었지?' — 이력 추적 불가\n" +
+      "2. PRD 환경에 DEV 설정을 실수로 적용하는 사고 위험\n" +
+      "3. 새로운 환경을 만들 때마다 콘솔 클릭 반복 — 재현성 없음\n\n" +
+      "그래서 shop-iac 프로젝트로 AWS 인프라를 Terraform IaC로 전환했습니다.\n\n" +
+      "**계정 분리 아키텍처**\n\n" +
+      "```\nDEV 계정 (008971653402)  PRD 계정 (725129837589)\n───────────────────────  ──────────────────────────\nS3: shop-iac-tfstate      S3: shop-iac-prd-tfstate\nDynamoDB: lock table      DynamoDB: lock table\nECR repos (3개)           ECR repos (3개)\n                          Security Groups\n                          Cognito User Pool\n```\n\n" +
+      "DEV와 PRD가 완전히 다른 계정이라 상태 파일도, 자격증명도 절대 공유되지 않아요. 각 환경은 `aws-accounts/dev/`, `aws-accounts/prd/`로 완전히 분리되어 있고, 각자 독립된 `terraform.tf`(S3 백엔드)와 `providers.tf`를 갖습니다.\n\n" +
+      "**S3 + DynamoDB 상태 백엔드 설계**\n\n" +
+      "상태 백엔드는 한 번만 수동으로 부트스트랩해요(`backend/dev/`, `backend/prd/`). 이후 모든 환경 리소스는 이 백엔드를 참조합니다:\n" +
+      "- S3 버킷: 버전닝 + AES256 암호화 + MFA Delete, `prevent_destroy = true` 필수\n" +
+      "- DynamoDB: PAY_PER_REQUEST 빌링, `LockID` 파티션 키, `prevent_destroy = true`\n" +
+      "- `.terraform.lock.hcl` 커밋 필수, `terraform.tfstate` 루트에 절대 커밋 불가\n\n" +
+      "**Jenkins CI/CD 파이프라인**\n\n" +
+      "파이프라인 흐름:\n" +
+      "`Checkout → Setup Terraform → Prepare AWS Profile → Init → Validate → Plan → Plan Review → [Destroy Guard] → Approval → Apply`\n\n" +
+      "핵심 안전 장치 3가지:\n\n" +
+      "1. **Destroy Guard 스테이지**: Plan 결과를 파싱해서 삭제 리소스가 1개라도 있으면 `🚨 DESTROY detected` Slack 긴급 알림 + 별도 수동 승인 요구. 표준 Approval 스테이지와 분리되어 이중 확인이 필요해요.\n\n" +
+      "2. **단일 자격증명 주입**: `TARGET_ENV` 파라미터(dev/prd)에 따라 Jenkins 자격증명 중 하나만 주입해요. `withCredentials`로 `$WORKSPACE/.aws/config`와 `$WORKSPACE/.aws/credentials`를 임시 생성하고, 빌드 종료 시 `cleanWs`로 완전 삭제. 교차 계정 오염을 원천 방지합니다.\n\n" +
+      "3. **항상 Approval 필수**: Apply 전 관리자(admin) 승인 스테이지가 항상 있어요. `⏳ Awaiting approval` Slack 알림을 보내서 팀이 인지하게 합니다. 자동 Apply는 절대 없습니다.\n\n" +
+      "**리소스 수명주기 관리**\n\n" +
+      "데이터 손실이 발생하면 복구 불가한 리소스에는 반드시 `prevent_destroy = true`를 적용해요:\n" +
+      "- S3 상태 버킷 (상태 파일 삭제 = 모든 IaC 이력 손실)\n" +
+      "- DynamoDB 락 테이블\n" +
+      "- ECR 레포 (이미지 삭제 = 롤백 불가)\n" +
+      "- Cognito User Pool (OIDC 이슈어 변경 = 클러스터 인증 전체 파괴)\n\n" +
+      "**Import 워크플로우**\n\n" +
+      "콘솔에서 이미 만들어진 리소스를 Terraform으로 가져올 때:\n" +
+      "1. `aws-accounts/<env>/NNN_*.tf`에 리소스 정의 작성\n" +
+      "2. `imports/` 디렉토리에 import 블록 작성\n" +
+      "3. `terraform plan -generate-config-out=generated.tf`로 실제 속성 확인 후 삭제\n" +
+      "4. Plan 결과가 **import only, zero create, zero destroy**인지 확인 후 apply\n" +
+      "5. `imports/` 파일은 감사 기록으로 영구 보존\n\n" +
+      "**운영 성과와 교훈**\n\n" +
+      "이 파이프라인 도입 후 '누가 이 리소스 만들었지?' 질문이 사라졌어요. 모든 변경이 git 커밋으로 추적되고, PR 리뷰를 통해 변경 의도가 문서화됩니다.\n\n" +
+      "핵심 교훈: Terraform은 '인프라를 코드로 쓰는 것'이 아니라 '감사 가능하고 재현 가능한 상태 관리'입니다. Destroy Guard 하나가 실수로 ECR 레포를 삭제하는 사고를 막을 수 있어요. 인프라 규모가 작아도 처음부터 IaC로 관리하는 게 맞다고 생각합니다.",
   },
 ];

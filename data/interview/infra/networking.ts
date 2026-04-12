@@ -2,7 +2,7 @@ import type { InterviewQuestion } from "@/types/portfolio";
 
 /**
  * Networking & CI/CD 질문들
- * ID: 15, 64
+ * ID: 15, 67, 140, 141, 161
  */
 export const infraNetworkingQuestions: InterviewQuestion[] = [
   {
@@ -46,18 +46,21 @@ export const infraNetworkingQuestions: InterviewQuestion[] = [
     category2: "CI/CD",
     question: "강력한 CI/CD 파이프라인 구축에 대한 접근 방식은 무엇인가요?",
     answer:
-      "견고한 CI/CD 파이프라인 구축에서 가장 중요한 것은 fast feedback과 안전한 배포 전략입니다.\n\n" +
-      "GitOps 워크플로우를 GitHub Actions와 ArgoCD로 구현했습니다. " +
-      "코드 변경 시 자동으로 테스트를 실행하고, 성공 시 컨테이너 이미지를 빌드하여 " +
-      "GitOps repository에 새 버전을 커밋합니다. " +
-      "ArgoCD가 변경사항을 감지하여 Kubernetes 클러스터에 자동 배포했습니다.\n\n" +
-      "Multi-stage 파이프라인으로 품질 게이트를 구현했습니다. " +
-      "Static Analysis → Unit Test → Integration Test → Security Scan → Build → Deploy 단계로 구성하여 " +
-      "각 단계 실패 시 즉시 중단하고 빠른 피드백을 제공했습니다. " +
-      "전체 파이프라인 실행 시간을 15분 이내로 유지했습니다.\n\n" +
-      "Blue-Green Deployment로 zero-downtime 배포를 구현했습니다. " +
-      "새 버전을 parallel environment에 배포하고 health check 통과 후 " +
-      "traffic을 점진적으로 전환했습니다. " +
+      "견고한 CI/CD 파이프라인에서 가장 중요한 것은 **fast feedback, 안전한 배포, 그리고 롤백 용이성**입니다. 현재 GitLab CI + Argo CD + Jenkins 조합으로 여러 환경을 운영합니다.\n\n" +
+      "**실제 운영 중인 파이프라인 (GitLab CI + Argo CD)**\n\n" +
+      "흐름: `GitLab Merge → GitLab CI 테스트/빌드 → ECR Push → Argo CD Image Updater 감지 → Helm Chart 태그 자동 커밋 → Argo CD Sync`\n\n" +
+      "- **dev 브랜치**: MR 머지 시 자동 테스트/빌드/배포. Image Updater가 ECR 태그를 감지해 Chart 레포를 자동 커밋하고 Argo CD가 동기화.\n" +
+      "- **prd 브랜치**: 자동 빌드 + ECR Push까지만 자동화. Argo CD Sync는 관리자가 수동 승인 후 실행.\n\n" +
+      "이 구조 덕분에 수동 이미지 태그 수정 과정이 사라지고, 롤백도 Argo CD에서 이전 버전 Sync 한 번으로 가능합니다.\n\n" +
+      "**Terraform 인프라 파이프라인 (Jenkins)**\n\n" +
+      "인프라 변경은 별도 Jenkins 파이프라인으로 관리합니다:\n" +
+      "`Checkout → Terraform Init → Validate → Plan → Plan Review → [Destroy Guard] → Approval → Apply`\n\n" +
+      "- Destroy Guard: Plan 결과를 파싱해서 리소스 삭제가 감지되면 Slack 긴급 알림 + 별도 승인 요구\n" +
+      "- Apply 전 항상 관리자 승인 필수 (자동 Apply 없음)\n\n" +
+      "**Multi-stage 품질 게이트**\n\n" +
+      "Static Analysis → Unit Test → Integration Test → Security Scan → Build → Deploy 단계로 구성해서 각 단계 실패 시 즉시 중단합니다. 전체 파이프라인 실행 시간은 15분 이내로 유지해요.\n\n" +
+      "**Blue-Green 및 Canary 배포**\n\n" +
+      "Argo CD Rollout을 활용해 새 버전을 parallel environment에 배포하고 health check 통과 후 traffic을 점진적으로 전환합니다. " +
       "문제 발생 시 1분 내 즉시 rollback이 가능했습니다.\n\n" +
       "Canary Release 전략으로 리스크를 최소화했습니다. " +
       "새 버전을 전체 트래픽의 5% → 25% → 50% → 100% 순으로 점진 배포하고, " +
@@ -82,5 +85,83 @@ export const infraNetworkingQuestions: InterviewQuestion[] = [
       "결과적으로 배포 빈도를 주 1회에서 일 5회로 증가시키고, " +
       "배포 실패율을 15%에서 2%로 감소시켰으며, " +
       "평균 복구 시간을 4시간에서 10분으로 단축했습니다.",
+  },
+  {
+    id: 140,
+    category1: "Infrastructure",
+    category2: "Networking",
+    question:
+      "Cilium eBPF CNI를 실무에서 운영한 경험을 설명해주세요. kube-proxy를 대체한 이유와 Hubble 관측성을 어떻게 활용했나요?",
+    answer:
+      "EKS 1.34와 온프레미스 Kubernetes 양쪽에서 Cilium을 CNI로 운영하고 있습니다. Calico, Flannel 같은 전통적인 CNI 대신 Cilium을 선택한 데는 명확한 이유가 있었어요.\n\n" +
+      "**kube-proxy를 대체한 이유**\n\n" +
+      "kube-proxy는 iptables 규칙 기반으로 서비스 라우팅을 처리합니다. 서비스 수가 늘어날수록 iptables 규칙도 선형으로 증가해서 성능 저하와 디버깅 어려움이 생기죠. Cilium은 eBPF로 커널 레벨에서 직접 패킷을 처리해서:\n\n" +
+      "- **더 낮은 latency**: 패킷이 iptables 체인을 거치지 않고 직접 처리\n" +
+      "- **더 높은 처리량**: eBPF XDP를 활용한 빠른 패킷 포워딩\n" +
+      "- **더 직관적인 디버깅**: iptables 규칙 대신 Cilium CLI와 Hubble로 flow 단위 관찰\n\n" +
+      "설정: `kube_proxy_remove: true`, `cilium_kube_proxy_replacement: true`로 Kubespray에서 완전 대체합니다.\n\n" +
+      "**Gateway API 활용**\n\n" +
+      "Nginx Ingress 대신 Cilium Gateway API 컨트롤러를 사용합니다:\n\n" +
+      "- **EKS**: Cilium Gateway → AWS NLB (ACM TLS 종단). annotations 위치가 `spec.infrastructure.annotations`에 있어야 해요. `nlb-target-type: instance` 필수.\n" +
+      "- **온프레미스**: Cilium Gateway → 호스트 네트워크 모드. `shop.co.kr`, `*.shop.co.kr`, `dwoong.com` 도메인 처리. cert-manager + Let's Encrypt DNS-01 (Route53)으로 TLS 자동화.\n\n" +
+      "**Hubble로 네트워크 가시성 확보**\n\n" +
+      "Hubble은 Cilium의 네트워크 관측성 레이어입니다. 실제 운영에서 이런 상황에 도움이 됐어요:\n\n" +
+      "1. **Pod 간 연결 문제 디버깅**: `hubble observe --namespace <ns> --follow`로 특정 네임스페이스의 flow를 실시간으로 관찰. 방화벽 정책으로 드롭된 패킷 즉시 파악.\n" +
+      "2. **서비스 메시 대체**: Hubble UI에서 서비스 간 연결 그래프와 에러율을 시각화. Istio 없이도 서비스 간 통신 패턴을 관찰할 수 있어요.\n" +
+      "3. **보안 정책 검증**: NetworkPolicy 적용 전 Hubble로 실제 트래픽 패턴을 먼저 확인하고, 필요한 정책만 추가하는 방식.\n\n" +
+      "Hubble UI는 `https://hubble.dwoong.com`으로 접근하거나, 로컬에서 `./scripts/portforward-hubble.sh`로 포트포워딩해서 사용합니다.\n\n" +
+      "**CiliumNetworkPolicy L7 정책**\n\n" +
+      "일반 Kubernetes NetworkPolicy보다 세밀한 제어가 가능합니다:\n" +
+      "- HTTP 메서드별 허용 (GET만 허용, POST는 특정 Path에만)\n" +
+      "- DNS 기반 정책 (외부 API 호출 도메인 화이트리스트)\n" +
+      "- 서비스 어카운트 기반 정책 (RBAC과 연계)\n\n" +
+      "**운영 중 겪은 주요 이슈**\n\n" +
+      "온프레미스에서 containerd를 CRI-O에서 containerd 2.2.1로 마이그레이션(2026-03-31)했을 때, Worker 노드에서 간헐적으로 stale `overlayfs@sha256:...` 이미지가 나타났어요. `scripts/fix-containerd-overlayfs.sh`를 만들어서 주기적으로 실행하도록 했습니다. Cilium과 containerd 버전 호환성을 항상 확인하는 것이 중요해요.",
+  },
+  {
+    id: 141,
+    category1: "Infrastructure",
+    category2: "Networking",
+    question:
+      "온프레미스와 AWS를 연결하는 하이브리드 네트워크 설계 경험을 설명해주세요.",
+    answer:
+      "IDC 이전 프로젝트에서 온프레미스 Kubernetes와 AWS VPC를 연결하는 하이브리드 아키텍처를 설계했습니다. 보안팀의 '고객 데이터는 Public 경유 불가' 요구사항이 핵심 제약이었어요.\n\n" +
+      "**설계안 비교**\n\n" +
+      "- **Direct Connect 10Gbps**: 가장 안정적이지만 월 500만원+, 구축 3개월 소요 → 일정 불가\n" +
+      "- **Site-to-Site VPN 1.25Gbps**: Direct Connect 대비 1/10 비용, 2주 내 구축 가능 → 선택\n\n" +
+      "**Site-to-Site VPN + 정적 라우팅 설계**\n\n" +
+      "BGP 대신 정적 라우팅을 선택한 이유: 온프레미스 네트워크팀의 BGP 운영 경험 부족 → 장애 대응 어려움 우려. 대신 Longest Prefix Match 원칙으로 라우팅 테이블을 설계했어요.\n\n" +
+      "**실운영에서 겪은 문제들**\n\n" +
+      "1. **SPOF**: 초기 1개 터널 → AZ-1a 라우터 장애로 새벽 2시 서비스 중단. Primary/Secondary VPN 터널을 각각 다른 AZ에 연결하고, 온프레미스도 2대 라우터 이중화로 해결.\n" +
+      "2. **처리량**: 스펙 1.25Gbps인데 실제 800Mbps. VPN 암호화 오버헤드 + 패킷 단편화 문제. MTU 1500→1400으로 낮추고 TCP Window Scaling 조정 후 900Mbps+ 달성.\n" +
+      "3. **Zonal 트래픽 비용**: AZ 간 통신은 $0.01/GB 발생. 각 AZ에 독립적인 NAT Gateway를 배치하고 'Keep traffic zonal' 원칙 적용.\n\n" +
+      "**Direct Connect 전환 시 BGP 운영 모델**\n\n" +
+      "트래픽 증가 단계에서는 Direct Connect를 Primary, IPsec VPN을 Backup으로 두는 Active/Standby 구성을 기본으로 보고 있습니다. 라우팅은 BGP 기반으로 관리하되, 온프레미스 라우터 장애나 DX 회선 이슈 시 VPN 경로로 자동 우회되도록 설계합니다.\n\n" +
+      "**CloudWatch 기반 BGP 헬스 모니터링**\n\n" +
+      "AWS가 제공하는 Direct Connect VIF BGP Health와 Prefix Count 메트릭을 기준으로 운영합니다. 핵심은 세 가지입니다.\n" +
+      "1. BGP session down 감지: BGP 헬스 지표가 비정상 상태로 전환되면 즉시 경보\n" +
+      "2. Prefix 급감/급증 감지: advertised/received prefix count 변동으로 라우팅 누락, route leak 조기 탐지\n" +
+      "3. 장애 전파 최소화: 알람과 라우팅 정책을 연결해 Direct Connect 장애 시 VPN 경로로 자동 전환\n\n" +
+      "이 방식은 AWS 네트워킹 블로그에서 소개된 Direct Connect VIF BGP Health/Prefix Count 운영 패턴을 기준으로 런북화해 적용하려는 설계입니다.\n\n" +
+      "**현재 온프레미스 ↔ EKS 통신 패턴**\n\n" +
+      "- 온프레미스 K8s → AWS RDS: VPN 터널 통해 Private IP 직접 통신\n" +
+      "- EKS → 온프레미스 Oracle DB (Kafka CDC): VPN 경유 Private subnet\n" +
+      "- DNS: External DNS가 Route53에 자동 등록, 온프레미스는 CoreDNS에서 `.cluster.local` 도메인 처리",
+  },
+  {
+    id: 161,
+    category1: "Infrastructure",
+    category2: "Networking",
+    question:
+      "Direct Connect, BGP, IPsec VPN을 함께 운영할 때 장애 대응과 모니터링 전략을 어떻게 설계하시나요?",
+    answer:
+      "핵심 원칙은 '전용선은 성능 경로, VPN은 복구 경로'입니다. Direct Connect를 Primary로 두고 IPsec VPN을 Backup으로 구성해, 회선 장애나 BGP 세션 다운 시 서비스가 끊기지 않도록 설계합니다.\n\n" +
+      "첫째, 라우팅 제어는 BGP 정책으로 단순하게 유지합니다. 평시에는 Direct Connect 경로를 우선 사용하고, 장애 시 VPN 경로가 자동 활성화되도록 AS Path와 Local Preference를 환경에 맞게 설계합니다.\n\n" +
+      "둘째, 모니터링은 CloudWatch의 Direct Connect VIF BGP Health와 Prefix Count 지표를 중심으로 구성합니다.\n" +
+      "- BGP Health 비정상 전환: 세션 다운 즉시 알람\n" +
+      "- Received/Advertised Prefix Count 급변: 라우트 누락, 오배포, route leak 조기 탐지\n" +
+      "- 터널 상태 + 트래픽 지표 동시 관찰: 장애 유형을 회선/라우팅/암호화 계층으로 빠르게 분리\n\n" +
+      "셋째, 운영 런북은 자동 전환 검증까지 포함해야 합니다. 분기별로 Direct Connect 장애 가정 훈련을 실행해 VPN 페일오버 시간, 핵심 서비스 지연, 복구 후 라우팅 정상화 시간을 측정합니다.\n\n" +
+      "실무적으로는 처음부터 완전 자동화보다 '알람 정확도 확보 → 자동 우회 → 사후 원인 분석' 순서로 성숙도를 올리는 게 안정적입니다. 이 접근이 하이브리드 네트워크에서 가장 현실적인 운영 모델이라고 봅니다.",
   },
 ];

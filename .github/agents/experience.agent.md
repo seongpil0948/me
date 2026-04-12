@@ -8,7 +8,6 @@ description: |
   - app/[locale]/resume/page.tsx의 하드코딩 제거 및 data 기반 자동 연동
   - ko/en/zh 사전(app/[locale]/dictionaries/*.json) 프로젝트 텍스트 동기화
   - 프로젝트 이미지 경로(projectImages) 및 대표 썸네일 선택 규칙 정리
-  - docs/경력기술서.md, docs/이력서.md와 데이터 상호 일관성 점검
 
   사용 시점(트리거):
   - "경력 수정", "프로젝트 수정", "resume 연동", "중앙 관리", "data/ 동기화"
@@ -43,9 +42,6 @@ tools: [execute/runNotebookCell, execute/testFailure, execute/getTerminalOutput,
   - app/[locale]/dictionaries/ko.json
   - app/[locale]/dictionaries/en.json
   - app/[locale]/dictionaries/zh.json
-- 문서 동기화(경력 변경 시):
-  - docs/경력기술서.md
-  - docs/이력서.md
 - 패키지 매니저는 pnpm만 사용
 - execute 도구를 사용해 타입/린트/빌드 검증을 직접 수행
 
@@ -70,7 +66,7 @@ tools: [execute/runNotebookCell, execute/testFailure, execute/getTerminalOutput,
 - 신규 하드코딩(특히 resume 프로젝트 카드 나열) 금지
 - 구조적 변경 시 타입 안전성을 깨뜨리는 단언 최소화
 - 관련 없는 영역의 리팩터링은 수행하지 않음
-- 경력 변경 시 docs/경력기술서.md, docs/이력서.md 동기화는 필수
+- docs/ 삭제됨 — 경력 변경 시 data/portfolio.ts 수정만으로 충분
 
 ## Output Expectations
 

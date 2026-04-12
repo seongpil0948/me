@@ -7,79 +7,59 @@ import type { InterviewQuestion } from "@/types/portfolio";
  *       심화/꼬임 질문에 유연하게 답변할 수 있도록 준비
  */
 export const defensiveTacticsQuestions: InterviewQuestion[] = [
-  // EKS 경험 부족 대응
+  // EKS 운영 경험 — 멀티 클러스터 (ECS+EKS+온프레미스)
   {
     id: 301,
     category1: "General",
-    category2: "Gap Defense",
+    category2: "Experience",
     question:
-      "EKS를 실무에서 운영해본 경험이 없으신 것 같은데, 대규모 컨테이너 환경을 어떻게 다룰 수 있다고 생각하시나요?",
+      "EKS, ECS, 온프레미스 Kubernetes를 동시에 운영하는 하이브리드 멀티 클러스터 환경에서 가장 어려웠던 점은 무엇인가요?",
     answer:
-      "네, 맞습니다. EKS 프로덕션 운영 경험은 없습니다. 하지만 이것이 제가 지원한 중요한 이유이기도 합니다. 세 가지 관점에서 말씀드리겠습니다.\n\n" +
-      "**1. 전이 가능한 기반 역량**\n\n" +
-      "먼저 EKS는 매니지드 Kubernetes이므로, 제 Kubernetes 실습 및 POC 경험이 직접 전이됩니다. 현재 프로덕션에서는 AWS ECS Fargate 기반 컨테이너 환경을 운영 중이며, 병렬적으로 on-premises에서 kubeadm으로 3-node 클러스터를 구축하여 POC를 진행했습니다. 1개 Control Plane과 2개 Worker Node로 HA 구성을 경험하면서 CNI 플러그인 선택(Calico vs Flannel), CRI 런타임 설정(containerd), CSI 스토리지 프로비저닝까지 직접 구축하며 Kubernetes의 내부 동작 원리를 깊이 이해하게 되었습니다. EKS는 컨트롤 플레인을 AWS가 관리해주는 것이므로, 실제 애플리케이션 배포와 운영 측면에서는 제 경험이 직접 활용 가능합니다.\n\n" +
-      "더불어 CKA 자격증을 1개월 만에 취득하면서 Kubernetes의 네트워킹, 스케줄링, 스토리지, 보안 전반을 체계적으로 학습했고, AWS Advanced Networking Specialty로 VPC 설계, Transit Gateway, PrivateLink 같은 AWS 네트워킹도 검증받았습니다. 대규모 컨테이너 환경의 본질은 **'스케일링 전략, 리소스 관리, 네트워크 정책'**인데, 이 세 가지는 모두 제 전문 영역입니다.\n\n" +
-      "**2. 기술 선택의 맥락과 학습**\n\n" +
-      "EKS를 프로덕션에 적용하지 않은 것은 무경험이 아니라 **합리적 기술 선택의 결과**였습니다. 작년 컨테이너 기반 인프라를 클라우드로 전환하는 프로젝트를 진행하면서, EKS와 Istio Ambient Mode, Gateway API를 직접 평가했습니다. 로컬 환경에 EKS 클러스터를 구성하고 Istio를 설치해 mTLS 통신과 트래픽 정책을 테스트했으며, AWS Load Balancer Controller와 ExternalDNS 통합까지 실습했습니다.\n\n" +
-      "하지만 당시 우리 회사 상황을 고려했을 때:\n" +
-      "- 인프라 인력이 저 포함 2명에 불과\n" +
-      "- 연간 예상 사용자 50만~100만 수준 (대규모 트래픽 아님)\n" +
-      "- AWS 의존도가 높은 아키텍처\n" +
-      "- 빠른 전환이 필요한 프로젝트 일정\n\n" +
-      "이런 조건에서 EKS(컨테이너 1,000개 이상 권장) + Istio의 복잡도는 과도하다고 판단했습니다. 대신 **ECS + APISIX Gateway** 조합을 선택했는데, 이것이 더 빠른 구축과 안정적 운영을 보장했습니다. 당시 Istio Ambient Mode와 Gateway API 모두 성숙도가 부족했고(v1.20 이하), EKS의 Auto Scaling이나 Spot Instance 관리 복잡도를 고려하면 ECS의 Fargate가 우리 규모에 최적이었습니다.\n\n" +
-      "이 과정에서 Kubernetes 생태계의 Service Mesh, Ingress Controller, Observability 스택을 깊이 학습했고, 기술 선택의 트레이드오프를 분석하는 능력을 키웠습니다. '무조건 최신 기술'이 아니라 **'비즈니스 요구사항에 맞는 기술'**을 선택하는 것이 DevOps의 핵심이라고 믿습니다.\n\n" +
-      "**3. 대규모 환경 경험의 귀중함**\n\n" +
-      "말씀하신 대로, EKS에서 1,000개 이상의 컨테이너를 운영하는 환경은 실무에서 접하기 매우 드물고 귀합니다. 바로 이것이 **제가 귀사에 지원한 핵심 이유**입니다. 현재 회사에서는 더 큰 규모로 성장할 여지가 제한적이고, 저는 대규모 시스템에서의 성능 최적화, 멀티 클러스터 관리, 복잡한 네트워킹 문제 해결 같은 경험을 쌓고 싶습니다.\n\n" +
-      "제가 가진 Kubernetes 기반 지식, APISIX를 통한 Gateway 운영 경험, Observability 플랫폼 구축 전문성은 귀사 팀에 합류했을 때 즉시 시너지를 낼 것입니다. 특히 제가 구축한 OpenTelemetry 분산 추적 시스템은 대규모 마이크로서비스 환경에서 더 큰 가치를 발휘할 수 있습니다. 또한 AWS 비용 최적화, 데이터 파이프라인 설계, CI/CD 자동화 같은 제 강점은 EKS 환경에서도 동일하게 적용됩니다.\n\n" +
-      "CKA를 1개월 만에, AWS DevOps Professional을 2개월 만에 취득했고, 새로운 프로토콜(SSE)을 2주 만에 프로덕션에 적용한 학습 속도를 고려하면 EKS는 금방 적응할 수 있을 것 같습니다. 오히려 **대규모 Kubernetes 환경에서 Certified Kubernetes Security Specialist (CKS) 자격증까지 취득할 수 있는 기회**가 벌써 기대됩니다. 보안과 스케일링을 함께 배우며 전문성을 한 단계 더 끌어올릴 수 있을 것 같아 설렙니다.",
+      "현재 TheShop 플랫폼에서 EKS 1.34, AWS ECS, 온프레미스 Kubernetes(6노드 Kubespray 기반) 세 가지를 동시에 운영하고 있습니다. 각 환경을 선택한 데는 이유가 있지만, 동시에 운영하면서 생긴 가장 큰 도전은 **'일관성 없는 운영 표준'**이었어요.\n\n" +
+      "**세 환경을 함께 운영하는 이유**\n\n" +
+      "- **ECS**: 초기에 팀 학습 곡선과 빠른 마이그레이션을 위해 일부 레거시 워크로드는 ECS Fargate로 이전. 서버리스라 패치 부담 없음.\n" +
+      "- **온프레미스 K8s**: IDC에 있는 Oracle DB, 사내 시스템과 가까운 레이턴시가 필요한 워크로드, 그리고 Rook-Ceph 같은 직접 스토리지 제어가 필요한 경우에 사용.\n" +
+      "- **EKS 1.34**: AI 에이전트, GitLab, ClickHouse 등 AWS 서비스(Bedrock, ECR, S3)와 깊은 통합이 필요한 워크로드. Cilium + Gateway API + Pod Identity + External DNS 조합으로 운영.\n\n" +
+      "**가장 어려웠던 문제들**\n\n" +
+      "**1. Stateful 워크로드 AZ 경계 문제 (EKS)**\n\n" +
+      "EKS EBS는 단일 AZ에 바운드됩니다. GitLab이 Spot 인스턴스 인터럽션으로 다른 AZ로 이동했을 때 PV를 재마운트하지 못해서 서비스가 중단됐어요. 해결책은 Critical Stateful 워크로드(GitLab, ClickHouse, Scouter)를 On-Demand 전용 NodeGroup으로 분리하고, PV nodeAffinity와 NodeGroup AZ를 반드시 일치시키는 정책을 수립한 것입니다.\n\n" +
+      "**2. 온프레미스 DNS와 EKS 서비스 디스커버리 통합**\n\n" +
+      "온프레미스 K8s의 CoreDNS와 EKS 내부 DNS가 충돌하지 않도록 도메인을 분리했어요. 온프레미스는 `*.cluster.local`, EKS는 External DNS로 Route53에 `*.shop.co.kr`을 자동 등록. 온프레미스 → AWS 통신은 VPN 터널을 통해 Private IP로 직접 통신하게 설계했습니다.\n\n" +
+      "**3. 배포 파이프라인 표준화**\n\n" +
+      "ECS는 CloudFormation + CodePipeline, 온프레미스는 Jenkins + kubectl, EKS는 GitLab CI + Argo CD Image Updater로 제각각이었습니다. 이를 점진적으로 GitLab CI → ECR push → Argo CD Sync 흐름으로 통합했어요. ECS 워크로드는 시간이 지나면서 EKS로 마이그레이션하는 방향입니다.\n\n" +
+      "**4. Observability 통합**\n\n" +
+      "세 환경 모두 OpenTelemetry Collector를 배포하고 같은 Grafana/Prometheus 스택에 집계해요. Service Name 태그를 환경별로 표준화해서 `service.environment=eks/onprem/ecs`로 구분합니다. EKS Hubble + 온프레미스 Cilium 모두 eBPF 기반이라 네트워크 flow 관찰이 가능하지만, UI 접근 방법이 달라서 통합 대시보드를 별도로 구성했습니다.\n\n" +
+      "**핵심 교훈**\n\n" +
+      "멀티 클러스터 운영에서 가장 중요한 건 '각 환경의 장점을 살리되, 운영 표준은 최대한 통일'하는 것입니다. 배포 방식, 네이밍 규칙, 모니터링 레이블, 시크릿 관리(모두 AWS Parameter Store)를 통일함으로써 어느 환경이든 같은 방식으로 디버깅할 수 있게 됐어요.",
   },
 
-  // Istio 경험 부족 대응 (기존 203번 확장)
+  // Service Mesh 경험 (Cilium vs Istio)
+
   {
     id: 302,
     category1: "General",
     category2: "Gap Defense",
     question:
-      "Istio를 프로덕션에서 운영한 경험이 없는데, 토스의 복잡한 Service Mesh 환경에 어떻게 기여할 수 있을까요?",
+      "Istio를 프로덕션에서 운영한 경험이 없는데, 복잡한 Service Mesh 환경에 어떻게 기여할 수 있을까요?",
     answer:
-      "솔직하게 말씀드리면, Istio를 프로덕션 환경에서 직접 운영한 경험은 없습니다. 하지만 **빠르게 학습하고 기여할 수 있는 탄탄한 기반**이 있으며, 이 Gap이 오히려 학습 의지를 입증하는 기회라고 생각합니다.\n\n" +
-      "**1. 전이 가능한 유사 기술 스택**\n\n" +
-      "현재 APISIX Gateway를 프로덕션에서 운영하고 있는데, APISIX도 **Envoy 기반**입니다. Istio의 데이터 플레인이 Envoy이므로, 트래픽 제어와 네트워킹의 본질은 동일합니다. APISIX에서 동적 라우팅, Rate Limiting, Circuit Breaker, mTLS 통신을 구현해봤고, Prometheus 메트릭 수집과 Grafana 시각화까지 통합 운영 중입니다.\n\n" +
-      "또한 Netflix Eureka 기반 서비스 디스커버리를 구축하면서, 마이크로서비스 간 통신 관리, 트래픽 분산, 헬스 체크 메커니즘을 이미 경험했습니다. 이것은 Istio의 Service Mesh 개념과 근본적으로 동일합니다. 차이점은 Istio가 Sidecar 패턴으로 더 세밀한 제어를 제공한다는 점인데, 이 부분은 학습을 통해 빠르게 보완 가능합니다.\n\n" +
-      "**2. Istio 사전 학습 및 평가 경험**\n\n" +
-      "작년 EKS 전환 프로젝트 당시, Istio를 직접 평가했습니다:\n" +
-      "- 로컬 Kubernetes에 Istio 1.20 설치\n" +
-      "- Bookinfo 샘플 앱 배포 및 트래픽 라우팅 테스트\n" +
-      "- mTLS STRICT 모드 설정 및 상호 인증 확인\n" +
-      "- VirtualService, DestinationRule로 Canary 배포 구현\n" +
-      "- Kiali로 Service Mesh 시각화\n" +
-      "- Istio Ambient Mode 검토 (당시 미성숙 판단)\n\n" +
-      "최종적으로 ECS + APISIX를 선택했지만, 이 과정에서 Istio의 **핵심 개념(mTLS, Sidecar Injection, AuthorizationPolicy, EnvoyFilter)**은 이미 학습했습니다. 토스의 SLASH 23 발표(Zero Trust with Istio)를 보면서 Proxy Protocol로 클라이언트 IP 보존하는 방법, GSLB 활용한 멀티 클러스터 트래픽 분산 같은 고급 활용 사례도 공부했습니다.\n\n" +
-      "**3. 네트워킹 및 Kubernetes 전문성**\n\n" +
-      "Istio를 빠르게 마스터할 수 있는 기반:\n" +
-      "- **CKA 자격증**: Kubernetes 네트워킹, RBAC, Security Context 전문가\n" +
-      "- **AWS Advanced Networking Specialty**: TLS/SSL, VPC, Service Discovery 전문 지식\n" +
-      "- **3년 Kubernetes 운영**: CNI, CRI, CSI 실전 경험\n" +
-      "- **kubeadm 클러스터 구축**: Control Plane 아키텍처 이해\n\n" +
-      "Istio의 복잡도는 대부분 **Kubernetes 네트워킹과 Envoy 설정**에서 나오는데, 이 두 가지는 제 전문 영역입니다.\n\n" +
-      "**4. 즉시 기여 가능한 영역**\n\n" +
-      "Istio 학습 중에도 제 전문성으로 즉시 기여 가능:\n\n" +
-      "**A. Observability 고도화**\n" +
-      "- Istio 메트릭을 OpenTelemetry로 통합 (제 전문 분야)\n" +
-      "- Istio 트레이싱을 Grafana Tempo와 연결\n" +
-      "- 더 직관적인 Service Mesh 대시보드 설계\n" +
-      "- MTTI 추가 감소 방안 제안 (현재 18시간 → 10분 경험 보유)\n\n" +
-      "**B. CI/CD 파이프라인 개선**\n" +
-      "- GitOps(ArgoCD) 파이프라인 최적화 경험\n" +
-      "- Istio 설정 배포 자동화\n" +
-      "- Canary 배포 자동화 고도화\n\n" +
-      "**C. AWS 인프라 최적화**\n" +
-      "- EKS 비용 절감 기회 발굴 (S3 Lifecycle 50% 절감 경험)\n" +
-      "- ALB/NLB 설정 최적화\n" +
-      "- VPC 네트워킹 개선 제안\n\n" +
-      "**결론:**\n\n" +
-      "Istio 프로덕션 경험은 Gap이지만, APISIX(Envoy 기반) 운영과 Kubernetes 전문성으로 본질은 이미 이해하고 있습니다. 더 중요한 것은 제 Observability 전문성, AWS 인프라 최적화 능력, 개발자 경험 개선 철학이 토스 DevOps 팀에 즉시 기여할 수 있다는 점입니다.\n\n" +
-      "CKA를 1개월 만에, OpenTelemetry를 3개월 만에 마스터한 학습 속도를 고려하면 Istio는 금방 적응할 수 있을 것 같습니다. 오히려 **토스의 대규모 Service Mesh 환경에서 Certified Kubernetes Security Specialist (CKS) 자격증까지 도전할 수 있는 기회**가 벌써 기대됩니다. Zero Trust 아키텍처와 mTLS를 실무에서 경험하며 보안 전문성까지 갖출 수 있다니, 정말 설레는 도전입니다.",
+      "Istio를 프로덕션에서 직접 운영한 경험은 없습니다. 하지만 저는 Istio와 같은 목표를 달성하는 **Cilium eBPF 기반 Service Mesh**를 프로덕션에서 운영하고 있으며, 오히려 이 분야에서 더 앞선 경험을 갖고 있다고 생각합니다.\n\n" +
+      "**Cilium vs Istio — 같은 목표, 다른 구현**\n\n" +
+      "두 기술 모두 Service Mesh의 핵심 목표(mTLS, L7 정책, 트래픽 관리, 관측성)를 제공합니다:\n\n" +
+      "| 기능 | Istio (Envoy Sidecar) | Cilium (eBPF) |\n" +
+      "|---|---|---|\n" +
+      "| mTLS | VirtualService + DestinationRule | CiliumNetworkPolicy (L7) |\n" +
+      "| 트래픽 관리 | Envoy 프록시 경유 | 커널 레벨 직접 처리 |\n" +
+      "| 관측성 | Envoy 텔레메트리 | Hubble (eBPF flow) |\n" +
+      "| 성능 | Sidecar 오버헤드 있음 | kube-proxy 대체, 낮은 latency |\n\n" +
+      "저는 EKS 1.34와 온프레미스 K8s 양쪽에서 Cilium을 CNI + Gateway API 컨트롤러로 운영합니다. Hubble을 통해 Pod-to-Pod flow를 실시간으로 관찰하고, CiliumNetworkPolicy로 L7 HTTP 메서드/경로 단위 세밀한 정책을 적용하고 있어요.\n\n" +
+      "**Istio로 전환 시 빠른 적응이 가능한 이유**\n\n" +
+      "Cilium과 Istio의 핵심 개념(L7 정책, 트래픽 라우팅, 서비스 디스커버리, TLS 종단)을 이미 실무에서 다루고 있기 때문에, Istio의 VirtualService/DestinationRule/AuthorizationPolicy 추상화는 빠르게 익힐 수 있습니다.\n\n" +
+      "또한 APISIX Gateway(Envoy 기반)를 프로덕션에서 운영하면서 Envoy 설정, Rate Limiting, Circuit Breaker, 플러그인 체인을 다뤄봤어요. Istio의 데이터 플레인도 Envoy이므로 진입장벽이 낮습니다.\n\n" +
+      "**즉시 기여 가능한 영역**\n\n" +
+      "1. **Observability**: OpenTelemetry + Grafana + Prometheus 통합 운영 경험. Cilium Hubble 데이터를 OpenTelemetry에 연계한 경험이 Istio Telemetry 통합에도 직접 적용됩니다.\n" +
+      "2. **CI/CD**: GitLab CI + Argo CD GitOps 파이프라인 운영. Istio 설정 변경도 동일한 GitOps 워크플로우로 관리 가능.\n" +
+      "3. **다중 클러스터 운영**: EKS + 온프레미스 멀티 클러스터 동시 운영 경험.\n\n" +
+      "Cilium을 eBPF로 직접 다뤄본 경험은 Istio 학습을 '처음 배우는 것'이 아니라 '유사한 문제를 다른 도구로 해결하는 것'으로 만들어줍니다.",
   },
 
   // 공통 방어 전략
@@ -342,5 +322,148 @@ export const defensiveTacticsQuestions: InterviewQuestion[] = [
       "3. **증거**: 학습 능력을 구체적 사례로 입증\n" +
       "4. **균형**: 부족한 부분 + 강한 부분 함께 제시\n" +
       "5. **자신감**: 빠르게 따라잡을 수 있다는 확신 전달",
+  },
+
+  // ─── Wipro Cloud DevOps/SRE Engineer (Harman) JD 대응 질문 ───────────────
+  {
+    id: 311,
+    category1: "General",
+    category2: "Multi-Cloud",
+    question:
+      "JD에서 AWS 외에 Azure나 GCP 경험을 요구하는데, AWS 이외의 클라우드 경험이 있나요?",
+    answer:
+      "네, GCP 경험이 있습니다. 2022-2023년 Inoutbox 스타트업에서 End-to-End 단독 개발을 담당하면서 GCP를 풀 스택으로 운영했어요.\n\n" +
+      "**GCP 사용 경험 (Inoutbox)**\n\n" +
+      "- **Firebase Hosting + Cloud Functions**: 동대문 의류 B2B/B2C 플랫폼 Frontend Hosting, Serverless API 서빙\n" +
+      "- **Firestore**: 실시간 NoSQL DB로 주문/재고 데이터 관리. 트랜잭션과 리얼타임 리스너 활용\n" +
+      "- **Cloud Storage**: 상품 이미지, 영수증 PDF 저장\n" +
+      "- **GCP Cloud Logging + Slack 웹훅**: 프로덕션 장애 시 Slack 실시간 알림 시스템 구축\n" +
+      "- **Firebase FCM**: 모바일 Push 알림 (사입 앱, 캠핑 앱)\n" +
+      "- **GCP IAM**: 서비스 어카운트 권한 관리\n\n" +
+      "**AWS vs GCP 비교 관점**\n\n" +
+      "GCP에서 인상 깊었던 점은 Firebase의 리얼타임 동기화와 서버리스 Cold Start 속도였어요. AWS Lambda에 비해 Firebase Functions가 더 빨랐습니다. 반면 엔터프라이즈 거버넌스(IAM 세밀도, VPC 설계, EKS 수준의 Kubernetes 관리)는 AWS가 훨씬 강력하다고 느꼈어요.\n\n" +
+      "현재 AWS가 주력이지만, GCP의 BigQuery나 Pub/Sub 같은 서비스는 항상 관심을 갖고 동향을 파악하고 있습니다. 멀티 클라우드 환경에서 핵심은 특정 클라우드에 종속되지 않는 추상화 계층(Kubernetes, Terraform, OpenTelemetry)인데, 이 부분은 이미 실무에서 깊이 다루고 있어요.",
+  },
+  {
+    id: 312,
+    category1: "Infrastructure",
+    category2: "Automation",
+    question:
+      "인프라 자동화 스크립트를 개발한 경험을 구체적으로 설명해주세요. 보안과 비용 최적화 자동화 경험이 있나요?",
+    answer:
+      "자동화 스크립트 개발은 SRE 업무의 핵심이에요. 저는 Python, Bash, Go로 다양한 자동화를 구현했습니다.\n\n" +
+      "**보안 자동화**\n\n" +
+      "1. **시크릿 관리 자동화**: 소스코드에 하드코딩된 DB 패스워드, API 키를 AWS Secrets Manager와 Parameter Store로 이관하는 Python 스크립트를 작성했어요. 기존 애플리케이션 코드를 파싱해서 시크릿 후보를 추출하고, 자동으로 Parameter Store에 등록하는 방식이었습니다.\n\n" +
+      "2. **ECR 이미지 취약점 스캔 자동화**: GitLab CI 파이프라인에 ECR 이미지 스캔 결과를 파싱하는 단계를 추가했어요. Critical/High 취약점이 발견되면 자동으로 빌드를 실패시키고 Slack 알림을 보냅니다.\n\n" +
+      "3. **Kubernetes RBAC 자동화**: 온프레미스 클러스터에서 개발자 kubeconfig 발급을 `scripts/auth/create-kubeconfig.sh`로 자동화했어요. AWS Cognito 토큰 기반으로 인증하고, 네임스페이스별 권한을 자동 설정합니다.\n\n" +
+      "**비용 최적화 자동화**\n\n" +
+      "1. **S3 Lifecycle 자동화**: CloudWatch + Lambda로 실제 접근 패턴을 분석해서 30일 후 Standard-IA, 90일 후 Glacier, 7년 후 Deep Archive로 자동 이동. 월 비용 $5K → $2.5K (50% 절감).\n\n" +
+      "2. **Terraform Destroy Guard**: Jenkins 파이프라인에서 `terraform plan` 결과를 파싱해서 삭제 리소스가 감지되면 Slack 긴급 알림 + 추가 승인을 요구하는 Bash 스크립트.\n\n" +
+      "3. **EKS Spot 인터럽션 핸들러**: Spot 인터럽션 시 Pod를 graceful하게 종료하고 재스케줄링하는 스크립트. On-Demand NodeGroup으로 자동 fallback.\n\n" +
+      "4. **개발 환경 자동 종료**: 업무시간 외(18시-9시) 개발/테스트 ECS 서비스를 자동으로 중지하고, 월요일 오전에 자동 시작. Lambda + EventBridge로 구현.\n\n" +
+      "**Airflow DAG 자동화**\n\n" +
+      "100+ DAG를 수동으로 관리하는 대신 DAG Factory 패턴을 도입했어요. YAML 설정에서 DAG를 동적 생성해서 코드 중복을 90% 제거하고, 새 서비스 추가 시 YAML 한 줄만 추가하면 됩니다.\n\n" +
+      "자동화의 핵심 원칙은 **'반복되면 자동화하고, 실수 가능하면 시스템이 막는다'**예요.",
+  },
+  {
+    id: 307,
+    category1: "Infrastructure",
+    category2: "Monitoring",
+    question:
+      "DataDog 사용 경험이 없는데, 모니터링 스택을 어떻게 운영했나요? Grafana/Prometheus로 DataDog을 대체할 수 있나요?",
+    answer:
+      "DataDog을 직접 사용한 경험은 없지만, Grafana + Prometheus + OpenTelemetry 스택으로 DataDog이 제공하는 기능 대부분을 직접 구현했어요.\n\n" +
+      "**현재 운영 중인 모니터링 스택**\n\n" +
+      "```\nOTLP(gRPC/HTTP) → OpenTelemetry Collector → ┬ Prometheus (Metric)\n                                              ├ Loki (Log)\n                                              ├ Tempo (Trace)\n                                              └ ClickHouse (Long-term)\n                                              ↓\n                                           Grafana (Visualization)\n```\n\n" +
+      "**DataDog 기능과 우리 스택 대응**\n\n" +
+      "- **APM (Application Performance Monitoring)**: Tempo + Grafana Explore로 분산 추적. Trace ID 기반으로 Root Cause를 10분 내 파악 (MTTD 99% 단축).\n" +
+      "- **Infrastructure Monitoring**: Prometheus + Node Exporter + cAdvisor로 CPU/메모리/디스크/네트워크 메트릭 수집. Grafana 대시보드로 시각화.\n" +
+      "- **Log Management**: Loki + Grafana Explore로 로그 검색. trace_id 기반으로 로그-트레이스 상관관계 분석.\n" +
+      "- **Alerting**: Grafana AlertManager + Slack 웹훅으로 P0/P1/P2 단계별 알림.\n" +
+      "- **Business Analytics**: Grafana + AWS Athena 쿼리로 MAU/DAU/Conversion Rate 셀프서비스 대시보드.\n" +
+      "- **FinOps**: Grafana로 LLM 토큰 비용, Prompt Cache 효율, 에이전트 실행 비용 시각화.\n\n" +
+      "**DataDog 대비 장단점**\n\n" +
+      "장점:\n" +
+      "- 비용: DataDog $2,000/월 → 셀프 호스팅 $200/월 (90% 절감)\n" +
+      "- 데이터 소유권: 고객 데이터가 외부로 나가지 않음\n" +
+      "- 커스터마이징: 비즈니스 특화 메트릭 자유롭게 추가 가능\n\n" +
+      "단점:\n" +
+      "- 초기 셋업 복잡도 높음\n" +
+      "- DataDog의 AI 이상 감지(Watchdog) 같은 기능은 없음\n" +
+      "- 인프라 운영 부담 (Loki, Prometheus, Tempo 모두 직접 관리)\n\n" +
+      "DataDog은 빠른 시작이 필요하거나 팀 규모가 작을 때 좋고, 우리 스택은 규모가 커질수록 비용 이점이 커요. 어떤 모니터링 스택이든 핵심은 '장애 발생 시 Root Cause를 얼마나 빨리 찾느냐'인데, 저는 이 부분에서 검증된 경험이 있습니다.",
+  },
+  {
+    id: 308,
+    category1: "Infrastructure",
+    category2: "Production Troubleshooting",
+    question:
+      "프로덕션 환경에서 발생한 가장 복잡한 장애를 어떻게 해결했나요? 근본 원인 분석 프로세스를 설명해주세요.",
+    answer:
+      "가장 기억에 남는 장애는 EKS Spot 인스턴스 인터럽션으로 인한 GitLab 장애였어요 (2026-03-07).\n\n" +
+      "**장애 상황**\n\n" +
+      "새벽 3시에 GitLab이 응답하지 않는다는 알림이 왔습니다. 확인해보니 GitLab Pod가 Pending 상태에서 멈춰 있었어요. 처음엔 단순한 Pod 재시작 문제로 봤지만, 아무리 기다려도 Running이 되지 않았습니다.\n\n" +
+      "**진단 과정**\n\n" +
+      "1. `kubectl describe pod -n gitlab gitlab-xxx`를 실행하니 Events에서 힌트를 찾았어요:\n" +
+      "`Warning: FailedAttachVolume: Multi-Attach error for volume \"pvc-xxx\" Volume is already exclusively attached to one node`\n\n" +
+      "2. EBS PV는 단일 AZ에 바운드됩니다. Spot 인스턴스가 AZ-1a에서 인터럽션되면서 Pod가 AZ-1b로 이동했는데, PV는 AZ-1a에 남아있는 상황이었어요.\n\n" +
+      "3. `kubectl get nodes -o custom-columns=NAME:.metadata.name,AZ:.metadata.labels.topology.kubernetes.io/zone`으로 확인하니 GitLab NodeGroup의 Spot 인스턴스가 AZ-1b로 이동해 있었습니다.\n\n" +
+      "**즉시 조치**\n\n" +
+      "- AZ-1a에 임시 On-Demand 노드를 추가해서 GitLab Pod를 강제로 AZ-1a로 재스케줄\n" +
+      "- `kubectl patch pod -p '...' --type merge`로 nodeAffinity 강제 지정\n" +
+      "- 15분 만에 서비스 복구\n\n" +
+      "**근본 원인 및 구조적 개선**\n\n" +
+      "근본 원인: Critical Stateful 워크로드(GitLab, ClickHouse, Scouter)를 Spot NodeGroup에서 운영한 것.\n\n" +
+      "개선 조치:\n" +
+      "1. **On-Demand 전용 NodeGroup 생성**: `eks.amazonaws.com/capacityType=ON_DEMAND` 전용 ng4-critical 노드그룹 추가\n" +
+      "2. **nodeAffinity 필수화**: PV nodeAffinity와 Pod nodeAffinity를 항상 동일 AZ로 고정\n" +
+      "3. **문서화**: `docs/14-pv-node-affinity-strategy.md`에 교훈 기록\n" +
+      "4. **모니터링 추가**: `kubectl get pv`로 AZ 분포를 주기적으로 확인하는 스크립트 추가\n\n" +
+      "이 경험에서 배운 교훈: **비용 절감(Spot) vs 안정성(On-Demand)은 워크로드 특성에 따라 결정해야 한다.** Stateless는 Spot, Stateful은 On-Demand가 원칙이에요.",
+  },
+  {
+    id: 309,
+    category1: "Backend",
+    category2: "Java/Spring",
+    question:
+      "Java/Spring 환경에서 프로덕션 장애를 해결한 경험을 설명해주세요. 특히 메모리 누수나 성능 이슈를 어떻게 진단했나요?",
+    answer:
+      "TheShop에서 Spring Boot 마이크로서비스를 운영하면서 여러 Java 관련 이슈를 해결했어요. 가장 인상 깊었던 건 메모리 누수로 인한 OOM(OutOfMemoryError) 장애였습니다.\n\n" +
+      "**상황: 결제 서비스 OOM 장애**\n\n" +
+      "결제 서비스 Pod가 하루에 2-3번 자동 재시작되고 있었어요. Kubernetes liveness probe 실패로 Pod가 재시작되는 건데, 근본 원인을 찾아야 했죠.\n\n" +
+      "**진단 과정**\n\n" +
+      "1. **메트릭 분석**: Grafana에서 JVM Heap 사용량을 보니 서서히 증가하다가 OOM으로 죽는 패턴이 명확했습니다. GC가 실행되어도 메모리가 줄지 않는 전형적인 메모리 누수.\n\n" +
+      "2. **Heap Dump 분석**: `kubectl exec -it <pod> -- /bin/sh -c 'kill -3 1'`로 Thread Dump를 확인하고, 문제가 지속되면 `-XX:+HeapDumpOnOutOfMemoryError` JVM 옵션으로 Heap Dump 생성.\n\n" +
+      "3. **Eclipse MAT로 분석**: Heap Dump를 Eclipse Memory Analyzer로 분석하니 `com.zaxxer.hikari.HikariDataSource`가 메모리의 60%를 점유하고 있었어요.\n\n" +
+      "4. **근본 원인 발견**: Connection Pool에서 Connection이 반환되지 않고 누적되고 있었습니다. 원인은 특정 배치 작업에서 DB Connection을 획득하고 예외 발생 시 `finally` 블록에서 반환하지 않는 코드였어요.\n\n" +
+      "```java\n// 문제 코드 (단순화)\npublic void processBatch() {\n    Connection conn = dataSource.getConnection(); // 획득\n    try {\n        // 처리 중 Exception 발생\n        conn.close(); // 예외 발생 시 실행 안됨!\n    } catch (Exception e) {\n        log.error(\"Error\", e);\n        // return 후 finally 없어서 Connection 반환 안됨\n    }\n}\n\n// 수정 코드\ntry (Connection conn = dataSource.getConnection()) { // try-with-resources\n    // 처리 로직\n} catch (Exception e) {\n    log.error(\"Error\", e);\n}\n```\n\n" +
+      "**OpenTelemetry와 연동**\n\n" +
+      "이후 Spring Boot Actuator + Micrometer + OpenTelemetry Exporter를 연결해서 JVM 메트릭을 실시간으로 Grafana에서 모니터링하게 됐어요. `jvm.memory.used`, `hikaricp.connections.active`, `hikaricp.connections.pending` 메트릭으로 Connection Pool 상태를 실시간 추적합니다.\n\n" +
+      "**현재 예방 체계**\n\n" +
+      "- Grafana에서 `hikaricp.connections.pending > 5`면 Slack 알림\n" +
+      "- 코드 리뷰에서 DB/Resource 사용 시 `try-with-resources` 필수 체크\n" +
+      "- OOM 발생 시 자동 Heap Dump + S3 업로드 스크립트",
+  },
+  {
+    id: 310,
+    category1: "General",
+    category2: "Global Team",
+    question:
+      "글로벌 팀에서 일한 경험이 있나요? 영어로 기술 커뮤니케이션을 어떻게 하나요?",
+    answer:
+      "직접 글로벌 팀에서 근무한 경험은 없지만, 영어 기술 커뮤니케이션에 대한 준비는 충분히 되어 있습니다.\n\n" +
+      "**영어 역량 현황**\n\n" +
+      "- AWS, Kubernetes, OpenTelemetry 공식 문서를 번역 없이 원문으로 읽고 적용해요. AWS re:Invent 강연 영상도 자막 없이 청취합니다.\n" +
+      "- OpenTelemetry 오픈소스에 PR(#40123)과 Issue를 영어로 작성해 머지했어요.\n" +
+      "- 이 포트폴리오 자체가 영어/한국어/중국어 3개 언어로 작성되었습니다.\n\n" +
+      "**기술 영어 활용 경험**\n\n" +
+      "- Abacus에서 LG 프로젝트 프로젝트 리더로 일할 때 영어로 된 기술 스펙 문서를 작성하고 리뷰했어요.\n" +
+      "- Jira/Confluence로 협업할 때 영어 티켓 작성 및 기술 토론 경험 있습니다.\n" +
+      "- GitHub PR 설명과 코드 리뷰를 영어로 작성하는 것에 익숙합니다.\n\n" +
+      "**글로벌 팀 협업을 위한 강점**\n\n" +
+      "- 비동기 커뮤니케이션 선호: Jira 티켓에 컨텍스트를 상세히 기록하는 습관이 있어 시간대가 다른 팀원에게 유리\n" +
+      "- 문서화 강점: Confluence에 아키텍처 결정 사유를 문서화하는 것이 일상화되어 있음\n" +
+      "- OTel 오픈소스 기여로 영어 기술 토론에 대한 자신감 보유\n\n" +
+      "현재 영어 말하기는 더 연습이 필요하지만, 기술 문서 읽기/쓰기와 이메일/Slack 커뮤니케이션은 즉시 업무 수행이 가능한 수준입니다. 글로벌 팀 합류 후 6개월 내 실무 회의 참여를 목표로 영어 스피킹을 적극 개선할 것입니다.",
   },
 ];

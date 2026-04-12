@@ -7,7 +7,7 @@
   "hero": {
     "greeting": "你好",
     "title": "Platform Lead Engineer",
-    "description": "同时负责大规模分布式系统与 AI 平台运营的平台工程师（7年）。\n\n在 IDC 迁移过程中，将基于 Docker 的 on-prem 遗留系统现代化为 EKS、on-prem 多 Kubernetes 集群、ECS 与长期数据平台。错误检测时间缩短 99%，部署时间缩短 90%，并构建 10 年可检索数据环境。\n\n当前负责运营每月 20 亿 Trace、150 亿 Metric、2.5 亿 Log、20TB 以上数据湖工作负载，以及基于 Bedrock 的多代理服务。"
+    "description": "同时负责大规模分布式系统与 AI 平台运营的平台工程师（7年）。\n\n在 IDC 迁移过程中，将基于 Docker 的 on-prem 遗留系统现代化为 EKS、on-prem 多 Kubernetes 集群、ECS 与长期数据平台。错误检测时间缩短 99%，部署时间缩短 90%，并构建 10 年可检索数据环境。\n\n当前负责运营每月 20 亿 Trace、150 亿 Metric、2.5 亿 Log、20TB 以上数据湖工作负载，以及基于 ADK + Bedrock 的多代理服务。"
   },
   "common": {
     "welcome": "欢迎",
@@ -23,7 +23,7 @@
   },
   "profile": {
     "title": "个人简介",
-    "name": "宋成必",
+    "name": "崔成必",
     "contactInfo": "联系信息",
     "phone": "电话",
     "email": "邮箱",
@@ -37,10 +37,10 @@
     "aboutMe": "自我介绍",
     "skills": "技术栈",
     "teamworkSkills": "团队合作技能",
-    "aboutMeParagraph1": "6年来在不同规模的组织中，负责从基础设施到应用的全栈系统，设计和运营可扩展的分布式系统。从创业公司的单人全栈开发者起步，现在担任年营业额5000亿韩元企业电商平台的平台负责工程师。",
-    "aboutMeParagraph2": "主要成果包括：错误检测时间缩短99%、部署周期缩短90%、基础设施成本降低50%。稳定运营日活10万用户的服务，管理月20TB规模的数据湖和3TB分布式追踪数据，在高可用环境中提升了系统效率和可靠性。通过参与LG电子、SK电信等多样化项目，深入理解了产品经理、设计师和开发者之间的协作结构，培养了超越单纯技术实现、设计实现业务目标系统的能力。",
-    "aboutMeParagraph3": "核心技术栈以Kubernetes和AWS为基础的云原生架构为中心。后端使用Django、Spring Boot、Gin开发服务和API，利用Kafka和Airflow构建稳定的消息传递和数据管道。前端使用React、Vue.js、Flutter开发，积累了全栈经验。出于对容器编排和云基础设施的深厚兴趣，获得了CKA（Certified Kubernetes Administrator）和LFCS（Linux Foundation Certified SysOps）认证，并为优化AWS环境取得了AWS SysOps Administrator、DevOps Professional和Advanced Networking Specialty认证。最近构建了基于OpenTelemetry的可观察性平台，大幅缩短了错误检测时间，并积极为多个开源项目做贡献。",
-    "aboutMeParagraph4": "目前担任大雄集团TheShop电商平台的SRE。运营处理日2000-5000万条消息的Kafka集群和200+个Airflow DAG，主导了遗留系统向微服务的转型。在此过程中，将部署时间减少了90%，基础设施成本减半。今后计划积极采用基于AI的开发工具，进一步提升开发生产力，构建共同成长的技术文化。",
+    "aboutMeParagraph1": "7年来在不同规模的组织中，负责从基础设施到应用的全栈系统，设计和运营可扩展的分布式系统。从创业公司的单人全栈开发者起步，现在担任年营业额5000亿韩元企业电商平台的平台负责工程师。",
+    "aboutMeParagraph2": "主要成果包括：错误检测时间缩短99%、部署周期缩短90%、基础设施成本降低50%。稳定运营日活10万用户的服务，管理月20TB以上数据湖，每月处理20亿条Trace、150亿条Metric、2.5亿条Log，在高可用环境中提升了系统效率和可靠性。基于ADK + Amazon Bedrock在EKS上构建了多智能体LLM平台，通过MCP/A2A协议实现了Seller、Admin、Developer、CS团队的工作流自动化。通过参与LG电子、SK电信等多样化项目，深入理解了产品经理、设计师和开发者之间的协作结构，培养了超越单纯技术实现、设计实现业务目标系统的能力。",
+    "aboutMeParagraph3": "核心技术栈以Kubernetes和AWS为基础的云原生架构为中心。后端使用Django、Spring Boot、Gin开发服务和API，利用Kafka和Airflow构建稳定的消息传递和数据管道。AI工程方面，使用Go + ADK-Go结合MCP/A2A协议实现多智能体系统，并集成Amazon Bedrock Converse API。前端使用React、Vue.js、Flutter开发，积累了全栈经验。出于对容器编排和云基础设施的深厚兴趣，获得了CKA（Certified Kubernetes Administrator）和LFCS（Linux Foundation Certified System Administrator）认证，并为优化AWS环境取得了SysOps Administrator、DevOps Professional和Advanced Networking Specialty认证。构建了基于OpenTelemetry的可观察性平台，并积极参与upstream议题贡献。",
+    "aboutMeParagraph4": "目前担任大雄集团TheShop电商平台的Platform Lead Engineer。自建并管理GitLab（自托管）、Kubernetes上的Jenkins、Argo CD、Nexus等企业内部CI/CD及平台基础设施，并将Scouter、ClickHouse等本地遗留平台服务迁移至EKS及on-prem Kubernetes进行现代化升级。运营处理日2000-5000万条消息的Kafka集群和200+个Airflow DAG，主导遗留系统微服务化转型，将基础设施成本降低一半。基于ADK + Amazon Bedrock的多智能体AI服务目前已正式上线运营。今后计划深度参与OpenTelemetry、OCI等云原生标准化生态建设，并持续深化Kubernetes网络领域的专业能力。",
     "teamwork": {
       "jiraConfluence": "Jira / Confluence",
       "gitTools": "Git / GitHub / GitLab",
@@ -97,24 +97,27 @@
       ]
     },
     "theshop": {
-      "title": "🏥 TheShop医药/B2B电商平台SRE",
+      "title": "🏥 TheShop医药/B2B电商平台 — 平台工程与SRE",
       "subtitle": "混合架构运营 · 年交易额5000亿韩元",
       "content": [
         "负责大熊集团核心 B2B/B2C 电商平台与内部平台的 SRE / Platform 工作，支撑年交易额 5000 亿韩元、日均 10 万用户与月 20TB 以上数据",
-        "在 IDC 迁移过程中，将基于 Docker 的 on-prem 遗留系统升级为 EKS、on-prem 多 Kubernetes 集群与 AWS ECS 的混合架构",
+        "在 IDC 迁移过程中，将基于 Docker 的 on-prem 遗留系统升级为 EKS 1.34、on-prem 多 Kubernetes 集群与 AWS ECS 的混合架构",
+        "基于 Kubespray IaC + Cilium eBPF CNI（替代 kube-proxy + Gateway API）+ Rook-Ceph（CephFS RWX + RBD RWO）+ AWS Cognito OIDC，设计并运营 6 节点 on-prem HA Kubernetes 集群",
         "设计 Standby / Production 分离体系，并将 Airflow、API Server、Kafka 工作负载迁移到集群平台",
         "将 Oracle/Tomcat 现代化为 Next.js 与 Spring Boot 微服务，并建立 Oracle On-Premise → Kafka CDC → AWS RDS 迁移路径",
-        "在 EKS 上构建基于 Bedrock、ADK、MCP 的多代理 LLM PWA，服务 Seller、Admin、Developer、CS 团队并接入变更数据 API",
+        "使用 Terraform 跨 DEV/PRD 独立账户管理 AWS 基础设施（S3+DynamoDB 状态后端、ECR、Security Group、Cognito），Jenkins CI/CD 流水线集成 Destroy Guard 与 Slack 审批",
+        "在 EKS 上构建基于 ADK-Go + Bedrock + MCP 的多代理 LLM PWA，服务 Seller、Admin、Developer、CS 团队并接入变更数据 API",
         "以 Cilium、Argo CD、GitLab CI、APISIX、Scouter、ClickHouse 为核心标准化运维与新服务接入流程",
         "通过 OpenTelemetry Root Cause 分析与 Grafana 仪表板提升部署与故障响应可见性"
       ]
     },
     "shopAi": {
       "title": "Shop AI 多代理工作平台",
-      "subtitle": "基于 Bedrock、ADK、MCP 的 EKS PWA | 2026.01 ~ 建设中(Beta)",
+      "subtitle": "基于 ADK-Go + Bedrock + MCP 的 EKS PWA | 2026.01 ~ 正式运营",
       "content": [
-        "为填补通用 LLM 的领域知识空白，构建连接更商内部 DB、文档与 API 的专属 AI 平台（2026.01 ~，beta）",
-        "在 EKS 上部署面向 Seller、Admin、Developer、CS 的多代理 LLM PWA；Orchestrator Agent 下集成 DB、Code、Sonic API、Jira、Confluence、S3 等 10 个以上异构代理",
+        "为填补通用 LLM 的领域知识空白，构建连接更商内部 DB、文档与 API 的专属 AI 平台（2026.01 ~ 正式运营）",
+        "采用 Go 1.25 + ADK-Go 框架开发，使用 A2A（Agent-to-Agent）协议实现代理间通信；在 EKS 上部署面向 Seller、Admin、Developer、CS 的多代理 LLM PWA — Orchestrator Agent 通过 MCP 协调 DB、Code、codesearch-mcp、Jira、Confluence、S3 等子代理",
+        "记忆架构：PostgreSQL + S3 Vector Store + Amazon Titan 嵌入向量语义检索；Redis/ElastiCache 缓存推荐提示词",
         "Meeting Agent：上传会议录音与文档后，AI 自动分离发言人、提取摘要与 Action Item，并在 5 分钟内自动发布到 Confluence 子页面，会议记录时间减少 80% 以上",
         "推荐系统：基于用户/组别角色与使用历史自动推荐提示词，实现一键任务自动化，最大程度减少手动输入（开发中）",
         "角色权限隔离：为 Seller、规划、开发、VC 等岗位分配独立代理上下文与权限；按用户发放 Bedrock API Token，推动全团队规模化采用",
@@ -136,17 +139,15 @@
       ]
     },
     "gateway": {
-      "title": "🏗️ 网关和流量管理",
-      "subtitle": "IDSTrust网关集成",
+      "title": "🏗️ API网关与流量管理基础设施",
+      "subtitle": "企业级网关集成",
       "content": [
-        "集成shop.co.kr和connect.shop.co.kr IDSTrust网关",
-        "通过Connect API集成进行高效流量管理",
-        "优化Platform和BO服务流量运营",
-        "构建基于APISIX的API网关并集成Eureka服务发现",
-        "通过Spring Cloud Eureka和APISIX集成实现动态服务路由和负载均衡",
-        "对所有流量应用RBAC",
-        "配置高可用（HA）环境",
-        "在APISIX POC中成功集成Kafka和Airflow"
+        "整合跨多域端点的企业级网关基础设施，统一认证与授权层",
+        "以 Spring Cloud Eureka 服务发现为基础设计 APISIX API 网关架构，实现动态微服务路由与负载均衡",
+        "通过集中策略管理对所有 API 流量实施全面的基于角色的访问控制（RBAC）",
+        "配置带有自动故障转移与健康监控的高可用网关集群",
+        "优化 Platform 与后台服务流量模式，平均 API 延迟降低 40%",
+        "通过概念验证实现验证 Kafka 流处理与 Airflow 工作流集成"
       ]
     },
     "airflow": {
@@ -268,7 +269,7 @@
   },
   "reviews": {
     "title": "最新成就",
-    "yearlyPerformance": "2025年主要技术成就和贡献",
+    "yearlyPerformance": "2025-2026年主要技术成就和贡献",
     "sections": {
       "infrastructure": "基础设施稳定性和成本优化",
       "highAvailability": "高可用性架构实现",

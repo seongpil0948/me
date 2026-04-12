@@ -2,7 +2,8 @@ import type { InterviewQuestion } from "@/types/portfolio";
 
 /**
  * Observability & Monitoring 질문들
- * ID: 11, 70, 71, 62, 72, 73, 74
+ * ID: 11, 70, 71, 62, 72, 73, 74, 134, 135, 144, 145, 146, 139,
+ *     150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160
  */
 export const infraObservabilityQuestions: InterviewQuestion[] = [
   {
@@ -299,7 +300,7 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "핵심 교훈은, Observability 인프라도 관측이 필요하다는 것입니다. Collector 자체의 메트릭(처리량, drop rate, latency)을 Prometheus로 모니터링하고, 문제가 생기면 즉시 알림이 오도록 했습니다. 관측성을 제공하는 시스템이 blind spot이 되면 안 되니까요.",
   },
   {
-    id: 140,
+    id: 144,
     category1: "Infrastructure",
     category2: "Synthetic Monitoring",
     question:
@@ -359,7 +360,7 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "셋째, Observability 표준(OpenTelemetry)을 지키면 나중에 도구를 바꾸기 쉽습니다. Jaeger에서 Tempo로, Prometheus에서 InfluxDB로 전환해도 에이전트 코드는 변경 없이 Collector 설정만 바꾸면 됐어요. 이게 표준의 힘입니다.",
   },
   {
-    id: 141,
+    id: 145,
     category1: "Infrastructure",
     category2: "High Availability",
     question:
@@ -380,7 +381,7 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "핵심 교훈은, AWS Managed 서비스를 활용하면 운영 부담을 크게 줄이면서도 엔터프라이즈급 가용성을 달성할 수 있다는 것입니다. Auto Scaling과 Multi-AZ 배포는 수동으로 구현하기 어려운 복원력을 제공했고, CloudWatch 통합으로 메타 모니터링까지 자동화할 수 있었습니다. 비용은 월 300달러 정도였지만, 엔지니어 시간 절약과 안정성을 고려하면 충분히 가치가 있었어요.",
   },
   {
-    id: 142,
+    id: 146,
     category1: "Infrastructure",
     category2: "API Gateway",
     question:
@@ -523,5 +524,397 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "둘째, 3노드 클러스터면 대부분의 경우 충분합니다. 5노드는 더 높은 가용성이 필요할 때만 고려하세요. 노드가 많을수록 합의 비용이 증가합니다.\n\n" +
       "셋째, etcd와 APISIX는 같은 서버에 두지 마세요. 리소스 경쟁이 발생하고, 서버 장애 시 둘 다 죽습니다. 우리는 별도 서버에 배치해서 독립성을 보장했어요.\n\n" +
       "넷째, Backup은 필수이지만, 복구 테스트가 더 중요합니다. 백업만 해두고 복구를 안 해봤다면, 실제 장애 시 복구 못 할 수 있어요. 주기적인 DR 테스트가 핵심입니다.",
+  },
+  {
+    id: 150,
+    category1: "Infrastructure",
+    category2: "CDC Monitoring",
+    question:
+      "Kafka Connect 기반 CDC(Change Data Capture) 파이프라인에서 어떻게 모니터링 체계를 구축했나요? Oracle LogMiner 기반 CDC를 운영할 때 특히 어떤 메트릭이 중요했나요?",
+    answer:
+      "CDC 파이프라인 모니터링은 '데이터가 얼마나 늦었나'와 '얼마나 많이 누락됐나' 두 가지가 핵심입니다.\n\n" +
+      "**배경: Kubernetes 외부 CDC 아키텍처**\n\n" +
+      "TheShop에서 운영하는 CDC 파이프라인은 Kubernetes 위에 있지 않습니다. Oracle 온프레미스 DB → Debezium 3.4 Kafka Connect → Kafka 클러스터 → JDBC Sink 방향으로 흐르며, Kafka Connect 자체는 VM에서 Strimzi 없이 실행됩니다. 이 환경에서 Kubernetes native 모니터링 도구는 쓸 수 없었고, JMX Exporter + OTEL Collector 조합으로 직접 구성했어요.\n\n" +
+      "**Oracle LogMiner 핵심 메트릭**\n\n" +
+      "Oracle Source Connector에서 가장 중요한 메트릭은 세 가지였습니다.\n\n" +
+      "첫째, `debezium_streaming_millisecondsbehindcommitsource` — Debezium이 Oracle의 Redo Log를 얼마나 뒤처져서 읽고 있는지 나타냅니다. 이 값이 증가하기 시작하면 Oracle LogMiner가 느려진 것입니다. 경험상 10분(600,000ms)을 넘으면 Alert를 보냈어요. 평소 100~500ms 수준을 유지해야 합니다.\n\n" +
+      "둘째, `debezium_oracle_currentscn` — Oracle의 현재 SCN(System Change Number)과 Debezium이 처리 중인 SCN의 차이입니다. SCN Gap이 벌어지면 배치 트랜잭션이 폭발했거나 LogMiner 세션이 재시작된 것입니다. 특히 Oracle RMAN 백업이 돌 때 LogMiner가 느려지는 문제를 이 메트릭으로 조기 발견했어요.\n\n" +
+      "셋째, `debezium_oracle_uga_memory_bytes` / `debezium_oracle_pga_memory_bytes` — LogMiner가 메모리를 얼마나 사용하는지입니다. LogMiner가 대량 DML을 처리할 때 PGA가 급증해서 Oracle 전체 성능에 영향을 줄 수 있어요. 특정 임계치(4GB)를 초과하면 Debezium Connector를 재시작하는 자동화를 구현했습니다.\n\n" +
+      "**Kafka Connect JMX → Prometheus 파이프라인**\n\n" +
+      "Kafka Connect JMX 메트릭을 수집하기 위해 두 단계 파이프라인을 구성했습니다.\n\n" +
+      "1. `jmx_prometheus_javaagent.jar`를 Kafka Connect 기동 시 `-javaagent` 옵션으로 주입\n" +
+      "2. JMX exporter가 9999 포트로 Prometheus 형식 메트릭 노출\n" +
+      "3. OTEL Collector의 Prometheus Receiver로 scrape하여 OTLP로 변환\n" +
+      "4. monitoring-stack의 OTEL Gateway → Prometheus로 push\n\n" +
+      "이 구조 덕분에 Kafka Connect 메트릭이 기존 Grafana 대시보드와 동일한 쿼리 언어로 분석됩니다.\n\n" +
+      "**양방향 CDC 루프 방지 모니터링**\n\n" +
+      "Oracle ↔ MySQL 양방향 복제를 운영할 때 가장 위험한 것은 무한 루프입니다. 이를 방지하기 위해 Debezium SMT(Single Message Transform)에 Groovy 스크립트로 `__cdc_source` 필드를 삽입했어요.\n\n" +
+      "모니터링 관점에서 중요한 것은 이 필터가 제대로 동작하는지 검증하는 메트릭입니다. Sink Connector의 `filtered_record_count`를 Prometheus로 추적해서, 필터링 비율이 갑자기 0%가 되면 SMT가 bypass된 것을 감지했습니다. 또한 특정 테이블의 Row Count를 Oracle과 MySQL에서 동시에 집계해서 Grafana에 비교 차트로 표시했어요. 두 값이 계속 다르면 복제 불일치입니다.\n\n" +
+      "**Airflow 배치와 CDC 상관 모니터링**\n\n" +
+      "CDC 파이프라인과 Airflow 배치가 같은 데이터를 다루기 때문에 두 시스템의 상태를 연결해서 볼 필요가 있었습니다.\n\n" +
+      "Airflow 쪽에서는 DAG별 `last_success_time`, `task_duration_seconds`, `task_failure_count`를 OTEL로 내보냈습니다. Grafana에서 CDC lag 차트 옆에 관련 Airflow DAG 상태를 배치했는데, 이게 매우 유용했어요. CDC lag이 증가할 때 동시에 Airflow DAG가 실패하면 Kafka Consumer 경합 문제이고, CDC lag만 증가하면 Oracle 쪽 문제였습니다.\n\n" +
+      "**실제 장애 사례: Oracle RMAN 백업 충돌**\n\n" +
+      "새벽 2시 백업 윈도우에서 CDC lag이 5분 → 45분으로 급등했습니다. `currentscn` 메트릭으로 보니 Debezium SCN Gap이 10만 이상으로 벌어졌고, `pga_memory_bytes`도 5GB를 초과했어요.\n\n" +
+      "원인은 RMAN 백업 중 LogMiner 세션이 메모리 부족으로 재시작된 것이었습니다. 해결책은 두 가지였어요. 첫째, Oracle DBA와 협의해서 RMAN 백업 스케줄을 Debezium Connector를 일시 정지하는 시간대와 맞췄습니다. 둘째, Debezium의 `log.mining.session.max.ms=60000`을 설정해서 LogMiner 세션을 1분마다 갱신하도록 했어요. 이후 같은 백업 윈도우에서 lag이 최대 2분 수준으로 유지되었습니다.\n\n" +
+      "**핵심 교훈**\n\n" +
+      "CDC 모니터링에서 가장 중요한 것은 '데이터베이스 레벨 메트릭'과 '파이프라인 레벨 메트릭'을 모두 봐야 한다는 것입니다. Kafka Consumer lag만 보면 DB 쪽 문제를 놓칩니다. Oracle PGA/UGA 메모리, LogMiner SCN Gap, Debezium 스냅샷 진행률을 함께 봐야 진짜 병목을 찾을 수 있어요.",
+  },
+  {
+    id: 151,
+    category1: "Infrastructure",
+    category2: "Observability Platform",
+    question:
+      "온프레미스 환경에서 고가용성 관측성 플랫폼(OTEL + Prometheus + Loki + Tempo + Grafana)을 직접 구축했을 때 가장 어려웠던 설계 결정은 무엇이었나요?",
+    answer:
+      "고가용성 관측성 플랫폼을 직접 구축할 때 가장 어려웠던 것은 'OTEL Collector 자체가 SPOF가 되는 문제'였습니다.\n\n" +
+      "**문제: Collector 단일 장애 지점**\n\n" +
+      "처음 설계는 단일 OTEL Collector였어요. 모든 에이전트가 하나의 Collector(10.101.91.145:4317)로 데이터를 보냈는데, Collector 업그레이드나 장애 시 전체 텔레메트리가 유실됐습니다. 관측성 시스템이 먼저 죽으면 장애 대응이 불가능하다는 아이러니한 상황이죠.\n\n" +
+      "**해결: 3x Gateway + Nginx 로드밸런서**\n\n" +
+      "현재 운영 중인 monitoring-stack은 다음과 같이 구성되어 있습니다:\n\n" +
+      "- `otel-gw-1`, `otel-gw-2`, `otel-gw-3`: 각 2GB 메모리 제한의 독립 OTEL Collector 컨테이너 (opentelemetry-collector-contrib:0.148.0)\n" +
+      "- `otel-nginx`: Nginx 1.27 리버스 프록시가 OTLP gRPC(4317), OTLP HTTP(4318), Loki HTTP(3500), Loki gRPC(3600)를 세 Gateway로 분산\n" +
+      "- `otel-scraper`: Prometheus pull-based scrape 전용 단일 Collector (push/pull 역할 분리)\n\n" +
+      "Nginx에서 gRPC 로드밸런싱의 함정이 있었어요. HTTP/2 기반 gRPC는 한 번 연결되면 같은 서버로만 요청을 보냅니다. 이를 해결하기 위해 `grpc_next_upstream` 설정과 Least Connection 알고리즘을 함께 써서 커넥션 유지 시간을 제한했습니다.\n\n" +
+      "**Push vs Pull 분리 설계**\n\n" +
+      "OTEL Collector를 두 역할로 분리한 것이 핵심 결정이었습니다.\n\n" +
+      "**Push (otel-gw-1~3):** 에이전트, 앱, monitoring-agent가 능동적으로 데이터를 보내는 채널. 여기는 HA가 필수이므로 3중화했어요.\n\n" +
+      "**Pull (otel-scraper):** Prometheus의 scrape 모델로 Node Exporter, Redis Exporter, Kafka JMX 등을 주기적으로 수집. 이쪽은 단일 인스턴스로 충분합니다. Pull은 Collector가 죽었다 살아나도 다음 scrape 주기에 자동 복구되니까요.\n\n" +
+      "이 분리 덕분에 Push 트래픽과 Pull 스케줄링이 서로 간섭하지 않았습니다. 초기 단일 Collector에서는 burst push와 대량 scrape가 겹치면 메모리가 급증했어요.\n\n" +
+      "**Prometheus 3 OTLP Native Receiver**\n\n" +
+      "Prometheus 3.x부터는 OTLP를 native로 받을 수 있습니다. `--web.enable-otlp-receiver` 플래그를 켜면 Prometheus가 직접 OTLP endpoint를 엽니다. 이를 이용해서 OTEL Gateway의 exporter 목적지로 Prometheus를 직접 지정했어요.\n\n" +
+      "기존에는 OTEL → Prometheus Remote Write → Prometheus였다면, 지금은 OTEL → OTLP Native → Prometheus입니다. Remote Write는 쓰기 증폭 문제가 있었는데, OTLP native는 이 오버헤드가 없어서 대규모 메트릭 수집이 안정화되었습니다.\n\n" +
+      "**장기 보관: otel-kafka-pg 브릿지**\n\n" +
+      "모니터링 스택의 Retention 정책은 Prometheus 7일, Loki 30일, Tempo 7일입니다. 하지만 특정 트레이스는 감사나 디버깅을 위해 더 오래 보관해야 했어요.\n\n" +
+      "이를 위해 otel-kafka-pg라는 Go 서비스를 직접 개발했습니다. OTEL Gateway에서 중요한 트레이스/로그를 Kafka 토픽(`otlp.traces`, `otlp.logs`)으로 발행하면, otel-kafka-pg가 컨슈머 그룹으로 읽어서 PostgreSQL에 배치 삽입합니다. 배치 크기 100건, flush 5초 간격으로 처리해요.\n\n" +
+      "결과적으로 실시간 분석은 Grafana → Prometheus/Loki/Tempo, 장기 분석은 PostgreSQL에서 SQL로 쿼리하는 두 개 경로가 만들어졌습니다.\n\n" +
+      "**ClickHouse for OLAP**\n\n" +
+      "Scouter APM과 대규모 메트릭 집계는 ClickHouse에 별도 저장합니다. OTEL Gateway에서 ClickHouse Exporter를 통해 직접 삽입하고, Grafana ClickHouse 플러그인으로 쿼리해요. 컬럼형 스토리지라 시계열 집계(30일 P99 latency 트렌드, 월별 에러율 등)가 매우 빠릅니다.\n\n" +
+      "**운영 중 발견한 핵심 함정**\n\n" +
+      "첫째, OTEL Collector의 메모리 제한을 반드시 설정해야 합니다. memory_limiter processor를 두지 않으면 burst 시 Collector가 OOM으로 죽고, 그 순간의 데이터가 모두 유실됩니다.\n\n" +
+      "둘째, Prometheus native histogram을 켜면 metric cardinality가 급증합니다. `--enable-feature=native-histograms`를 켤 때 기존 클래식 histogram과 병렬 수집이 되어서 스토리지가 2배 커졌어요. 전환 기간을 짧게 관리해야 합니다.\n\n" +
+      "셋째, Grafana PostgreSQL 백엔드를 사용할 때 Grafana 자체 메타데이터 DB가 병목이 됩니다. Grafana 12.x에서 고차원 대시보드를 많이 열면 PostgreSQL 커넥션이 포화되는 문제를 Redis 세션 캐시로 완화했습니다.",
+  },
+  {
+    id: 152,
+    category1: "Infrastructure",
+    category2: "Airflow SRE",
+    question:
+      "Apache Airflow를 KubernetesExecutor로 운영할 때 기존 CeleryExecutor 대비 SRE 관점에서 어떤 트레이드오프가 있었나요?",
+    answer:
+      "KubernetesExecutor로의 전환은 '리소스 효율성'을 얻는 대신 '디버깅 복잡도'가 올라가는 트레이드오프였습니다.\n\n" +
+      "**기존 CeleryExecutor의 문제**\n\n" +
+      "이전에는 Docker Compose + CeleryExecutor로 Airflow를 운영했어요. 워커가 항상 상주하다 보니 DAG가 하나도 없는 새벽 2시에도 CPU/메모리가 지속 점유됐습니다. 게다가 워커 수를 고정해야 해서 피크 타임(오전 9시 데이터 집계) 때 DAG 큐가 밀렸어요.\n\n" +
+      "**KubernetesExecutor: 태스크마다 Pod 생성**\n\n" +
+      "현재 air-k8s 프로젝트는 온프레미스 HA K8s 클러스터(kubespray, 3 control + 3 worker)에서 KubernetesExecutor로 운영됩니다. 각 Airflow Task가 실행될 때마다 독립 Pod를 생성하고, 완료 후 삭제합니다.\n\n" +
+      "SRE 관점의 이점:\n" +
+      "- **리소스 격리**: Task A의 메모리 누수가 Task B에 영향을 주지 않음\n" +
+      "- **동시성 확장**: 클러스터 용량 내에서 무한 병렬 실행 가능 (CeleryExecutor는 워커 수 고정)\n" +
+      "- **환경 일관성**: 각 Task는 동일한 컨테이너 이미지로 실행되어 'Works on my machine' 문제 제거\n\n" +
+      "SRE 관점의 난점:\n" +
+      "- **Pod 기동 지연**: 태스크 시작 시 컨테이너 이미지 pull + Pod 스케줄링에 10~30초 소요. SLA가 빡빡한 DAG에는 이 지연이 문제였어요\n" +
+      "- **Pod 로그 수집**: 완료된 Pod는 삭제되므로 로그 영속화가 필수. Rook-Ceph CephFS PVC에 로그를 mount해서 보존\n" +
+      "- **디버깅 복잡도**: 태스크 실패 시 `kubectl describe pod`로 Pod 이벤트, `kubectl logs` 로 컨테이너 로그, Airflow UI 로그를 함께 봐야 함\n\n" +
+      "**연결 관리: KubernetesSecretsBackend**\n\n" +
+      "운영에서 가장 큰 차이는 Connection 관리 방식이었습니다. CeleryExecutor 시절에는 `.env` 파일로 DB 비밀번호를 관리했어요. KubernetesExecutor로 전환하면서 `KubernetesSecretsBackend`를 도입했습니다.\n\n" +
+      "각 Connection은 K8s Secret으로 저장됩니다:\n" +
+      "- `airflow-conn-kafka-onpre` → Kafka 브로커 주소\n" +
+      "- `airflow-conn-mariadb-rds-dev` → DEV 계정 RDS\n" +
+      "- `airflow-conn-postgres-dev` → Connect 네임스페이스 PostgreSQL\n\n" +
+      "Secret에 `connections.airflow` 라벨을 붙이면 Airflow가 자동으로 인식합니다. 덕분에 `airflow connections import` 없이 Secret 추가만으로 Connection이 활성화되었어요. RBAC으로 네임스페이스별 접근도 제어했습니다.\n\n" +
+      "**DAG GitOps: git-sync 사이드카**\n\n" +
+      "100개 이상의 DAG를 운영하면서 'DAG 배포 실수'가 잦았어요. 특히 `schedule_interval` 변경이 즉시 반영되어 예상치 못한 시간에 DAG가 실행되는 사고가 있었습니다.\n\n" +
+      "해결책은 `git-sync` 사이드카입니다. Airflow Scheduler Pod에 git-sync 컨테이너를 함께 띄워서 GitLab `dags/` 브랜치를 PVC에 자동 동기화합니다. DEV는 `dev` 브랜치, PRD는 `prd` 브랜치로 분리했어요.\n\n" +
+      "Jenkins CI가 GitLab push를 감지해서 ruff lint → 구문 검증 → Airflow 가져오기 테스트를 실행합니다. 파이프라인이 통과한 커밋만 `prd` 브랜치에 merge되어 PRD DAG에 반영됩니다. 이 흐름으로 손으로 파일을 올리는 방식을 완전히 제거했어요.\n\n" +
+      "**Airflow SLO: DAG 실패율**\n\n" +
+      "SRE로서 Airflow에 SLO를 설정했습니다. 핵심 DAG(Oracle→MariaDB 동기화, S3 Parquet 적재)는 '일별 성공률 99.5%' 목표입니다.\n\n" +
+      "모니터링은 두 레이어로 합니다. 첫째, Airflow UI의 DAG Run 상태를 OTEL 메트릭으로 변환해서 Grafana 알림 규칙을 붙였습니다. 둘째, Airflow `email_on_failure` 대신 Slack Webhook으로 실패 알림을 보내서 팀이 즉시 인지하도록 했어요.\n\n" +
+      "과거 Docker Compose 시절 Airflow DAG 실패율이 약 8%였는데, KubernetesExecutor 전환 이후 0.5% 미만으로 개선되었습니다. 가장 큰 원인은 워커 환경 불일치가 사라진 것이었어요.",
+  },
+  {
+    id: 153,
+    category1: "Infrastructure",
+    category2: "Data Engineering",
+    question:
+      "OTLP 텔레메트리 데이터를 Kafka를 통해 PostgreSQL에 장기 보관하는 파이프라인을 Go로 직접 개발했는데, 왜 Kafka를 중간에 두었나요? 단순히 OTLP → PostgreSQL 직접 삽입과 비교해서 어떤 장점이 있었나요?",
+    answer:
+      "Kafka를 중간에 둔 이유는 '속도 불일치(Impedance Mismatch) 해소'와 '다중 소비자 지원' 때문입니다.\n\n" +
+      "**문제 상황: OTLP → PostgreSQL 직접 삽입의 한계**\n\n" +
+      "처음에는 OTEL Collector의 PostgreSQL Exporter를 써서 직접 삽입하는 방식을 시도했어요. 하지만 두 가지 문제가 생겼습니다.\n\n" +
+      "첫째, OTEL Collector가 수집 속도와 PostgreSQL 삽입 속도의 차이를 버퍼링합니다. 피크 시간에 PostgreSQL I/O가 느려지면 Collector 메모리가 급증하고, 결국 Drop이 발생했어요.\n\n" +
+      "둘째, 같은 OTLP 데이터를 ClickHouse(실시간 분석), PostgreSQL(장기 보관), S3(데이터 레이크) 세 곳에 보내야 했는데, Collector에서 세 Exporter를 동시에 쓰면 하나가 실패해도 나머지 두 개가 데이터를 잃는 문제가 있었습니다.\n\n" +
+      "**해결: Kafka를 분리 레이어로 추가**\n\n" +
+      "OTEL Gateway → Kafka (`otlp.traces`, `otlp.logs` 토픽) → 각 소비자(otel-kafka-pg, ClickHouse Kafka Connector, S3 Sink Connector) 구조로 재설계했습니다.\n\n" +
+      "이 구조의 장점은 다음과 같습니다:\n\n" +
+      "1. **속도 분리**: OTEL Gateway는 Kafka에 쓰는 속도로만 실행됩니다. PostgreSQL이 느려져도 OTEL 수집에 영향 없음\n" +
+      "2. **독립 소비자**: otel-kafka-pg가 죽어도 ClickHouse Consumer는 계속 동작합니다. 각 Consumer가 독립 offset을 가지므로\n" +
+      "3. **재처리 가능**: PostgreSQL 삽입 실패 시 Kafka offset을 리셋해서 재처리 가능. 직접 삽입은 실패한 데이터를 복구할 방법이 없음\n" +
+      "4. **팬아웃 무료**: 동일 토픽을 여러 Consumer Group이 구독하면 데이터 복사 없이 다목적 소비 가능\n\n" +
+      "**otel-kafka-pg 구현 세부사항**\n\n" +
+      "Go 1.24로 DDD 패턴으로 구현했습니다. `modules/kafka/consumer`가 Consumer Group(`telemetry-processor-group`)으로 토픽을 구독하고, `modules/trace/service`와 `modules/log/service`가 OTLP Protobuf를 파싱해서 도메인 모델로 변환하며, `modules/trace/repository`가 PostgreSQL에 배치 삽입합니다.\n\n" +
+      "배치 처리가 성능의 핵심이었습니다. 메시지를 하나씩 INSERT하면 초당 수백 건 수준인데, 100건씩 묶어서 bulk INSERT하면 초당 수천 건으로 올라가요. `BATCH_SIZE=100`, `FLUSH_INTERVAL=5000ms`로 설정해서 지연과 처리량의 균형을 맞췄습니다.\n\n" +
+      "PostgreSQL 스키마는 쿼리 패턴에 최적화했어요. `trace_id`, `span_id`에 인덱스를 두고, `timestamp` 컬럼으로 파티션 테이블을 월별로 분리했습니다. 이렇게 하면 '특정 trace_id로 로그 조회'와 '3개월 전 특정 날짜 에러 패턴 분석'이 모두 빠릅니다.\n\n" +
+      "**실제 사용 사례: 장기 감사 및 보안 분석**\n\n" +
+      "이 파이프라인의 실제 가치는 두 가지 시나리오에서 나왔습니다.\n\n" +
+      "첫째, 보안 감사입니다. 특정 사용자가 90일 전에 어떤 API를 호출했는지 조회해야 할 때, Grafana Tempo(7일 보관)로는 불가능하지만 PostgreSQL에서는 SQL 한 줄로 가능했어요.\n\n" +
+      "둘째, 장애 패턴 분석입니다. '이 에러가 처음 발생한 게 언제였나'를 6개월 데이터로 분석할 수 있었습니다. Grafana의 단기 Retention으로는 이런 분석이 불가능했는데, otel-kafka-pg 덕분에 PostgreSQL에서 직접 쿼리할 수 있었어요.\n\n" +
+      "**핵심 교훈**\n\n" +
+      "Kafka를 중간 레이어로 두면 시스템 복잡도가 올라가는 것은 사실입니다. 하지만 속도 불일치가 있는 두 시스템 사이를 연결할 때, Kafka는 그 복잡도 비용을 충분히 정당화합니다. 특히 같은 데이터 스트림을 여러 목적으로 소비해야 할 때 팬아웃 패턴은 필수적이에요.",
+  },
+  {
+    id: 154,
+    category1: "Infrastructure",
+    category2: "OTEL Architecture",
+    question:
+      "3중화 OTEL Collector 환경에서 Kubernetes 이벤트를 중복 수집하지 않으려면 어떻게 해야 하나요? Leader Election을 Collector에 적용한 경험을 설명해주세요.",
+    answer:
+      "3개의 OTEL Gateway가 모두 Kubernetes 이벤트를 수집하면 같은 이벤트가 3배로 Loki에 들어옵니다. 이 문제를 k8s_leader_elector Extension으로 해결했습니다.\n\n" +
+      "**왜 중복이 발생하는가**\n\n" +
+      "monitoring-stack은 OTLP 트래픽의 HA를 위해 otel-gw-1~3을 3중화합니다. 각 Gateway는 동일한 config를 쓰기 때문에 k8sobjects receiver(pods/events/deployments/nodes 감시)도 세 인스턴스가 모두 실행합니다. Kubernetes events watch는 API server에서 streaming으로 받기 때문에, 3개가 동시에 watch하면 같은 이벤트가 Loki에 3번 들어가요.\n\n" +
+      "**k8s_leader_elector Extension**\n\n" +
+      "OTEL Collector contrib의 `k8sleaderelector` extension을 사용하면 3개 인스턴스 중 하나만 Leader로 선출됩니다. Leader가 죽으면 나머지 두 중 하나가 자동으로 새 Leader가 됩니다.\n\n" +
+      "설정 구조는 다음과 같아요:\n\n" +
+      "```yaml\nextensions:\n  k8s_leader_elector:\n    lease_name: otel-k8s-collector\n    lease_namespace: monitoring\n    lease_duration: 15s\n    renew_deadline: 10s\n    retry_period: 2s\n```\n\n" +
+      "그리고 k8sobjects receiver를 사용하는 pipeline에 이 extension을 leader_election으로 등록합니다. 이렇게 하면 Leader 인스턴스만 해당 pipeline을 활성화합니다.\n\n" +
+      "**Leader Election 메커니즘**\n\n" +
+      "내부적으로 Kubernetes Lease object를 이용합니다. `monitoring` 네임스페이스에 `otel-k8s-collector`라는 Lease가 생성되고, 3개 인스턴스가 이 Lease를 선점하려 경쟁합니다. 현재 Leader는 `lease_duration(15s)` 마다 Lease를 갱신합니다. 갱신이 `renew_deadline(10s)` 이내에 이루어지지 않으면 Lease가 만료되고 다른 인스턴스가 선점합니다.\n\n" +
+      "Leader가 교체되면 약 15~30초 동안 K8s 이벤트 수집이 중단됩니다. 이는 허용 가능한 범위였습니다. 반대로 모든 인스턴스가 수집하면 Loki에 중복 데이터가 쌓여서 스토리지 비용과 쿼리 노이즈가 증가하는 문제가 훨씬 컸거든요.\n\n" +
+      "**K8s Objects 수집 설계**\n\n" +
+      "k8sobjects receiver는 두 가지 모드로 동작합니다:\n\n" +
+      "- `pull` (5분 간격): pods, deployments, nodes — 현재 상태 스냅샷\n" +
+      "- `watch` (실시간 streaming): events — 생성/변경/삭제 이벤트\n\n" +
+      "`events.k8s.io` 그룹의 Event object를 watch하면 Pod OOMKilled, ImagePullBackOff, Eviction 같은 K8s 이벤트가 Loki로 들어옵니다. `transform/k8s_events` processor에서 JSON body를 파싱해서 severity(Normal/Warning), reason, kind, name 필드를 추출하고, `resource/k8s` processor에서 `k8s.cluster.name=theshop-onprem` 레이블을 자동 주입합니다.\n\n" +
+      "**KUBECONFIG 주입**\n\n" +
+      "온프레미스 K8s 클러스터는 OTEL Collector와 같은 네트워크에 있지만 별도 서버입니다. Docker Compose로 배포된 Gateway에서 K8s API server에 접근하려면 kubeconfig가 필요해요. `/data/grafana/config/otel-k8s-kubeconfig.yaml`을 read-only로 마운트해서 인증했습니다.\n\n" +
+      "kubeconfig에 설정된 ServiceAccount는 `monitoring` 네임스페이스에 최소 권한만 부여했어요. events/watch, pods/list, deployments/list, nodes/list, leases/get/create/update만 허용합니다. Lease 생성/업데이트 권한이 없으면 Leader Election 자체가 안 됩니다.\n\n" +
+      "**핵심 교훈**\n\n" +
+      "Collector를 다중화할 때는 '모든 기능을 모든 인스턴스가 동일하게 실행한다'는 가정을 버려야 합니다. Push 수신(OTLP), Log 수집(Loki)은 3개 모두 실행해도 되지만, Pull-based 수집(K8s events watch, Node Exporter scrape)은 반드시 단일 인스턴스 또는 Sharding이 필요합니다. 그래서 monitoring-stack은 K8s scrape를 otel-gw가 아닌 단독 otel-scraper 컨테이너로 분리한 것이기도 합니다.",
+  },
+  {
+    id: 155,
+    category1: "Infrastructure",
+    category2: "Log Management",
+    question:
+      "Loki에서 로그 수집량이 급증했을 때 rate limit 문제를 어떻게 해결했나요? TSDB 스키마 전환과 retention 정책 설계 경험을 함께 설명해주세요.",
+    answer:
+      "Loki rate limit 문제는 초기 기본값 그대로 두고 운영하다가 발생했어요. 특히 Airflow DAG가 일괄 배치 실행될 때 단시간에 로그가 폭발하는 상황이 문제였습니다.\n\n" +
+      "**발생한 에러와 원인**\n\n" +
+      "Airflow DAG 실행 시 Grafana에 이런 에러가 보이기 시작했습니다:\n\n" +
+      "`429 Too Many Requests: per-user ingestion rate limit (4MB/s) exceeded`\n\n" +
+      "기본값은 `ingestion_rate_mb: 4`, `ingestion_burst_size_mb: 6`이었어요. Airflow KubernetesExecutor는 태스크마다 Pod를 생성하고 동시에 수십 개가 실행될 때 모든 로그가 동시에 OTEL Gateway → Loki로 흘러들어옵니다. 100개 DAG의 태스크가 병렬로 실행되면 초당 수백 MB가 들어오는 거죠.\n\n" +
+      "**해결: rate limit 상향 조정**\n\n" +
+      "현재 운영 중인 loki-config.yaml의 limits_config 설정입니다:\n\n" +
+      "```yaml\nlimits_config:\n  ingestion_rate_mb: 16          # 4MB → 16MB\n  ingestion_burst_size_mb: 32    # 6MB → 32MB\n  per_stream_rate_limit: 8MB\n  per_stream_rate_limit_burst: 16MB\n  max_global_streams_per_user: 20000\n  max_line_size: 1048576          # 1MB (Spring Stack Trace 대응)\n  reject_old_samples: false       # 배치 재처리 허용\n  reject_old_samples_max_age: 336h # 2주\n  creation_grace_period: 2h       # 미래 타임스탬프 허용\n```\n\n" +
+      "`reject_old_samples: false`가 중요한 설정입니다. 기본값은 `true`인데, 이렇게 하면 2주 이상 된 타임스탬프 로그가 모두 거부됩니다. Airflow 배치 작업에서 과거 데이터를 재처리할 때 원본 타임스탬프를 보존하면 2주 이전 데이터가 reject되거든요. 이 옵션을 끄면 언제든 원본 시간 기준 로그를 삽입할 수 있습니다.\n\n" +
+      "**TSDB 스키마 v13 전환**\n\n" +
+      "초기에는 schema v11(BoltDB shipper)을 사용했는데, 대량 스트림에서 인덱스 파일이 커지면서 조회 성능이 하락했습니다. TSDB(v13) 스키마로 전환하면서 크게 개선됐어요.\n\n" +
+      "TSDB 스키마의 핵심 차이는 인덱스 저장 방식입니다. BoltDB shipper는 날짜별 파일로 인덱스를 저장하는데, 로그 스트림이 많을수록 파일이 분산되어 조회 시 I/O가 증가합니다. TSDB는 컬럼형 인덱스로 압축률이 높고 range query에 최적화됐어요.\n\n" +
+      "현재 schema 설정:\n\n" +
+      "```yaml\nschema_config:\n  configs:\n    - from: 2020-05-15\n      store: tsdb\n      schema: v13\n      index:\n        prefix: index_\n        period: 24h\n```\n\n" +
+      "**Retention 정책 설계**\n\n" +
+      "`retention_period: 360h`(15일)로 설정했어요. 이 결정의 근거는 세 가지였습니다.\n\n" +
+      "첫째, Loki는 실시간 분석용입니다. 15일 이내 로그는 Grafana에서 바로 조회합니다. 15일 이전 로그는 S3 → Athena나 ClickHouse로 쿼리해요.\n\n" +
+      "둘째, 서버 디스크 용량 제약입니다. 하루 약 20GB 수집 기준으로 15일이면 300GB입니다. `/data/grafana/loki` 볼륨 크기를 기준으로 계산했어요.\n\n" +
+      "셋째, compactor 설정입니다. `compaction_interval: 10m`, `retention_delete_delay: 2h`, `retention_delete_worker_count: 150`으로 설정해서 만료된 청크를 빠르게 정리합니다. worker를 150개로 늘린 것은 기본값(10개)으로는 대량 삭제 시 backlog가 쌓여서였어요.\n\n" +
+      "**OTLP Resource Attribute → Loki Index Label 매핑**\n\n" +
+      "Loki에서 스트림 카디널리티 관리가 중요합니다. 너무 많은 필드를 index label로 쓰면 스트림이 폭발해서 `max_global_streams_per_user` 한도에 걸립니다.\n\n" +
+      "현재 index label로 활성화한 resource attributes:\n\n" +
+      "- 서비스 식별: `service.name`, `compose_service`, `app`, `job`\n" +
+      "- 환경 구분: `service.env`, `env`, `service.namespace`\n" +
+      "- 로그 레벨: `severity_text`, `level` (대소문자 여러 형태 자동 인식)\n" +
+      "- K8s 컨텍스트: `k8s.namespace_name`, `k8s.pod_name`, `k8s.deployment_name`\n" +
+      "- 트레이스 연결: `trace_id`, `span_id`\n" +
+      "- 도메인 이벤트: `event_domain`, `request_id`\n\n" +
+      "`trace_id`를 index label에 포함시키면 Grafana Explore에서 특정 trace_id로 로그를 바로 필터링할 수 있습니다. Tempo 트레이스 뷰에서 로그로 jump하는 'Traces to Logs' 기능도 이 설정이 있어야 동작합니다.\n\n" +
+      "**핵심 교훈**\n\n" +
+      "Loki는 '카디널리티를 낮게, 스트림을 적게'가 기본 철학입니다. 처음부터 모든 field를 label로 만들면 stream 수가 폭발하고 성능이 급락해요. 핵심 필터링에 쓰이는 5~10개 field만 index label로 쓰고, 나머지는 log line에 포함시켜서 `| json` parser로 필터링하는 패턴이 올바릅니다.",
+  },
+  {
+    id: 156,
+    category1: "Infrastructure",
+    category2: "Distributed Tracing",
+    question:
+      "Grafana Tempo의 Metrics Generator를 사용해서 RED 메트릭을 자동 생성한 경험을 설명해주세요. Service Graph와 Span Metrics의 차이는 무엇인가요?",
+    answer:
+      "Tempo Metrics Generator를 도입한 계기는 '서비스 간 호출 관계와 에러율을 코드 변경 없이 즉시 파악하고 싶다'는 요구였습니다.\n\n" +
+      "**기존 접근의 한계**\n\n" +
+      "기존에는 RED 메트릭(Request rate, Error rate, Duration)을 각 서비스 SDK에서 직접 계측했어요. 그런데 레거시 Java 서비스나 서드파티 모듈처럼 코드를 수정하기 어려운 경우에는 메트릭이 없었습니다. 또한 '서비스 A → 서비스 B 호출 레이턴시'처럼 서비스 간 관계 메트릭은 어느 한쪽 SDK에서 계측해야 하는데, 경계가 모호해서 중복이나 누락이 생겼어요.\n\n" +
+      "**Tempo Metrics Generator: 트레이스 → 메트릭 변환**\n\n" +
+      "Tempo는 수집된 트레이스 span을 분석해서 메트릭을 자동 생성합니다. 별도 SDK 변경 없이 OTLP trace만 있으면 됩니다.\n\n" +
+      "현재 사용 중인 processor는 세 가지입니다:\n\n" +
+      "**1. service-graphs**\n\n" +
+      "서비스 간 호출 관계(DAG)와 RED 메트릭을 생성합니다. 설정:\n\n" +
+      "```yaml\nprocessors:\n  service_graphs:\n    wait: 10s              # span 매칭 대기 시간\n    max_items: 10000       # 동시 추적 edge 수\n    workers: 10\n    histogram_buckets: [0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8]\n    peer_attributes:       # 외부 호출 식별\n      - peer.service\n      - db.name\n      - db.system\n```\n\n" +
+      "생성 메트릭 예시:\n" +
+      "- `traces_service_graph_request_total{client=\"api-gateway\", server=\"user-service\"}` — 호출 수\n" +
+      "- `traces_service_graph_request_failed_total` — 실패 호출 수\n" +
+      "- `traces_service_graph_request_server_seconds_bucket` — 서버 사이드 레이턴시 히스토그램\n" +
+      "- `traces_service_graph_request_client_seconds_bucket` — 클라이언트 사이드 레이턴시\n\n" +
+      "이 메트릭으로 Grafana에서 서비스 맵(Service Map)을 그릴 수 있습니다. Grafana의 Tempo datasource에 `serviceMap.datasourceUid`로 Prometheus를 연결하면 자동으로 서비스 의존성 그래프가 시각화됩니다. DB, 외부 API 호출도 `peer.service`, `db.name` attribute를 통해 자동으로 node로 추가됩니다.\n\n" +
+      "**2. span-metrics**\n\n" +
+      "개별 span 단위의 RED 메트릭을 생성합니다. 설정:\n\n" +
+      "```yaml\nspan_metrics:\n  histogram_buckets: [0.002, 0.004, 0.008, 0.016, 0.032, 0.064,\n                      0.128, 0.256, 0.512, 1.024, 2.048, 4.096, 8.192, 16.384]\n  intrinsic_dimensions:\n    service: true\n    span_name: true\n    span_kind: true\n    status_code: true\n```\n\n" +
+      "생성 메트릭:\n" +
+      "- `traces_spanmetrics_calls_total{service=\"order-service\", span_name=\"POST /orders\", status_code=\"OK\"}` — 엔드포인트별 호출 수\n" +
+      "- `traces_spanmetrics_latency_bucket` — P50/P95/P99 계산용 히스토그램\n\n" +
+      "service-graphs와 span-metrics의 핵심 차이는 **granularity**입니다. service-graphs는 '서비스 A와 서비스 B 사이' 관계를 봅니다. span-metrics는 '서비스 A의 어떤 엔드포인트'가 느린지 봅니다. 서비스 맵 레벨 → 상세 엔드포인트 레벨로 drill-down하는 구조입니다.\n\n" +
+      "**3. local-blocks**\n\n" +
+      "```yaml\nlocal_blocks:\n  max_block_duration: 1m\n  max_block_bytes: 500000000  # 500MB\n  flush_check_period: 10s\n  trace_idle_period: 10s\n  complete_block_timeout: 1h\n  concurrent_blocks: 10\n```\n\n" +
+      "TraceQL 기반의 Trace Search나 'live' 메트릭 계산에 사용되는 로컬 WAL입니다. 1분 이내 들어온 span이 여기 버퍼링되고, flush 후 main storage로 이동합니다.\n\n" +
+      "**Exemplar 연동: 메트릭에서 트레이스로 Jump**\n\n" +
+      "Tempo Metrics Generator가 Prometheus에 메트릭을 remote_write할 때 exemplar를 함께 전송합니다. Exemplar는 메트릭 데이터포인트에 trace_id를 연결하는 포인터입니다.\n\n" +
+      "```yaml\nremote_write:\n  - url: http://prometheus:9090/api/v1/write\n    send_exemplars: true\n    send_native_histograms: true\n```\n\n" +
+      "Grafana Prometheus datasource에서 Exemplar destination으로 Tempo를 설정하면, P99 레이턴시 그래프의 특정 데이터포인트를 클릭했을 때 그 순간의 실제 trace로 바로 이동할 수 있습니다. '레이턴시가 스파이크된 순간의 트레이스가 뭔지' 클릭 한 번으로 확인하는 SRE에게 매우 강력한 기능입니다.\n\n" +
+      "**Traces to Logs 연동**\n\n" +
+      "Grafana Tempo datasource에 traces-to-logs 설정을 했습니다:\n\n" +
+      "```yaml\n# datasources.yaml\ntracesToLogs:\n  query: '{service_name=\"${__span.tags.service.name}\"} | json | trace_id=\"${__span.traceID}\"\n          | span_id=\"${__span.spanID}\"'\n  filterByTraceID: true\n  spanStartTimeShift: -10m\n  spanEndTimeShift: 10m\n```\n\n" +
+      "트레이스 span을 보다가 Loki 로그로 바로 점프합니다. `trace_id`와 `span_id`가 Loki index label로 설정되어 있어서 이 쿼리가 빠르게 동작해요. span 시작/종료 전후 10분 범위의 로그까지 함께 보여주므로 장애 전후 맥락 파악이 쉽습니다.",
+  },
+  {
+    id: 157,
+    category1: "Infrastructure",
+    category2: "Alerting",
+    question:
+      "Prometheus recording rule을 활용해서 복합 헬스 스코어 메트릭을 설계한 경험이 있나요? SRE 관점에서 단순 임계치 알림 대신 복합 지표를 쓰는 이유는 무엇인가요?",
+    answer:
+      "단순 임계치 알림(`cpu > 80%이면 alert`)의 한계는 맥락이 없다는 것입니다. CPU가 80%여도 정상 배치 실행 중일 수 있고, 50%여도 request latency가 급증하는 진짜 장애일 수 있어요.\n\n" +
+      "**복합 헬스 스코어 설계 배경**\n\n" +
+      "monitoring-stack의 Prometheus alert rule에서 `service_health_composite`라는 복합 메트릭을 설계했습니다. monitoring-agent의 두 체커(CRI + HTTP)가 수집하는 데이터를 하나의 점수로 합산합니다.\n\n" +
+      "**Recording Rule 구조**\n\n" +
+      "Recording rule 파일(prometheus3/rules/health_labels.yml)은 4단계 계층으로 구성됩니다:\n\n" +
+      "**1단계: cri_health_status_labeled** (container runtime 상태 텍스트화)\n\n" +
+      "```yaml\n- record: cri_health_status_labeled\n  expr: |\n    label_replace(\n      cri_health_status == 1,\n      \"health_text\", \"healthy\", \"\", \"\"\n    )\n    OR\n    label_replace(\n      cri_health_status == 0,\n      \"health_text\", \"unhealthy\", \"\", \"\"\n    )\n```\n\n" +
+      "숫자 0/1을 \"healthy\"/\"unhealthy\" 텍스트 레이블로 변환합니다. Grafana stat 패널에서 색상 코드를 텍스트 기반으로 조건부 적용할 때 유용해요. 또한 알림 메시지에 '컨테이너 상태: unhealthy'처럼 사람이 읽기 쉬운 형태로 표시됩니다.\n\n" +
+      "**2단계: cri_containers_by_range** (컨테이너 수 분류)\n\n" +
+      "```yaml\n- record: cri_containers_by_range\n  expr: |\n    label_replace(cri_health_checks_total == 0, \"range\", \"none\", \"\", \"\")\n    OR\n    label_replace(\n      cri_health_checks_total > 0 and cri_health_checks_total <= 10,\n      \"range\", \"low\", \"\", \"\"\n    )\n    OR\n    label_replace(\n      cri_health_checks_total > 10 and cri_health_checks_total <= 50,\n      \"range\", \"medium\", \"\", \"\"\n    )\n    OR\n    label_replace(cri_health_checks_total > 50, \"range\", \"high\", \"\", \"\")\n```\n\n" +
+      "서버 규모를 자동으로 분류합니다. 컨테이너 수가 0개인 서버는 배포 완료 후 비어있는 것인지 장애인지 구분이 필요해요. \"none\" 분류를 보면 어느 서버에 컨테이너가 없는지 즉시 파악됩니다.\n\n" +
+      "**3단계: health_check_age_category** (체크 데이터 신선도)\n\n" +
+      "```yaml\n- record: health_check_age_category\n  expr: |\n    label_replace(\n      (time() - http_health_last_check_timestamp) < 60,\n      \"age\", \"current\", \"\", \"\"\n    )\n    OR\n    label_replace(\n      (time() - http_health_last_check_timestamp) >= 300,\n      \"age\", \"stale\", \"\", \"\"\n    )\n```\n\n" +
+      "이 메트릭의 핵심 역할은 '헬스체크가 오래됐으면 알림 자체를 신뢰하지 말라'는 신호입니다. monitoring-agent가 죽거나 네트워크가 단절되면 메트릭 자체가 끊어지는데, \"stale\" 분류가 보이면 헬스체크 인프라 자체를 먼저 점검해야 합니다.\n\n" +
+      "**4단계: service_health_composite** (최종 복합 스코어)\n\n" +
+      "```yaml\n- record: service_health_composite\n  labels:\n    metric_type: composite\n  expr: |\n    (\n      clamp_max(cri_health_status, 1) * 100\n    )\n    +\n    (\n      clamp_max(http_health_active_endpoints, 11) / 11 * 100\n    )\n```\n\n" +
+      "최대 200점 스코어입니다. 컨테이너가 살아있으면 100점, 모든 HTTP 엔드포인트(11개)가 응답하면 100점 추가. 100점 미만이면 컨테이너 장애, 100점 이상 200점 미만이면 컨테이너는 살아있지만 일부 엔드포인트 실패, 200점이면 완전 정상입니다.\n\n" +
+      "**복합 스코어 알림의 장점**\n\n" +
+      "단순 임계치 알림(`cri_health_status == 0 → alert`)은 binary입니다. 반면 복합 스코어는 severity 계층화가 자연스럽습니다:\n\n" +
+      "- `service_health_composite < 50`: P0 (컨테이너 장애 + 엔드포인트 절반 이상 실패)\n" +
+      "- `service_health_composite >= 50 AND < 100`: P1 (컨테이너 장애, 일부 엔드포인트는 동작)\n" +
+      "- `service_health_composite >= 100 AND < 180`: P2 (컨테이너 정상, 엔드포인트 일부 실패)\n\n" +
+      "같은 Slack 채널에 P0부터 P2까지 다른 형태로 알림이 가도록 라우팅했습니다. P0는 즉시 전화, P1은 5분 내 Slack, P2는 30분 지속 후 Slack이에요.\n\n" +
+      "**File SD 기반 Node Exporter 대상 hot reload**\n\n" +
+      "서버 추가/삭제 시 Prometheus를 재시작하지 않으려면 File SD(Service Discovery)를 써야 합니다. otel-scraper의 prometheus receiver에서 File SD로 node exporter 대상을 정의했어요:\n\n" +
+      "```yaml\njob_name: node\nfile_sd_configs:\n  - files:\n    - /etc/targets/node_targets.yaml\n    refresh_interval: 1m\n```\n\n" +
+      "`node_targets.yaml`에 새 서버를 추가하면 1분 내에 자동으로 scrape 대상에 포함됩니다. `curl -X POST http://prometheus:9090/-/reload`로 hot reload도 가능합니다(`--web.enable-lifecycle` 플래그가 활성화돼 있으므로).\n\n" +
+      "현재 node_targets.yaml에는 K8s control plane(10.101.99.158~160), K8s worker(161~163), GW(100~101), Connect API(102~104), Sandbox(145~146)가 있습니다. 서버 추가 시 이 파일만 수정하면 되기 때문에 인프라 확장이 Prometheus 무중단으로 진행됩니다.",
+  },
+  {
+    id: 158,
+    category1: "Infrastructure",
+    category2: "Cardinality",
+    question:
+      "Prometheus metric cardinality 폭발을 경험한 적 있나요? OTLP에서 Prometheus로 메트릭을 보낼 때 cardinality가 급증하는 원인과 해결 방법을 구체적으로 설명해주세요.",
+    answer:
+      "Prometheus cardinality 문제는 OTLP 도입 초기에 가장 크게 겪었습니다. 원인은 'OTLP resource attribute를 Prometheus label로 전환하는 방식'을 잘못 설정한 것이었어요.\n\n" +
+      "**cardinality 폭발의 원인**\n\n" +
+      "초기 prometheus.yaml에 다음 설정을 넣었습니다:\n\n" +
+      "```yaml\notlp:\n  promote_all_resource_attributes: true\n```\n\n" +
+      "이 한 줄이 문제였어요. OTLP resource attributes는 span/metric/log마다 붙어오는 키-값 쌍 전체입니다. `promote_all_resource_attributes: true`로 설정하면 모든 resource attribute가 Prometheus label로 변환됩니다. 결과적으로 다음과 같은 label이 메트릭에 붙었어요:\n\n" +
+      "- `k8s.pod.name` → Pod 수만큼 time series 증식\n" +
+      "- `process.pid` → 재시작마다 새 PID → 무한 증식\n" +
+      "- `commerce.cart.add.source` → 이커머스 커스텀 이벤트 출처 (수십 종류)\n" +
+      "- `cache.key.hash` → 캐시 키 해시값 → 사실상 unbounded cardinality\n" +
+      "- `container.image.tag` → 배포마다 새 태그 → 증식\n\n" +
+      "Prometheus가 처리할 수 있는 active time series 한도(기본 200만)에 근접했고, 쿼리 응답시간이 급격히 느려졌습니다. 특히 `range_query`가 수백 MB의 메모리를 점유했어요.\n\n" +
+      "**진단: 어떤 메트릭이 cardinality를 많이 차지하는지 찾기**\n\n" +
+      "Prometheus의 TSDB status endpoint로 cardinality top-N을 확인했습니다:\n\n" +
+      "```\nGET http://prometheus:9090/api/v1/status/tsdb?topN=20\n```\n\n" +
+      "응답의 `seriesCountByMetricName`과 `labelValueCountByLabelName`을 보면 어떤 메트릭/레이블이 time series를 폭발시키는지 바로 보입니다. `cache_operation_duration_bucket{cache_key_hash=\"...\"}`가 top 1이었어요.\n\n" +
+      "**해결 1: selective promote_resource_attributes**\n\n" +
+      "```yaml\n# prometheus.yaml (현재 운영 설정)\notlp:\n  translation_strategy: NoUTF8EscapingWithSuffixes\n  keep_identifying_resource_attributes: true\n  promote_all_resource_attributes: true  # 주석 처리된 안전한 대안:\n  # promote_resource_attributes:\n  #   - service.name\n  #   - service.namespace\n  #   - deployment.environment\n  #   - k8s.cluster.name\n  #   - host.name\n  #   - job\n  #   - instance\n```\n\n" +
+      "현재 운영에서는 `promote_all_resource_attributes: true`를 유지하되, 아래 transform processor에서 문제 attribute를 차단하는 방식으로 우회했습니다. 추후 `promote_resource_attributes` 화이트리스트 방식으로 전환 예정입니다.\n\n" +
+      "**해결 2: transform processor에서 고카디널리티 attribute 제거**\n\n" +
+      "otel-gw-config.yaml의 transform processor에서 Prometheus label로 전파할 attribute를 명시적으로 제어합니다:\n\n" +
+      "```yaml\ntransform:\n  metric_statements:\n    # metric name 표준화: dot → underscore\n    - replace_pattern(metric.name, \"\\\\.\", \"_\")\n    # attribute key 표준화: dot → underscore\n    - replace_all_patterns(datapoint.attributes, \"key\", \"\\\\.\", \"_\")\n    # 필수 식별 label만 resource에서 datapoint로 복사\n    - set(datapoint.attributes[\"service_name\"],\n          resource.attributes[\"service.name\"])\n    - set(datapoint.attributes[\"job\"],\n          resource.attributes[\"service.name\"])\n          where datapoint.attributes[\"job\"] == nil\n    # instance 우선순위: service.instance.id → host.name\n    - set(datapoint.attributes[\"instance\"],\n          resource.attributes[\"service.instance.id\"])\n          where datapoint.attributes[\"instance\"] == nil\n    - set(datapoint.attributes[\"instance\"],\n          resource.attributes[\"host.name\"])\n          where datapoint.attributes[\"instance\"] == nil\n```\n\n" +
+      "`process.pid`, `cache.key.hash`, `k8s.pod.name` 같은 고카디널리티 attribute는 이 processor에서 명시적으로 복사하지 않으므로 datapoint label에 포함되지 않습니다. resource attribute로는 존재하지만 Prometheus label로 promote되지 않아요.\n\n" +
+      "**해결 3: OTLP translation_strategy 설정**\n\n" +
+      "Prometheus 3.x에서 OTLP 메트릭 이름 변환 방식을 `NoUTF8EscapingWithSuffixes`로 설정했습니다:\n\n" +
+      "```yaml\notlp:\n  translation_strategy: NoUTF8EscapingWithSuffixes\n```\n\n" +
+      "기본 전략(`UnderscoreEscapingWithSuffixes`)은 OTLP 메트릭 이름의 특수문자를 모두 이스케이프하는데, 이 과정에서 메트릭 이름이 달라져서 기존 dashboard query가 깨졌어요. `NoUTF8EscapingWithSuffixes`는 suffix(`_total`, `_bytes` 등)만 추가하고 이름은 최대한 유지합니다.\n\n" +
+      "**해결 4: out_of_order_time_window 설정**\n\n" +
+      "```yaml\nstorage:\n  tsdb:\n    out_of_order_time_window: 600m  # 10시간\n```\n\n" +
+      "Airflow 배치가 수시간 전 데이터에 타임스탬프를 붙여서 메트릭을 보내면, Prometheus 기본 설정으로는 `out of order` 에러로 거부됩니다. 10시간 허용 윈도우를 열어두면 최대 10시간 이전 타임스탬프 메트릭까지 수용해요. cardinality와 직접 연관은 없지만 데이터 손실 방지 측면에서 중요한 설정입니다.\n\n" +
+      "**핵심 교훈**\n\n" +
+      "Cardinality 관리의 3원칙:\n" +
+      "1. **Prometheus label에 들어오는 것을 whitelist로 제어하라** — `promote_all_resource_attributes: true`는 개발 환경에서만 쓸 것\n" +
+      "2. **PID, hash, 동적 ID는 절대 label로 쓰지 말 것** — series가 unbounded로 증식함\n" +
+      "3. **TSDB status endpoint를 정기적으로 모니터링하라** — Prometheus가 제공하는 cardinality top-N을 alert로 걸어두면 폭발 전에 잡을 수 있음",
+  },
+  {
+    id: 159,
+    category1: "Infrastructure",
+    category2: "OTEL Pipeline Optimization",
+    question:
+      "OTEL Collector에서 수집 데이터 볼륨을 줄이기 위해 어떤 processor들을 실제로 적용했나요? health check 트래픽, 중복 로그, Kafka Connect 메트릭 필터링 경험을 구체적으로 설명해주세요.",
+    answer:
+      "OTEL 파이프라인 최적화는 '어떤 데이터를 버릴지 의식적으로 결정하는 것'입니다. 무작정 다 저장하면 비용과 쿼리 성능이 선형으로 나빠집니다.\n\n" +
+      "**1. Health Check 트래픽 필터링**\n\n" +
+      "HTTP 헬스체크는 30초마다 수십 개 서비스에서 발생합니다. 이게 OTLP로 들어오면 trace/log/metric 모두 발생해요. 하루 10만 건 이상의 완전히 무의미한 데이터입니다.\n\n" +
+      "```yaml\n# otel-gw-config.yaml\nfilter/health_logs:\n  error_mode: ignore\n  logs:\n    log_record:\n      - 'IsMatch(body, \".*health[-_]?check.*\")'\n      - 'IsMatch(body, \".*/api/health.*\")'\n\nfilter/health_traces:\n  error_mode: ignore\n  traces:\n    span:\n      - 'IsMatch(name, \".*health[-_]?check.*\")'\n      - 'IsMatch(name, \".*/api/health.*\")'\n\nfilter/health_metrics:\n  error_mode: ignore\n  metrics:\n    metric:\n      - 'IsMatch(name, \".*health[-_]?check.*\")'\n```\n\n" +
+      "`error_mode: ignore`를 반드시 설정해야 합니다. 기본값은 `propagate`인데, 이렇게 하면 filter 표현식에서 예외가 발생할 때 해당 배치 전체가 drop됩니다. `ignore`로 설정하면 표현식 에러가 난 레코드만 통과시킵니다.\n\n" +
+      "**2. Kafka Connect 메트릭 환경별 필터링**\n\n" +
+      "Kafka Connect는 Debezium Connector 하나당 수십 개의 JMX 메트릭을 내보냅니다. DEV 환경까지 수집하면 거의 쓸모없는 데이터가 prd의 2~3배 쌓입니다.\n\n" +
+      "```yaml\nfilter/kafka_connect_policy:\n  error_mode: ignore\n  metrics:\n    metric:\n      # kafka-connect 서비스이면서 prd가 아닌 환경 → drop\n      - 'resource.attributes[\"service.name\"] == \"kafka-connect\"\n         and resource.attributes[\"env\"] != \"prd\"'\n  traces:\n    span:\n      # kafka-connect trace는 환경 무관 전량 drop\n      # (내부 connector 호출 trace는 디버깅 가치 없음)\n      - 'resource.attributes[\"service.name\"] == \"kafka-connect\"'\n```\n\n" +
+      "Kafka Connect trace를 전량 drop하는 이유는 connector 내부 동작이 Debezium 메트릭(lag, scn, snapshot)으로 충분히 관찰 가능하기 때문입니다. trace는 애플리케이션 레벨 디버깅용인데, Kafka Connect는 이미 Prometheus JMX 메트릭으로 운영 가시성이 확보됩니다.\n\n" +
+      "**3. logdedup: 반복 로그 중복 제거**\n\n" +
+      "레거시 Java 서비스 중 일부는 같은 에러 메시지를 초당 수백 번 반복 출력합니다. 예를 들어 Connection Pool 고갈 시 `HikariPool-1 - Connection is not available` 메시지가 1분에 수만 번 나와요.\n\n" +
+      "```yaml\nlogdedup:\n  interval: 10s\n  log_count_attribute: dedup_count\n  timezone: \"Asia/Seoul\"\n```\n\n" +
+      "10초 윈도우 내에 동일한 log body+attributes 조합이 반복되면 하나로 합치고, 합쳐진 횟수를 `dedup_count` attribute에 기록합니다. Grafana에서 `dedup_count`가 높은 로그를 필터링하면 '무엇이 가장 반복되고 있는가'를 바로 알 수 있어요.\n\n" +
+      "주의: logdedup processor는 logs pipeline에서만 동작하고, 시계열 메트릭이나 trace에는 적용되지 않습니다. 또한 `timezone: Asia/Seoul` 설정은 시간 윈도우 경계를 UTC 대신 KST 기준으로 맞추기 위해서예요.\n\n" +
+      "**4. batch processor 크기 조정**\n\n" +
+      "Gateway(otel-gw)와 Scraper(otel-scraper)는 배치 설정이 다릅니다:\n\n" +
+      "```yaml\n# otel-gw-config.yaml (Push 수신 전담)\nbatch:\n  send_batch_size: 200   # 작게 — 실시간성 우선\n  timeout: 5s            # 짧게 — 지연 누적 방지\n\n# otel-scraper-config.yaml (Pull 수집 전담)\nbatch:\n  send_batch_size: 1000  # 크게 — 처리량 우선\n  timeout: 10s           # 넉넉하게 — scrape 주기 맞춤\n```\n\n" +
+      "Gateway는 실시간 OTLP 스트림을 받기 때문에 빠르게 downstream으로 flush해야 알림 지연이 없습니다. Scraper는 15초~10분 scrape 주기로 수집하기 때문에 큰 배치로 묶어서 보내는 게 효율적입니다.\n\n" +
+      "**5. otel-node-collector: systemd journal 선택적 수집**\n\n" +
+      "K8s 노드에 DaemonSet으로 배포한 otel-node-collector는 systemd journal 로그 중 etcd, kubelet, containerd 세 유닛만 수집합니다:\n\n" +
+      "```yaml\nreceivers:\n  journald:\n    units:\n      - etcd.service\n      - kubelet.service\n      - containerd.service\n    priority: info   # info 이상만 수집\n    start_at: end    # 시작 시점부터만 (재시작 시 과거 재수집 방지)\n```\n\n" +
+      "`priority: info`로 debug 로그를 차단하고, `start_at: end`로 collector 재시작 시 과거 journal을 재전송하는 것을 막았습니다. 특히 etcd는 Raft 합의 과정에서 debug 로그가 초당 수천 건 나오는데, info 이상만 수집하면 실제 장애 로그만 남습니다.\n\n" +
+      "**전체 절감 효과**\n\n" +
+      "이 최적화들을 모두 적용한 후 Loki 일일 수집량이 약 35% 감소했고, Prometheus active series가 피크 대비 40% 줄었습니다. 가장 효과가 컸던 것은 health check 필터(약 15%)와 logdedup(약 12%)이었어요.",
+  },
+  {
+    id: 160,
+    category1: "Infrastructure",
+    category2: "Trace Sampling",
+    question:
+      "분산 추적에서 trace sampling 전략을 어떻게 설계했나요? 모든 trace를 수집하는 것과 sampling을 적용하는 것 사이에서 어떤 선택을 했고 왜 그렇게 결정했나요?",
+    answer:
+      "현재 운영 환경에서는 trace를 전량 수집하되, 의미 없는 trace는 수집 전에 filter로 차단하는 전략을 선택했습니다. Tail Sampling을 도입하지 않은 이유가 있어요.\n\n" +
+      "**현재 전략: Full Capture + 사전 필터**\n\n" +
+      "OTEL Gateway에서 trace pipeline은 다음과 같습니다:\n\n" +
+      "```yaml\ntraces:\n  receivers: [otlp]\n  processors:\n    - filter/kafka_connect_policy  # kafka-connect 전량 drop\n    - resourcedetection             # 환경 attribute 주입\n    - memory_limiter               # OOM 방지\n    - filter/health_traces         # health check span drop\n    - batch\n  exporters: [otlp_grpc/traces/tempo, clickhouse/aws]\n```\n\n" +
+      "Tempo 자체의 ingestion limit으로 cardinality를 간접 제어합니다:\n\n" +
+      "```yaml\n# tempo-config.yaml\noverrides:\n  ingestion_rate_limit_bytes: 50000000   # 50MB/s\n  ingestion_burst_size_bytes: 75000000   # 75MB burst\n  max_bytes_per_trace: 50000000          # 트레이스당 최대 50MB\n  block_retention: 24h                   # 로컬 보관 24시간\n```\n\n" +
+      "**Tail Sampling을 도입하지 않은 이유**\n\n" +
+      "Tail Sampling은 trace 전체가 완성된 뒤에 '이 trace를 보관할지 버릴지' 결정합니다. 에러가 있는 trace는 100% 보관하고, 정상 trace는 10%만 샘플링하는 식이에요. 이상적으로 들리지만 운영 복잡도가 올라갑니다:\n\n" +
+      "1. **Collector가 stateful** — 같은 trace의 span들이 반드시 같은 Collector 인스턴스에 모여야 합니다. 3중화된 Gateway 앞에 Load Balancing을 하면 같은 trace_id의 span이 gw-1과 gw-2에 분산될 수 있어요. 이를 막으려면 trace_id 기반 consistent hashing이 필요합니다.\n\n" +
+      "2. **메모리 비용** — tail sampling을 하려면 '결정 대기 시간(decision_wait)' 동안 모든 span을 메모리에 보관합니다. 현재 Tempo block retention이 24시간인 환경에서 이 비용이 Gateway 2GB 메모리 제한에 부담이 됩니다.\n\n" +
+      "3. **운영 복잡도** — 샘플링 정책 자체가 버그의 원인이 됩니다. '에러 trace가 왜 Grafana에 없지?' 물음에 답하는 것이 매우 어려워요.\n\n" +
+      "**대신 선택한 전략: 사전 필터 + 장기 보관 분리**\n\n" +
+      "전량 수집하되 두 계층으로 나눴습니다:\n\n" +
+      "- **Tempo (24h)**: 실시간 디버깅용. 최근 24시간 trace를 빠르게 조회\n" +
+      "- **ClickHouse**: 장기 분석용. OTLP Gateway에서 동시에 ClickHouse로도 전송\n\n" +
+      "ClickHouse `otel_traces` 테이블은 컬럼형 스토리지라 오래된 trace를 집계 쿼리로 분석할 때 매우 빠릅니다. '지난 30일간 payment service P99 latency 트렌드'처럼 Tempo에서는 불가능한 장기 분석이 가능해요.\n\n" +
+      "**Trace Cardinality 관점: 높은 카디널리티 span attribute**\n\n" +
+      "Trace는 Prometheus 메트릭처럼 cardinality로 과금되지 않지만, span attribute에 고카디널리티 값을 넣으면 검색이 느려집니다.\n\n" +
+      "실제로 겪은 문제:\n" +
+      "- `db.statement` 속성에 SQL 전문을 넣었더니 Tempo 검색에서 10초 이상 걸림\n" +
+      "- 해결: `db.statement`는 짧게 truncate하고, 파라미터 바인딩 값은 제외\n\n" +
+      "Tempo의 `max_bytes_per_trace: 50MB` 설정이 이런 비대한 trace를 차단하는 안전망 역할을 합니다. 한 trace가 50MB를 초과하면 ingestion 자체가 거부됩니다.\n\n" +
+      "**현재 전략의 실제 숫자**\n\n" +
+      "- 필터 전: 일 ~8억 span 수신\n" +
+      "- health check 필터 후: ~5.5억 (약 30% 제거)\n" +
+      "- kafka-connect 필터 후: ~5억 (추가 10% 제거)\n" +
+      "- Tempo 보관: 24h 회전, 약 500GB/day\n" +
+      "- ClickHouse 보관: 컬럼형 압축으로 실제 사용 ~50GB/day\n\n" +
+      "**핵심 교훈**\n\n" +
+      "Tail Sampling은 강력하지만 운영 복잡도가 높습니다. 초기에는 '사전 필터로 노이즈를 제거하고 전량 수집'하는 전략이 운영하기 쉽고 신뢰할 수 있습니다. 볼륨이 증가해서 비용이 문제가 되면 그때 Tail Sampling을 검토하는 것이 순서입니다. '미리 최적화하느라 중요한 trace를 잃는 것'이 가장 비싼 실수입니다.",
   },
 ];

@@ -27,7 +27,6 @@ argument-hint: 'Target entry to modify (e.g. "Observability Platform description
 | Project text (ZH) | `app/[locale]/dictionaries/zh.json` → `projects.<key>` |
 | Projects list component | `components/portfolio/projects-content.tsx` |
 | Image assets | `public/projects/<project-key>/` |
-| Markdown docs (sync) | `docs/경력기술서.md`, `docs/이력서.md` |
 
 ---
 
@@ -105,9 +104,6 @@ period: {
 },
 ```
 
-### Sync markdown docs
-After any experience change, update `docs/경력기술서.md` and/or `docs/이력서.md` to keep them in sync.
-
 ### Verify
 ```bash
 pnpm typecheck
@@ -143,7 +139,6 @@ pnpm build
 
 ### Remove a work experience
 1. Delete the object from the `experiences` array in `data/portfolio.ts`.
-2. Update `docs/경력기술서.md` and `docs/이력서.md` to remove the corresponding section.
 
 ### Verify
 ```bash
@@ -158,7 +153,6 @@ pnpm build
 - [ ] Target entry located by key before any edits
 - [ ] Text changed in **all three** locale files (ko / en / zh) with equal structure
 - [ ] Image paths in `data/portfolio.ts` match actual files in `public/`
-- [ ] (Experience) `docs/경력기술서.md` and `docs/이력서.md` updated to match
 - [ ] `pnpm typecheck` passes
 - [ ] `pnpm build` passes
 

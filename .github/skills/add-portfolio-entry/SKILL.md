@@ -24,7 +24,6 @@ argument-hint: 'Project name or company name to add (e.g. "Observability Platfor
 | Project text (ZH) | `app/[locale]/dictionaries/zh.json` → `projects.<key>` |
 | Projects list component | `components/portfolio/projects-content.tsx` |
 | Image assets | `public/projects/<project-key>/` |
-| Markdown docs (sync) | `docs/경력기술서.md`, `docs/이력서.md` |
 
 ---
 
@@ -112,8 +111,9 @@ The `Experience` interface requires `company`, `position`, `period`, `descriptio
 ```
 Insert at the **top** of the `experiences` array (most recent first).
 
-### 2. Sync markdown docs
-Open `docs/경력기술서.md` and/or `docs/이력서.md` and add the same information to keep them consistent with the data constants.
+### 2. Sync with dictionaries
+
+Update all three language dictionaries for the new experience entry.
 
 ### 3. Verify
 ```bash
@@ -131,7 +131,6 @@ pnpm build
 - [ ] Dictionary entry added to all three locale JSON files (ko / en / zh)
 - [ ] Project registered in `projects-content.tsx` `useMemo` array  
 - [ ] (Experience only) `experiences` array updated in `data/portfolio.ts`
-- [ ] (Experience only) Markdown docs synced in `docs/`
 - [ ] `pnpm typecheck` passes
 - [ ] `pnpm build` passes
 

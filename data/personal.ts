@@ -157,7 +157,7 @@ export const personalInfo: PersonalInfo = {
   careerMotivation:
     "현재 회사에서 많은 기회를 받았고 성장했으며 사람들도 좋지만, Networking, Monitoring, Open Container Initiative에 좀 더 집중해서 연구하고 싶습니다. OTEL, OCI 등 표준화 프로젝트가 너무 흥미롭습니다.",
   availability: {
-    noticeEndDate: "2025-12-29",
+    noticeEndDate: "즉시 출근 가능",
     interviewPreference: "무관",
     otherPositions: false,
   },

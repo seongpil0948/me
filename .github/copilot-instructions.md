@@ -4,7 +4,7 @@
 
 Personal portfolio website built with Next.js 16 (App Router), React 19, HeroUI v3(Use HeroUI React documentation from https://v3.heroui.com/react/llms.txt) component library, and Tailwind CSS v4. Features multilingual support (Korean/English/Chinese) and a dark theme-focused design showcasing professional experience and certifications.
 
-- 질의응답, QA 작성 가이드라인 문서: docs/company/common/QA작성가이드.md
+- 면접 Q&A 작성 규칙: `.github/instructions/interview-qa.instructions.md`
 
 ## Critical Development Workflow
 
@@ -306,75 +306,56 @@ throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
 
 - `data/interview/general.ts` - Behavioral, career change, problem-solving
 
-### Infrastructure Questions (23 questions) - Organized by subdirectory
+### Infrastructure Questions - Organized by subdirectory
 
 **Location**: `data/interview/infra/`
 
-- **Core** (`core.ts`): Kubernetes, AWS
-- **Observability** (`observability.ts`): Monitoring, Distributed Tracing, Time-Series DB, SRE (7 questions)
-- **Data & Messaging** (`data.ts`): Data Pipeline, Messaging, Stream Processing (5 questions)
-- **Operations** (`operations.ts`): Redis, Cost Optimization, Security, Disaster Recovery (5 questions)
-- **Networking** (`networking.ts`): Network Architecture, CI/CD (2 questions)
-- **Soft Skills** (`soft-skills.ts`): Philosophy, Leadership (1 question)
+- **Core** (`core.ts`): Kubernetes (EKS + on-prem), AWS, IaC (Terraform), Cilium/EKS Gateway API
+- **Observability** (`observability.ts`): OpenTelemetry, Monitoring, Distributed Tracing, SRE
+- **Data & Messaging** (`data.ts`): Kafka, Airflow, Data Pipeline, Stream Processing
+- **Operations** (`operations.ts`): Redis, Cost Optimization, Security, Disaster Recovery
+- **Networking** (`networking.ts`): Cilium eBPF, Hybrid Networking, CI/CD (GitLab+ArgoCD+Jenkins)
+- **Soft Skills** (`soft-skills.ts`): Philosophy, SRE vs DevOps, On-prem vs Cloud decisions
 - **Index** (`index.ts`): Aggregates all infra questions into `infraQuestions` export
 
-### Backend Questions (6 questions)
+### Backend Questions
 
-- `data/interview/backend.ts` - Go, Python, Spring Boot, Django, databases
+- `data/interview/backend.ts` - Go (ADK-Go multi-agent), Python, Spring Boot, Django, databases, API design, testing
 
-### Frontend Questions (5 questions)
+### Frontend Questions
 
 - `data/interview/frontend.ts` - React, Next.js, Vue.js, Flutter
 
-### Toss-Specific Questions (23 questions) - Organized by subdirectory
+### Defensive Tactics & Company-Specific Questions
 
-**Location**: `data/interview/toss/`
-
-- **Istio** (`istio.ts`): Service Mesh, mTLS, Ambient Mode (6 questions)
-- **Gateway** (`gateway.ts`): APISIX, API Gateway patterns (3 questions)
-- **Migration** (`migration.ts`): Legacy system modernization (1 question)
-- **Observability** (`observability.ts`): OpenTelemetry, monitoring (3 questions)
-- **Open Source** (`opensource.ts`): Contribution experience (2 questions)
-- **Automation** (`automation.ts`): CI/CD, GitOps (2 questions)
-- **Multi-Cluster** (`multi-cluster.ts`): Multi-cluster management (2 questions)
-- **Compliance** (`compliance.ts`): Security compliance (2 questions)
-- **Company** (`company.ts`): Company culture, strengths, gaps (5 questions)
-- **Index** (`index.ts`): Aggregates toss questions into `tossInterviewQuestions` export
-
-### Defensive Tactics Questions
-
-- `data/interview/defensive-tactics.ts` - Reverse questions for interviewers
+- `data/interview/defensive-tactics.ts` - Multi-cluster operational experience, Service Mesh (Cilium vs Istio), gap defense, Wipro JD-targeted questions
 
 **ID Ranges**:
 
 - General questions: 1-100
-- Infrastructure technical: 9-76 (organized in infra/ subdirectory)
-- Toss technical: 101-200 (organized in toss/ subdirectory)
-- Toss company: 201-300 (organized in toss/ subdirectory)
-- Future companies: 301+ (reserved)
+- Infrastructure technical: 9-76 + 130-143 (organized in infra/ subdirectory)
+- Backend: 16-41
+- Defensive/Company: 301-400 (defensive-tactics.ts)
 
 **Component Usage**:
 
 ```tsx
-import { interviewQuestions, tossInterviewQuestions } from "@/data/interview";
+import { interviewQuestions } from "@/data/interview";
 import { QATable } from "@/components/interview/qa-table";
 
-// General questions (includes general + infrastructure + backend + frontend)
+// All questions (general + infrastructure + backend + frontend + defensive-tactics)
 <QATable questions={interviewQuestions} />
 
-// Company-specific with filter
-<QATable questions={tossInterviewQuestions} companyFilter="toss" title="토스 면접" />
-
-// Individual category imports (if needed)
-import { infraCoreQuestions, infraObservabilityQuestions } from "@/data/interview/infra";
-import { tossIstioQuestions, tossGatewayQuestions } from "@/data/interview/toss";
+// Individual category imports
+import { infraCoreQuestions, infraNetworkingQuestions } from "@/data/interview/infra";
+import { backendQuestions } from "@/data/interview/backend";
+import { defensiveTacticsQuestions } from "@/data/interview/defensive-tactics";
 ```
 
-**Company-Specific Pages**:
+**Company-Specific Interview Prep**:
 
-- `/ko/interview/toss` - Toss DevOps Engineer interview prep (Korean only)
-- Features: Self-intro, strengths mapping, gap analysis, 23 Q&A (technical + company)
-- Future: `/ko/interview/kakaobank`, `/ko/interview/naver`, etc.
+- Wipro Cloud DevOps/SRE 포지션 전용 질문: `defensive-tactics.ts` (IDs 305-399)
+- Toss DevOps 포지션 전용 질문: `data/interview/infra/`, `data/interview/infra/networking.ts`
 
 **File Organization Benefits**:
 
@@ -385,17 +366,35 @@ import { tossIstioQuestions, tossGatewayQuestions } from "@/data/interview/toss"
 
 ## User Background & Key Experiences
 
-**Professional Context**: Portfolio owner is Platform Lead Engineer with 3+ years experience operating ₩500B e-commerce platform processing 20-50M daily Kafka messages.
+**Professional Context**: Portfolio owner is Platform Lead Engineer with 7 years experience. Currently operates ₩500B e-commerce platform (TheShop, Daewoong Group), handling 20-50M daily Kafka messages, 2B monthly traces, 15B metrics, 250M logs, 20TB+ data lake. Manages hybrid multi-cluster environment: EKS 1.34 + on-prem Kubernetes (Kubespray 6-node) + AWS ECS simultaneously.
+
+**Multi-Cloud Experience**:
+- **AWS** (Primary, 4+ years): EKS, ECS, RDS, S3, Glue, Athena, Bedrock, CodePipeline, CloudFormation, ECR, Cognito, Parameter Store, Lambda
+- **GCP** (Inoutbox startup, 2022-2023): Firebase Hosting/Firestore/Functions, Cloud Logging, Cloud Storage, FCM Push, GCP IAM
+- **On-Premise**: IDC Kubernetes cluster (Kubespray + Cilium eBPF + Rook-Ceph + Cognito OIDC)
+
+**Multi-Cluster & Multi-Account IaC**:
+- **Terraform shop-iac**: DEV (008971653402) + PRD (725129837589) account isolation, S3+DynamoDB state backends, ECR/Security Group/Cognito declarative management; Jenkins CI/CD with Destroy Guard + Slack approvals
+- **CloudFormation**: AWS-native IaC for EKS candidate resources, Parameter Store, Security Groups
+- **Helm**: shop-ai-chart (4 components), EKS service onboarding, Airflow/GitLab/ClickHouse deployments
+- **Kubespray**: On-prem Kubernetes IaC (Ansible-based, 6-node HA cluster)
+
+**AI Platform Engineering**:
+- Built multi-agent LLM platform (Go 1.25 + ADK-Go + AWS Bedrock + MCP) on EKS
+- 7 apps: orchestrator, meeting_agent, recommend_agent, customer_service_agent, project_app, knowledge_app
+- Memory: PostgreSQL + S3 Vectors + Amazon Titan embeddings; Redis/ElastiCache caching
+- Full OTel integration: trace propagation via A2A/MCP, FinOps cost dashboards
 
 **Legacy System Modernization Experience**:
 
-- **System**: 10+ year old production system with Tomcat, Spring, React, Vue.js, Kafka
+- **System**: 10+ year old production system with Tomcat, Spring, React, Vue.js, Kafka, Oracle
 - **Challenges**: Zero monitoring/observability → 18-hour manual log investigation during incidents
 - **Service Discovery**: Implemented Netflix Eureka for service discovery, Spring Cloud for service mesh patterns
 - **Traffic Management & Security**: Built centralized traffic management with authentication/authorization policies
-  - Gateway-level security controls for microservices
+  - Gateway-level security controls for microservices (APISIX Gateway)
   - Policy-driven access control and rate limiting
   - Service-to-service authentication mechanisms
+- **Data Modernization**: Oracle on-prem → Kafka CDC → AWS RDS (zero downtime)
 
 **SRE & Observability Platform**:
 
@@ -457,11 +456,11 @@ import { tossIstioQuestions, tossGatewayQuestions } from "@/data/interview/toss"
 
 **Technical Expertise**:
 
-- **Certifications**: CKA (Certified Kubernetes Administrator), AWS Advanced Networking Specialty, AWS DevOps Professional
-- **Cloud & Infrastructure**: AWS EKS, Kubernetes, Istio evaluation (Ambient Mode), APISIX Gateway production experience
-- **Observability**: OpenTelemetry contributor, Prometheus, Grafana, distributed tracing architecture
-- **Service Mesh**: Evaluated Istio Ambient Mode for EKS migration, expertise in mTLS and zero-trust networking
-- **DevOps**: CI/CD pipeline design, GitOps workflows
+- **Certifications**: CKA, LFCS, AWS Advanced Networking Specialty (Oct 2025), AWS DevOps Professional (Nov 2024), AWS SysOps Associate (Aug 2024), 정보처리기사
+- **Cloud & Infrastructure**: AWS EKS 1.34, ECS, GCP Firebase/Cloud, On-prem K8s (Kubespray), Cilium eBPF, Rook-Ceph, APISIX Gateway, Terraform, CloudFormation, Helm
+- **Observability**: OpenTelemetry contributor (PR #40123), Prometheus, Grafana, ClickHouse, Hubble (Cilium network flow)
+- **CI/CD & GitOps**: GitLab CI + Argo CD + Argo Image Updater + Jenkins (EKS and Terraform pipelines)
+- **AI Engineering**: ADK-Go (multi-agent), AWS Bedrock (Converse API, Prompt Caching), MCP/A2A protocols, Amazon Titan embeddings
 
 **Interview Preparation Context**: These experiences form the foundation for interview answers, particularly for DevOps/Platform/SRE positions requiring:
 
@@ -472,20 +471,18 @@ import { tossIstioQuestions, tossGatewayQuestions } from "@/data/interview/toss"
 
 ## Content Synchronization (Critical)
 
-**The centralized data constants in `data/` MUST always match the markdown documentation in `./docs/`:**
+**`data/` 는 단일 소스 오브 트루스다. 별도 마크다운 동기화 없음.**
 
-- `data/portfolio.ts` + `data/personal.ts` ↔ `docs/경력기술서.md` & `docs/이력서.md`
-- `data/interview/*.ts` ↔ `docs/면접-질의응답.md` (archived, TypeScript is now source of truth)
-- When updating portfolio data, update BOTH sources simultaneously
-- Korean documentation files are the reference for career details
+- `data/portfolio.ts` + `data/personal.ts` → resume 페이지·포트폴리오 자동 반영
+- `data/interview/**/*.ts` → 면접 Q&A 화면 자동 반영
+- 경력/프로젝트 변경 시 markdown 문서를 함께 편집할 필요 없음
 
 **Workflow for portfolio updates**:
 
-1. Edit markdown files in `./docs/` first (Korean source of truth)
-2. Update `data/portfolio.ts` and `data/personal.ts` to match
-3. Update all three language dictionaries (`ko.json`, `en.json`, `zh.json`) for any new text
-4. Verify consistency between markdown docs, data constants, and live web app content
-5. Test PDF generation on `/[locale]/resume` route
+1. `data/portfolio.ts` 또는 `data/personal.ts` 를 먼저 수정
+2. 세 언어 사전 (`ko.json`, `en.json`, `zh.json`) 에 해당 텍스트를 동기화
+3. resume 페이지가 data/ 루프 구조를 유지하는지 확인
+4. PDF 확인: `/[locale]/resume` 에서 브라우저 인쇄 테스트
 
 **Workflow for interview question updates**:
 
