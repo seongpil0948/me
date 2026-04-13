@@ -105,6 +105,7 @@ export interface InterviewQuestion {
   category2: string;
   question: string;
   answer: string;
+  priority?: "high" | "medium" | "low";
 }
 
 /**

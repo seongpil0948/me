@@ -27,17 +27,6 @@ const category1Options: { name: string; uid: Category1 }[] = [
   { name: "Backend", uid: "Backend" },
 ];
 
-const tableColumns: Array<{
-  className?: string;
-  id: string;
-  label: string;
-}> = [
-    { className: "w-14", id: "favorite", label: "★" },
-    { id: "question", label: "Question" },
-    { id: "category1", label: "Category 1" },
-    { id: "category2", label: "Category 2" },
-  ];
-
 interface InterviewQATableProps {
   companyFilter?: string;
   questions: InterviewQuestion[];
@@ -367,75 +356,84 @@ export function QATable({
   return (
     <>
       {topContent}
-      <Table aria-label="Interview Q&A table with filters and favorites">
-        <Table.Header columns={tableColumns}>
-          {(column) => (
-            <Table.Column className={column.className} id={column.id}>
-              {column.label}
-            </Table.Column>
-          )}
-        </Table.Header>
-        <Table.Body items={sortedItems}>
-          {(item) => (
-            <Table.Row
-              key={item.id}
-              className="cursor-pointer"
-              id={String(item.id)}
-              onAction={() => handleRowClick(item)}
-            >
-              <Table.Cell>{renderCell(item, "favorite")}</Table.Cell>
-              <Table.Cell>{renderCell(item, "question")}</Table.Cell>
-              <Table.Cell>{renderCell(item, "category1")}</Table.Cell>
-              <Table.Cell>{renderCell(item, "category2")}</Table.Cell>
-            </Table.Row>
-          )}
-        </Table.Body>
+      <Table>
+        <Table.ScrollContainer>
+          <Table.Content aria-label="Interview Q&A table with filters and favorites">
+            <Table.Header>
+              <Table.Column className="w-14" id="favorite" isRowHeader>
+                ★
+              </Table.Column>
+              <Table.Column id="question">Question</Table.Column>
+              <Table.Column id="category1">Category 1</Table.Column>
+              <Table.Column id="category2">Category 2</Table.Column>
+            </Table.Header>
+            <Table.Body items={sortedItems}>
+              {(item) => (
+                <Table.Row
+                  key={item.id}
+                  className="cursor-pointer"
+                  id={String(item.id)}
+                  onAction={() => handleRowClick(item)}
+                >
+                  <Table.Cell>{renderCell(item, "favorite")}</Table.Cell>
+                  <Table.Cell>{renderCell(item, "question")}</Table.Cell>
+                  <Table.Cell>{renderCell(item, "category1")}</Table.Cell>
+                  <Table.Cell>{renderCell(item, "category2")}</Table.Cell>
+                </Table.Row>
+              )}
+            </Table.Body>
+          </Table.Content>
+        </Table.ScrollContainer>
       </Table>
 
-      <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
-        <Modal.Backdrop />
-        <Modal.Container className="max-w-4xl">
-          <Modal.Dialog>
-            <Modal.Header className="flex flex-col gap-3">
-              <div className="text-lg font-semibold text-slate-800">
-                {selectedQuestion?.question}
-              </div>
-              <div className="flex gap-2">
-                {selectedQuestion && (
-                  <Chip color={getCategoryColor(selectedQuestion.category1)} size="sm" variant="soft">
-                    {selectedQuestion.category1}
-                  </Chip>
-                )}
-                {selectedQuestion?.category2 && (
-                  <Chip color="default" size="sm" variant="secondary">
-                    {selectedQuestion.category2}
-                  </Chip>
-                )}
-              </div>
-            </Modal.Header>
-            <Modal.Body>
-              <MarkdownRenderer>{selectedQuestion?.answer ?? ""}</MarkdownRenderer>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                variant="ghost"
-                onPress={() => {
-                  if (selectedQuestion) {
-                    toggleFavorite(selectedQuestion.id);
-                  }
-                }}
-              >
-                {selectedQuestion && favorites.has(selectedQuestion.id)
-                  ? "Remove from Favorites"
-                  : "Add to Favorites"}
-              </Button>
-              <Button onPress={() => setIsOpen(false)}>
-                Close
-              </Button>
-            </Modal.Footer>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal>
+      <Modal.Root>
+        <Modal.Trigger>
+          <span className="hidden" aria-hidden="true" />
+        </Modal.Trigger>
+        <Modal.Backdrop isOpen={isOpen} onOpenChange={setIsOpen}>
+          <Modal.Container className="max-w-4xl">
+            <Modal.Dialog>
+              <Modal.Header className="flex flex-col gap-3">
+                <div className="text-lg font-semibold text-slate-800">
+                  {selectedQuestion?.question}
+                </div>
+                <div className="flex gap-2">
+                  {selectedQuestion && (
+                    <Chip color={getCategoryColor(selectedQuestion.category1)} size="sm" variant="soft">
+                      {selectedQuestion.category1}
+                    </Chip>
+                  )}
+                  {selectedQuestion?.category2 && (
+                    <Chip color="default" size="sm" variant="secondary">
+                      {selectedQuestion.category2}
+                    </Chip>
+                  )}
+                </div>
+              </Modal.Header>
+              <Modal.Body>
+                <MarkdownRenderer>{selectedQuestion?.answer ?? ""}</MarkdownRenderer>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  variant="ghost"
+                  onPress={() => {
+                    if (selectedQuestion) {
+                      toggleFavorite(selectedQuestion.id);
+                    }
+                  }}
+                >
+                  {selectedQuestion && favorites.has(selectedQuestion.id)
+                    ? "Remove from Favorites"
+                    : "Add to Favorites"}
+                </Button>
+                <Button onPress={() => setIsOpen(false)}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal.Dialog>
+          </Modal.Container>
+        </Modal.Backdrop>
+      </Modal.Root>
     </>
   );
 }

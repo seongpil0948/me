@@ -3,7 +3,7 @@ import type { InterviewQuestion } from "@/types/portfolio";
 /**
  * Observability & Monitoring 질문들
  * ID: 11, 70, 71, 62, 72, 73, 74, 134, 135, 144, 145, 146, 139,
- *     150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160
+ *     150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 162
  */
 export const infraObservabilityQuestions: InterviewQuestion[] = [
   {
@@ -916,5 +916,25 @@ export const infraObservabilityQuestions: InterviewQuestion[] = [
       "- ClickHouse 보관: 컬럼형 압축으로 실제 사용 ~50GB/day\n\n" +
       "**핵심 교훈**\n\n" +
       "Tail Sampling은 강력하지만 운영 복잡도가 높습니다. 초기에는 '사전 필터로 노이즈를 제거하고 전량 수집'하는 전략이 운영하기 쉽고 신뢰할 수 있습니다. 볼륨이 증가해서 비용이 문제가 되면 그때 Tail Sampling을 검토하는 것이 순서입니다. '미리 최적화하느라 중요한 trace를 잃는 것'이 가장 비싼 실수입니다.",
+  },
+
+  // ─── AI / LLM Observability ────────────────────────────────────────────
+  {
+    id: 162,
+    category1: "Observability",
+    category2: "AI Platform",
+    priority: "high",
+    question:
+      "AI 멀티 에이전트 환경(ADK-Go, MCP)에서 Observability를 어떻게 구현했나요? 에이전트별·유저별 토큰 사용량, 캐싱 효율, 비용 추적을 Grafana로 어떻게 시각화하고 의사결정에 활용했는지 설명해주세요.",
+    answer:
+      "shop-ai 프로젝트에서 가장 어려웠던 건 LLM 호출이 기존 HTTP 요청과 완전히 다른 관측 패턴을 요구한다는 점이었어요. 기존 Observability에서는 latency, error rate, throughput만 보면 됐는데, LLM은 여기에 토큰 사용량, 캐싱 히트율, 모델별 비용이라는 새로운 차원이 추가되거든요.\n\n" +
+      "문제의 시작은 AWS Bedrock 비용이 한 달 만에 예상의 3배로 뛰어오른 거였어요. 어떤 에이전트가, 어떤 유저의 요청에서, 얼마나 토큰을 쓰고 있는지 전혀 보이지 않았습니다. CloudWatch에 Bedrock 메트릭이 있긴 한데 모델 ID 단위까지만 나오고, 에이전트별·유저별 분해가 안 되더라고요.\n\n" +
+      "그래서 Go의 OpenTelemetry SDK(otel-go)로 직접 계측 레이어를 만들었습니다. ADK-Go 프레임워크 안에서 Bedrock Converse API를 호출할 때마다, 응답 메타데이터에 담긴 inputTokens, outputTokens, cacheReadInputTokens, cacheWriteInputTokens를 파싱해서 OTEL Meter로 히스토그램과 카운터를 기록해요. 핵심은 이 메트릭에 agent_name, user_id, model_id, session_id를 attribute로 붙이는 거였습니다. 이렇게 하면 Grafana에서 에이전트별, 유저별, 모델별로 자유롭게 group by 할 수 있거든요.\n\n" +
+      "Prompt Caching 관측이 특히 중요했어요. Bedrock의 Prompt Caching은 동일한 시스템 프롬프트나 컨텍스트를 재사용할 때 토큰 비용을 크게 줄여주는데, 실제로 캐시가 얼마나 히트하는지 보이지 않으면 최적화할 수가 없잖아요. cacheReadInputTokens가 0이 아닌 비율을 cache_hit_ratio로 계산해서 메트릭으로 내보냈더니, meeting_agent의 캐시 히트율이 87%인 반면 knowledge_app은 12%에 불과한 걸 발견했어요. knowledge_app은 매번 다른 문서를 컨텍스트로 넘기니까 당연한 거였는데, 시스템 프롬프트 부분만이라도 캐싱되도록 프롬프트 구조를 재배치해서 히트율을 45%까지 올렸습니다.\n\n" +
+      "MCP 툴 호출 트레이싱도 직접 구현했어요. 에이전트가 postgres-mcp, codesearch-mcp, mcp-atlassian 같은 MCP 서버에 도구를 호출할 때마다 Span을 생성하고, W3C Trace Context를 MCP params._meta 필드로 전파합니다. wrapWithMeta()라는 미들웨어로 모든 MCP 핸들러를 래핑해서 trace context 추출을 자동화했어요. 덕분에 Grafana Tempo에서 사용자 요청 → orchestrator → 서브에이전트 → MCP 서버 → DB까지 전체 흐름을 하나의 Trace ID로 추적할 수 있게 됐습니다.\n\n" +
+      "FinOps 대시보드는 Grafana에서 4개 패널로 구성했어요. 첫째, 에이전트별 일일 토큰 소비량과 예상 비용 추이 그래프. 둘째, 유저별 사용량 Top 10 테이블로 과도 사용자를 식별. 셋째, Prompt Cache 효율 히트맵으로 에이전트별 캐싱 최적화 여지 파악. 넷째, 모델 티어별 비용 비교로 특정 태스크에 비싼 모델을 불필요하게 쓰고 있는지 검출.\n\n" +
+      "이 데이터가 실제 의사결정에 쓰인 대표 사례가 있어요. knowledge_app이 모든 질문에 Claude Opus(가장 비싼 모델)를 쓰고 있었는데, 대시보드에서 확인해보니 질문의 70%가 단순 FAQ 수준이었어요. 이걸 근거로 경량 질문은 Haiku 티어로, 복잡한 질문만 Opus로 라우팅하는 3단계 파이프라인으로 리팩터링했고, 해당 에이전트의 월 비용이 60% 이상 줄었습니다.\n\n" +
+      "또 하나는 AI 도입 자체의 ROI를 경영진에게 보여준 거예요. meeting_agent가 월 평균 80건의 회의록을 자동 생성하는데, 이전에는 담당자가 회의당 40분 이상 소비했거든요. Grafana에서 에이전트 실행 횟수와 평균 처리 시간을 뽑아서 '월 53시간 절감, 인건비 환산 시 LLM 비용 대비 4배 ROI'라는 수치를 만들었어요. 이 데이터가 AI 플랫폼 추가 투자 승인의 핵심 근거가 됐습니다.\n\n" +
+      "지금 다시 한다면 토큰 메트릭 수집을 ADK-Go 미들웨어 레벨로 더 추상화했을 거예요. 현재는 Bedrock Converse API 응답만 파싱하는데, 나중에 OpenAI나 다른 프로바이더를 추가하면 프로바이더별 파싱 로직이 필요하거든요. 프로바이더 무관하게 inputTokens, outputTokens, cachedTokens를 통일 인터페이스로 추출하는 GenAI Semantic Convention을 처음부터 따랐으면 확장이 더 쉬웠을 겁니다. 실제로 OpenTelemetry의 GenAI Semantic Convention이 아직 Experimental이라 당시엔 커스텀으로 갔는데, 이제 안정화되고 있으니 마이그레이션을 계획하고 있어요.",
   },
 ];

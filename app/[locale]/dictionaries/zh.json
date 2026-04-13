@@ -40,7 +40,7 @@
     "aboutMeParagraph1": "我从创业公司的全栈开发者起步，7年来跨越从基础设施到应用层的全栈领域，在不同规模与复杂度的组织中直接设计并运营分布式系统。现担任年营业额5000亿韩元企业电商平台的平台负责工程师，持续专注于构建更快速、更稳定的生产运营体系。",
     "aboutMeParagraph2": "我长期稳定运营日活10万用户的混合生产环境，支撑月20TB以上数据湖，以及每月20亿条Trace、150亿条Metric、2.5亿条Log，并以统一的平台视角打通可观测性、数据平台与AI服务能力。在EKS上搭建了基于ADK + Bedrock的AI服务环境，支持Seller、Admin、Developer、CS各组织的AX（AI Transformation）落地。经过这些结构性改进，错误检测时间缩短了99%，基础设施成本降低了50%。通过参与LG电子、SK电信等多元客户项目，我积累了跨职能团队协作（Cross-functional）与客户直接沟通的实战经验，形成了在业务语境中定义问题并给出技术解法的工作习惯。",
     "aboutMeParagraph3": "技术栈以Kubernetes和AWS为核心的云原生基础设施为根基。后端使用Django、Spring Boot、Gin开发服务和API，熟练掌握Kafka、RabbitMQ、Airflow构建的消息传递、CDC与编排管道。AI工程方面，以Go + ADK-Go结合MCP/A2A协议实现多智能体系统，并接入Bedrock Converse API。前端使用React、Vue.js、Flutter开发，具备贯穿全栈的技术视角。对这一领域的持续热情让我自然而然地获得了CKA、LFCS及AWS SysOps Administrator、DevOps Professional、Advanced Networking Specialty认证，并持续参与OpenTelemetry的upstream贡献。",
-    "aboutMeParagraph4": "目前担任大雄集团TheShop电商平台的Platform Lead Engineer。自建并管理GitLab（自托管）、Kubernetes上的Jenkins、Argo CD、Nexus等企业内部CI/CD及平台基础设施，并将Scouter、ClickHouse等本地遗留平台服务迁移至EKS及on-prem Kubernetes进行现代化升级。设计并运营基于Kafka和Kafka Connect的CDC与消息管道，以及100+个Airflow DAG，主导遗留系统微服务化转型，将基础设施成本降低一半。当前正积极推进对OpenTelemetry、OCI等云原生标准化生态的贡献，同时持续深化Kubernetes网络领域的专业能力。",
+    "aboutMeParagraph4": "在大雄集团TheShop电商平台，自建并管理GitLab、Kubernetes上的Jenkins、Argo CD、Nexus等企业内部CI/CD及平台基础设施，并将Scouter、ClickHouse等本地遗留平台服务迁移至EKS及on-prem Kubernetes进行现代化升级。设计并运营基于Kafka和Kafka Connect的CDC与消息管道，以及100+个Airflow DAG，主导遗留系统微服务化转型，将基础设施成本降低一半。当前正积极推进对OpenTelemetry、OCI等云原生标准化生态的贡献，同时持续深化Kubernetes网络领域的专业能力。",
     "teamwork": {
       "jiraConfluence": "Jira / Confluence",
       "gitTools": "Git / GitHub / GitLab",
