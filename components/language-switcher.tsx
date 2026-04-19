@@ -52,7 +52,11 @@ export default function LanguageSwitcher() {
       <Select.Popover>
         <ListBox>
           {LANGUAGES.map((lang) => (
-            <ListBox.Item key={lang.value} id={lang.value} textValue={lang.label}>
+            <ListBox.Item
+              key={lang.value}
+              id={lang.value}
+              textValue={lang.label}
+            >
               {lang.label}
               <ListBox.ItemIndicator />
             </ListBox.Item>

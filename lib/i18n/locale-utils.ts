@@ -2,6 +2,35 @@
  * Utility functions for internationalization (i18n) and locale management
  */
 
+import type { Locale } from "@/app/[locale]/dictionaries";
+import type { Localized } from "@/types/i18n";
+import type {
+  InterviewQuestion,
+  LocalizedInterviewQuestion,
+} from "@/types/portfolio";
+
+export function localize<T>(value: Localized<T>, locale: Locale): T {
+  return value[locale] ?? value.ko;
+}
+
+export function localizeQuestion(
+  q: LocalizedInterviewQuestion,
+  locale: Locale,
+): InterviewQuestion {
+  return {
+    ...q,
+    question: localize(q.question, locale),
+    answer: localize(q.answer, locale),
+  };
+}
+
+export function localizeQuestions(
+  questions: LocalizedInterviewQuestion[],
+  locale: Locale,
+): InterviewQuestion[] {
+  return questions.map((q) => localizeQuestion(q, locale));
+}
+
 /**
  * Extract locale from pathname
  * @param pathname - Current URL pathname

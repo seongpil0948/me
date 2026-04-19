@@ -13,7 +13,10 @@ export const Navbar = () => {
     <nav className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
       <div className="flex h-14 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Brand */}
-        <NextLink className="flex items-center gap-2 font-bold text-lg" href="/">
+        <NextLink
+          className="flex items-center gap-2 font-bold text-lg"
+          href="/"
+        >
           Sp Choi
         </NextLink>
 

@@ -380,6 +380,7 @@
   },
   "interview": {
     "title": "Interview Q&A",
+    "description": "Practice technical and behavioral interview questions by category. Click a question to open the full answer.",
     "practice": "Practice Mode",
     "tableView": "Table View",
     "quiz": {

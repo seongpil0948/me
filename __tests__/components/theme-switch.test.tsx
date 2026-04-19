@@ -4,10 +4,7 @@ import { userEvent } from "@testing-library/user-event";
 import { render, screen } from "../test-utils";
 
 import { ThemeSwitch } from "@/components/theme-switch";
-import {
-  DEFAULT_THEME_PREFERENCE,
-  useThemeStore,
-} from "@/lib/theme-store";
+import { DEFAULT_THEME_PREFERENCE, useThemeStore } from "@/lib/theme-store";
 
 describe("ThemeSwitch", () => {
   beforeEach(() => {

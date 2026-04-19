@@ -382,6 +382,7 @@
   },
   "interview": {
     "title": "面试问答",
+    "description": "按类别练习技术与行为面试问题。点击问题可查看完整答案。",
     "practice": "练习模式",
     "tableView": "列表视图",
     "quiz": {

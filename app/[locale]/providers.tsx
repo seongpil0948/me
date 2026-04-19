@@ -17,7 +17,11 @@ export interface ProvidersProps {
 function HtmlThemeSync() {
   const hydrated = useThemeStore((state) => state.hydrated);
   const themePreference = useThemeStore((state) => state.themePreference);
-  useSyncExternalStore(subscribeToSystemTheme, getSystemTheme, () => DEFAULT_THEME);
+  useSyncExternalStore(
+    subscribeToSystemTheme,
+    getSystemTheme,
+    () => DEFAULT_THEME,
+  );
 
   useEffect(() => {
     if (!hydrated) {

@@ -520,18 +520,18 @@ export const resumeProjects: {
   key: ProjectKey;
   thumbnailIndex?: number;
 }[] = [
-    { key: "monitoring" },
-    { key: "dataLake" },
-    { key: "theshop" },
-    { key: "gitops" },
-    { key: "gateway" },
-    { key: "airflow" },
-    { key: "ixiStudio" },
-    { key: "ixiAdmin" },
-    { key: "drone", thumbnailIndex: 2 },
-    { key: "robotPlatform" },
-    { key: "inoutbox", thumbnailIndex: 8 },
-    { key: "campi" },
-    { key: "virtualTryOn" },
-    { key: "intellisysWebsite" },
-  ];
+  { key: "monitoring" },
+  { key: "dataLake" },
+  { key: "theshop" },
+  { key: "gitops" },
+  { key: "gateway" },
+  { key: "airflow" },
+  { key: "ixiStudio" },
+  { key: "ixiAdmin" },
+  { key: "drone", thumbnailIndex: 2 },
+  { key: "robotPlatform" },
+  { key: "inoutbox", thumbnailIndex: 8 },
+  { key: "campi" },
+  { key: "virtualTryOn" },
+  { key: "intellisysWebsite" },
+];

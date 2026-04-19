@@ -1,7 +1,6 @@
 /* Print-specific styles for resume PDF generation */
 
 @media print {
-
   /* Hide elements that shouldn't appear in print */
   nav,
   .no-print,

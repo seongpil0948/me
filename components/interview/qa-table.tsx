@@ -162,13 +162,10 @@ export function QATable({
     return [...filteredItems].sort((a, b) => a.id - b.id);
   }, [filteredItems]);
 
-  const handleRowClick = React.useCallback(
-    (question: InterviewQuestion) => {
-      setSelectedQuestion(question);
-      setIsOpen(true);
-    },
-    [],
-  );
+  const handleRowClick = React.useCallback((question: InterviewQuestion) => {
+    setSelectedQuestion(question);
+    setIsOpen(true);
+  }, []);
 
   const getCategoryColor = (category: Category1) => {
     switch (category) {
@@ -188,30 +185,25 @@ export function QATable({
       switch (columnKey) {
         case "favorite":
           return (
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleFavorite(question.id);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.stopPropagation();
-                  toggleFavorite(question.id);
-                }
-              }}
+            <Button
+              isIconOnly
+              aria-label={
+                favorites.has(question.id)
+                  ? "Remove question from favorites"
+                  : "Add question to favorites"
+              }
+              size="sm"
+              variant="ghost"
+              onPress={() => toggleFavorite(question.id)}
             >
-              <Button isIconOnly size="sm" variant="ghost">
-                <StarIcon
-                  filled={favorites.has(question.id)}
-                  style={{
-                    color: favorites.has(question.id) ? "#f59e0b" : "#d1d5db",
-                    fontSize: "20px",
-                  }}
-                />
-              </Button>
-            </div>
+              <StarIcon
+                filled={favorites.has(question.id)}
+                style={{
+                  color: favorites.has(question.id) ? "#f59e0b" : "#d1d5db",
+                  fontSize: "20px",
+                }}
+              />
+            </Button>
           );
         case "question":
           return (
@@ -223,7 +215,11 @@ export function QATable({
           );
         case "category1":
           return (
-            <Chip color={getCategoryColor(question.category1)} size="sm" variant="soft">
+            <Chip
+              color={getCategoryColor(question.category1)}
+              size="sm"
+              variant="soft"
+            >
               {question.category1}
             </Chip>
           );
@@ -266,6 +262,7 @@ export function QATable({
           }}
         >
           <SearchField
+            aria-label="Search interview questions"
             className="max-w-100"
             value={filterValue}
             onChange={setFilterValue}
@@ -292,7 +289,11 @@ export function QATable({
                   }
                 >
                   {category1Options.map((cat) => (
-                    <Dropdown.Item key={cat.uid} id={cat.uid} textValue={cat.name}>
+                    <Dropdown.Item
+                      key={cat.uid}
+                      id={cat.uid}
+                      textValue={cat.name}
+                    >
                       <Dropdown.ItemIndicator />
                       {cat.name}
                     </Dropdown.Item>
@@ -314,7 +315,11 @@ export function QATable({
                   }
                 >
                   {category2Options.map((cat) => (
-                    <Dropdown.Item key={cat.uid} id={cat.uid} textValue={cat.name}>
+                    <Dropdown.Item
+                      key={cat.uid}
+                      id={cat.uid}
+                      textValue={cat.name}
+                    >
                       <Dropdown.ItemIndicator />
                       {cat.name}
                     </Dropdown.Item>
@@ -399,7 +404,11 @@ export function QATable({
                 </div>
                 <div className="flex gap-2">
                   {selectedQuestion && (
-                    <Chip color={getCategoryColor(selectedQuestion.category1)} size="sm" variant="soft">
+                    <Chip
+                      color={getCategoryColor(selectedQuestion.category1)}
+                      size="sm"
+                      variant="soft"
+                    >
                       {selectedQuestion.category1}
                     </Chip>
                   )}
@@ -411,7 +420,9 @@ export function QATable({
                 </div>
               </Modal.Header>
               <Modal.Body>
-                <MarkdownRenderer>{selectedQuestion?.answer ?? ""}</MarkdownRenderer>
+                <MarkdownRenderer>
+                  {selectedQuestion?.answer ?? ""}
+                </MarkdownRenderer>
               </Modal.Body>
               <Modal.Footer>
                 <Button
@@ -426,9 +437,7 @@ export function QATable({
                     ? "Remove from Favorites"
                     : "Add to Favorites"}
                 </Button>
-                <Button onPress={() => setIsOpen(false)}>
-                  Close
-                </Button>
+                <Button onPress={() => setIsOpen(false)}>Close</Button>
               </Modal.Footer>
             </Modal.Dialog>
           </Modal.Container>

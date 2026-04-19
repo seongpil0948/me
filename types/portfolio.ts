@@ -108,6 +108,14 @@ export interface InterviewQuestion {
   priority?: "high" | "medium" | "low";
 }
 
+export interface LocalizedInterviewQuestion extends Omit<
+  InterviewQuestion,
+  "question" | "answer"
+> {
+  question: import("@/types/i18n").Localized<string>;
+  answer: import("@/types/i18n").Localized<string>;
+}
+
 /**
  * Portfolio data structure combining all portfolio information with dictionary
  * Note: Dictionary type is imported from @/types/i18n for better type inference

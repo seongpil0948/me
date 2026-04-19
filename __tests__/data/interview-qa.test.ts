@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { interviewQuestions } from "@/data/interview";
+import { localize, localizeQuestions } from "@/lib/i18n/locale-utils";
 
 describe("interview data", () => {
   describe("general interview questions", () => {
@@ -18,8 +19,8 @@ describe("interview data", () => {
         expect(typeof q.id).toBe("number");
         expect(typeof q.category1).toBe("string");
         expect(typeof q.category2).toBe("string");
-        expect(typeof q.question).toBe("string");
-        expect(typeof q.answer).toBe("string");
+        expect(typeof q.question.ko).toBe("string");
+        expect(typeof q.answer.ko).toBe("string");
       });
     });
 
@@ -48,8 +49,8 @@ describe("interview data", () => {
 
     it("should have questions and answers with content", () => {
       interviewQuestions.forEach((q) => {
-        expect(q.question.length).toBeGreaterThan(0);
-        expect(q.answer.length).toBeGreaterThan(0);
+        expect(q.question.ko.length).toBeGreaterThan(0);
+        expect(q.answer.ko.length).toBeGreaterThan(0);
       });
     });
 
@@ -70,6 +71,41 @@ describe("interview data", () => {
   describe("all questions combined", () => {
     it("should have sufficient total questions", () => {
       expect(interviewQuestions.length).toBeGreaterThan(50);
+    });
+  });
+
+  describe("localize helper", () => {
+    it("returns ko value when locale is ko", () => {
+      const val = { ko: "한국어" };
+      expect(localize(val, "ko")).toBe("한국어");
+    });
+
+    it("falls back to ko when en is missing", () => {
+      const val = { ko: "한국어" };
+      expect(localize(val, "en")).toBe("한국어");
+    });
+
+    it("returns en value when present", () => {
+      const val = { ko: "한국어", en: "English" };
+      expect(localize(val, "en")).toBe("English");
+    });
+
+    it("localizeQuestions returns InterviewQuestion[] with string fields", () => {
+      const localized = localizeQuestions(interviewQuestions, "ko");
+
+      localized.forEach((q) => {
+        expect(typeof q.question).toBe("string");
+        expect(typeof q.answer).toBe("string");
+      });
+    });
+
+    it("localizeQuestions ko matches source ko values", () => {
+      const localized = localizeQuestions(interviewQuestions, "ko");
+
+      interviewQuestions.forEach((src, i) => {
+        expect(localized[i].question).toBe(src.question.ko);
+        expect(localized[i].answer).toBe(src.answer.ko);
+      });
     });
   });
 });

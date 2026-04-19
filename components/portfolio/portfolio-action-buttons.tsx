@@ -19,7 +19,11 @@ export default function PortfolioActionButtons({
 }: PortfolioActionButtonsProps) {
   return (
     <div className="flex justify-center gap-4 mt-8 mb-16 flex-wrap">
-      <a href="https://github.com/seongpil0948" rel="noreferrer" target="_blank">
+      <a
+        href="https://github.com/seongpil0948"
+        rel="noreferrer"
+        target="_blank"
+      >
         <Button className="shadow-lg" style={commonStyles.button.secondary}>
           <GithubIcon size={20} />
           {dict.buttons.visitGithub}

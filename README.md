@@ -47,15 +47,18 @@ Personal portfolio website showcasing professional experience, skills, and certi
 │   └── interview/         # Interview Q&A (category-based)
 │       ├── index.ts       # Aggregator
 │       ├── general.ts     # General questions (20)
-│       ├── infrastructure.ts # Infrastructure (11)
-│       ├── backend.ts     # Backend (6)
-│       ├── frontend.ts    # Frontend (5)
-│       ├── toss-tech.ts   # Toss technical (13, Korean)
-│       └── toss-company.ts # Toss company (5, Korean)
-└── docs/                   # Documentation
-    ├── 경력기술서.md       # Career details (Korean)
-    ├── 이력서.md           # Resume (Korean)
-    └── 면접-질의응답.md    # Interview Q&A (archived)
+│       ├── backend.ts     # Backend questions
+│       ├── frontend.ts    # Frontend questions
+│       ├── defensive-tactics.ts # Gap defense / company-specific
+│       ├── wipro.ts       # Wipro executive interview set (501-530)
+│       └── infra/         # Infrastructure by category (core/obs/data/...)
+│           ├── core.ts
+│           ├── observability.ts
+│           ├── data.ts
+│           ├── operations.ts
+│           ├── networking.ts
+│           └── soft-skills.ts
+└── public/                 # Static assets
 ```
 
 ## 🛠️ Development
@@ -101,7 +104,7 @@ The project supports three languages:
 - `/[locale]` - Main portfolio page
 - `/[locale]/resume` - PDF-optimized resume
 - `/[locale]/interview` - General interview Q&A (60+ questions)
-- `/[locale]/interview/toss` - Toss DevOps interview prep (Korean only, 18 questions)
+- `/[locale]/interview/wipro` - Wipro executive interview prep (Korean, 30 questions)
 
 **How it works**:
 
@@ -142,8 +145,7 @@ The project supports three languages:
 ## 📄 Documentation
 
 - **[Copilot Instructions](./.github/copilot-instructions.md)**: Development guidelines and architecture patterns
-- **[Interview Guide](./docs/company/common/경력직%20기술%20인터뷰%20핵심%20가이드.md)**: Technical interview preparation guide (Korean)
-- **[Toss Research](./docs/company/toss/)**: Toss DevOps Engineer JD and research materials (Korean)
+- **[Interview QA Rules](./.github/instructions/interview-qa.instructions.md)**: Interview answer writing rules (Korean)
 
 ## 🎨 Features
 
@@ -160,7 +162,7 @@ The project supports three languages:
 ### Interview System
 
 - ✅ Category-based Q&A (60+ questions)
-- ✅ Company-specific preparation pages
+- ✅ Company-specific preparation pages (Wipro)
 - ✅ Interactive table with search & filters
 - ✅ Favorites system (localStorage)
 - ✅ Modal view for detailed answers

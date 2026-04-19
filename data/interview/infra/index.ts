@@ -1,4 +1,4 @@
-import type { InterviewQuestion } from "@/types/portfolio";
+import type { LocalizedInterviewQuestion } from "@/types/portfolio";
 
 /**
  * Infrastructure 카테고리별 질문들
@@ -15,7 +15,7 @@ import { infraSoftSkillsQuestions } from "./soft-skills";
 /**
  * 모든 Infrastructure 질문들을 카테고리별로 통합
  */
-export const infraQuestions: InterviewQuestion[] = [
+export const infraQuestions: LocalizedInterviewQuestion[] = [
   ...infraCoreQuestions, // Core Infrastructure (Kubernetes, AWS, IaC)
   ...infraObservabilityQuestions, // Observability & Monitoring
   ...infraDataQuestions, // Data & Messaging

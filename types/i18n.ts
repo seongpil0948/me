@@ -4,6 +4,8 @@
 
 import type { getDictionary, Locale } from "@/app/[locale]/dictionaries";
 
+export type Localized<T> = { ko: T; en?: T; zh?: T };
+
 /**
  * Dictionary type automatically inferred from JSON files
  * This uses TypeScript's type inference to get the exact shape of dictionary objects

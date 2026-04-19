@@ -18,15 +18,15 @@ argument-hint: 'Target entry to modify (e.g. "Observability Platform description
 
 ## Key Files
 
-| Purpose | File |
-|---------|------|
-| Skill & experience data | `data/portfolio.ts` |
-| Project image paths | `data/portfolio.ts` → `projectImages` object |
-| Project text (KO) | `app/[locale]/dictionaries/ko.json` → `projects.<key>` |
-| Project text (EN) | `app/[locale]/dictionaries/en.json` → `projects.<key>` |
-| Project text (ZH) | `app/[locale]/dictionaries/zh.json` → `projects.<key>` |
-| Projects list component | `components/portfolio/projects-content.tsx` |
-| Image assets | `public/projects/<project-key>/` |
+| Purpose                 | File                                                   |
+| ----------------------- | ------------------------------------------------------ |
+| Skill & experience data | `data/portfolio.ts`                                    |
+| Project image paths     | `data/portfolio.ts` → `projectImages` object           |
+| Project text (KO)       | `app/[locale]/dictionaries/ko.json` → `projects.<key>` |
+| Project text (EN)       | `app/[locale]/dictionaries/en.json` → `projects.<key>` |
+| Project text (ZH)       | `app/[locale]/dictionaries/zh.json` → `projects.<key>` |
+| Projects list component | `components/portfolio/projects-content.tsx`            |
+| Image assets            | `public/projects/<project-key>/`                       |
 
 ---
 
@@ -35,18 +35,22 @@ argument-hint: 'Target entry to modify (e.g. "Observability Platform description
 Targets: title, subtitle, or `content` bullet points.
 
 ### 1. Identify the project key
+
 Open `data/portfolio.ts` and locate the key in `projectImages` (e.g., `observabilityPlatform`).  
 The same key is used in all three locale JSON files.
 
 ### 2. Edit the Korean dictionary (`ko.json`)
+
 Open `app/[locale]/dictionaries/ko.json` and find `"projects"."<key>"`.  
 Edit `title`, `subtitle`, or `content` array items as needed.
 
 ### 3. Mirror the change in `en.json` and `zh.json`
+
 Open each file and make the equivalent update for the same key.  
 All three locales **must remain structurally identical** (same number of `content` items).
 
 ### 4. Verify
+
 ```bash
 pnpm typecheck   # catch any key drift
 pnpm build
@@ -57,6 +61,7 @@ pnpm build
 ## Procedure B — Replace or Remove Project Images
 
 ### Replace images
+
 1. Copy new files into `public/projects/<project-key>/` (overwrite or use new filenames).
 2. If filenames changed, update the path array in `data/portfolio.ts` → `projectImages.<key>`:
    ```ts
@@ -68,16 +73,21 @@ pnpm build
 3. Delete old image files from `public/projects/<project-key>/` if no longer needed.
 
 ### Remove all images from a project
+
 Set the array to empty in `projectImages`:
+
 ```ts
 myProject: [],
 ```
+
 The `ProjectImageSwiper` component handles empty arrays gracefully (hides the swiper).
 
 ### Remove a single image
+
 Delete the path string from the array; delete the physical file from `public/`.
 
 ### Verify
+
 ```bash
 pnpm typecheck   # readonly array types validated
 pnpm build
@@ -88,6 +98,7 @@ pnpm build
 ## Procedure C — Edit Work Experience Entry
 
 ### Update achievements, description, or technologies
+
 Open `data/portfolio.ts`, find the target object in the `experiences` array (ordered newest-first).
 
 - `description`: Multilingual object `{ ko, en, zh }` — update all three.
@@ -95,7 +106,9 @@ Open `data/portfolio.ts`, find the target object in the `experiences` array (ord
 - `technologies`: Plain `string[]` — technology names are not localised.
 
 ### Update period / dates
+
 Locate the `period` field and update all three locales:
+
 ```ts
 period: {
   ko: "2024년 3월 – 현재 (1년 1개월)",
@@ -105,6 +118,7 @@ period: {
 ```
 
 ### Verify
+
 ```bash
 pnpm typecheck
 pnpm lint
@@ -116,13 +130,16 @@ pnpm build
 ## Procedure D — Reorder Entries
 
 ### Reorder projects
+
 `components/portfolio/projects-content.tsx` contains a `useMemo` array.  
 Cut and paste the target object to the desired position. Display order matches array order.
 
 ### Reorder experiences
+
 `data/portfolio.ts` → `experiences` array. **Newest entry must stay first** — this is a convention enforced visually.
 
 ### Verify
+
 ```bash
 pnpm build
 ```
@@ -132,15 +149,18 @@ pnpm build
 ## Procedure E — Remove an Entry
 
 ### Remove a project
+
 1. Delete the object from the `useMemo` array in `components/portfolio/projects-content.tsx`.
 2. Delete the `projectImages.<key>` entry from `data/portfolio.ts`.
 3. Delete the `"<key>"` block from **all three** locale JSON files (`ko.json`, `en.json`, `zh.json`).
 4. Optionally delete image files from `public/projects/<key>/`.
 
 ### Remove a work experience
+
 1. Delete the object from the `experiences` array in `data/portfolio.ts`.
 
 ### Verify
+
 ```bash
 pnpm typecheck   # confirms no dangling references
 pnpm build

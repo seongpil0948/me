@@ -1,11 +1,13 @@
-import type { Locale } from "../dictionaries";
 import type { Metadata } from "next";
 
-import { getDictionary } from "../dictionaries";
+import { notFound } from "next/navigation";
+
+import { getDictionary, hasLocale } from "../dictionaries";
 
 import { InterviewTabsClient } from "@/components/interview/interview-tabs-client";
 import { interviewQuestions } from "@/data/interview";
 import { layoutStyles, spacing } from "@/constants/styles";
+import { localizeQuestions } from "@/lib/i18n/locale-utils";
 
 export const metadata: Metadata = {
   title: "Interview Q&A Practice | Seongpil Choi",
@@ -17,10 +19,13 @@ export const metadata: Metadata = {
 export default async function InterviewPage({
   params,
 }: {
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  if (!hasLocale(locale)) notFound();
+
   const dict = await getDictionary(locale);
+  const questions = localizeQuestions(interviewQuestions, locale);
 
   return (
     <div style={layoutStyles.interviewPage}>
@@ -28,12 +33,11 @@ export default async function InterviewPage({
         <header style={{ marginBottom: spacing.xl }}>
           <h1 style={layoutStyles.interviewHeader}>{dict.interview.title}</h1>
           <p style={layoutStyles.interviewDescription}>
-            Prepare for technical interviews with categorized questions and
-            answers. Click any question to view the full answer in a modal.
+            {dict.interview.description}
           </p>
         </header>
 
-        <InterviewTabsClient dict={dict} questions={interviewQuestions} />
+        <InterviewTabsClient dict={dict} questions={questions} />
       </div>
     </div>
   );

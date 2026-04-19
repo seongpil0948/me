@@ -1,7 +1,7 @@
 import type { Dictionary } from "@/types/i18n";
 
 import { Card, CardContent, Chip, Separator } from "@heroui/react";
-import Image from 'next/image';
+import Image from "next/image";
 
 import { Certification, Skill } from "@/types/portfolio";
 import { categorizeSkills, getSkillEmoji } from "@/lib/skill-utils";

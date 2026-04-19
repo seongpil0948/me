@@ -57,7 +57,6 @@ export function cleanupOldQuizData(): void {
       localStorage.removeItem(stateKey);
     }
   } catch (error) {
-     
     console.warn("Failed to cleanup old quiz data:", error);
   }
 }

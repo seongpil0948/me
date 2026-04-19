@@ -34,13 +34,20 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
   return (
     <button
       aria-label={`Switch to ${isSelected ? "dark" : "light"} mode`}
-      className={clsx("inline-flex items-center px-px transition-opacity hover:opacity-80", className)}
+      className={clsx(
+        "inline-flex items-center px-px transition-opacity hover:opacity-80",
+        className,
+      )}
       type="button"
       onClick={toggleTheme}
     >
       <Switch isReadOnly isSelected={isSelected} />
       <span className="ml-2 text-muted">
-        {isSelected ? <SunFilledIcon size={22} /> : <MoonFilledIcon size={22} />}
+        {isSelected ? (
+          <SunFilledIcon size={22} />
+        ) : (
+          <MoonFilledIcon size={22} />
+        )}
       </span>
     </button>
   );

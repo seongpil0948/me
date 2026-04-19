@@ -1,16 +1,17 @@
-import type { InterviewQuestion } from "@/types/portfolio";
+import type { LocalizedInterviewQuestion } from "@/types/portfolio";
 
 import { backendQuestions } from "./backend";
 import { defensiveTacticsQuestions } from "./defensive-tactics";
 import { frontendQuestions } from "./frontend";
 import { generalQuestions } from "./general";
 import { infraQuestions as infrastructureQuestions } from "./infra";
+import { wiproQuestions } from "./wipro";
 
 /**
  * All general interview questions combined
  * Split by category for better maintainability
  */
-export const interviewQuestions: InterviewQuestion[] = [
+export const interviewQuestions: LocalizedInterviewQuestion[] = [
   ...generalQuestions,
   ...infrastructureQuestions,
   ...backendQuestions,
@@ -27,4 +28,5 @@ export {
   frontendQuestions,
   generalQuestions,
   infrastructureQuestions,
+  wiproQuestions,
 };

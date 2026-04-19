@@ -43,19 +43,16 @@ export class NotFoundError extends AppError {
  */
 export function logError(error: Error, context?: Record<string, any>): void {
   if (process.env.NODE_ENV === "development") {
-     
     console.error("❌ Error:", {
       name: error.name,
       message: error.message,
       stack: error.stack,
       context,
     });
-     
   } else {
     // In production, send to error tracking service (Sentry, etc.)
-     
+
     console.error(error.message);
-     
   }
 }
 
@@ -78,9 +75,7 @@ export function handleError(
     return error.message;
   }
 
-   
   console.error("Unknown error:", error);
-   
 
   return fallbackMessage;
 }

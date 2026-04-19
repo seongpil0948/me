@@ -9,44 +9,46 @@ argument-hint: 'Project name or company name to add (e.g. "Observability Platfor
 ## When to Use
 
 - Adding a new project card to the **Projects** tab
-- Adding a new company/role to the **Experience** tab  
+- Adding a new company/role to the **Experience** tab
 - Adding or replacing project screenshot images
 - Updating achievements or technologies for an existing experience
 
 ## Key Files
 
-| Purpose | File |
-|---------|------|
-| Skill & experience data | `data/portfolio.ts` |
-| Project image paths | `data/portfolio.ts` → `projectImages` object |
-| Project text (KO) | `app/[locale]/dictionaries/ko.json` → `projects.<key>` |
-| Project text (EN) | `app/[locale]/dictionaries/en.json` → `projects.<key>` |
-| Project text (ZH) | `app/[locale]/dictionaries/zh.json` → `projects.<key>` |
-| Projects list component | `components/portfolio/projects-content.tsx` |
-| Image assets | `public/projects/<project-key>/` |
+| Purpose                 | File                                                   |
+| ----------------------- | ------------------------------------------------------ |
+| Skill & experience data | `data/portfolio.ts`                                    |
+| Project image paths     | `data/portfolio.ts` → `projectImages` object           |
+| Project text (KO)       | `app/[locale]/dictionaries/ko.json` → `projects.<key>` |
+| Project text (EN)       | `app/[locale]/dictionaries/en.json` → `projects.<key>` |
+| Project text (ZH)       | `app/[locale]/dictionaries/zh.json` → `projects.<key>` |
+| Projects list component | `components/portfolio/projects-content.tsx`            |
+| Image assets            | `public/projects/<project-key>/`                       |
 
 ---
 
 ## Procedure A — Add a New Project
 
 ### 1. Place image files
+
 Copy screenshots to `public/projects/<project-key>/` (e.g., `public/projects/my-project/1.png`).  
 Use lowercase-kebab-case for the folder name. Supported formats: `.png`, `.jpg`, `.jpeg`, `.webp`.
 
 ### 2. Register image paths in `data/portfolio.ts`
+
 Add an entry to the `projectImages` object (keep `as const`):
+
 ```ts
 projectImages = {
   // existing entries …
-  myProject: [
-    "/projects/my-project/1.png",
-    "/projects/my-project/2.png",
-  ],
+  myProject: ["/projects/my-project/1.png", "/projects/my-project/2.png"],
 } as const;
 ```
 
 ### 3. Add Korean text to `app/[locale]/dictionaries/ko.json`
+
 Insert under the `"projects"` object. `content` is a string array — each item renders as one bullet point:
+
 ```json
 "myProject": {
   "title": "프로젝트 제목",
@@ -59,10 +61,13 @@ Insert under the `"projects"` object. `content` is a string array — each item 
 ```
 
 ### 4. Add English text to `en.json` and Chinese to `zh.json`
+
 Same structure. Keep the same key as step 3 (`myProject`).
 
 ### 5. Register project in `components/portfolio/projects-content.tsx`
+
 Add an entry to the `projects` array inside `useMemo`:
+
 ```tsx
 {
   title: dict.projects.myProject.title,
@@ -71,10 +76,13 @@ Add an entry to the `projects` array inside `useMemo`:
   images: projectImages.myProject,
 },
 ```
+
 Insert at the desired display position (top = first, newer projects first).
 
 ### 6. Verify TypeScript & lint
+
 Run in order:
+
 ```bash
 pnpm typecheck   # catch missing dict keys or projectImages keys
 pnpm lint        # ESLint auto-fix
@@ -86,7 +94,9 @@ pnpm build       # full Next.js build check
 ## Procedure B — Add a New Work Experience
 
 ### 1. Add entry to `experiences` in `data/portfolio.ts`
+
 The `Experience` interface requires `company`, `position`, `period`, `description`, `achievements`, and `technologies`. All text fields must have `ko`, `en`, `zh` locales:
+
 ```ts
 {
   company: "회사명 (Company Name)",
@@ -109,6 +119,7 @@ The `Experience` interface requires `company`, `position`, `period`, `descriptio
   technologies: ["Tech1", "Tech2", "Tech3"],
 },
 ```
+
 Insert at the **top** of the `experiences` array (most recent first).
 
 ### 2. Sync with dictionaries
@@ -116,6 +127,7 @@ Insert at the **top** of the `experiences` array (most recent first).
 Update all three language dictionaries for the new experience entry.
 
 ### 3. Verify
+
 ```bash
 pnpm typecheck
 pnpm lint
@@ -129,7 +141,7 @@ pnpm build
 - [ ] Images placed under `public/projects/<key>/`
 - [ ] `projectImages.<key>` added to `data/portfolio.ts`
 - [ ] Dictionary entry added to all three locale JSON files (ko / en / zh)
-- [ ] Project registered in `projects-content.tsx` `useMemo` array  
+- [ ] Project registered in `projects-content.tsx` `useMemo` array
 - [ ] (Experience only) `experiences` array updated in `data/portfolio.ts`
 - [ ] `pnpm typecheck` passes
 - [ ] `pnpm build` passes

@@ -25,7 +25,6 @@ function loadQuizState(totalQuestions: number): Partial<QuizState> {
       viewedQuestionIds: state.viewedQuestionIds,
     };
   } catch (error) {
-     
     console.warn("Failed to load quiz state:", error);
 
     return {};
@@ -51,7 +50,6 @@ function saveQuizState(
 
     localStorage.setItem(QUIZ_STORAGE_KEYS.state, JSON.stringify(state));
   } catch (error) {
-     
     console.warn("Failed to save quiz state:", error);
   }
 }
@@ -83,7 +81,6 @@ function saveQuizSettings(
 
     localStorage.setItem(QUIZ_STORAGE_KEYS.settings, JSON.stringify(settings));
   } catch (error) {
-     
     console.warn("Failed to save quiz settings:", error);
   }
 }

@@ -145,9 +145,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
     return (
       <Card>
         <CardContent>
-          <p className="text-center text-muted">
-            {dict.common.loading}...
-          </p>
+          <p className="text-center text-muted">{dict.common.loading}...</p>
         </CardContent>
       </Card>
     );
@@ -161,6 +159,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
           {title || dict.interview.quiz.title}
         </h2>
         <Select
+          aria-label={dict.interview.settings.category}
           className="max-w-xs"
           placeholder={dict.interview.settings.allCategories}
           value={selectedCategory}
@@ -227,7 +226,11 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
               <div className="flex w-full items-center justify-between">
                 <div className="flex gap-2">
                   {currentQuestion.category1 && (
-                    <Chip color={getCategoryColor(currentQuestion.category1)} size="sm" variant="soft">
+                    <Chip
+                      color={getCategoryColor(currentQuestion.category1)}
+                      size="sm"
+                      variant="soft"
+                    >
                       {currentQuestion.category1}
                     </Chip>
                   )}
@@ -299,10 +302,7 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
                   ← {dict.interview.quiz.previousQuestion}
                 </Button>
 
-                <Button
-                  variant="ghost"
-                  onClick={handleRandomQuestion}
-                >
+                <Button variant="ghost" onClick={handleRandomQuestion}>
                   🎲 {dict.interview.quiz.randomQuestion}
                 </Button>
 
@@ -351,12 +351,10 @@ export function QuizMode({ dict, questions, title }: QuizModeProps) {
       <Card className="bg-surface">
         <CardContent className="py-3">
           <p className="text-center text-sm text-muted">
-            💡 Tip: Use{" "}
-            <kbd className="px-2 py-1 bg-default rounded">←</kbd>{" "}
-            <kbd className="px-2 py-1 bg-default rounded">→</kbd> arrow keys
-            to navigate,{" "}
-            <kbd className="px-2 py-1 bg-default rounded">Space</kbd> to
-            toggle answer
+            💡 Tip: Use <kbd className="px-2 py-1 bg-default rounded">←</kbd>{" "}
+            <kbd className="px-2 py-1 bg-default rounded">→</kbd> arrow keys to
+            navigate, <kbd className="px-2 py-1 bg-default rounded">Space</kbd>{" "}
+            to toggle answer
           </p>
         </CardContent>
       </Card>

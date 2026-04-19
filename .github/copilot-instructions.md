@@ -179,12 +179,12 @@ import { Navbar } from "@/components/navbar";
 **Interview Data**: Category-based interview Q&A system in `/data/interview` directory:
 
 - **`data/interview/general.ts`**: 20 general interview questions (behavioral, career)
-- **`data/interview/infrastructure.ts`**: 11 infrastructure/DevOps questions
+- **`data/interview/infra/`**: Infrastructure questions split by category (core/observability/data/operations/networking/soft-skills)
 - **`data/interview/backend.ts`**: 6 backend development questions
 - **`data/interview/frontend.ts`**: 5 frontend development questions
-- **`data/interview/toss-tech.ts`**: 13 Toss-specific technical questions (Korean, Istio/mTLS)
-- **`data/interview/toss-company.ts`**: 5 Toss company/culture questions (Korean)
-- **`data/interview/index.ts`**: Aggregator exporting `interviewQuestions` and `tossInterviewQuestions`
+- **`data/interview/defensive-tactics.ts`**: Gap defense and company-specific tactical questions
+- **`data/interview/wipro.ts`**: Wipro executive interview set (IDs 501–530)
+- **`data/interview/index.ts`**: Aggregator exporting `interviewQuestions` and `wiproQuestions`
 
 **Type Definitions**: Comprehensive TypeScript types in `/types` directory:
 
@@ -227,7 +227,7 @@ throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
 - `app/[locale]/page.tsx` - Main portfolio page with data definitions
 - `app/[locale]/resume/page.tsx` - PDF-optimized resume page
 - `app/[locale]/interview/page.tsx` - Main interview Q&A page
-- `app/[locale]/interview/toss/page.tsx` - Toss-specific interview preparation page (Korean)
+- `app/[locale]/interview/wipro/page.tsx` - Wipro-specific interview preparation page (Korean)
 
 ### Data Layer
 
@@ -236,7 +236,7 @@ throw new AppError("Something went wrong", "CUSTOM_ERROR", 400);
 - `data/interview/` - Interview questions organized by category:
   - `general.ts`, `backend.ts`, `frontend.ts`, `defensive-tactics.ts`
   - `infra/` - Infrastructure questions split into 6 category files (23 questions)
-  - `toss/` - Toss-specific questions split into 9 category files (23 questions)
+  - `wipro.ts` - Wipro executive interview questions (30 questions)
 
 ### Components
 
@@ -344,10 +344,13 @@ import { interviewQuestions } from "@/data/interview";
 import { QATable } from "@/components/interview/qa-table";
 
 // All questions (general + infrastructure + backend + frontend + defensive-tactics)
-<QATable questions={interviewQuestions} />
+<QATable questions={interviewQuestions} />;
 
 // Individual category imports
-import { infraCoreQuestions, infraNetworkingQuestions } from "@/data/interview/infra";
+import {
+  infraCoreQuestions,
+  infraNetworkingQuestions,
+} from "@/data/interview/infra";
 import { backendQuestions } from "@/data/interview/backend";
 import { defensiveTacticsQuestions } from "@/data/interview/defensive-tactics";
 ```
@@ -355,7 +358,7 @@ import { defensiveTacticsQuestions } from "@/data/interview/defensive-tactics";
 **Company-Specific Interview Prep**:
 
 - Wipro Cloud DevOps/SRE 포지션 전용 질문: `defensive-tactics.ts` (IDs 305-399)
-- Toss DevOps 포지션 전용 질문: `data/interview/infra/`, `data/interview/infra/networking.ts`
+- Wipro 2차 임원 면접 전용 질문: `wipro.ts` (IDs 501-530)
 
 **File Organization Benefits**:
 
@@ -369,17 +372,20 @@ import { defensiveTacticsQuestions } from "@/data/interview/defensive-tactics";
 **Professional Context**: Portfolio owner is Platform Lead Engineer with 7 years experience. Currently operates ₩500B e-commerce platform (TheShop, Daewoong Group), handling 20-50M daily Kafka messages, 2B monthly traces, 15B metrics, 250M logs, 20TB+ data lake. Manages hybrid multi-cluster environment: EKS 1.34 + on-prem Kubernetes (Kubespray 6-node) + AWS ECS simultaneously.
 
 **Multi-Cloud Experience**:
+
 - **AWS** (Primary, 4+ years): EKS, ECS, RDS, S3, Glue, Athena, Bedrock, CodePipeline, CloudFormation, ECR, Cognito, Parameter Store, Lambda
 - **GCP** (Inoutbox startup, 2022-2023): Firebase Hosting/Firestore/Functions, Cloud Logging, Cloud Storage, FCM Push, GCP IAM
 - **On-Premise**: IDC Kubernetes cluster (Kubespray + Cilium eBPF + Rook-Ceph + Cognito OIDC)
 
 **Multi-Cluster & Multi-Account IaC**:
+
 - **Terraform shop-iac**: DEV (008971653402) + PRD (725129837589) account isolation, S3+DynamoDB state backends, ECR/Security Group/Cognito declarative management; Jenkins CI/CD with Destroy Guard + Slack approvals
 - **CloudFormation**: AWS-native IaC for EKS candidate resources, Parameter Store, Security Groups
 - **Helm**: shop-ai-chart (4 components), EKS service onboarding, Airflow/GitLab/ClickHouse deployments
 - **Kubespray**: On-prem Kubernetes IaC (Ansible-based, 6-node HA cluster)
 
 **AI Platform Engineering**:
+
 - Built multi-agent LLM platform (Go 1.25 + ADK-Go + AWS Bedrock + MCP) on EKS
 - 7 apps: orchestrator, meeting_agent, recommend_agent, customer_service_agent, project_app, knowledge_app
 - Memory: PostgreSQL + S3 Vectors + Amazon Titan embeddings; Redis/ElastiCache caching
@@ -486,8 +492,8 @@ import { defensiveTacticsQuestions } from "@/data/interview/defensive-tactics";
 
 **Workflow for interview question updates**:
 
-1. Edit appropriate category file in `data/interview/` (or subdirectory like `infra/` or `toss/`)
-2. Use proper ID range (general: 1-100, infra: 9-76, toss: 101-300, future: 301+)
+1. Edit appropriate category file in `data/interview/` (or subdirectory like `infra/`)
+2. Use proper ID range (general: 1-100, infra: 9-76/130-165, defensive: 301-400, wipro: 501-530, future: 1001+)
 3. Maintain TypeScript type safety with `InterviewQuestion` interface
 4. Follow QA writing guidelines: natural conversational Korean, no code blocks (```), no \*\* headers
 5. Update index.ts if adding new category files

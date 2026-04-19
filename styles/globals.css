@@ -251,9 +251,11 @@
 
 [data-rmiz-btn-zoom],
 [data-rmiz-btn-unzoom] {
-  background-color: color-mix(in srgb,
-      var(--color-background-secondary) 84%,
-      transparent);
+  background-color: color-mix(
+    in srgb,
+    var(--color-background-secondary) 84%,
+    transparent
+  );
   border: 1px solid var(--color-border-primary);
   color: var(--color-text-primary);
   transition:

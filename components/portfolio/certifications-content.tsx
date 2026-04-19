@@ -1,7 +1,7 @@
 import type { Dictionary } from "@/types/i18n";
 
 import { Card, CardContent, Chip } from "@heroui/react";
-import Image from 'next/image';
+import Image from "next/image";
 
 import { Certification } from "@/types/portfolio";
 

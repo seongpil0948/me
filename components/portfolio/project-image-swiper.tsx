@@ -10,7 +10,6 @@ import {
   Scrollbar,
 } from "swiper/modules";
 
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -46,9 +45,9 @@ export default function ProjectImageSwiper({
         autoplay={
           autoplay
             ? {
-              delay: 3000,
-              disableOnInteraction: false,
-            }
+                delay: 3000,
+                disableOnInteraction: false,
+              }
             : false
         }
         // breakpoints={{
