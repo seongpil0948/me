@@ -364,6 +364,7 @@ import { defensiveTacticsQuestions } from "@/data/interview/defensive-tactics";
 
 - **Maintainability**: Large files (4500+ lines) split into focused category files (50-300 lines each)
 - **Natural Format**: All answers follow QA writing guidelines (natural Korean, no code blocks/headers)
+- **Tone Design**: Answers use breathing notation (`/`, `//`), emphasis markers (`[ ]`), and senior-tone patterns per `.github/instructions/interview-qa.instructions.md`
 - **Type Safety**: All questions use `InterviewQuestion` interface with proper ID ranges
 - **Aggregation**: Index files combine categories while preserving individual imports
 
@@ -496,6 +497,7 @@ import { defensiveTacticsQuestions } from "@/data/interview/defensive-tactics";
 2. Use proper ID range (general: 1-100, infra: 9-76/130-165, defensive: 301-400, wipro: 501-530, future: 1001+)
 3. Maintain TypeScript type safety with `InterviewQuestion` interface
 4. Follow QA writing guidelines: natural conversational Korean, no code blocks (```), no \*\* headers
-5. Update index.ts if adding new category files
-6. Test on `/[locale]/interview` or company-specific page
-7. No markdown sync needed (TypeScript is source of truth)
+5. Apply tone rules: breathing notation (`/`, `//`), emphasis (`[ ]`), 문어체→구어체 변환, senior tone 원칙
+6. Update index.ts if adding new category files
+7. Test on `/[locale]/interview` or company-specific page
+8. No markdown sync needed (TypeScript is source of truth)

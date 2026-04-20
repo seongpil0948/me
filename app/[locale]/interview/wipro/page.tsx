@@ -7,7 +7,6 @@ import { getDictionary, hasLocale } from "../../dictionaries";
 
 import { InterviewTabsClient } from "@/components/interview/interview-tabs-client";
 import { wiproQuestions } from "@/data/interview";
-import { layoutStyles, spacing } from "@/constants/styles";
 import { localizeQuestions } from "@/lib/i18n/locale-utils";
 
 export const metadata: Metadata = {
@@ -29,51 +28,26 @@ export default async function WiproInterviewPage({
   const questions = localizeQuestions(wiproQuestions, locale);
 
   return (
-    <div style={layoutStyles.interviewPage}>
-      <div style={layoutStyles.maxWidthContainer}>
-        <header style={{ marginBottom: spacing.xl }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-              marginBottom: "8px",
-            }}
+    <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1400px]">
+        <header className="mb-8">
+          <Link
+            className="mb-3 inline-flex items-center gap-1 text-sm text-[var(--color-text-tertiary)] transition-colors hover:text-[var(--color-text-secondary)]"
+            href={`/${locale}/interview`}
           >
-            <Link
-              href={`/${locale}/interview`}
-              style={{
-                fontSize: "14px",
-                color: "#6b7280",
-                textDecoration: "none",
-              }}
-            >
-              ← 전체 Q&A
-            </Link>
-          </div>
+            ← 전체 Q&A
+          </Link>
 
-          <h1 style={layoutStyles.interviewHeader}>
+          <h1 className="font-nanum-myeongjo mb-2 text-3xl font-bold text-[var(--color-text-primary)] sm:text-4xl">
             Wipro 2차 임원 면접 — Cloud DevOps/SRE Engineer
           </h1>
 
-          <p
-            style={{
-              ...layoutStyles.interviewDescription,
-              marginBottom: "8px",
-            }}
-          >
+          <p className="mb-3 text-base text-[var(--color-text-secondary)]">
             Harman/Samsung 프로젝트 기반 임원 면접 전용 연습 페이지입니다.
             두괄식(결론 → 근거 → 사례) 구조로 답변하는 연습을 하세요.
           </p>
 
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "8px",
-              marginTop: "12px",
-            }}
-          >
+          <div className="flex flex-wrap gap-2">
             {[
               "Set 1: 기본 임원 면접 15문 (501–515)",
               "Set 2: 심층 질문 15문 (516–530)",
@@ -81,14 +55,7 @@ export default async function WiproInterviewPage({
             ].map((tag) => (
               <span
                 key={tag}
-                style={{
-                  fontSize: "12px",
-                  padding: "2px 10px",
-                  borderRadius: "999px",
-                  background: "#f3f4f6",
-                  color: "#374151",
-                  border: "1px solid #e5e7eb",
-                }}
+                className="rounded-full border border-[var(--color-border-primary)] bg-[var(--color-background-secondary)] px-3 py-0.5 text-xs text-[var(--color-text-secondary)]"
               >
                 {tag}
               </span>

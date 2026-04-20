@@ -208,7 +208,7 @@ export function QATable({
         case "question":
           return (
             <div
-              style={{ fontSize: "14px", color: "#2c3e50", lineHeight: "1.5" }}
+              style={{ fontSize: "14px", color: "var(--color-text-primary)", lineHeight: "1.5" }}
             >
               {question.question}
             </div>
@@ -225,7 +225,7 @@ export function QATable({
           );
         case "category2":
           return (
-            <div style={{ fontSize: "13px", color: "#7f8c8d" }}>
+            <div style={{ fontSize: "13px", color: "var(--color-text-tertiary)" }}>
               {question.category2}
             </div>
           );
@@ -341,7 +341,7 @@ export function QATable({
             </Button>
           </div>
         </div>
-        <div style={{ fontSize: "14px", color: "#7f8c8d" }}>
+        <div style={{ fontSize: "14px", color: "var(--color-text-tertiary)" }}>
           Total {sortedItems.length} questions
           {favorites.size > 0 && ` • ${favorites.size} favorited`}
         </div>
@@ -399,7 +399,7 @@ export function QATable({
           <Modal.Container className="max-w-4xl">
             <Modal.Dialog>
               <Modal.Header className="flex flex-col gap-3">
-                <div className="text-lg font-semibold text-slate-800">
+                <div className="text-lg font-semibold" style={{ color: "var(--color-text-primary)" }}>
                   {selectedQuestion?.question}
                 </div>
                 <div className="flex gap-2">

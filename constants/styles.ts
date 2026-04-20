@@ -82,19 +82,15 @@ export const commonStyles = {
 export const layoutStyles = {
   interviewPage: {
     minHeight: "100vh",
-    backgroundColor: "#ffffff",
-    color: "#000000",
     padding: spacing.xl,
   },
   interviewHeader: {
     fontSize: fontSize["4xl"],
     fontWeight: "bold",
     marginBottom: spacing.sm,
-    color: "#2c3e50",
   },
   interviewDescription: {
     fontSize: fontSize.base,
-    color: "#7f8c8d",
   },
   maxWidthContainer: {
     maxWidth: "1400px",

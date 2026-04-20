@@ -17,30 +17,30 @@ export const infraNetworkingQuestions: LocalizedInterviewQuestion[] = [
         "하이브리드 네트워킹은 제가 가장 집중해온 인프라 영역 중 하나예요. 지난 1년간 Direct Connect, IPsec VPN, Transit Gateway를 집중적으로 학습하며 실무 적용을 준비해왔습니다.\n\n" +
         "현재 회사의 온프레미스-AWS 환경을 관찰하면서 하이브리드 네트워킹의 실제 운영 특성을 이해하게 되었고, 네트워크팀과 협업하며 실무 경험을 쌓았습니다.\n\n" +
         "**당시 문제 상황**\n\n" +
-        "레거시 시스템은 온프레미스에, 신규 서비스는 AWS에 있었는데 실시간 데이터 동기화가 필수였어요. 기존 Public Internet 연결은 보안팀이 강력히 반대했고, '고객 개인정보가 Public으로 전송되면 안 된다'는 게 이유였죠.\n\n" +
+        "레거시 시스템은 온프레미스에, 신규 서비스는 AWS에 있었는데 실시간 데이터 동기화가 필수였습니다. 기존 Public Internet 연결은 보안팀이 강력히 반대했고, '고객 개인정보가 Public으로 전송되면 안 된다'는 게 이유였죠.\n\n" +
         "**3가지 설계안 검토**\n\n" +
-        "첫째, **AWS Direct Connect 10Gbps**: 가장 안정적이지만 월 500만원 이상, 구축 3개월 소요. 당시 우리에겐 시간이 없었어요.\n\n" +
+        "첫째, **AWS Direct Connect 10Gbps**: 가장 안정적이지만 월 500만원 이상, 구축 3개월 소요. 당시 우리에겐 시간이 없었습니다.\n\n" +
         "둘째, **Public VPN over Internet**: 비용은 저렴하지만 품질 예측 불가. 트래픽 급증 시 지연 문제.\n\n" +
         "셋째, **Site-to-Site IPsec VPN 1.25Gbps**: Direct Connect 대비 1/10 비용, 2주 내 구축 가능. 온프레미스 네트워크팀의 BGP 경험 부족이 걸림돌.\n\n" +
         "**최종 선택: IPsec VPN + 정적 라우팅**\n\n" +
-        "Site-to-Site VPN을 선택했어요. BGP 대신 정적 라우팅을 적용한 이유는 온프레미스 팀이 BGP 운영 경험이 없어서 장애 시 대응이 어려울 것 같았거든요. AWS re:Invent NET318 세션에서 배운 'Longest Prefix Match' 원칙으로 라우팅 테이블을 설계했습니다.\n\n" +
+        "Site-to-Site VPN을 선택했습니다. BGP 대신 정적 라우팅을 적용한 이유는 온프레미스 팀이 BGP 운영 경험이 없어서 장애 시 대응이 어려울 것 같았습니다. AWS re:Invent NET318 세션에서 배운 'Longest Prefix Match' 원칙으로 라우팅 테이블을 설계했습니다.\n\n" +
         "**실전에서 마주한 문제와 해결**\n\n" +
-        "1. **SPOF 문제**: 처음엔 1개 VPN 터널만 구성했는데, 온프레미스 라우터 장애로 새벽 2시에 전체 서비스 중단. Primary/Secondary VPN 터널을 각각 다른 AZ에 연결하고, 온프레미스도 2대 라우터로 이중화했어요.\n\n" +
+        "1. **SPOF 문제**: 처음엔 1개 VPN 터널만 구성했는데, 온프레미스 라우터 장애로 새벽 2시에 전체 서비스 중단. Primary/Secondary VPN 터널을 각각 다른 AZ에 연결하고, 온프레미스도 2대 라우터로 이중화했습니다.\n\n" +
         "2. **처리량 문제**: 스펙상 1.25Gbps인데 실제로는 800Mbps만 나왔죠. 원인은 VPN 암호화 오버헤드와 패킷 단편화. MTU를 1500 → 1400으로 낮추고 TCP Window Scaling 조정하니 900Mbps 이상으로 개선됐습니다.\n\n" +
-        "3. **라우팅 우선순위 제어**: AWS re:Invent에서 배운 대로, Static Routes가 Propagated Routes보다 우선순위가 높다는 점을 활용했어요. 특정 트래픽은 VPN으로, 나머지는 NAT Gateway로 라우팅하도록 설계했죠.\n\n" +
+        "3. **라우팅 우선순위 제어**: AWS re:Invent에서 배운 대로, Static Routes가 Propagated Routes보다 우선순위가 높다는 점을 활용했습니다. 특정 트래픽은 VPN으로, 나머지는 NAT Gateway로 라우팅하도록 설계했습니다.\n\n" +
         "**Zonal 트래픽 설계 (AWS re:Invent NET318 핵심)**\n\n" +
-        "'Keep your traffic zonal'이라는 원칙을 적용했어요. AZ 간 통신은 비용($)이 발생하고 latency가 증가하니까, 각 AZ에 독립적인 NAT Gateway와 Internet Gateway를 배치했습니다. AZ-1a 장애 시에도 트래픽이 자동으로 AZ-1b로 전환되어 서비스가 유지됐어요.\n\n" +
+        "'Keep your traffic zonal'이라는 원칙을 적용했습니다. AZ 간 통신은 비용($)이 발생하고 latency가 증가하니까, 각 AZ에 독립적인 NAT Gateway와 Internet Gateway를 배치했습니다. AZ-1a 장애 시에도 트래픽이 자동으로 AZ-1b로 전환되어 서비스가 유지됐습니다.\n\n" +
         "**Transit Gateway 도입 검토 (미래 계획)**\n\n" +
-        "현재는 VPN 2개로 운영 중이지만, 서비스와 계정이 늘어나면 Transit Gateway가 필수라고 봐요. 각 VPC를 일일이 피어링하는 것보다 중앙 허브로 관리하는 게 훨씬 효율적이거든요. 조직별 격리가 중요한 환경에서는 Transit Gateway의 Route Table 분리 기능이 핵심이라고 생각합니다.\n\n" +
+        "현재는 VPN 2개로 운영 중이지만, 서비스와 계정이 늘어나면 Transit Gateway가 필수라고 봐요. 각 VPC를 일일이 피어링하는 것보다 중앙 허브로 관리하는 게 훨씬 효율적입니다. 조직별 격리가 중요한 환경에서는 Transit Gateway의 Route Table 분리 기능이 핵심이라고 생각합니다.\n\n" +
         "**BGP와 트래픽 엔지니어링 (학습 중)**\n\n" +
-        "1년간 집중 공부한 내용 중 가장 흥미로웠던 건 BGP 속성이에요. Local Preference (AWS → 온프레미스), AS Path Prepending (온프레미스 → AWS)으로 트래픽 경로를 제어하는 방법을 배웠습니다. 아직 실무에서 BGP를 직접 운영해보진 못했지만, Direct Connect 환경에서 꼭 적용해보고 싶어요.\n\n" +
+        "1년간 집중 공부한 내용 중 가장 흥미로웠던 건 BGP 속성입니다. Local Preference (AWS → 온프레미스), AS Path Prepending (온프레미스 → AWS)으로 트래픽 경로를 제어하는 방법을 배웠습니다. 아직 실무에서 BGP를 직접 운영해보진 못했지만, Direct Connect 환경에서 꼭 적용해보고 싶습니다.\n\n" +
         "**보안 설계**\n\n" +
-        "Security Group과 NACL을 계층화했어요. NACL로 알려진 공격 IP 대역 차단, Security Group으로 애플리케이션별 세밀한 제어. VPC Flow Logs + Athena로 Top Talkers를 분석하니 특정 IP에서 초당 10만 건 요청이 보였고, GuardDuty 연동 Lambda로 자동 차단했죠.\n\n" +
+        "Security Group과 NACL을 계층화했습니다. NACL로 알려진 공격 IP 대역 차단, Security Group으로 애플리케이션별 세밀한 제어. VPC Flow Logs + Athena로 Top Talkers를 분석하니 특정 IP에서 초당 10만 건 요청이 보였고, GuardDuty 연동 Lambda로 자동 차단했습니다.\n\n" +
         "**운영 성과**\n\n" +
         "네트워크 가용성 99.9% → 99.95% 개선, VPN 평균 지연시간 P95 기준 15ms 유지, 보안 인시던트 zero.\n\n" +
         "**왜 이 포지션인가?**\n\n" +
-        "글로벌 고객사를 지원하는 DevOps/SRE 포지션에서는 온프레미스-클라우드 하이브리드 환경이 필수라고 생각해요. 제가 1년간 공부한 Direct Connect, Transit Gateway, Cloud WAN 같은 기술들을 실전에서 대규모로 운영해보고 싶습니다. 특히 BGP 기반 트래픽 엔지니어링과 멀티 리전 라우팅 설계는 이 역할에서 핵심 도전 과제라고 봅니다.\n\n" +
-        "이론적 준비는 끝났습니다. 이제 실전에서 직접 문제를 해결하며 성장하고 싶어요.",
+        "글로벌 고객사를 지원하는 DevOps/SRE 포지션에서는 온프레미스-클라우드 하이브리드 환경이 필수라고 생각합니다. 제가 1년간 공부한 Direct Connect, Transit Gateway, Cloud WAN 같은 기술들을 실전에서 대규모로 운영해보고 싶습니다. 특히 BGP 기반 트래픽 엔지니어링과 멀티 리전 라우팅 설계는 이 역할에서 핵심 도전 과제라고 봅니다.\n\n" +
+        "이론적 준비는 끝났습니다. 이제 실전에서 직접 문제를 해결하며 성장하고 싶습니다.",
       en: "A concise Networking answer covering real production context, key decision trade-offs, measurable outcomes, and takeaways.",
     },
   },
@@ -65,7 +65,7 @@ export const infraNetworkingQuestions: LocalizedInterviewQuestion[] = [
         "- Destroy Guard: Plan 결과를 파싱해서 리소스 삭제가 감지되면 Slack 긴급 알림 + 별도 승인 요구\n" +
         "- Apply 전 항상 관리자 승인 필수 (자동 Apply 없음)\n\n" +
         "**Multi-stage 품질 게이트**\n\n" +
-        "Static Analysis → Unit Test → Integration Test → Security Scan → Build → Deploy 단계로 구성해서 각 단계 실패 시 즉시 중단합니다. 전체 파이프라인 실행 시간은 15분 이내로 유지해요.\n\n" +
+        "Static Analysis → Unit Test → Integration Test → Security Scan → Build → Deploy 단계로 구성해서 각 단계 실패 시 즉시 중단합니다. 전체 파이프라인 실행 시간은 15분 이내로 유지합니다.\n\n" +
         "**Blue-Green 및 Canary 배포**\n\n" +
         "Argo CD Rollout을 활용해 새 버전을 parallel environment에 배포하고 health check 통과 후 traffic을 점진적으로 전환합니다. " +
         "문제 발생 시 1분 내 즉시 rollback이 가능했습니다.\n\n" +
@@ -100,11 +100,11 @@ export const infraNetworkingQuestions: LocalizedInterviewQuestion[] = [
     category1: "Infrastructure",
     category2: "Networking",
     question: {
-      ko: "Cilium eBPF CNI를 실무에서 운영한 경험을 설명해주세요. kube-proxy를 대체한 이유와 Hubble 관측성을 어떻게 활용했나요?",
+      ko: "Cilium eBPF CNI를 실무에서 운영한 경험을 설명해주세요. kube-proxy를 대체한 이유와 Hubble 관측성을 어떻게 활용했습니까?",
     },
     answer: {
       ko:
-        "EKS 1.34와 온프레미스 Kubernetes 양쪽에서 Cilium을 CNI로 운영하고 있습니다. Calico, Flannel 같은 전통적인 CNI 대신 Cilium을 선택한 데는 명확한 이유가 있었어요.\n\n" +
+        "EKS 1.34와 온프레미스 Kubernetes 양쪽에서 Cilium을 CNI로 운영하고 있습니다. Calico, Flannel 같은 전통적인 CNI 대신 Cilium을 선택한 데는 명확한 이유가 있었습니다.\n\n" +
         "**kube-proxy를 대체한 이유**\n\n" +
         "kube-proxy는 iptables 규칙 기반으로 서비스 라우팅을 처리합니다. 서비스 수가 늘어날수록 iptables 규칙도 선형으로 증가해서 성능 저하와 디버깅 어려움이 생기죠. Cilium은 eBPF로 커널 레벨에서 직접 패킷을 처리해서:\n\n" +
         "- **더 낮은 latency**: 패킷이 iptables 체인을 거치지 않고 직접 처리\n" +
@@ -113,12 +113,12 @@ export const infraNetworkingQuestions: LocalizedInterviewQuestion[] = [
         "설정: `kube_proxy_remove: true`, `cilium_kube_proxy_replacement: true`로 Kubespray에서 완전 대체합니다.\n\n" +
         "**Gateway API 활용**\n\n" +
         "Nginx Ingress 대신 Cilium Gateway API 컨트롤러를 사용합니다:\n\n" +
-        "- **EKS**: Cilium Gateway → AWS NLB (ACM TLS 종단). annotations 위치가 `spec.infrastructure.annotations`에 있어야 해요. `nlb-target-type: instance` 필수.\n" +
+        "- **EKS**: Cilium Gateway → AWS NLB (ACM TLS 종단). annotations 위치가 `spec.infrastructure.annotations`에 있어야 합니다. `nlb-target-type: instance` 필수.\n" +
         "- **온프레미스**: Cilium Gateway → 호스트 네트워크 모드. `shop.co.kr`, `*.shop.co.kr`, `dwoong.com` 도메인 처리. cert-manager + Let's Encrypt DNS-01 (Route53)으로 TLS 자동화.\n\n" +
         "**Hubble로 네트워크 가시성 확보**\n\n" +
-        "Hubble은 Cilium의 네트워크 관측성 레이어입니다. 실제 운영에서 이런 상황에 도움이 됐어요:\n\n" +
+        "Hubble은 Cilium의 네트워크 관측성 레이어입니다. 실제 운영에서 이런 상황에 도움이 됐습니다:\n\n" +
         "1. **Pod 간 연결 문제 디버깅**: `hubble observe --namespace <ns> --follow`로 특정 네임스페이스의 flow를 실시간으로 관찰. 방화벽 정책으로 드롭된 패킷 즉시 파악.\n" +
-        "2. **서비스 메시 대체**: Hubble UI에서 서비스 간 연결 그래프와 에러율을 시각화. Istio 없이도 서비스 간 통신 패턴을 관찰할 수 있어요.\n" +
+        "2. **서비스 메시 대체**: Hubble UI에서 서비스 간 연결 그래프와 에러율을 시각화. Istio 없이도 서비스 간 통신 패턴을 관찰할 수 있습니다.\n" +
         "3. **보안 정책 검증**: NetworkPolicy 적용 전 Hubble로 실제 트래픽 패턴을 먼저 확인하고, 필요한 정책만 추가하는 방식.\n\n" +
         "Hubble UI는 `https://hubble.dwoong.com`으로 접근하거나, 로컬에서 `./scripts/portforward-hubble.sh`로 포트포워딩해서 사용합니다.\n\n" +
         "**CiliumNetworkPolicy L7 정책**\n\n" +
@@ -127,7 +127,7 @@ export const infraNetworkingQuestions: LocalizedInterviewQuestion[] = [
         "- DNS 기반 정책 (외부 API 호출 도메인 화이트리스트)\n" +
         "- 서비스 어카운트 기반 정책 (RBAC과 연계)\n\n" +
         "**운영 중 겪은 주요 이슈**\n\n" +
-        "온프레미스에서 containerd를 CRI-O에서 containerd 2.2.1로 마이그레이션(2026-03-31)했을 때, Worker 노드에서 간헐적으로 stale `overlayfs@sha256:...` 이미지가 나타났어요. `scripts/fix-containerd-overlayfs.sh`를 만들어서 주기적으로 실행하도록 했습니다. Cilium과 containerd 버전 호환성을 항상 확인하는 것이 중요해요.",
+        "온프레미스에서 containerd를 CRI-O에서 containerd 2.2.1로 마이그레이션(2026-03-31)했을 때, Worker 노드에서 간헐적으로 stale `overlayfs@sha256:...` 이미지가 나타났어요. `scripts/fix-containerd-overlayfs.sh`를 만들어서 주기적으로 실행하도록 했습니다. Cilium과 containerd 버전 호환성을 항상 확인하는 것이 중요합니다.",
       en: "A concise Networking answer covering real production context, key decision trade-offs, measurable outcomes, and takeaways.",
     },
   },
@@ -140,12 +140,12 @@ export const infraNetworkingQuestions: LocalizedInterviewQuestion[] = [
     },
     answer: {
       ko:
-        "IDC 이전 프로젝트에서 온프레미스 Kubernetes와 AWS VPC를 연결하는 하이브리드 아키텍처를 설계했습니다. 보안팀의 '고객 데이터는 Public 경유 불가' 요구사항이 핵심 제약이었어요.\n\n" +
+        "IDC 이전 프로젝트에서 온프레미스 Kubernetes와 AWS VPC를 연결하는 하이브리드 아키텍처를 설계했습니다. 보안팀의 '고객 데이터는 Public 경유 불가' 요구사항이 핵심 제약이었습니다.\n\n" +
         "**설계안 비교**\n\n" +
         "- **Direct Connect 10Gbps**: 가장 안정적이지만 월 500만원+, 구축 3개월 소요 → 일정 불가\n" +
         "- **Site-to-Site VPN 1.25Gbps**: Direct Connect 대비 1/10 비용, 2주 내 구축 가능 → 선택\n\n" +
         "**Site-to-Site VPN + 정적 라우팅 설계**\n\n" +
-        "BGP 대신 정적 라우팅을 선택한 이유: 온프레미스 네트워크팀의 BGP 운영 경험 부족 → 장애 대응 어려움 우려. 대신 Longest Prefix Match 원칙으로 라우팅 테이블을 설계했어요.\n\n" +
+        "BGP 대신 정적 라우팅을 선택한 이유: 온프레미스 네트워크팀의 BGP 운영 경험 부족 → 장애 대응 어려움 우려. 대신 Longest Prefix Match 원칙으로 라우팅 테이블을 설계했습니다.\n\n" +
         "**실운영에서 겪은 문제들**\n\n" +
         "1. **SPOF**: 초기 1개 터널 → AZ-1a 라우터 장애로 새벽 2시 서비스 중단. Primary/Secondary VPN 터널을 각각 다른 AZ에 연결하고, 온프레미스도 2대 라우터 이중화로 해결.\n" +
         "2. **처리량**: 스펙 1.25Gbps인데 실제 800Mbps. VPN 암호화 오버헤드 + 패킷 단편화 문제. MTU 1500→1400으로 낮추고 TCP Window Scaling 조정 후 900Mbps+ 달성.\n" +
@@ -170,7 +170,7 @@ export const infraNetworkingQuestions: LocalizedInterviewQuestion[] = [
     category1: "Infrastructure",
     category2: "Networking",
     question: {
-      ko: "Direct Connect, BGP, IPsec VPN을 함께 운영할 때 장애 대응과 모니터링 전략을 어떻게 설계하시나요?",
+      ko: "Direct Connect, BGP, IPsec VPN을 함께 운영할 때 장애 대응과 모니터링 전략을 어떻게 설계하시습니까?",
     },
     answer: {
       ko:

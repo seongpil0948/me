@@ -6,7 +6,6 @@ import { getDictionary, hasLocale } from "../dictionaries";
 
 import { InterviewTabsClient } from "@/components/interview/interview-tabs-client";
 import { interviewQuestions } from "@/data/interview";
-import { layoutStyles, spacing } from "@/constants/styles";
 import { localizeQuestions } from "@/lib/i18n/locale-utils";
 
 export const metadata: Metadata = {
@@ -28,11 +27,13 @@ export default async function InterviewPage({
   const questions = localizeQuestions(interviewQuestions, locale);
 
   return (
-    <div style={layoutStyles.interviewPage}>
-      <div style={layoutStyles.maxWidthContainer}>
-        <header style={{ marginBottom: spacing.xl }}>
-          <h1 style={layoutStyles.interviewHeader}>{dict.interview.title}</h1>
-          <p style={layoutStyles.interviewDescription}>
+    <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1400px]">
+        <header className="mb-8">
+          <h1 className="font-nanum-myeongjo mb-2 text-3xl font-bold text-[var(--color-text-primary)] sm:text-4xl">
+            {dict.interview.title}
+          </h1>
+          <p className="text-base text-[var(--color-text-secondary)]">
             {dict.interview.description}
           </p>
         </header>

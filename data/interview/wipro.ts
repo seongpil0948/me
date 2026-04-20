@@ -39,12 +39,11 @@ export const wiproQuestions: LocalizedInterviewQuestion[] = [
     },
     answer: {
       ko:
-        "사용자의 요청부터 답변까지 모든 데이터를 분석하고 서비스에 안정성을 보장하는 일은 너무 매력적이라고 생각합니다.\n\n" +
-        "제가 만들어온 운영 구조는 일 10만명의 데이터를 안정적으로 처리하지만 더 큰 규모에서도 통하는지 직접 검증하고 싶었습니다.\n\n" +
-        "지금까지 EKS, CI/CD, Observability 플랫폼을 국내 단일 서비스 환경에서 처음부터 구축해왔습니다. 그 경험이 한 서비스 안에 머무는 것은 아쉬운 부분이었습니다.\n\n" +
-        "글로벌 고객사를 대상으로 멀티 계정, 멀티 리전 환경을 운영하는 이 포지션은 규모 자체가 다른 환경에서 제가 만들어온 방식을 검증하고 확장할 수 있는 기회라고 판단했습니다.\n\n" +
-        "또 한 가지는 Java/Spring 환경입니다. 현재 운영하는 서비스도 Spring Boot 기반이라 JVM 튜닝과 APM 구성까지 경험이 있어서, 이곳 환경에도 곧바로 기여할 수 있다고 판단했습니다.",
-      en: "Analyzing data end-to-end from user request to response while guaranteeing stability is exactly the work I find most compelling. My platform reliably handles 100K daily users, and I want to validate these same principles at a larger scale. I've built EKS, CI/CD, and Observability stacks end-to-end in a single domestic service — and I'm ready to see how far they travel. Multi-account, multi-region operations for global customers is a fundamentally different scale, and that's the environment where I want to extend what I've built. The Java/Spring stack is also directly relevant — our current service runs Spring Boot, so I can contribute immediately.",
+        "지원 이유는 세 가지로 명확합니다.\n\n" +
+        "첫 번째는 [1억 이상의 사용자 트래픽]입니다. / 지금 운영하는 플랫폼에서 수천만 건의 Kafka 메시지와 수십억 건의 Trace를 처리하는 구조를 직접 설계했는데요, / 이 운영 원칙이 더 큰 규모에서도 같은 방식으로 작동하는지 // 직접 검증해보고 싶었습니다. / 그게 이 포지션에서 가장 하고 싶은 일입니다.\n\n" +
+        "두 번째는 [기술스택 일치]입니다. / EKS, GitLab CI + Argo CD, Terraform, OpenTelemetry 기반 관측성 스택은 지금도 매일 쓰는 도구입니다. / Java/Spring Boot도 현재 서비스 운영 환경이라 JVM 튜닝과 APM 연동까지 경험이 있습니다. / 도구를 새로 익히는 시간 없이 [바로 기여]할 수 있다는 확신이 있었습니다.\n\n" +
+        "세 번째는 [글로벌 오픈소스 기여와 실전 협업]입니다. / OpenTelemetry upstream에 PR #40123을 직접 기여해 머지됐고, / GitHub에서 영문 이슈 토론과 코드 리뷰를 통해 // 글로벌 컨트리뷰터들과 실제로 협업한 경험이 이미 있습니다. / 텍스트 기반 비동기 커뮤니케이션과 영문 기술 논의는 일상이 됐지만, / 시간대가 다른 팀과 함께 [실시간으로 인시던트를 대응하는 것]은 // 국내 환경에서는 얻기 어려운 경험입니다. / 이 포지션이 그 다음 단계라고 판단했습니다.",
+      en: "Three clear reasons. First, [100M+ user traffic]: I've designed the architecture handling tens of millions of daily Kafka messages and billions of monthly traces — and I want to validate whether the same operating principles hold at a fundamentally larger scale. That's what this position offers. Second, [tech stack alignment]: EKS, GitLab CI + Argo CD, Terraform, OpenTelemetry-based observability — these are tools I use every day. Spring Boot is my current production environment too, so I can contribute from week one without an onboarding ramp. Third, [global open-source contribution and real collaboration]: I contributed PR #40123 to the OpenTelemetry upstream and had it merged — working with global contributors through English issue discussions and code reviews is already part of my routine. Async text-based collaboration in English is natural, but real-time incident response with teammates across time zones is something I can't get in a domestic environment. This position is exactly that next step.",
     },
   },
   {
@@ -53,17 +52,16 @@ export const wiproQuestions: LocalizedInterviewQuestion[] = [
     category2: "Company Interest",
     priority: "high",
     question: {
-      ko: "Wipro에 지원한 동기는 무엇이며, 특히 Wipro의 어떤 점이 매력적으로 느껴졌나요?",
+      ko: "Wipro에 지원한 동기는 무엇이며, 특히 Wipro의 어떤 점이 매력적으로 느껴졌습니까?",
       en: "What motivated you to apply to Wipro, and what aspects of Wipro did you find most attractive?",
     },
     answer: {
       ko:
-        "글로벌 엔터프라이즈 환경에서 DevOps를 해보고 싶다는 생각이 있었고, Wipro는 그 경험을 제공할 수 있는 회사라고 판단했습니다.\n\n" +
-        "스타트업과 이커머스를 거치면서 기술적 기반은 충분히 쌓았다고 생각합니다. 지금 필요한 다음 단계는 65개국에 분산된 팀과 함께 운영하는 경험입니다.\n\n" +
-        "Harman 프로젝트가 특히 매력적이었습니다. 커넥티드 디바이스 인프라는 이커머스와는 안정성 요구 수준이 다릅니다. 그 환경에서 SRE로 일하면서 배울 수 있는 것들이 많다고 봤습니다.\n\n" +
-        "Azure나 GCP 경험을 넓히고 싶기도 했는데, Wipro처럼 다양한 클라우드를 다루는 환경이 그 기회를 줄 수 있다고 생각했습니다.\n\n" +
-        "영어로 협업하는 환경에서 대규모 사용자 문제를 직접 풀 수 있다는 점에서 Wipro에 지원하게 됐습니다.",
-      en: "I've been looking for a place to take DevOps to the global enterprise level, and Wipro is where that becomes real. Startups and e-commerce have built a solid technical foundation — the next step is operating alongside teams distributed across 65 countries. The Harman project stood out specifically: connected device infrastructure has fundamentally different reliability requirements than e-commerce. I also want to broaden cloud exposure beyond AWS into Azure and GCP, and Wipro's multi-cloud client base provides exactly that. Working in English on large-scale user problems is what brought me to this application.",
+        "Wipro에 지원한 이유는 세 가지가 있습니다.\n\n" +
+        "첫 번째는 [1억 이상의 트래픽 규모]입니다. / Harman/Samsung 프로젝트에서 다루는 글로벌 사용자 트래픽은 / 제가 지금까지 설계해온 EKS 운영 구조와 모니터링 시스템, GitOps 파이프라인이 // 진짜 한계까지 검증받을 수 있는 환경입니다. / 커넥티드 디바이스 인프라는 이커머스와는 가용성 요구 수준이 다르고, / 그 환경에서 SRE로 일한다는 게 오래된 목표였습니다.\n\n" +
+        "두 번째는 [기술스택 일치]입니다. / Kubernetes/EKS, GitLab + Argo + Jenkins, 그리고 Java/Spring Boot는 / 7년 동안 실무에서 쌓아온 스택입니다. / 도구를 배우는 시간 없이 온보딩 직후부터 실질적인 기여가 가능하다고 판단했습니다.\n\n" +
+        "세 번째는 [글로벌 협업의 다음 단계]입니다. / OpenTelemetry PR #40123 기여를 통해 글로벌 컨트리뷰터들과 영문으로 직접 협업한 경험이 있고, / Kubernetes, Argo CD, OpenTelemetry 공식 이슈 트래커에서 영문 기술 토론도 일상적으로 합니다. / 오픈소스 기여를 통해 비동기 글로벌 협업의 패턴은 이미 몸에 익었지만, / 시간대가 다른 팀과 [실시간으로 인시던트를 대응하고 릴리즈를 조율하는 것]은 // 국내 환경에서는 얻기 어렵습니다. / Wipro의 65개국 분산 팀 구조가 그 다음 단계를 제공한다는 확신이 있었습니다.",
+      en: "Three reasons brought me to Wipro specifically. First, [the traffic scale]: Harman/Samsung projects handle 100M+ global users — the scale at which the EKS operating architecture and GitOps pipeline I've built gets genuinely stress-tested. Connected device infrastructure has different availability requirements than e-commerce, and working as SRE in that environment has been a long-standing goal. Second, [tech stack alignment]: Kubernetes/EKS, GitLab + Argo + Jenkins, and Java/Spring Boot are seven years of hands-on production experience. I can contribute meaningfully from day one without a tool onboarding period. Third, [the next level of global collaboration]: I contributed PR #40123 to OpenTelemetry upstream and have been active in English technical discussions on Kubernetes, Argo CD, and OTel issue trackers — async global collaboration is already part of my daily workflow. What I haven't experienced yet is real-time incident response and release coordination across time zones with colleagues. Wipro's 65-country distributed team structure is exactly that next step.",
     },
   },
   {
@@ -72,7 +70,7 @@ export const wiproQuestions: LocalizedInterviewQuestion[] = [
     category2: "AWS",
     priority: "high",
     question: {
-      ko: "지금까지 AWS 기반 인프라를 운영하면서 가장 큰 도전이었던 프로젝트는 무엇이었고, 어떻게 극복했나요?",
+      ko: "지금까지 AWS 기반 인프라를 운영하면서 가장 큰 도전이었던 프로젝트는 무엇이었고, 어떻게 극복했습니까?",
       en: "What was the most challenging project while operating AWS-based infrastructure, and how did you overcome it?",
     },
     answer: {
@@ -115,12 +113,11 @@ export const wiproQuestions: LocalizedInterviewQuestion[] = [
     },
     answer: {
       ko:
-        "레거시 수동 배포 환경을 완전 자동화된 GitOps 체계로 전환한 경험이 있습니다.\n\n" +
-        "기존 환경은 Nexus에 저장된 latest 태그 이미지를 Jenkins가 수동으로 배포하는 구조였습니다. latest 태그는 덮어써지기 때문에 어느 버전이 운영 중인지 추적할 수 없었고, 배포 이력은 Slack 메시지에만 남았습니다. 롤백이 필요한 상황에서는 이전 이미지를 찾는 것부터 다시 시작해야 했고, 평균 30분 이상이 소요됐습니다.\n\n" +
-        "전환의 핵심은 두 가지였습니다. 먼저 이미지 관리를 Nexus latest에서 ECR 시맨틱 버전 태그로 바꿨습니다. GitLab CI가 커밋마다 고유 태그로 이미지를 빌드해 ECR에 푸시하고, Argo CD Image Updater가 최신 태그를 감지해 Helm values를 자동으로 갱신합니다. 모든 배포 이력이 Git commit으로 남습니다.\n\n" +
-        "롤백은 Git revert 한 번으로 끝납니다. Argo CD가 이전 커밋 상태로 클러스터를 자동 복원하기 때문에 실제 소요 시간은 1분 이내입니다. ECR 수명 주기 정책으로 최근 5개 릴리즈 이미지를 항상 보존하도록 설정해 언제든 안전하게 되돌릴 수 있는 기반도 갖췄습니다.\n\n" +
-        "배포 빈도는 월 2~3회에서 하루 1~2회로 늘었고, 사람이 배포 과정에 개입하는 단계를 완전히 제거했습니다. 배포 안정성은 개인의 숙련도가 아니라 구조에서 나온다는 것을 이 전환으로 확신하게 됐습니다.",
-      en: "I migrated a legacy manual deployment environment to fully automated GitOps. The original setup used Jenkins to manually deploy latest-tagged images from Nexus — no version tracking, deployment history only in Slack, rollbacks averaging 30+ minutes of hunting for previous images. The transformation: I moved image management to ECR semantic version tags. GitLab CI builds a unique-tagged image per commit; Argo CD Image Updater detects the latest tag and auto-updates Helm values. Rollback is a single Git revert — Argo CD restores the cluster to the previous commit state in under 1 minute. ECR lifecycle policies preserve the last 5 releases at all times. Deployment frequency went from 2–3 times a month to 1–2 times daily, with zero human intervention in the pipeline.",
+        "애플리케이션 배포와 인프라 관리를 완전히 분리된 두 레이어로 설계해서 운영하고 있습니다.\n\n" +
+        "애플리케이션 레이어는 GitLab CI + Argo CD + Argo Image Updater 조합입니다. / GitLab CI가 커밋마다 고유 SHA 태그로 이미지를 빌드해 ECR에 푸시하고, / Argo Image Updater가 새 태그를 감지해 Git 저장소의 Helm values를 자동 커밋합니다. / Argo CD는 Git 상태를 클러스터와 항상 일치시키기 때문에 // 모든 배포 이력이 Git commit으로 남고, 롤백은 git revert 한 번으로 끝납니다. / 실제 소요 시간은 1분 이내입니다.\n\n" +
+        "인프라 레이어는 Jenkins + Terraform입니다. / shop-iac 프로젝트에서 DEV/PRD 계정을 디렉토리 단위로 완전 분리해 / ECR, Security Group, Cognito를 선언적으로 관리합니다. / Jenkins 파이프라인은 Plan → Slack 승인 → Apply 순서를 강제하고, / 삭제 리소스가 하나라도 감지되면 Destroy Guard가 추가 수동 확인을 요구합니다. / 자동 Apply는 없습니다.\n\n" +
+        "이 구조 전환의 결과로, 월 2~3회였던 배포 빈도가 하루 1~2회로 늘었고, / 배포 안정성이 개인 숙련도가 아닌 [구조]에서 나오게 됐습니다. / Helm chart는 shop-ai-chart 하나로 4개 AI 에이전트 컴포넌트를 values 파일 분기만으로 DEV/PRD 동시 관리합니다.",
+      en: "I operate CI/CD as two cleanly separated layers: application delivery and infrastructure management. Application layer uses GitLab CI + Argo CD + Argo Image Updater. GitLab CI builds an image per commit with a unique SHA tag and pushes to ECR; Argo Image Updater detects the new tag and auto-commits the Helm values update to Git; Argo CD continuously syncs cluster state to Git, so every deployment is a commit and rollback is a single git revert completed in under 1 minute. Infrastructure layer uses Jenkins + Terraform. The shop-iac project separates DEV and PRD AWS accounts at the directory level, managing ECR, Security Groups, and Cognito declaratively. The Jenkins pipeline enforces Plan → Slack approval → Apply, with a Destroy Guard that blocks any run detecting resource deletions until manual confirmation. No automatic Apply. Result: deployment frequency increased from 2–3 times per month to 1–2 times daily. Deployment reliability now comes from structure, not from individual skill. Helm's shop-ai-chart manages four AI agent components across DEV and PRD with values file branching in a single chart.",
     },
   },
   {
@@ -172,7 +169,7 @@ export const wiproQuestions: LocalizedInterviewQuestion[] = [
     category2: "Cost Optimization",
     priority: "medium",
     question: {
-      ko: "비용 최적화(Cost Optimization) 또는 Security Automation을 위해 스크립트나 도구를 개발/운영한 경험이 있나요?",
+      ko: "비용 최적화(Cost Optimization) 또는 Security Automation을 위해 스크립트나 도구를 개발/운영한 경험이 있습니까?",
       en: "Do you have experience developing or operating scripts or tools for Cost Optimization or Security Automation?",
     },
     answer: {
@@ -247,7 +244,7 @@ export const wiproQuestions: LocalizedInterviewQuestion[] = [
     category2: "Trends",
     priority: "medium",
     question: {
-      ko: "향후 2~3년 안에 DevOps/SRE 분야에서 가장 중요한 트렌드나 변화는 무엇이라고 보시나요? 본인은 어떻게 대비하고 계신가요?",
+      ko: "향후 2~3년 안에 DevOps/SRE 분야에서 가장 중요한 트렌드나 변화는 무엇이라고 보시습니까? 본인은 어떻게 대비하고 계신가요?",
       en: "What do you see as the most important trends in the DevOps/SRE field over the next 2–3 years, and how are you preparing?",
     },
     answer: {
@@ -285,7 +282,7 @@ export const wiproQuestions: LocalizedInterviewQuestion[] = [
     category2: "Contribution",
     priority: "high",
     question: {
-      ko: "이 포지션에서 본인이 Wipro에 가장 크게 기여할 수 있는 부분은 무엇이라고 생각하시나요?",
+      ko: "이 포지션에서 본인이 Wipro에 가장 크게 기여할 수 있는 부분은 무엇이라고 생각하시습니까?",
       en: "What do you think is the area where you can contribute most to Wipro in this position?",
     },
     answer: {
@@ -346,7 +343,7 @@ export const wiproQuestions: LocalizedInterviewQuestion[] = [
     category2: "Cost Optimization",
     priority: "high",
     question: {
-      ko: "클라우드 환경에서 리소스 보안과 비용 최적화를 자동화하기 위해 스크립트를 작성해 본 경험이 있습니까? 기술적인 개선이 실제 회사의 비즈니스(수익이나 비용)에 어떤 영향을 미쳤나요?",
+      ko: "클라우드 환경에서 리소스 보안과 비용 최적화를 자동화하기 위해 스크립트를 작성해 본 경험이 있습니까? 기술적인 개선이 실제 회사의 비즈니스(수익이나 비용)에 어떤 영향을 미쳤습니까?",
       en: "Do you have experience scripting resource security and cost optimization automation in a cloud environment? How did the technical improvement impact business outcomes?",
     },
     answer: {

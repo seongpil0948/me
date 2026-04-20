@@ -165,70 +165,84 @@ ${dict.projects.theshop.content.map((item, idx) => `${idx + 1}. ${item}`).join("
 
 ----------------------------------------
 
-[4] ${dict.projects.gateway.title}
+[4] ${dict.projects.shopAi.title}
+${dict.projects.shopAi.subtitle}
+
+${dict.projects.shopAi.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}
+
+----------------------------------------
+
+[5] ${dict.projects.gitops.title}
+${dict.projects.gitops.subtitle}
+
+${dict.projects.gitops.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}
+
+----------------------------------------
+
+[6] ${dict.projects.gateway.title}
 ${dict.projects.gateway.subtitle}
 
 ${dict.projects.gateway.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}
 
 ----------------------------------------
 
-[5] ${dict.projects.airflow.title}
+[7] ${dict.projects.airflow.title}
 ${dict.projects.airflow.subtitle}
 
 ${dict.projects.airflow.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}
 
 ----------------------------------------
 
-[6] ${dict.projects.ixiStudio.title}
+[8] ${dict.projects.ixiStudio.title}
 ${dict.projects.ixiStudio.subtitle}
 
 ${dict.projects.ixiStudio.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}
 
 ----------------------------------------
 
-[7] ${dict.projects.ixiAdmin.title}
+[9] ${dict.projects.ixiAdmin.title}
 ${dict.projects.ixiAdmin.subtitle}
 
 ${dict.projects.ixiAdmin.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}
 
 ----------------------------------------
 
-[8] ${dict.projects.drone.title}
+[10] ${dict.projects.drone.title}
 ${dict.projects.drone.subtitle}
 
 ${dict.projects.drone.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}
 
 ----------------------------------------
 
-[9] ${dict.projects.robotPlatform.title}
+[11] ${dict.projects.robotPlatform.title}
 ${dict.projects.robotPlatform.subtitle}
 
 ${dict.projects.robotPlatform.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}
 
 ----------------------------------------
 
-[10] ${dict.projects.inoutbox.title}
+[12] ${dict.projects.inoutbox.title}
 ${dict.projects.inoutbox.subtitle}
 
 ${dict.projects.inoutbox.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}
 
 ----------------------------------------
 
-[11] ${dict.projects.campi.title}
+[13] ${dict.projects.campi.title}
 ${dict.projects.campi.subtitle}
 
 ${dict.projects.campi.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}
 
 ----------------------------------------
 
-[12] ${dict.projects.virtualTryOn.title}
+[14] ${dict.projects.virtualTryOn.title}
 ${dict.projects.virtualTryOn.subtitle}
 
 ${dict.projects.virtualTryOn.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}
 
 ----------------------------------------
 
-[13] ${dict.projects.intellisysWebsite.title}
+[15] ${dict.projects.intellisysWebsite.title}
 ${dict.projects.intellisysWebsite.subtitle}
 
 ${dict.projects.intellisysWebsite.content.map((item, idx) => `${idx + 1}. ${item}`).join("\n")}

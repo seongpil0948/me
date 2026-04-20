@@ -523,6 +523,7 @@ export const resumeProjects: {
   { key: "monitoring" },
   { key: "dataLake" },
   { key: "theshop" },
+  { key: "shopAi" },
   { key: "gitops" },
   { key: "gateway" },
   { key: "airflow" },

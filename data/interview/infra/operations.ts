@@ -12,8 +12,8 @@ export const infraOperationsQuestions: LocalizedInterviewQuestion[] = [
     question: { ko: "Redis 클러스터링과 최적화 경험은 어떤가요?" },
     answer: {
       ko:
-        "Redis 운영에서 가장 어려웠던 것은 '기술 지표'를 넘어 '비즈니스 지표'를 수집하는 거였어요. Redis Exporter나 OTEL로는 서버 수준 메트릭만 나오니까, 정작 필요한 건 API별 캐시 히트율인데 말이죠.\n\n" +
-        "문제 상황: ₩500B 이커머스에서 Redis를 세션 저장과 API 캐싱으로 사용했어요. Backend API 팀에서 DB 성능 개선을 위해 캐싱 전략을 추진하면서 '사일로별, 모듈별 Redis 캐싱 히트율을 보여달라'고 요청했어요. 예를 들어 '상품 목록 API의 캐싱 효과가 얼마나 되나?' 같은 비즈니스 질문에 답해야 했죠.\n\n" +
+        "Redis 운영에서 가장 어려웠던 것은 '기술 지표'를 넘어 '비즈니스 지표'를 수집하는 거였습니다. Redis Exporter나 OTEL로는 서버 수준 메트릭만 나오니까, 정작 필요한 건 API별 캐시 히트율인데 말입니다.\n\n" +
+        "문제 상황: ₩500B 이커머스에서 Redis를 세션 저장과 API 캐싱으로 사용했습니다. Backend API 팀에서 DB 성능 개선을 위해 캐싱 전략을 추진하면서 '사일로별, 모듈별 Redis 캐싱 히트율을 보여달라'고 요청했습니다. 예를 들어 '상품 목록 API의 캐싱 효과가 얼마나 되나?' 같은 비즈니스 질문에 답해야 했습니다.\n\n" +
         "가장 고민했던 것은 비즈니스 컨텍스트가 포함된 캐싱 지표 수집이었습니다. " +
         "Backend API 팀에서 DB 쿼리 최적화와 캐싱 전략으로 성능 개선을 추진하면서 " +
         "사일로별, 모듈별 Redis 캐싱 히트율 지표를 요청했습니다. " +
@@ -59,11 +59,11 @@ export const infraOperationsQuestions: LocalizedInterviewQuestion[] = [
     id: 13,
     category1: "Infrastructure",
     category2: "Cost Optimization",
-    question: { ko: "클라우드 비용 최적화를 어떻게 접근하나요?" },
+    question: { ko: "클라우드 비용 최적화를 어떻게 접근하습니까?" },
     answer: {
       ko:
-        "클라우드 비용 최적화에서 가장 큰 충격은 '이건 누가 써요?' 라는 질문에 대답하지 못한다는 것이었어요. 비용이 갑자기 5배 뛰었는데 어느 팀의 어떤 서비스인지 모르니 비난받기도 하고, 추적하기도 힘들었죠.\n\n" +
-        "문제 상황: 월 AWS 비용이 처음엔 1,000달러였는데, 6개월 후 5,000달러가 됐어요. 다들 '저희가 쓴 게 아니에요'라고만 하더라고요. Cost Explorer를 열어보니 EC2, S3, RDS가 분산되어 있는데 누가 어떤 목적으로 만들었는지 정보가 없었죠. 태그도 없고, 명명 규칙도 제각각이고.\n\n" +
+        "클라우드 비용 최적화에서 가장 큰 충격은 '이건 누가 써요?' 라는 질문에 대답하지 못한다는 것이었습니다. 비용이 갑자기 5배 뛰었는데 어느 팀의 어떤 서비스인지 모르니 비난받기도 하고, 추적하기도 힘들었습니다.\n\n" +
+        "문제 상황: 월 AWS 비용이 처음엔 1,000달러였는데, 6개월 후 5,000달러가 됐습니다. 다들 '저희가 쓴 게 아니입니다'라고만 했습니다. Cost Explorer를 열어보니 EC2, S3, RDS가 분산되어 있는데 누가 어떤 목적으로 만들었는지 정보가 없었습니다. 태그도 없고, 명명 규칙도 제각각이고.\n\n" +
         "Reserved Instance와 Savings Plans 전략을 수립했습니다. " +
         "과거 12개월 사용 패턴을 분석하여 안정적인 workload는 RI로 전환하고, " +
         "변동성이 큰 워크로드는 Compute Savings Plans을 적용했습니다. " +
@@ -104,8 +104,8 @@ export const infraOperationsQuestions: LocalizedInterviewQuestion[] = [
     question: { ko: "인프라 보안에 대한 접근 방식은 무엇인가요?" },
     answer: {
       ko:
-        "인프라 보안에서 가장 무서웠던 순간은 GitHub Private Repo에서 '.env 파일에 DB 패스워드가 하드코딩되어 있다'는 보고를 받았을 때였어요. 다행히 Private Repo였지만, '만약 누군가 토큰을 훔쳤다면?' 하는 상상만 해도 등가류가 숰었죠.\n\n" +
-        "문제 상황: 10년된 레거시 코드베이스에서 DB 패스워드, API 키, 제3자 서비스 토큰이 소스코드에 그대로 녹아있었어요. application.properties에 spring.datasource.password=prod1234! 이런 식으로요. '어차피 Private Repo인데 무슨 문제예요?'라는 반응도 있었죠.\n\n" +
+        "인프라 보안에서 가장 무서웠던 순간은 GitHub Private Repo에서 '.env 파일에 DB 패스워드가 하드코딩되어 있다'는 보고를 받았을 때였습니다. 다행히 Private Repo였지만, '만약 누군가 토큰을 훔쳤다면?' 하는 상상만 해도 등가류가 숰었습니다.\n\n" +
+        "문제 상황: 10년된 레거시 코드베이스에서 DB 패스워드, API 키, 제3자 서비스 토큰이 소스코드에 그대로 녹아있었습니다. application.properties에 spring.datasource.password=prod1234! 이런 식으로요. '어차피 Private Repo인데 무슨 문제예요?'라는 반응도 있었습니다.\n\n" +
         "Identity and Access Management를 최소 권한 원칙으로 설계했습니다. " +
         "각 서비스별로 필요한 최소 권한만 부여하고, " +
         "IAM Policy Simulator로 권한을 검증했습니다. " +
@@ -189,7 +189,7 @@ export const infraOperationsQuestions: LocalizedInterviewQuestion[] = [
     id: 76,
     category1: "Infrastructure",
     category2: "Cost Optimization",
-    question: { ko: "인프라 비용 모니터링에 어떤 전략을 사용하나요?" },
+    question: { ko: "인프라 비용 모니터링에 어떤 전략을 사용하습니까?" },
     answer: {
       ko:
         "인프라 비용 모니터링에서 가장 중요한 것은 실시간 가시성과 예측적 알림입니다.\n\n" +
@@ -234,22 +234,22 @@ export const infraOperationsQuestions: LocalizedInterviewQuestion[] = [
     category1: "Infrastructure/Operations",
     category2: "Redis Migration",
     question: {
-      ko: "Redis v5에서 v7 LTS로 무중단 마이그레이션할 때 Dual-Write 전략을 사용했다고 하셨는데, 데이터 정합성은 어떻게 보장하고 언제 레거시 시스템을 비활성화할 수 있었나요?",
+      ko: "Redis v5에서 v7 LTS로 무중단 마이그레이션할 때 Dual-Write 전략을 사용했다고 하셨는데, 데이터 정합성은 어떻게 보장하고 언제 레거시 시스템을 비활성화할 수 있었습니까?",
     },
     answer: {
       ko:
         "Redis 마이그레이션에서 가장 어려웠던 부분은 '백업/복구 정책이 제대로 작동하지 않는다'는 현실을 마주한 것이었습니다.\n\n" +
-        "당시 상황을 먼저 말씀드리면, Redis는 세션 관리와 장바구니등 성능 개선의 핵심 요소로 사용되고 있었고, 서비스 중단 없이 v5에서 v7로 전환해야 했습니다. 처음엔 단순하게 생각했어요. 공식 문서대로 AOF/RDB 백업 방식을 쓰면 되겠지 싶었죠.\n\n" +
-        "그런데 막상 해보니 큰 문제가 있었습니다. AOF와 RDB 백업 정책이 제대로 관리되지 않아서 실제 복구 시 작동하지 않았어요. 백업 파일은 있는데, 데이터 타입별로 복원이 안 되는 거죠. String, Hash, Set, Sorted Set이 섞여 있는데 일괄 복구가 깨지는 상황이었습니다.\n\n" +
+        "당시 상황을 먼저 말씀드리면, Redis는 세션 관리와 장바구니등 성능 개선의 핵심 요소로 사용되고 있었고, 서비스 중단 없이 v5에서 v7로 전환해야 했습니다. 처음엔 단순하게 생각했습니다. 공식 문서대로 AOF/RDB 백업 방식을 쓰면 되겠지 싶었습니다.\n\n" +
+        "그런데 막상 해보니 큰 문제가 있었습니다. AOF와 RDB 백업 정책이 제대로 관리되지 않아서 실제 복구 시 작동하지 않았습니다. 백업 파일은 있는데, 데이터 타입별로 복원이 안 되는 거죠. String, Hash, Set, Sorted Set이 섞여 있는데 일괄 복구가 깨지는 상황이었습니다.\n\n" +
         "결국 Dual-Write 방식을 선택했고, 제가 직접 스크립트를 작성해서 진행했습니다.\n\n" +
-        "첫 번째로 한 일은 두 Redis 클러스터(v5, v7)를 동시에 운영하는 거였어요. 애플리케이션에서 Write 요청이 오면 v5와 v7 양쪽에 모두 쓰도록 했습니다. 복잡한 로직은 아니었고, Redis 클라이언트 설정에서 endpoint 두 개를 지정하고 순차적으로 write하는 정도였죠.\n\n" +
-        "두 번째는 동기화 스크립트였습니다. 기존 v5에 있던 데이터를 v7로 옮겨야 했는데, 데이터 타입별로 처리가 달랐어요. Python으로 간단한 스크립트를 작성했습니다. SCAN으로 키를 순회하면서 TYPE 명령어로 데이터 타입을 확인하고, String이면 GET→SET, Hash면 HGETALL→HMSET, Set이면 SMEMBERS→SADD 이런 식으로 타입별 복사 로직을 만들었습니다. TTL도 같이 복사해야 했기 때문에 TTL 명령어로 남은 시간을 확인하고 EXPIRE로 동일하게 설정했죠.\n\n" +
-        "세 번째는 검증 작업이었습니다. 동기화 스크립트를 돌린 후 v5와 v7의 데이터가 정말 같은지 확인해야 했어요. 매시간 크론잡으로 샘플링 스크립트를 돌렸습니다. 무작위로 키 몇천 개를 뽑아서 v5와 v7의 값을 비교하고, 다르면 Slack으로 알림이 오도록 했죠. 생각보다 불일치가 많이 발생했는데, 대부분 TTL 차이나 Dual-Write 중 한쪽이 실패한 경우였어요.\n\n" +
-        "네 번째가 제일 힘들었던 백업 작업이었습니다. AOF/RDB가 믿을 수 없다는 걸 알았기 때문에, 별도 백업 스크립트를 만들어야 했어요. 데이터 타입별로 JSON 형태로 덤프하는 스크립트를 작성했습니다. 예를 들어 String은 key와 value를 JSON으로, Hash는 key와 field-value 쌍을 JSON으로 저장했죠. 이 JSON 파일을 S3에 업로드하고, 복구 스크립트도 따로 만들었습니다. JSON을 읽어서 데이터 타입에 맞게 Redis 명령어를 실행하는 거였어요.\n\n" +
-        "실제로 이 백업 스크립트가 한 번 빛을 발했습니다. v7로 전환하는 중에 실수로 데이터를 날린 적이 있었는데, S3에 있던 JSON 백업 파일로 5분 만에 복구했어요. AOF/RDB였으면 복구 자체가 불가능했을 겁니다.\n\n" +
-        "레거시 시스템 비활성화는 생각보다 간단했습니다. v7로 Read/Write를 모두 전환하고 2주간 문제가 없으면 v5를 종료하기로 했어요. 실제로는 3주 정도 두 클러스터를 병행 운영하다가, 확신이 서고 나서 v5를 내렸습니다. 다만 v5 스냅샷은 S3에 한 달간 보관했죠. 혹시 모를 롤백 상황을 대비해서요.\n\n" +
-        "결과적으로 무중단 마이그레이션에 성공했고, v7의 성능 개선도 체감할 수 있었습니다. 하지만 가장 큰 교훈은, '공식 백업 방식이 항상 작동한다고 믿으면 안 된다'는 것이었어요. 특히 오래된 시스템일수록 설정이 꼬여 있거나 관리가 안 되는 경우가 많습니다. 직접 스크립트로 제어할 수 있는 방법을 만들어두는 게 안전합니다.\n\n" +
-        "지금 생각해보면 Dual-Write 방식이 복잡해 보이지만, 실제로는 '두 군데 쓰고, 동기화하고, 검증하고, 백업한다'는 단순한 작업의 반복이었습니다. 다만 그 각각을 믿을 수 있게 만드는 게 핵심이었죠.",
+        "첫 번째로 한 일은 두 Redis 클러스터(v5, v7)를 동시에 운영하는 거였습니다. 애플리케이션에서 Write 요청이 오면 v5와 v7 양쪽에 모두 쓰도록 했습니다. 복잡한 로직은 아니었고, Redis 클라이언트 설정에서 endpoint 두 개를 지정하고 순차적으로 write하는 정도였죠.\n\n" +
+        "두 번째는 동기화 스크립트였습니다. 기존 v5에 있던 데이터를 v7로 옮겨야 했는데, 데이터 타입별로 처리가 달랐어요. Python으로 간단한 스크립트를 작성했습니다. SCAN으로 키를 순회하면서 TYPE 명령어로 데이터 타입을 확인하고, String이면 GET→SET, Hash면 HGETALL→HMSET, Set이면 SMEMBERS→SADD 이런 식으로 타입별 복사 로직을 만들었습니다. TTL도 같이 복사해야 했기 때문에 TTL 명령어로 남은 시간을 확인하고 EXPIRE로 동일하게 설정했습니다.\n\n" +
+        "세 번째는 검증 작업이었습니다. 동기화 스크립트를 돌린 후 v5와 v7의 데이터가 정말 같은지 확인해야 했습니다. 매시간 크론잡으로 샘플링 스크립트를 돌렸습니다. 무작위로 키 몇천 개를 뽑아서 v5와 v7의 값을 비교하고, 다르면 Slack으로 알림이 오도록 했습니다. 생각보다 불일치가 많이 발생했는데, 대부분 TTL 차이나 Dual-Write 중 한쪽이 실패한 경우였습니다.\n\n" +
+        "네 번째가 제일 힘들었던 백업 작업이었습니다. AOF/RDB가 믿을 수 없다는 걸 알았기 때문에, 별도 백업 스크립트를 만들어야 했습니다. 데이터 타입별로 JSON 형태로 덤프하는 스크립트를 작성했습니다. 예를 들어 String은 key와 value를 JSON으로, Hash는 key와 field-value 쌍을 JSON으로 저장했습니다. 이 JSON 파일을 S3에 업로드하고, 복구 스크립트도 따로 만들었습니다. JSON을 읽어서 데이터 타입에 맞게 Redis 명령어를 실행하는 거였습니다.\n\n" +
+        "실제로 이 백업 스크립트가 한 번 빛을 발했습니다. v7로 전환하는 중에 실수로 데이터를 날린 적이 있었는데, S3에 있던 JSON 백업 파일로 5분 만에 복구했습니다. AOF/RDB였으면 복구 자체가 불가능했을 겁니다.\n\n" +
+        "레거시 시스템 비활성화는 생각보다 간단했습니다. v7로 Read/Write를 모두 전환하고 2주간 문제가 없으면 v5를 종료하기로 했습니다. 실제로는 3주 정도 두 클러스터를 병행 운영하다가, 확신이 서고 나서 v5를 내렸습니다. 다만 v5 스냅샷은 S3에 한 달간 보관했습니다. 혹시 모를 롤백 상황을 대비해서요.\n\n" +
+        "결과적으로 무중단 마이그레이션에 성공했고, v7의 성능 개선도 체감할 수 있었습니다. 하지만 가장 큰 교훈은, '공식 백업 방식이 항상 작동한다고 믿으면 안 된다'는 것이었습니다. 특히 오래된 시스템일수록 설정이 꼬여 있거나 관리가 안 되는 경우가 많습니다. 직접 스크립트로 제어할 수 있는 방법을 만들어두는 게 안전합니다.\n\n" +
+        "지금 생각해보면 Dual-Write 방식이 복잡해 보이지만, 실제로는 '두 군데 쓰고, 동기화하고, 검증하고, 백업한다'는 단순한 작업의 반복이었습니다. 다만 그 각각을 믿을 수 있게 만드는 게 핵심이었습니다.",
       en: "A concise Redis Migration answer covering real production context, key decision trade-offs, measurable outcomes, and takeaways.",
     },
   },
@@ -258,24 +258,24 @@ export const infraOperationsQuestions: LocalizedInterviewQuestion[] = [
     category1: "Infrastructure/Operations",
     category2: "Cost Optimization",
     question: {
-      ko: "인프라 비용 50% 절감을 달성했습니다. EC2 라이트사이징과 S3 스토리지 최적화를 어떻게 진행했나요?",
+      ko: "인프라 비용 50% 절감을 달성했습니다. EC2 라이트사이징과 S3 스토리지 최적화를 어떻게 진행했습니까?",
     },
     answer: {
       ko:
         "인프라 비용 절감에서 가장 어려웠던 부분은 '이게 정말 안 쓰는 거 맞나?'라는 확신을 갖는 것이었습니다.\n\n" +
-        "당시 상황을 먼저 말씀드리면, 10년 이상 운영된 시스템이다 보니 누가 왜 만들었는지 모르는 리소스들이 많았어요. EC2로 구동 중인 Redmine, Bastion, 그리고 POC 프로젝트로 보이는 인스턴스들이 여기저기 흩어져 있었습니다. 문제는 '이거 내리면 누군가 쓰고 있을까봐' 두려워서 아무도 손을 못 대고 있었다는 거죠. 거기다 RDS는 필요 이상으로 높은 스펙으로 프로비저닝되어 있었습니다.\n\n" +
-        "첫 번째로 한 일은 CloudWatch 메트릭 수집이었습니다. 모든 EC2와 RDS의 사용률 데이터를 4주간 모았어요. CPU, Memory, Network, Disk I/O를 5분 단위로 수집했습니다. 단순히 평균값만 보는 게 아니라, 피크 타임의 최대값도 함께 봤죠. 혹시 야간이나 주말에 배치 작업이 돌아갈 수도 있으니까요.\n\n" +
-        "데이터를 보니 명확해졌습니다. Redmine 서버는 CPU 평균 5%, 피크 타임에도 15%밖에 안 썼어요. Bastion 서버는 하루에 몇 번 SSH 접속하는 게 전부였고요. 그래서 이 두 서버는 과감하게 다운그레이드했습니다. t3.large에서 t3.small로 내렸는데, 실제 사용에는 전혀 문제가 없었죠.\n\n" +
-        "미사용 인스턴스 처리가 더 조심스러웠습니다. 메트릭상으로는 거의 idle 상태인데, 혹시 누군가 쓰고 있을까봐 불안했거든요. 그래서 이렇게 진행했어요. 먼저 인스턴스를 정지(stop)시키고 1주일 기다렸습니다. Slack에 공지도 올리고, 혹시 문제가 있으면 연락 달라고 했죠. 1주일 동안 아무도 연락이 없으면, 그때 완전히 제거(terminate)했습니다. 결과적으로 6개 인스턴스를 내릴 수 있었어요.\n\n" +
-        "RDS는 좀 더 신중하게 접근했습니다. db.r5.2xlarge로 운영 중이었는데, 실제 사용률을 보니 CPU 10%, 메모리 30% 수준이었어요. 하지만 프로덕션 DB라서 바로 다운그레이드하기엔 리스크가 컸습니다. 그래서 Read Replica를 먼저 작은 인스턴스로 만들어서 테스트했어요. 성능에 문제가 없다는 걸 확인한 후에, Primary도 db.r5.xlarge로 한 단계 낮췄습니다. 그것만으로도 월 비용이 40% 줄었죠.\n\n" +
-        "S3 최적화도 중요했습니다. 데이터를 크게 세 가지로 분류했어요.\n\n" +
-        "첫째, 장기 보관 데이터였습니다. OpenTelemetry Metric, Trace, Log 같은 관측성 데이터는 규제나 분석 목적으로 오래 보관해야 했어요. 이런 건 30일 후 S3 Standard-IA로, 90일 후 Glacier로 자동 이동하도록 Lifecycle 정책을 설정했습니다. 자주 접근하지 않는 데이터는 저렴한 스토리지에 두는 거죠.\n\n" +
-        "둘째, 단기 디버깅 데이터였습니다. 개발 중에 생성되는 테스트 로그나 임시 파일들은 7일 후 자동 삭제되도록 했어요. 디버깅이 끝나면 필요 없는 데이터인데, 계속 쌓여서 비용만 발생하고 있었거든요.\n\n" +
-        "셋째, 워크플로우 간 전달용 휘발 데이터였습니다. Airflow DAG 사이에서 중간 결과를 주고받는 용도의 데이터는 24시간 후 삭제했습니다. 한 번 쓰고 버리는 데이터인데 무기한 보관할 이유가 없었죠.\n\n" +
-        "이 정책들을 적용한 후 S3 비용이 월 800달러에서 300달러로 62% 감소했습니다. 특히 Glacier 이동만으로도 스토리지 비용의 절반을 아낄 수 있었어요.\n\n" +
-        "전체적으로 월 AWS 비용이 5,000달러에서 2,500달러로 50% 절감되었습니다. EC2 다운그레이드와 미사용 인스턴스 제거로 1,500달러, RDS 최적화로 700달러, S3 Lifecycle 정책으로 500달러를 줄였죠. 나머지 800달러는 EBS 볼륨 정리, 사용하지 않는 EIP 해제, 오래된 스냅샷 삭제 같은 자잘한 것들이었어요.\n\n" +
-        "가장 큰 교훈은, 비용 절감의 핵심은 '용기'라는 것이었습니다. 데이터는 명확하게 보여주는데, 막상 실행하려면 '혹시 문제가 생기면 어쩌지?'라는 두려움 때문에 못 하게 되거든요. 그래서 저는 단계적 접근을 택했어요. Stop → 1주일 대기 → Terminate 이런 식으로 안전장치를 두고 진행하니 심리적 부담이 줄었습니다.\n\n" +
-        "지금은 매달 비용 리포트를 보면서 불필요한 리소스가 없는지 체크하고 있어요. 한 번 정리했다고 끝이 아니라, 지속적으로 관리해야 비용이 다시 늘어나지 않더라고요.",
+        "당시 상황을 먼저 말씀드리면, 10년 이상 운영된 시스템이다 보니 누가 왜 만들었는지 모르는 리소스들이 많았습니다. EC2로 구동 중인 Redmine, Bastion, 그리고 POC 프로젝트로 보이는 인스턴스들이 여기저기 흩어져 있었습니다. 문제는 '이거 내리면 누군가 쓰고 있을까봐' 두려워서 아무도 손을 못 대고 있었다는 거죠. 거기다 RDS는 필요 이상으로 높은 스펙으로 프로비저닝되어 있었습니다.\n\n" +
+        "첫 번째로 한 일은 CloudWatch 메트릭 수집이었습니다. 모든 EC2와 RDS의 사용률 데이터를 4주간 모았습니다. CPU, Memory, Network, Disk I/O를 5분 단위로 수집했습니다. 단순히 평균값만 보는 게 아니라, 피크 타임의 최대값도 함께 봤죠. 혹시 야간이나 주말에 배치 작업이 돌아갈 수도 있으니까요.\n\n" +
+        "데이터를 보니 명확해졌습니다. Redmine 서버는 CPU 평균 5%, 피크 타임에도 15%밖에 안 썼어요. Bastion 서버는 하루에 몇 번 SSH 접속하는 게 전부였고요. 그래서 이 두 서버는 과감하게 다운그레이드했습니다. t3.large에서 t3.small로 내렸는데, 실제 사용에는 전혀 문제가 없었습니다.\n\n" +
+        "미사용 인스턴스 처리가 더 조심스러웠습니다. 메트릭상으로는 거의 idle 상태인데, 혹시 누군가 쓰고 있을까봐 불안했습니다. 그래서 이렇게 진행했습니다. 먼저 인스턴스를 정지(stop)시키고 1주일 기다렸습니다. Slack에 공지도 올리고, 혹시 문제가 있으면 연락 달라고 했습니다. 1주일 동안 아무도 연락이 없으면, 그때 완전히 제거(terminate)했습니다. 결과적으로 6개 인스턴스를 내릴 수 있었습니다.\n\n" +
+        "RDS는 좀 더 신중하게 접근했습니다. db.r5.2xlarge로 운영 중이었는데, 실제 사용률을 보니 CPU 10%, 메모리 30% 수준이었습니다. 하지만 프로덕션 DB라서 바로 다운그레이드하기엔 리스크가 컸습니다. 그래서 Read Replica를 먼저 작은 인스턴스로 만들어서 테스트했습니다. 성능에 문제가 없다는 걸 확인한 후에, Primary도 db.r5.xlarge로 한 단계 낮췄습니다. 그것만으로도 월 비용이 40% 줄었습니다.\n\n" +
+        "S3 최적화도 중요했습니다. 데이터를 크게 세 가지로 분류했습니다.\n\n" +
+        "첫째, 장기 보관 데이터였습니다. OpenTelemetry Metric, Trace, Log 같은 관측성 데이터는 규제나 분석 목적으로 오래 보관해야 했습니다. 이런 건 30일 후 S3 Standard-IA로, 90일 후 Glacier로 자동 이동하도록 Lifecycle 정책을 설정했습니다. 자주 접근하지 않는 데이터는 저렴한 스토리지에 두는 거죠.\n\n" +
+        "둘째, 단기 디버깅 데이터였습니다. 개발 중에 생성되는 테스트 로그나 임시 파일들은 7일 후 자동 삭제되도록 했습니다. 디버깅이 끝나면 필요 없는 데이터인데, 계속 쌓여서 비용만 발생하고 있었습니다.\n\n" +
+        "셋째, 워크플로우 간 전달용 휘발 데이터였습니다. Airflow DAG 사이에서 중간 결과를 주고받는 용도의 데이터는 24시간 후 삭제했습니다. 한 번 쓰고 버리는 데이터인데 무기한 보관할 이유가 없었습니다.\n\n" +
+        "이 정책들을 적용한 후 S3 비용이 월 800달러에서 300달러로 62% 감소했습니다. 특히 Glacier 이동만으로도 스토리지 비용의 절반을 아낄 수 있었습니다.\n\n" +
+        "전체적으로 월 AWS 비용이 5,000달러에서 2,500달러로 50% 절감되었습니다. EC2 다운그레이드와 미사용 인스턴스 제거로 1,500달러, RDS 최적화로 700달러, S3 Lifecycle 정책으로 500달러를 줄였죠. 나머지 800달러는 EBS 볼륨 정리, 사용하지 않는 EIP 해제, 오래된 스냅샷 삭제 같은 자잘한 것들이었습니다.\n\n" +
+        "가장 큰 교훈은, 비용 절감의 핵심은 '용기'라는 것이었습니다. 데이터는 명확하게 보여주는데, 막상 실행하려면 '혹시 문제가 생기면 어쩌지?'라는 두려움 때문에 못 하게 되습니다. 그래서 저는 단계적 접근을 택했습니다. Stop → 1주일 대기 → Terminate 이런 식으로 안전장치를 두고 진행하니 심리적 부담이 줄었습니다.\n\n" +
+        "지금은 매달 비용 리포트를 보면서 불필요한 리소스가 없는지 체크하고 있습니다. 한 번 정리했다고 끝이 아니라, 지속적으로 관리해야 비용이 다시 늘어나지 않더라고요.",
       en: "A concise Cost Optimization answer covering real production context, key decision trade-offs, measurable outcomes, and takeaways.",
     },
   },
@@ -289,24 +289,24 @@ export const infraOperationsQuestions: LocalizedInterviewQuestion[] = [
     answer: {
       ko:
         "APISIX 도입 결정은 레거시 시스템의 근본적인 문제를 해결하기 위한 선택이었습니다.\n\n" +
-        "당시 상황을 먼저 설명하겠습니다. 기존 Nginx는 10년간 사용되면서 설정 파일이 2,000줄이 넘었고, 정규표현식이 중첩되어 있어서 새로운 라우팅 규칙을 추가할 때마다 side effect가 발생했습니다. 더 큰 문제는 동적 설정 변경이 불가능했다는 것이죠. 서비스 라우팅을 바꾸려면 nginx.conf를 수정하고, syntax check 후 reload해야 했는데, 이 과정에서 실수로 잘못된 설정을 반영하면 전체 트래픽이 차단되는 위험이 있었어요.\n\n" +
+        "당시 상황을 먼저 설명하겠습니다. 기존 Nginx는 10년간 사용되면서 설정 파일이 2,000줄이 넘었고, 정규표현식이 중첩되어 있어서 새로운 라우팅 규칙을 추가할 때마다 side effect가 발생했습니다. 더 큰 문제는 동적 설정 변경이 불가능했다는 것입니다. 서비스 라우팅을 바꾸려면 nginx.conf를 수정하고, syntax check 후 reload해야 했는데, 이 과정에서 실수로 잘못된 설정을 반영하면 전체 트래픽이 차단되는 위험이 있었습니다.\n\n" +
         "APISIX를 선택한 이유는 세 가지 핵심 요구사항을 충족했기 때문입니다.\n\n" +
         "첫째, 동적 라우팅과 Hot Reload였습니다. APISIX는 etcd를 백엔드로 사용해서 설정 변경을 실시간으로 반영할 수 있습니다. Admin API로 라우팅 규칙을 추가하면 1-2초 내에 모든 APISIX 노드에 전파되죠. Nginx처럼 reload가 필요 없으니 connection drop도 없었습니다.\n\n" +
-        "둘째, 플러그인 기반 확장성이었습니다. Rate Limiting, CORS, JWT 인증, Circuit Breaker를 Lua 플러그인으로 쉽게 추가할 수 있었어요. Nginx에서는 이런 기능들을 직접 구현하거나 서드파티 모듈을 컴파일해야 했는데, APISIX는 built-in 플러그인 50개 이상을 제공했습니다.\n\n" +
-        "셋째, Service Discovery 통합이었습니다. Nginx는 upstream 서버를 정적으로 설정해야 했지만, APISIX는 Eureka, Consul, Nacos를 네이티브로 지원했습니다. 우리 환경은 Spring Cloud Eureka를 이미 사용하고 있었기 때문에 이 통합이 결정적이었죠.\n\n" +
+        "둘째, 플러그인 기반 확장성이었습니다. Rate Limiting, CORS, JWT 인증, Circuit Breaker를 Lua 플러그인으로 쉽게 추가할 수 있었습니다. Nginx에서는 이런 기능들을 직접 구현하거나 서드파티 모듈을 컴파일해야 했는데, APISIX는 built-in 플러그인 50개 이상을 제공했습니다.\n\n" +
+        "셋째, Service Discovery 통합이었습니다. Nginx는 upstream 서버를 정적으로 설정해야 했지만, APISIX는 Eureka, Consul, Nacos를 네이티브로 지원했습니다. 우리 환경은 Spring Cloud Eureka를 이미 사용하고 있었기 때문에 이 통합이 결정적이었습니다.\n\n" +
         "Spring Cloud Eureka와의 연동 과정을 구체적으로 설명하겠습니다.\n\n" +
-        "첫 번째 단계는 APISIX Discovery 플러그인 설정이었습니다. APISIX의 config.yaml에 Eureka 서버 URL과 polling interval을 설정했어요. 30초마다 Eureka에서 서비스 목록을 가져오도록 했습니다.\n\n" +
+        "첫 번째 단계는 APISIX Discovery 플러그인 설정이었습니다. APISIX의 config.yaml에 Eureka 서버 URL과 polling interval을 설정했습니다. 30초마다 Eureka에서 서비스 목록을 가져오도록 했습니다.\n\n" +
         "두 번째는 Route 설정이었습니다. 예를 들어 product-service라는 마이크로서비스가 있다면, APISIX Admin API로 이렇게 설정했습니다.\n\n" +
-        "uri는 /api/products/*, upstream은 service_name=product-service, discovery_type=eureka로 지정했죠. 그러면 APISIX가 자동으로 Eureka에서 product-service의 인스턴스 목록을 조회하고, 로드밸런싱을 수행합니다.\n\n" +
-        "세 번째는 Health Check 통합이었습니다. Eureka의 Health Status와 APISIX의 Health Check를 연동해서, Eureka에서 DOWN 상태인 인스턴스는 APISIX가 자동으로 트래픽을 보내지 않도록 했습니다. 이를 위해 Eureka의 /actuator/health endpoint를 APISIX Healthcheck 플러그인에 등록했죠.\n\n" +
-        "네 번째는 Graceful Shutdown 구현이었습니다. Spring Boot 서비스가 종료될 때, Eureka에서 먼저 deregister하고 30초 대기 후 실제 종료되도록 했어요. APISIX가 Eureka에서 서비스가 사라진 것을 감지하고 트래픽을 끊기까지 시간 차를 고려한 거죠. 이렇게 해서 배포 시 502 Bad Gateway 에러를 zero로 만들었습니다.\n\n" +
+        "uri는 /api/products/*, upstream은 service_name=product-service, discovery_type=eureka로 지정했습니다. 그러면 APISIX가 자동으로 Eureka에서 product-service의 인스턴스 목록을 조회하고, 로드밸런싱을 수행합니다.\n\n" +
+        "세 번째는 Health Check 통합이었습니다. Eureka의 Health Status와 APISIX의 Health Check를 연동해서, Eureka에서 DOWN 상태인 인스턴스는 APISIX가 자동으로 트래픽을 보내지 않도록 했습니다. 이를 위해 Eureka의 /actuator/health endpoint를 APISIX Healthcheck 플러그인에 등록했습니다.\n\n" +
+        "네 번째는 Graceful Shutdown 구현이었습니다. Spring Boot 서비스가 종료될 때, Eureka에서 먼저 deregister하고 30초 대기 후 실제 종료되도록 했습니다. APISIX가 Eureka에서 서비스가 사라진 것을 감지하고 트래픽을 끊기까지 시간 차를 고려한 거죠. 이렇게 해서 배포 시 502 Bad Gateway 에러를 zero로 만들었습니다.\n\n" +
         "API 지연시간 40% 감소의 구체적인 방법을 설명하겠습니다.\n\n" +
-        "첫 번째는 Connection Pooling과 Keepalive였습니다. Nginx는 upstream connection을 매번 새로 맺었는데, APISIX는 upstream과의 connection을 pool로 관리하고 keepalive를 사용했습니다. HTTP handshake 오버헤드가 사라지면서 latency가 20ms 감소했어요.\n\n" +
+        "첫 번째는 Connection Pooling과 Keepalive였습니다. Nginx는 upstream connection을 매번 새로 맺었는데, APISIX는 upstream과의 connection을 pool로 관리하고 keepalive를 사용했습니다. HTTP handshake 오버헤드가 사라지면서 latency가 20ms 감소했습니다.\n\n" +
         "두 번째는 Intelligent Load Balancing이었습니다. Nginx는 Round Robin만 지원했지만, APISIX는 Least Connection과 Consistent Hashing을 지원했습니다. 특히 Cache 친화적인 API는 Consistent Hashing으로 같은 요청이 항상 같은 backend로 가도록 해서 cache hit rate를 높였죠. 이것만으로 평균 응답시간이 15ms 줄었습니다.\n\n" +
-        "세 번째는 Request Aggregation이었습니다. 프론트엔드에서 여러 API를 순차 호출하던 것을 APISIX의 BatchRequest 플러그인으로 한 번에 묶어서 보냈어요. 예를 들어 상품 상세 페이지에서 product-info, reviews, recommendations 3개 API를 호출하던 것을 하나의 batch request로 처리했습니다. 네트워크 왕복 횟수가 줄어서 total latency가 40ms 감소했죠.\n\n" +
-        "네 번째는 Response Caching이었습니다. APISIX의 Proxy Cache 플러그인으로 자주 요청되는 API 응답을 캐싱했어요. 상품 목록처럼 변경이 드문 데이터는 5분간 캐싱해서, cache hit 시 backend를 거치지 않고 APISIX에서 바로 응답했습니다. Backend CPU 부하도 줄고 응답시간도 80%가량 빨라졌죠.\n\n" +
+        "세 번째는 Request Aggregation이었습니다. 프론트엔드에서 여러 API를 순차 호출하던 것을 APISIX의 BatchRequest 플러그인으로 한 번에 묶어서 보냈어요. 예를 들어 상품 상세 페이지에서 product-info, reviews, recommendations 3개 API를 호출하던 것을 하나의 batch request로 처리했습니다. 네트워크 왕복 횟수가 줄어서 total latency가 40ms 감소했습니다.\n\n" +
+        "네 번째는 Response Caching이었습니다. APISIX의 Proxy Cache 플러그인으로 자주 요청되는 API 응답을 캐싱했습니다. 상품 목록처럼 변경이 드문 데이터는 5분간 캐싱해서, cache hit 시 backend를 거치지 않고 APISIX에서 바로 응답했습니다. Backend CPU 부하도 줄고 응답시간도 80%가량 빨라졌죠.\n\n" +
         "다섯 번째는 Circuit Breaker와 Timeout 튜닝이었습니다. Nginx 시절엔 backend가 느려지면 gateway도 같이 느려졌는데, APISIX에서는 연속 5회 실패 시 Circuit Open, 30초간 트래픽 차단, 이후 Half-Open으로 전환하는 정책을 설정했습니다. 장애 서비스가 전체 시스템을 느리게 만드는 것을 방지한 거죠.\n\n" +
-        "마지막으로 모니터링 개선이었습니다. APISIX의 Prometheus 플러그인으로 경로별, 메서드별, 상태코드별 메트릭을 수집하고 Grafana로 시각화했어요. P50, P90, P99 latency를 실시간으로 보면서 bottleneck을 찾고 개선했습니다. 예를 들어 특정 API의 P99가 1초를 넘으면 해당 backend 팀에 알림이 가도록 했죠.\n\n" +
+        "마지막으로 모니터링 개선이었습니다. APISIX의 Prometheus 플러그인으로 경로별, 메서드별, 상태코드별 메트릭을 수집하고 Grafana로 시각화했습니다. P50, P90, P99 latency를 실시간으로 보면서 bottleneck을 찾고 개선했습니다. 예를 들어 특정 API의 P99가 1초를 넘으면 해당 backend 팀에 알림이 가도록 했습니다.\n\n" +
         "결과적으로 평균 API 지연시간이 100ms에서 60ms로 40% 감소했고, P99 latency는 500ms에서 200ms로 대폭 개선되었습니다. 더 중요한 것은, 동적 설정 변경으로 배포 없이 라우팅을 수정할 수 있게 되어 운영 민첩성이 크게 향상되었다는 점입니다.\n\n" +
         "핵심 교훈은, API Gateway는 단순한 프록시가 아니라 성능과 안정성의 핵심 계층이라는 것입니다. 적절한 기술 선택과 세심한 튜닝으로 큰 개선을 만들 수 있습니다.",
       en: "A concise API Gateway answer covering real production context, key decision trade-offs, measurable outcomes, and takeaways.",
@@ -321,26 +321,26 @@ export const infraOperationsQuestions: LocalizedInterviewQuestion[] = [
     },
     answer: {
       ko:
-        "'AWS Native로 완전 자동화하자'는 목표로 CodePipeline을 주로 활용해  모놀리식 CloudFormation 스택으로 관리했죠.\n\n" +
-        "문제는 CodeBuild에서 생성한 **동적 이미지 태그**를 CloudFormation 템플릿에 주입하기엔 제한적이었어요" +
-        "Parameter Store, Lambda 를 고려했지만, CloudFormation은 Parameter 값 변경을 Change Set으로 인식하지 않는등 관리형 서비스 장점을 가져갈 수 가 없었어요.\n\n" +
+        "'AWS Native로 완전 자동화하자'는 목표로 CodePipeline을 주로 활용해  모놀리식 CloudFormation 스택으로 관리했습니다.\n\n" +
+        "문제는 CodeBuild에서 생성한 **동적 이미지 태그**를 CloudFormation 템플릿에 주입하기엔 제한적이었습니다" +
+        "Parameter Store, Lambda 를 고려했지만, CloudFormation은 Parameter 값 변경을 Change Set으로 인식하지 않는등 관리형 서비스 장점을 가져갈 수 가 없었습니다.\n\n" +
         "Drift 문제가 있었는데. 장애 대응 때 팀원이 콘솔에서 보안 그룹을 급하게 수정하면, CloudFormation 템플릿과 실제 리소스 상태가 달라지면서. 그 상태에서 ECS Task Definition만 업데이트하려 해도 'Drift detected' 에러로 배포가 완전히 막혔습니다.\n\n" +
-        "작은 프로젝트라 인프라 수정은 콘솔에서 빠르게 하는 게 현실적인데, CloudFormation은 그런 유연성을 허용하지 않았어요. 매번 템플릿을 동기화하는 것도 부담이었고요.\n\n" +
-        "결국 '모든 걸 IaC로 관리하겠다'는 이상주의를 버렸습니다. CloudFormation으로 프로비저닝된 인프라는 VPC 단위로 격리하고, **신규 앱 배포만 Jenkins로 분리**했어요.\n\n" +
+        "작은 프로젝트라 인프라 수정은 콘솔에서 빠르게 하는 게 현실적인데, CloudFormation은 그런 유연성을 허용하지 않았습니다. 매번 템플릿을 동기화하는 것도 부담이었고요.\n\n" +
+        "결국 '모든 걸 IaC로 관리하겠다'는 이상주의를 버렸습니다. CloudFormation으로 프로비저닝된 인프라는 VPC 단위로 격리하고, **신규 앱 배포만 Jenkins로 분리**했습니다.\n\n" +
         "Jenkins 파이프라인에서 AWS CLI로 직접 제어하니 훨씬 간단해졌죠. Task Definition 만 신규로 배포한후  스크립트도 대폭 줄었습니다 또 줄인 포인트가 있는데.\n\n" +
         "첫 번째는 이미지 빌드 시간 단축이었습니다. 빌드 캐시, Multi-stage build를 사용했고.\n\n" +
-        "두번째는 웹훅 트리거 활용입니다. 배포 자체는 민감하지만 병목은 주로 이미지빌드에 있습니다. 푸시 시점에 웹훅으로 빌드만 먼저 시작하고, 수동 승인으로 배포를 진행하도록 했어요.\n\n" +
-        "세 번째는 Health Check 튜닝이었습니다. 신규 테스크로 트래픽 이전전에 시간이 오래 소요되는 걸 확인했어요, Health Check 간격, Threshold를  낮추고 안정화 대기 시간을 줄였습니다.\n\n" +
+        "두번째는 웹훅 트리거 활용입니다. 배포 자체는 민감하지만 병목은 주로 이미지빌드에 있습니다. 푸시 시점에 웹훅으로 빌드만 먼저 시작하고, 수동 승인으로 배포를 진행하도록 했습니다.\n\n" +
+        "세 번째는 Health Check 튜닝이었습니다. 신규 테스크로 트래픽 이전전에 시간이 오래 소요되는 걸 확인했습니다, Health Check 간격, Threshold를  낮추고 안정화 대기 시간을 줄였습니다.\n\n" +
         "네 번째는 Mail 통합이었습니다. 배포 실패 시 어디서 멈췄는지 찾기 어려웠는데, AWS SNS로 유관자에게 알림을 보내 MTTI 자체를 줄였습니다.\n\n" +
         "**결과와 트레이드오프**\n\n" +
         "Drift로 인한 배포 차단이 zero가 되었습니다. 롤백 시간도 30초로 줄었고요.\n\n" +
-        "물론 트레이드오프는 있었어요. CloudFormation의 선언적 관리를 포기했고, 인프라와 애플리케이션 배포가 분리되었죠. 하지만 작은 팀에서 빠른 배포가 더 중요했기 때문에 현실적인 선택이었다고 생각합니다.\n\n" +
+        "물론 트레이드오프는 있었습니다. CloudFormation의 선언적 관리를 포기했고, 인프라와 애플리케이션 배포가 분리되었습니다. 하지만 작은 팀에서 빠른 배포가 더 중요했기 때문에 현실적인 선택이었다고 생각합니다.\n\n" +
         "**CloudFormation/CodePipeline에 대한 회고**\n\n" +
-        "CodeBuild 자체는 좋았어요. 빌드 환경이 격리되고, 테스트도 가능하고, 이미지 생성기 자체로 로그도 깔끔했죠. 하지만 CodePipeline과 CloudFormation 조합은 개발자 경험이 좋지 않았습니다. 특히 동적 값 주입과 Drift 처리가 너무 경직되어 있었어요.\n\n" +
-        "Terraform이었으면 좀 더 유연했을 것 같긴 해요. `local-exec` provisioner로 동적 처리도 가능하고, State 관리도 더 명확하니까요. 하지만 당시엔 팀 역량과 러닝 커브를 고려해서 익숙한 Jenkins를 선택했습니다.\n\n" +
+        "CodeBuild 자체는 좋았습니다. 빌드 환경이 격리되고, 테스트도 가능하고, 이미지 생성기 자체로 로그도 깔끔했습니다. 하지만 CodePipeline과 CloudFormation 조합은 개발자 경험이 좋지 않았습니다. 특히 동적 값 주입과 Drift 처리가 너무 경직되어 있었습니다.\n\n" +
+        "Terraform이었으면 좀 더 유연했을 것 같긴 합니다. `local-exec` provisioner로 동적 처리도 가능하고, State 관리도 더 명확하니까요. 하지만 당시엔 팀 역량과 러닝 커브를 고려해서 익숙한 Jenkins를 선택했습니다.\n\n" +
         "**향후 계획**\n\n" +
-        "사실 IaC 쪽은 더 많은 경험을 해보고 싶어요. Terraform으로 전체 인프라를 다시 설계해보거나, GitOps 방식의 ArgoCD 같은 것도 도전해보고 싶습니다. 특히 멀티 클러스터 환경에서 IaC를 어떻게 관리하는지 궁금하거든요.\n\n" +
-        "다만 지금은 '작동하는 시스템'이 우선이었고, Jenkins가 그 목표를 달성했습니다. 완벽한 IaC보다 팀이 유지보수 가능한 복잡도가 더 중요했어요.",
+        "사실 IaC 쪽은 더 많은 경험을 해보고 싶습니다. Terraform으로 전체 인프라를 다시 설계해보거나, GitOps 방식의 ArgoCD 같은 것도 도전해보고 싶습니다. 특히 멀티 클러스터 환경에서 IaC를 어떻게 관리하는지 궁금하습니다.\n\n" +
+        "다만 지금은 '작동하는 시스템'이 우선이었고, Jenkins가 그 목표를 달성했습니다. 완벽한 IaC보다 팀이 유지보수 가능한 복잡도가 더 중요했습니다.",
       en: "A concise CI/CD answer covering real production context, key decision trade-offs, measurable outcomes, and takeaways.",
     },
   },
