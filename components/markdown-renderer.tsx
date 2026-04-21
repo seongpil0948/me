@@ -20,14 +20,13 @@ export function MarkdownRenderer({
       style={{
         fontSize: "15px",
         lineHeight: "1.8",
-        color: "#34495e",
       }}
     >
       <ReactMarkdown
         components={{
           // Customize strong (bold) text
           strong: ({ children }: { children?: ReactNode }) => (
-            <strong style={{ fontWeight: "700", color: "#1a202c" }}>
+            <strong style={{ fontWeight: "700" }}>
               {children}
             </strong>
           ),
