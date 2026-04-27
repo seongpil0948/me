@@ -116,7 +116,7 @@ export const personalInfo: PersonalInfo = {
       en: "Information and Communication Engineering",
       zh: "信息通信工程",
     },
-    period: "2015.03 - 2019.03",
+    period: "2015.02 - 2019.02",
     gpa: "3.35 / 4.5",
   },
   highSchool: {
